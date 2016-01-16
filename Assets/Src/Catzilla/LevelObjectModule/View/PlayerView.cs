@@ -2,10 +2,12 @@
 using System.Collections;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
+using Catzilla.PlayerModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class PlayerView: LevelObjectView {
-        public enum Event {Ready, Damaged, Death}
+        public enum Event {Ready, Damaged, Death, ScoreChange}
 
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
@@ -19,9 +21,17 @@ namespace Catzilla.LevelObjectModule.View {
         [Inject("EnvLayer")]
         public int EnvLayer {get; set;}
 
-        public int Health {get {return health;}}
+        public Collider Collider {get {return collider;}}
 
-        public Collider Collider {get; private set;}
+        public int Score {
+            get {
+                return score.Value;
+            }
+            set {
+                score.Value = value;
+                EventBus.Dispatch(Event.ScoreChange, this);
+            }
+        }
 
         [SerializeField]
         private float frontSpeed = 5f;
@@ -35,23 +45,30 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private int health = 100;
 
+        [SerializeField]
+        private ScoreView score;
+
+        [SerializeField]
+        new private Camera camera;
+
+        [SerializeField]
+        private Animator animator;
+
+        [SerializeField]
+        private Collider collider;
+
         private bool isDead = false;
         private float minX;
         private float maxX;
         private float targetX;
         private Rigidbody body;
-        private Animator animator;
-        new private Camera camera;
 
         [PostConstruct]
         public void OnReady() {
             Debug.Log("PlayerView.OnReady()");
-            animator = GetComponentInChildren<Animator>();
-            camera = GetComponentInChildren<Camera>();
             body = GetComponent<Rigidbody>();
-            Collider = GetComponentInChildren<Collider>();
             targetX = body.position.x;
-            float halfWidth = Collider.bounds.extents.x;
+            float halfWidth = collider.bounds.extents.x;
             minX = LevelMinX + halfWidth;
             maxX = LevelMaxX - halfWidth;
             EventBus.Dispatch(Event.Ready, this);

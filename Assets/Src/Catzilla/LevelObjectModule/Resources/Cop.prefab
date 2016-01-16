@@ -12,6 +12,7 @@ GameObject:
   - 114: {fileID: 11429200}
   - 114: {fileID: 11496890}
   - 114: {fileID: 11483028}
+  - 114: {fileID: 11487140}
   m_Layer: 0
   m_Name: Cop
   m_TagString: Untagged
@@ -188,6 +189,18 @@ MonoBehaviour:
   projectileProto: {fileID: 11467526, guid: 362fec4312e394d09be04ce01ef081a4, type: 2}
   projectileSource: {fileID: 450834}
   period: 5
+--- !u!114 &11487140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Score: 1
 --- !u!114 &11496890
 MonoBehaviour:
   m_ObjectHideFlags: 1

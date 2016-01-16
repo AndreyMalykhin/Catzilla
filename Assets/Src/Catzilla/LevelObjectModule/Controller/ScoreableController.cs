@@ -5,7 +5,7 @@ using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.View;
 
 namespace Catzilla.LevelObjectModule.Controller {
-    public class DamagingController {
+    public class ScoreableController {
         [Inject("PlayerMeshTag")]
         public string PlayerTag {get; set;}
 
@@ -16,7 +16,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             if (collider.CompareTag(PlayerTag)) {
                 var player =
                     collider.attachedRigidbody.GetComponent<PlayerView>();
-                player.TakeDamage(((DamagingView) eventData.EventOwner).Damage);
+                player.Score += ((ScoreableView) eventData.EventOwner).Score;
             }
         }
     }

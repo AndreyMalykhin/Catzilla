@@ -12,8 +12,8 @@ namespace Catzilla.LevelObjectModule.View {
         private Rigidbody body;
         private float speed;
 
-        protected override void Awake() {
-            base.Awake();
+        [PostConstruct]
+        public void OnReady() {
             body = GetComponent<Rigidbody>();
             speed = Random.Range(minSpeed, maxSpeed);
         }

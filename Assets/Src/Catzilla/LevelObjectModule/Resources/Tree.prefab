@@ -11,6 +11,7 @@ GameObject:
   - 54: {fileID: 5443342}
   - 114: {fileID: 11418764}
   - 114: {fileID: 11466756}
+  - 114: {fileID: 11486824}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -157,6 +158,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smashedProto: {fileID: 11418540, guid: c694f9174b7b6496bb8cd96d2baf15cb, type: 2}
+--- !u!114 &11486824
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Score: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

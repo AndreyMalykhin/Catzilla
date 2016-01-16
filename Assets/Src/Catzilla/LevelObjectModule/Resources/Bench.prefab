@@ -30,6 +30,7 @@ GameObject:
   - 54: {fileID: 5452302}
   - 114: {fileID: 11415620}
   - 114: {fileID: 11469876}
+  - 114: {fileID: 11472518}
   m_Layer: 0
   m_Name: Bench
   m_TagString: Untagged
@@ -145,6 +146,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smashedProto: {fileID: 11442300, guid: 68c0164f709bf4a52bd1da3509a6910d, type: 2}
+--- !u!114 &11472518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Score: 1
 --- !u!114 &11495764
 MonoBehaviour:
   m_ObjectHideFlags: 1
