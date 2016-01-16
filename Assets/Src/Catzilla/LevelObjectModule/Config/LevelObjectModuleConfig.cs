@@ -31,6 +31,10 @@ namespace Catzilla.LevelObjectModule.Config {
                 .To<DamagingController>()
                 .ToSingleton()
                 .CrossContext();
+            injectionBinder.Bind<ShootingController>()
+                .To<ShootingController>()
+                .ToSingleton()
+                .CrossContext();
             injectionBinder.Bind<LevelObjectType>()
                 .ToValue(LevelObjectType.Player)
                 .ToName("PlayerObjectType")
@@ -54,6 +58,12 @@ namespace Catzilla.LevelObjectModule.Config {
                 injectionBinder.GetInstance<DamagingController>();
             eventBus.AddListener(DamagingView.Event.TriggerEnter,
                 damagingContoller.OnTriggerEnter);
+            var shootingContoller =
+                injectionBinder.GetInstance<ShootingController>();
+            eventBus.AddListener(PlayerView.Event.Ready,
+                shootingContoller.OnPlayerReady);
+            eventBus.AddListener(ShootingView.Event.Ready,
+                shootingContoller.OnViewReady);
         }
     }
 }

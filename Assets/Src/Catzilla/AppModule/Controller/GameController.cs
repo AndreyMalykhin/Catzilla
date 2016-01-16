@@ -39,12 +39,20 @@ namespace Catzilla.AppModule.Controller {
             GameOverScreen.Show();
         }
 
-        public void OnPause() {
+        public void OnGameOverScreenShow() {
+            Pause();
+        }
+
+        public void OnGameOverScreenHide() {
+            Resume();
+        }
+
+        private void Pause() {
             Time.timeScale = 0f;
             AudioListener.pause = true;
         }
 
-        public void OnResume() {
+        private void Resume() {
             Time.timeScale = 1f;
             AudioListener.pause = false;
         }

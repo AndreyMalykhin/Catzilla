@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67692da98c5374d13b81e88ea204f9d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AreaProto: {fileID: 11412316, guid: e3d2b67a31db14ee49848e3e8b5e4936, type: 2}
+  areaProto: {fileID: 11412316, guid: e3d2b67a31db14ee49848e3e8b5e4936, type: 2}
 --- !u!4 &817976763
 Transform:
   m_ObjectHideFlags: 0

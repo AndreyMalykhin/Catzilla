@@ -58,8 +58,6 @@ namespace Catzilla.LevelModule.Config {
                 LevelView.Event.Ready, levelController.OnViewReady);
             eventBus.AddListener(LevelAreaView.Event.TriggerEnter,
                 levelController.OnAreaTriggerEnter);
-            // eventBus.AddListener(LevelAreaView.Event.TriggerExit,
-            //     levelController.OnAreaTriggerExit);
         }
     }
 }

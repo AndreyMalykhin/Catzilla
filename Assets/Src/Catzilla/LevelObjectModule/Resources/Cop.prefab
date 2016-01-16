@@ -11,8 +11,24 @@ GameObject:
   - 54: {fileID: 5465430}
   - 114: {fileID: 11429200}
   - 114: {fileID: 11496890}
+  - 114: {fileID: 11483028}
   m_Layer: 0
   m_Name: Cop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &119450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 450834}
+  m_Layer: 0
+  m_Name: ProjectileSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,8 +64,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 475104}
+  - {fileID: 450834}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &450834
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 119450}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 424354}
+  m_RootOrder: 1
 --- !u!4 &475104
 Transform:
   m_ObjectHideFlags: 1
@@ -108,7 +137,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!65 &6500988
 BoxCollider:
@@ -145,6 +174,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 102404}
+--- !u!114 &11483028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43715d89143b94592b01daf5f2f035f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileProto: {fileID: 11467526, guid: 362fec4312e394d09be04ce01ef081a4, type: 2}
+  projectileSource: {fileID: 450834}
+  period: 5
 --- !u!114 &11496890
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -174,7 +217,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Constraints
-      value: 116
+      value: 84
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SmashedProto
@@ -206,6 +249,19 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d1a91c843157b48a38f0200b5adf6e81, type: 2}
+    - target: {fileID: 0}
+      propertyPath: projectileSource
+      value: 
+      objectReference: {fileID: 450834}
+    - target: {fileID: 0}
+      propertyPath: projectileProto
+      value: 
+      objectReference: {fileID: 11467526, guid: 362fec4312e394d09be04ce01ef081a4,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: period
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 102404}

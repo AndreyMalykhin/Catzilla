@@ -47,9 +47,9 @@ namespace Catzilla.AppModule.Config {
             globalEventBus.AddListener(GameOverMenuView.Event.RestartBtnClick,
                 gameController.OnRestart);
             globalEventBus.AddListener(GameOverScreenView.Event.Show,
-                gameController.OnPause);
+                gameController.OnGameOverScreenShow);
             globalEventBus.AddListener(GameOverScreenView.Event.Hide,
-                gameController.OnResume);
+                gameController.OnGameOverScreenHide);
             globalEventBus.AddListener(PlayerView.Event.Death,
                 gameController.OnPlayerDeath);
         }

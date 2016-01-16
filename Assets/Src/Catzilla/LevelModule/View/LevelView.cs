@@ -16,9 +16,9 @@ namespace Catzilla.LevelModule.View {
         [Inject("LevelAreaDepth")]
         public float AreaDepth {get; set;}
 
-        public LevelAreaView AreaProto;
+        [SerializeField]
+        private LevelAreaView areaProto;
 
-        // private List<LevelAreaView> areas = new List<LevelAreaView>(4);
         private Level level;
 
         [PostConstruct]
@@ -35,20 +35,6 @@ namespace Catzilla.LevelModule.View {
             Debug.Log("LevelView.AddArea()");
             RenderArea(area);
         }
-
-        // public void DeleteArea(int index) {
-        //     Debug.Log("LevelView.DeleteArea()");
-
-        //     for (int i = 0; i < areas.Count; ++i) {
-        //         LevelAreaView area = areas[i];
-
-        //         if (area.Index == index) {
-        //             areas.Remove(area);
-        //             Destroy(area.gameObject);
-        //             break;
-        //         }
-        //     }
-        // }
 
         protected override void Start() {
             base.Start();
@@ -68,10 +54,9 @@ namespace Catzilla.LevelModule.View {
             var position =
                 new Vector3(0f, 0f, area.Index * AreaDepth);
             var areaView = (LevelAreaView) Instantiate(
-                AreaProto, position, Quaternion.identity);
+                areaProto, position, Quaternion.identity);
             areaView.transform.parent = transform;
             areaView.Init(area);
-            // areas.Add(areaView);
         }
     }
 }

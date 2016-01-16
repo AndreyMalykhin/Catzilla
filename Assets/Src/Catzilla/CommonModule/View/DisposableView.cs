@@ -15,7 +15,7 @@ namespace Catzilla.CommonModule.View {
         }
 
         private void Dispose() {
-            Debug.Log("DisposableView.Dispose()");
+            // Debug.Log("DisposableView.Dispose()");
             Destroy(root == null ? gameObject : root);
         }
     }

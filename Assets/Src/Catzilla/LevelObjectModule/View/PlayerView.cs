@@ -5,7 +5,7 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 
 namespace Catzilla.LevelObjectModule.View {
     public class PlayerView: LevelObjectView {
-        public enum Event {Damaged, Death}
+        public enum Event {Ready, Damaged, Death}
 
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
@@ -18,6 +18,10 @@ namespace Catzilla.LevelObjectModule.View {
 
         [Inject("EnvLayer")]
         public int EnvLayer {get; set;}
+
+        public int Health {get {return health;}}
+
+        public Collider Collider {get; private set;}
 
         [SerializeField]
         private float frontSpeed = 5f;
@@ -39,19 +43,18 @@ namespace Catzilla.LevelObjectModule.View {
         private Animator animator;
         new private Camera camera;
 
-        public int Health {get {return health;}}
-
         [PostConstruct]
         public void OnReady() {
             Debug.Log("PlayerView.OnReady()");
             animator = GetComponentInChildren<Animator>();
             camera = GetComponentInChildren<Camera>();
             body = GetComponent<Rigidbody>();
+            Collider = GetComponentInChildren<Collider>();
             targetX = body.position.x;
-            float halfWidth =
-                GetComponentInChildren<Collider>().bounds.extents.x;
+            float halfWidth = Collider.bounds.extents.x;
             minX = LevelMinX + halfWidth;
             maxX = LevelMaxX - halfWidth;
+            EventBus.Dispatch(Event.Ready, this);
         }
 
         public void TakeDamage(int damage) {
@@ -66,6 +69,10 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void Die() {
+            if (isDead) {
+                return;
+            }
+
             isDead = true;
             animator.enabled = false;
             EventBus.Dispatch(Event.Death);
