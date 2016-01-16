@@ -18,23 +18,24 @@ namespace Catzilla.LevelModule.Controller {
         [Inject("LevelScene")]
         public string LevelScene {get; set;}
 
-        private Level level;
-        private LevelView levelView;
+        private LevelView level;
+        private int levelIndex;
 
         public void Load(int levelIndex) {
             Debug.Log("LevelController.Load()");
-            level = LevelGenerator.Generate(levelIndex);
+            this.levelIndex = levelIndex;
             SceneManager.LoadScene(LevelScene);
         }
 
         public void OnViewReady(IEvent evt) {
-            levelView = (LevelView) evt.data;
-            levelView.Init(level);
+            level = (LevelView) evt.data;
+            level.Index = levelIndex;
+            LevelGenerator.NewLevel(level);
         }
 
         public void OnAreaTriggerEnter(IEvent evt) {
             if (((Collider) evt.data).CompareTag(PlayerTag)) {
-                levelView.AddArea(LevelGenerator.GenerateArea(level.Index));
+                 LevelGenerator.NewArea(level);
             }
         }
     }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Catzilla.LevelAreaModule.Model;
 using Catzilla.LevelObjectModule.Model;
+using Catzilla.LevelObjectModule.View;
+using Catzilla.LevelModule.View;
 
 namespace Catzilla.LevelModule.Model {
     public class LevelGenerator {
@@ -12,21 +14,21 @@ namespace Catzilla.LevelModule.Model {
 
         private State state;
 
-        public Level Generate(int levelIndex) {
+        public void NewLevel(LevelView level) {
+            Debug.Log("LevelGenerator.NewLevel()");
             state = StateStart;
-            var areas = new List<LevelArea>(1);
             bool spawnPlayer = true;
-            areas.Add(GenerateArea(levelIndex, spawnPlayer));
-            return new Level(levelIndex, areas);
+            NewArea(spawnPlayer, level);
         }
 
-        public LevelArea GenerateArea(int levelIndex) {
+        public void NewArea(LevelView level) {
+            Debug.Log("LevelGenerator.NewArea()");
             bool spawnPlayer = false;
-            return GenerateArea(levelIndex, spawnPlayer);
+            NewArea(spawnPlayer, level);
         }
 
-        private LevelArea GenerateArea(int levelIndex, bool spawnPlayer) {
-            return AreaGenerator.Generate(state(), levelIndex, spawnPlayer);
+        private void NewArea(bool spawnPlayer, LevelView level) {
+            AreaGenerator.NewArea(state(), spawnPlayer, level);
         }
 
         private EnvType StateStart() {

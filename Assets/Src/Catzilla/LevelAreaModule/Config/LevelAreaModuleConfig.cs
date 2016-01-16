@@ -13,10 +13,6 @@ namespace Catzilla.LevelAreaModule.Config {
                 .To<LevelAreaGenerator>()
                 .ToSingleton()
                 .CrossContext();
-            injectionBinder.Bind<EnvFactory>()
-                .To<EnvFactory>()
-                .ToSingleton()
-                .CrossContext();
             injectionBinder.Bind<EnvTypeInfoStorage>()
                 .To<EnvTypeInfoStorage>()
                 .ToSingleton()

@@ -2,15 +2,11 @@
 using System;
 using System.Collections.Generic;
 using Catzilla.LevelObjectModule.Model;
+using Catzilla.LevelModule.View;
+using Catzilla.LevelAreaModule.View;
 
 namespace Catzilla.LevelAreaModule.Model {
     public class LevelAreaGenerator {
-        [Inject]
-        public EnvFactory EnvFactory {get; set;}
-
-        [Inject]
-        public LevelObjectFactory ObjectFactory {get; set;}
-
         [Inject]
         public ObjectTypeInfoStorage ObjectTypeInfoStorage {get; set;}
 
@@ -24,9 +20,8 @@ namespace Catzilla.LevelAreaModule.Model {
             new Dictionary<LevelAreaPoint, bool>();
         private int nextAreaIndex = 0;
 
-        public LevelArea Generate(
-            EnvType envType, int levelIndex, bool spawnPlayer) {
-            Debug.Log("LevelAreaGenerator.Generate()");
+        public void NewArea(
+            EnvType envType, bool spawnPlayer, LevelView level) {
             reservedSpawnPoints.Clear();
             LevelObjectType[] objectTypesToSpawn =
                 EnvTypeInfoStorage.Get(envType).GetObjectTypes();
@@ -34,25 +29,30 @@ namespace Catzilla.LevelAreaModule.Model {
                 return ObjectTypeInfoStorage.Get(lhs).SpawnPriority.CompareTo(
                     ObjectTypeInfoStorage.Get(rhs).SpawnPriority);
             });
-            Env env = EnvFactory.Make(envType);
-            var objects = new List<LevelObject>();
+            LevelAreaView area = level.NewArea(nextAreaIndex);
+            EnvTypeInfo envTypeInfo = EnvTypeInfoStorage.Get(envType);
+            area.NewEnv(envTypeInfo);
 
             for (int i = 0; i < objectTypesToSpawn.Length; ++i) {
-                SpawnObjects(objectTypesToSpawn[i], env, spawnPlayer,
-                    levelIndex, objects);
+                NewObjects(
+                    objectTypesToSpawn[i],
+                    envType,
+                    spawnPlayer,
+                    nextAreaIndex,
+                    level);
             }
 
-            return new LevelArea(nextAreaIndex++, env, objects);
+            ++nextAreaIndex;
         }
 
-        private void SpawnObjects(
+        private void NewObjects(
             LevelObjectType objectType,
-            Env env,
+            EnvType envType,
             bool spawnPlayer,
-            int levelIndex,
-            List<LevelObject> outputObjects) {
+            int areaIndex,
+            LevelView level) {
             List<LevelAreaRect> spawnLocations =
-                EnvTypeInfoStorage.Get(env.Type).GetSpawnLocations(objectType);
+                EnvTypeInfoStorage.Get(envType).GetSpawnLocations(objectType);
             int objectsCountToSpawn;
             ObjectTypeInfo objectTypeInfo =
                 ObjectTypeInfoStorage.Get(objectType);
@@ -62,7 +62,7 @@ namespace Catzilla.LevelAreaModule.Model {
                 spawnPlayer = false;
             } else {
                 objectsCountToSpawn =
-                    GetObjectsCountToSpawn(objectTypeInfo, levelIndex);
+                    GetObjectsCountToSpawn(objectTypeInfo, level.Index);
             }
 
             LevelAreaPoint spawnPoint;
@@ -79,9 +79,7 @@ namespace Catzilla.LevelAreaModule.Model {
                     break;
                 }
 
-                var obj = ObjectFactory.Make(objectType);
-                obj.SpawnPoint = spawnPoint;
-                outputObjects.Add(obj);
+                level.NewObject(objectTypeInfo, spawnPoint, areaIndex);
                 ReserveSpawnPoint(spawnPoint);
             }
         }

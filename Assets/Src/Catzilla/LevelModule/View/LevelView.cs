@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.LevelModule.Model;
+using Catzilla.LevelObjectModule.Model;
+using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelAreaModule.Model;
 using Catzilla.LevelAreaModule.View;
 
@@ -13,50 +15,46 @@ namespace Catzilla.LevelModule.View {
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
 
+        [Inject("LevelAreaWidth")]
+        public float AreaWidth {get; set;}
+
         [Inject("LevelAreaDepth")]
         public float AreaDepth {get; set;}
+
+        public int Index {get; set;}
 
         [SerializeField]
         private LevelAreaView areaProto;
 
-        private Level level;
+        private float areaHalfWidth;
+        private float areaHalfDepth;
 
         [PostConstruct]
         public void OnReady() {
             Debug.Log("LevelView.OnReady()");
+            areaHalfWidth = AreaWidth / 2f;
+            areaHalfDepth = AreaDepth / 2f;
             EventBus.Dispatch(Event.Ready, this);
         }
 
-        public void Init(Level level) {
-            this.level = level;
-        }
-
-        public void AddArea(LevelArea area) {
-            Debug.Log("LevelView.AddArea()");
-            RenderArea(area);
-        }
-
-        protected override void Start() {
-            base.Start();
-            Render();
-        }
-
-        private void Render() {
-            Debug.Log("LevelView.Render()");
-            List<LevelArea> areas = level.Areas;
-
-            for (int i = 0; i < areas.Count; ++i) {
-                RenderArea(areas[i]);
-            }
-        }
-
-        private void RenderArea(LevelArea area) {
-            var position =
-                new Vector3(0f, 0f, area.Index * AreaDepth);
+        public LevelAreaView NewArea(int index) {
+            var position = new Vector3(0f, 0f, index * AreaDepth);
             var areaView = (LevelAreaView) Instantiate(
                 areaProto, position, Quaternion.identity);
             areaView.transform.parent = transform;
-            areaView.Init(area);
+            return areaView;
+        }
+
+        public LevelObjectView NewObject(
+            ObjectTypeInfo typeInfo, LevelAreaPoint spawnPoint, int areaIndex) {
+            var position = new Vector3(
+                spawnPoint.X + typeInfo.Width / 2f - areaHalfWidth,
+                0f,
+                spawnPoint.Z + typeInfo.Depth / 2f + areaIndex * AreaDepth - areaHalfDepth);
+            var obj = (LevelObjectView) Instantiate(
+                typeInfo.ViewProto, position, Quaternion.identity);
+            obj.transform.parent = transform;
+            return obj;
         }
     }
 }

@@ -22,7 +22,8 @@ namespace Catzilla.LevelObjectModule.View {
             smashedView.Init(sourcePosition);
         }
 
-        private void OnTriggerEnter(Collider collider) {
+        private IEnumerator OnTriggerEnter(Collider collider) {
+            yield return new WaitForFixedUpdate();
             EventBus.Dispatch(
                 Event.TriggerEnter, new EventData(this, collider));
         }

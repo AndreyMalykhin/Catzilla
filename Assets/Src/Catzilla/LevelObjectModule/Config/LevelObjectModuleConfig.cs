@@ -11,10 +11,6 @@ using Catzilla.LevelObjectModule.Controller;
 namespace Catzilla.LevelObjectModule.Config {
     public class LevelObjectModuleConfig: IModuleConfig {
         void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
-            injectionBinder.Bind<LevelObjectFactory>()
-                .To<LevelObjectFactory>()
-                .ToSingleton()
-                .CrossContext();
             injectionBinder.Bind<ObjectTypeInfoStorage>()
                 .To<ObjectTypeInfoStorage>()
                 .ToSingleton()
