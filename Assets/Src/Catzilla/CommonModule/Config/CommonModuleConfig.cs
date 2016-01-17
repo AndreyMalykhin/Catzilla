@@ -4,6 +4,7 @@ using strange.extensions.injector.api;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using SmartLocalization;
+using Catzilla.CommonModule.View;
 
 namespace Catzilla.CommonModule.Config {
     public class CommonModuleConfig: IModuleConfig {

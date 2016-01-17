@@ -32,22 +32,25 @@ namespace Catzilla.GameOverMenuModule.View {
                 new Color(currentColor.r, currentColor.g, currentColor.b, 0f);
         }
 
-        public void Show() {
+        public void Show(Action onDone) {
             canvas.enabled = true;
             image.DOFade(1f, animationDuration)
                 .SetUpdate(UpdateType.Normal, true)
                 .OnComplete(() => {
                     menu.Show();
+                    onDone();
                     EventBus.Dispatch(Event.Show);
                 });
         }
 
-        public void Hide() {
+        public void Hide(Action onDone) {
             menu.Hide();
-            image.DOFade(0f, animationDuration)
+            var duration = 0f;
+            image.DOFade(0f, duration)
                 .SetUpdate(UpdateType.Normal, true)
                 .OnComplete(() => {
                     canvas.enabled = false;
+                    onDone();
                     EventBus.Dispatch(Event.Hide);
                 });
         }

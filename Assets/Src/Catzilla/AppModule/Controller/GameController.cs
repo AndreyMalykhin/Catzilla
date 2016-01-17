@@ -1,49 +1,45 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
+using SmartLocalization;
+using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.View;
 using Catzilla.PlayerModule.Model;
 using Catzilla.LevelModule.Controller;
+using Catzilla.LevelModule.View;
 using Catzilla.MainMenuModule.View;
 using Catzilla.GameOverMenuModule.View;
 
 namespace Catzilla.AppModule.Controller {
     public class GameController {
         [Inject]
-        public PlayerSettingsStorage PlayerSettingsStorage {get; set;}
-
-        [Inject]
-        public LevelController LevelController {get; set;}
-
-        [Inject]
         public MainScreenView MainScreen {get; set;}
 
         [Inject]
         public GameOverScreenView GameOverScreen {get; set;}
 
-        [Inject("MainCamera")]
-        public Camera MainCamera {get; set;}
+        [Inject("LevelScene")]
+        public string LevelScene {get; set;}
 
-        public void OnStart() {
-            PlayerSettings playerSettings = PlayerSettingsStorage.GetCurrent();
+        public void OnStartBtnClick() {
             MainScreen.Hide();
-            MainCamera.gameObject.SetActive(false);
-            LevelController.Load(playerSettings.Level);
+            LoadLevel();
         }
 
-        public void OnRestart() {
-            PlayerSettings playerSettings = PlayerSettingsStorage.GetCurrent();
-            LevelController.Load(playerSettings.Level);
-            GameOverScreen.Hide();
+        public void OnRestartBtnClick() {
+            GameOverScreen.Hide(() => {
+                LoadLevel();
+            });
         }
 
         public void OnPlayerDeath() {
-            GameOverScreen.Show();
+            GameOverScreen.Show(() => {
+                Pause();
+            });
         }
 
-        public void OnGameOverScreenShow() {
-            Pause();
-        }
-
-        public void OnGameOverScreenHide() {
+        private void LoadLevel() {
+            SceneManager.LoadScene(LevelScene);
             Resume();
         }
 

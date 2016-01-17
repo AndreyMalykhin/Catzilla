@@ -4,6 +4,7 @@ using strange.extensions.injector.api;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Config;
+using Catzilla.CommonModule.View;
 using Catzilla.MainMenuModule.View;
 using Catzilla.GameOverMenuModule.View;
 using Catzilla.LevelObjectModule.View;
@@ -43,13 +44,9 @@ namespace Catzilla.AppModule.Config {
 
             var gameController = injectionBinder.GetInstance<GameController>();
             globalEventBus.AddListener(MainMenuView.Event.StartBtnClick,
-                gameController.OnStart);
+                gameController.OnStartBtnClick);
             globalEventBus.AddListener(GameOverMenuView.Event.RestartBtnClick,
-                gameController.OnRestart);
-            globalEventBus.AddListener(GameOverScreenView.Event.Show,
-                gameController.OnGameOverScreenShow);
-            globalEventBus.AddListener(GameOverScreenView.Event.Hide,
-                gameController.OnGameOverScreenHide);
+                gameController.OnRestartBtnClick);
             globalEventBus.AddListener(PlayerView.Event.Death,
                 gameController.OnPlayerDeath);
         }

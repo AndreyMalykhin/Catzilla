@@ -12,6 +12,12 @@ using Catzilla.LevelAreaModule.View;
 namespace Catzilla.LevelModule.Config {
     public class LevelModuleConfig: IModuleConfig {
         void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
+            var levelStartScreen = GameObject.FindWithTag("LevelStartScreen")
+                .GetComponent<LevelStartScreenView>();
+            injectionBinder.Bind<LevelStartScreenView>()
+                .ToValue(levelStartScreen)
+                .ToInject(false)
+                .CrossContext();
             injectionBinder.Bind<LevelController>()
                 .To<LevelController>()
                 .ToSingleton()
@@ -58,6 +64,8 @@ namespace Catzilla.LevelModule.Config {
                 LevelView.Event.Ready, levelController.OnViewReady);
             eventBus.AddListener(LevelAreaView.Event.TriggerEnter,
                 levelController.OnAreaTriggerEnter);
+            eventBus.AddListener(LevelStartScreenView.Event.Hide,
+                levelController.OnStartScreenHide);
         }
     }
 }

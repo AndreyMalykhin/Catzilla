@@ -15,7 +15,7 @@ namespace Catzilla.AppModule.Controller {
         }
 
         public void OnExit() {
-            Debug.Log("AppController.Exit()");
+            Debug.Log("AppController.OnExit()");
             Application.Quit();
         }
     }

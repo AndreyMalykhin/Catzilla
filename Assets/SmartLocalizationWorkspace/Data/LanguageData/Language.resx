@@ -128,4 +128,7 @@
 	<data name="MainMenu.Start" xml:space="preserve">
 		<value>Play</value>
 	</data>
+	<data name="LevelStartScreen.Level" xml:space="preserve">
+		<value>Level {0}</value>
+	</data>
 </root>

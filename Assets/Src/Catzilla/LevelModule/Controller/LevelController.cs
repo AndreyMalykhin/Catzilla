@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using strange.extensions.dispatcher.eventdispatcher.api;
-using Catzilla.LevelAreaModule.View;
+using SmartLocalization;
 using Catzilla.CommonModule.Util;
+using Catzilla.PlayerModule.Model;
+using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelModule.Model;
 using Catzilla.LevelModule.View;
 
@@ -12,25 +13,37 @@ namespace Catzilla.LevelModule.Controller {
         [Inject]
         public LevelGenerator LevelGenerator {get; set;}
 
+        [Inject]
+        public PlayerSettingsStorage PlayerSettingsStorage {get; set;}
+
+        [Inject]
+        public LevelStartScreenView LevelStartScreen {get; set;}
+
+        [Inject]
+        public LanguageManager Translator {get; set;}
+
         [Inject("PlayerMeshTag")]
         public string PlayerTag {get; set;}
 
-        [Inject("LevelScene")]
-        public string LevelScene {get; set;}
+        [Inject("MainCamera")]
+        public Camera MainCamera {get; set;}
 
         private LevelView level;
-        private int levelIndex;
-
-        public void Load(int levelIndex) {
-            Debug.Log("LevelController.Load()");
-            this.levelIndex = levelIndex;
-            SceneManager.LoadScene(LevelScene);
-        }
 
         public void OnViewReady(IEvent evt) {
+            PlayerSettings playerSettings = PlayerSettingsStorage.GetCurrent();
+            LevelStartScreen.Msg.text = string.Format(Translator.GetTextValue(
+                "LevelStartScreen.Level"), playerSettings.Level);
+            LevelStartScreen.Show();
             level = (LevelView) evt.data;
-            level.Index = levelIndex;
+            level.Index = playerSettings.Level;
+            level.gameObject.SetActive(false);
             LevelGenerator.NewLevel(level);
+        }
+
+        public void OnStartScreenHide() {
+            level.gameObject.SetActive(true);
+            MainCamera.gameObject.SetActive(false);
         }
 
         public void OnAreaTriggerEnter(IEvent evt) {

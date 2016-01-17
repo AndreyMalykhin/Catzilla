@@ -10,6 +10,16 @@ TagManager:
   - GameOverScreen.Menu
   - GameOverScreen
   - MainScreen
+  - MainMenu.ExitBtn
+  - MainMenu.ExitText
+  - GameOverMenu.RestartBtn
+  - GameOverMenu.RestartText
+  - MainMenu.StartBtn
+  - MainMenu.StartText
+  - GameOverMenu.ExitBtn
+  - GameOverMenu.ExitText
+  - Player.Camera
+  - LevelStartScreen
   layers:
   - Default
   - TransparentFX

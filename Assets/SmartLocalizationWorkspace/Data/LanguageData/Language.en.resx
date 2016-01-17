@@ -122,6 +122,9 @@
 	<data name="GameOverMenu.Restart" xml:space="preserve">
 		<value>Restart</value>
 	</data>
+	<data name="LevelStartScreen.Level" xml:space="preserve">
+		<value>Level {0}</value>
+	</data>
 	<data name="MainMenu.Exit" xml:space="preserve">
 		<value>Quit</value>
 	</data>
