@@ -4,6 +4,9 @@ using System.Collections;
 
 namespace Catzilla.PlayerModule.View {
     public class ScoreView: strange.extensions.mediation.impl.View {
+        [Inject("ScoreText")]
+        public string Text {get; set;}
+
         public int Value {
             get {
                 return value;
@@ -24,7 +27,7 @@ namespace Catzilla.PlayerModule.View {
         }
 
         private void RenderValue() {
-            text.text = string.Format("Score: {0}", value);
+            text.text = string.Format(Text, value);
         }
     }
 }

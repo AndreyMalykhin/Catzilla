@@ -14,21 +14,23 @@ namespace Catzilla.LevelModule.Model {
 
         private State state;
 
-        public void NewLevel(LevelView level) {
+        public void NewLevel(int levelIndex, LevelView outputLevel) {
             Debug.Log("LevelGenerator.NewLevel()");
+            int completionScore = 1 + levelIndex * 2;
+            outputLevel.Init(levelIndex, completionScore);
             state = StateStart;
             bool spawnPlayer = true;
-            NewArea(spawnPlayer, level);
+            NewArea(spawnPlayer, outputLevel);
         }
 
-        public void NewArea(LevelView level) {
+        public void NewArea(LevelView outputLevel) {
             Debug.Log("LevelGenerator.NewArea()");
             bool spawnPlayer = false;
-            NewArea(spawnPlayer, level);
+            NewArea(spawnPlayer, outputLevel);
         }
 
-        private void NewArea(bool spawnPlayer, LevelView level) {
-            AreaGenerator.NewArea(state(), spawnPlayer, level);
+        private void NewArea(bool spawnPlayer, LevelView outputLevel) {
+            AreaGenerator.NewArea(state(), spawnPlayer, outputLevel);
         }
 
         private EnvType StateStart() {

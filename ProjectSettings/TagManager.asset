@@ -6,20 +6,11 @@ TagManager:
   tags:
   - MainScreen.Menu
   - Player.Mesh
-  - Level
   - GameOverScreen.Menu
   - GameOverScreen
   - MainScreen
-  - MainMenu.ExitBtn
-  - MainMenu.ExitText
-  - GameOverMenu.RestartBtn
-  - GameOverMenu.RestartText
-  - MainMenu.StartBtn
-  - MainMenu.StartText
-  - GameOverMenu.ExitBtn
-  - GameOverMenu.ExitText
-  - Player.Camera
   - LevelStartScreen
+  - LevelCompleteScreen
   layers:
   - Default
   - TransparentFX
@@ -33,7 +24,7 @@ TagManager:
   - LevelArea
   - Env
   - LevelObject
-  - 
+  - LevelObjectSmashed
   - 
   - 
   - 

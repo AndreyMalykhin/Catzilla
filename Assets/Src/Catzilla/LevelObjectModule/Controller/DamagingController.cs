@@ -16,7 +16,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             if (collider.CompareTag(PlayerTag)) {
                 var player =
                     collider.attachedRigidbody.GetComponent<PlayerView>();
-                player.TakeDamage(((DamagingView) eventData.EventOwner).Damage);
+                player.Health -= ((DamagingView) eventData.EventOwner).Damage;
             }
         }
     }

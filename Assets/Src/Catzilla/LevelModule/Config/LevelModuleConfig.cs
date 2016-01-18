@@ -18,6 +18,13 @@ namespace Catzilla.LevelModule.Config {
                 .ToValue(levelStartScreen)
                 .ToInject(false)
                 .CrossContext();
+            var levelCompleteScreen =
+                GameObject.FindWithTag("LevelCompleteScreen")
+                .GetComponent<LevelCompleteScreenView>();
+            injectionBinder.Bind<LevelCompleteScreenView>()
+                .ToValue(levelCompleteScreen)
+                .ToInject(false)
+                .CrossContext();
             injectionBinder.Bind<LevelController>()
                 .To<LevelController>()
                 .ToSingleton()

@@ -9,18 +9,16 @@ using Catzilla.CommonModule.View;
 namespace Catzilla.CommonModule.Config {
     public class CommonModuleConfig: IModuleConfig {
         void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
+            InitTranslator(LanguageManager.Instance);
             injectionBinder.Bind<LanguageManager>()
                 .ToValue(LanguageManager.Instance)
                 .ToInject(false)
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
-            InitTranslator(injectionBinder);
-        }
+        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {}
 
-        private void InitTranslator(IInjectionBinder injectionBinder) {
-            var translator = injectionBinder.GetInstance<LanguageManager>();
+        private void InitTranslator(LanguageManager translator) {
             GameObject.DontDestroyOnLoad(translator);
             SmartCultureInfo language =
                 translator.GetDeviceCultureIfSupported();

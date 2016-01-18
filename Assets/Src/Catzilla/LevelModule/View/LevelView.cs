@@ -21,13 +21,19 @@ namespace Catzilla.LevelModule.View {
         [Inject("LevelAreaDepth")]
         public float AreaDepth {get; set;}
 
-        public int Index {get; set;}
+        public int Index {get; private set;}
+        public int CompletionScore {get; private set;}
 
         [SerializeField]
         private LevelAreaView areaProto;
 
         private float areaHalfWidth;
         private float areaHalfDepth;
+
+        public void Init(int index, int completionScore) {
+            Index = index;
+            CompletionScore = completionScore;
+        }
 
         [PostConstruct]
         public void OnReady() {

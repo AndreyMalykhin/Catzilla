@@ -21,7 +21,7 @@ namespace Catzilla.LevelAreaModule.Model {
         private int nextAreaIndex = 0;
 
         public void NewArea(
-            EnvType envType, bool spawnPlayer, LevelView level) {
+            EnvType envType, bool spawnPlayer, LevelView outputLevel) {
             reservedSpawnPoints.Clear();
             LevelObjectType[] objectTypesToSpawn =
                 EnvTypeInfoStorage.Get(envType).GetObjectTypes();
@@ -29,7 +29,7 @@ namespace Catzilla.LevelAreaModule.Model {
                 return ObjectTypeInfoStorage.Get(lhs).SpawnPriority.CompareTo(
                     ObjectTypeInfoStorage.Get(rhs).SpawnPriority);
             });
-            LevelAreaView area = level.NewArea(nextAreaIndex);
+            LevelAreaView area = outputLevel.NewArea(nextAreaIndex);
             EnvTypeInfo envTypeInfo = EnvTypeInfoStorage.Get(envType);
             area.NewEnv(envTypeInfo);
 
@@ -39,7 +39,7 @@ namespace Catzilla.LevelAreaModule.Model {
                     envType,
                     spawnPlayer,
                     nextAreaIndex,
-                    level);
+                    outputLevel);
             }
 
             ++nextAreaIndex;
@@ -50,7 +50,7 @@ namespace Catzilla.LevelAreaModule.Model {
             EnvType envType,
             bool spawnPlayer,
             int areaIndex,
-            LevelView level) {
+            LevelView outputLevel) {
             List<LevelAreaRect> spawnLocations =
                 EnvTypeInfoStorage.Get(envType).GetSpawnLocations(objectType);
             int objectsCountToSpawn;
@@ -62,7 +62,7 @@ namespace Catzilla.LevelAreaModule.Model {
                 spawnPlayer = false;
             } else {
                 objectsCountToSpawn =
-                    GetObjectsCountToSpawn(objectTypeInfo, level.Index);
+                    GetObjectsCountToSpawn(objectTypeInfo, outputLevel.Index);
             }
 
             LevelAreaPoint spawnPoint;
@@ -79,7 +79,7 @@ namespace Catzilla.LevelAreaModule.Model {
                     break;
                 }
 
-                level.NewObject(objectTypeInfo, spawnPoint, areaIndex);
+                outputLevel.NewObject(objectTypeInfo, spawnPoint, areaIndex);
                 ReserveSpawnPoint(spawnPoint);
             }
         }

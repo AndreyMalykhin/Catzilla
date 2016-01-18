@@ -8,6 +8,7 @@ using Catzilla.CommonModule.View;
 using Catzilla.MainMenuModule.View;
 using Catzilla.GameOverMenuModule.View;
 using Catzilla.LevelObjectModule.View;
+using Catzilla.LevelModule.View;
 using Catzilla.AppModule.Controller;
 
 namespace Catzilla.AppModule.Config {
@@ -49,6 +50,12 @@ namespace Catzilla.AppModule.Config {
                 gameController.OnRestartBtnClick);
             globalEventBus.AddListener(PlayerView.Event.Death,
                 gameController.OnPlayerDeath);
+            globalEventBus.AddListener(PlayerView.Event.ScoreChange,
+                gameController.OnPlayerScoreChange);
+            globalEventBus.AddListener(LevelCompleteScreenView.Event.Hide,
+                gameController.OnLevelCompleteScreenHide);
+            globalEventBus.AddListener(LevelView.Event.Ready,
+                gameController.OnLevelReady);
         }
     }
 }

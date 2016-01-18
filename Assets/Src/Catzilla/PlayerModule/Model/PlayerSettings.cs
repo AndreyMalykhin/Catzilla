@@ -3,10 +3,7 @@ using System.Collections;
 
 namespace Catzilla.PlayerModule.Model {
     public class PlayerSettings {
-        public int Level {get; private set;}
-
-        public PlayerSettings(int level) {
-            Level = level;
-        }
+        public int Level {get; set;}
+        public int MaxScore {get; set;}
     }
 }

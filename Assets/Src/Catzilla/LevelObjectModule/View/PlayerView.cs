@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SmartLocalization;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Util;
@@ -7,7 +8,7 @@ using Catzilla.PlayerModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class PlayerView: LevelObjectView {
-        public enum Event {Ready, Damaged, Death, ScoreChange}
+        public enum Event {Ready, HealthChange, Death, ScoreChange}
 
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
@@ -22,14 +23,41 @@ namespace Catzilla.LevelObjectModule.View {
         public int EnvLayer {get; set;}
 
         public Collider Collider {get {return collider;}}
+        public bool IsHealthFreezed {get; set;}
+        public bool IsScoreFreezed {get; set;}
 
         public int Score {
             get {
                 return score.Value;
             }
             set {
+                if (IsScoreFreezed) {
+                    return;
+                }
+
                 score.Value = value;
                 EventBus.Dispatch(Event.ScoreChange, this);
+            }
+        }
+
+        public int Health {
+            get {
+                return health;
+            }
+            set {
+                if (IsHealthFreezed) {
+                    return;
+                }
+
+                health = value;
+                health = Mathf.Clamp(health, 0, maxHealth);
+                EventBus.Dispatch(Event.HealthChange);
+
+                if (health > 0) {
+                    return;
+                }
+
+                Die();
             }
         }
 
@@ -43,7 +71,7 @@ namespace Catzilla.LevelObjectModule.View {
         private float cameraRayLength = 100f;
 
         [SerializeField]
-        private int health = 100;
+        private int maxHealth = 100;
 
         [SerializeField]
         private ScoreView score;
@@ -55,8 +83,9 @@ namespace Catzilla.LevelObjectModule.View {
         private Animator animator;
 
         [SerializeField]
-        private Collider collider;
+        new private Collider collider;
 
+        private int health;
         private bool isDead = false;
         private float minX;
         private float maxX;
@@ -71,18 +100,8 @@ namespace Catzilla.LevelObjectModule.View {
             float halfWidth = collider.bounds.extents.x;
             minX = LevelMinX + halfWidth;
             maxX = LevelMaxX - halfWidth;
+            health = maxHealth;
             EventBus.Dispatch(Event.Ready, this);
-        }
-
-        public void TakeDamage(int damage) {
-            health = Mathf.Max(0, health - damage);
-            EventBus.Dispatch(Event.Damaged);
-
-            if (health > 0) {
-                return;
-            }
-
-            Die();
         }
 
         private void Die() {

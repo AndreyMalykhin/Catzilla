@@ -311,9 +311,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frontSpeed: 5
-  sideSpeed: 5
+  sideSpeed: 10
   cameraRayLength: 100
-  health: 100
+  maxHealth: 100
   score: {fileID: 11459512}
   camera: {fileID: 2046270}
   animator: {fileID: 9533428}
@@ -491,6 +491,14 @@ Prefab:
       propertyPath: collider
       value: 
       objectReference: {fileID: 6507940}
+    - target: {fileID: 0}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sideSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 103594}

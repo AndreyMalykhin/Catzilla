@@ -31,14 +31,15 @@ namespace Catzilla.LevelModule.Controller {
         private LevelView level;
 
         public void OnViewReady(IEvent evt) {
-            PlayerSettings playerSettings = PlayerSettingsStorage.GetCurrent();
-            LevelStartScreen.Msg.text = string.Format(Translator.GetTextValue(
-                "LevelStartScreen.Level"), playerSettings.Level);
-            LevelStartScreen.Show();
-            level = (LevelView) evt.data;
-            level.Index = playerSettings.Level;
-            level.gameObject.SetActive(false);
-            LevelGenerator.NewLevel(level);
+            PlayerSettingsStorage.GetCurrent((playerSettings) => {
+                var msg = string.Format(Translator.GetTextValue(
+                    "LevelStartScreen.Level"), playerSettings.Level + 1);
+                LevelStartScreen.Msg.text = msg;
+                LevelStartScreen.Show();
+                level = (LevelView) evt.data;
+                level.gameObject.SetActive(false);
+                LevelGenerator.NewLevel(playerSettings.Level, level);
+            });
         }
 
         public void OnStartScreenHide() {
