@@ -29,6 +29,14 @@ namespace Catzilla.LevelModule.Config {
                 .To<LevelController>()
                 .ToSingleton()
                 .CrossContext();
+            injectionBinder.Bind<LevelCompleteScreenController>()
+                .To<LevelCompleteScreenController>()
+                .ToSingleton()
+                .CrossContext();
+            injectionBinder.Bind<LevelStartScreenController>()
+                .To<LevelStartScreenController>()
+                .ToSingleton()
+                .CrossContext();
             injectionBinder.Bind<LevelGenerator>()
                 .To<LevelGenerator>()
                 .ToSingleton()
@@ -65,14 +73,23 @@ namespace Catzilla.LevelModule.Config {
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
             var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
                 ContextKeys.CROSS_CONTEXT_DISPATCHER);
+
             var levelController =
                 injectionBinder.GetInstance<LevelController>();
             eventBus.AddListener(
                 LevelView.Event.Ready, levelController.OnViewReady);
-            eventBus.AddListener(LevelAreaView.Event.TriggerEnter,
-                levelController.OnAreaTriggerEnter);
+
+            var levelCompleteScreenController =
+                injectionBinder.GetInstance<LevelCompleteScreenController>();
+            eventBus.AddListener(LevelCompleteScreenView.Event.Hide,
+                levelCompleteScreenController.OnHide);
+
+            var levelStartScreenController =
+                injectionBinder.GetInstance<LevelStartScreenController>();
             eventBus.AddListener(LevelStartScreenView.Event.Hide,
-                levelController.OnStartScreenHide);
+                levelStartScreenController.OnHide);
+            eventBus.AddListener(LevelView.Event.Ready,
+                levelStartScreenController.OnLevelReady);
         }
     }
 }

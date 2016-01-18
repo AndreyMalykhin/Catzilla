@@ -14,7 +14,7 @@ namespace Catzilla.LevelObjectModule.Model {
             {LevelObjectType.Civilian, new ObjectTypeInfo(1, 1, 4, 1f, 1, 1f, Resources.Load<LevelObjectView>("Civilian"))},
             {LevelObjectType.Cop, new ObjectTypeInfo(1, 1, 4, 1f, 1, 1f, Resources.Load<LevelObjectView>("Cop"))},
             {LevelObjectType.Mine, new ObjectTypeInfo(1, 1, 5, 1f, 1, 1f, Resources.Load<LevelObjectView>("Mine"))},
-            {LevelObjectType.Food, new ObjectTypeInfo(1, 1, 5, 0.125f, 0, 0f, Resources.Load<LevelObjectView>("Food"))}
+            // {LevelObjectType.Food, new ObjectTypeInfo(1, 1, 5, 0.125f, 0, 0f, Resources.Load<LevelObjectView>("Food"))}
         };
 
         public ObjectTypeInfo Get(LevelObjectType type) {

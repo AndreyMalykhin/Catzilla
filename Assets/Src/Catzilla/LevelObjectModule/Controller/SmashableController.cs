@@ -13,7 +13,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             var eventData = (EventData) evt.data;
             var collider = (Collider) eventData.Data;
 
-            if (collider.CompareTag(PlayerTag)) {
+            if (collider != null && collider.CompareTag(PlayerTag)) {
                 ((SmashableView) eventData.EventOwner).Smash(
                     collider.attachedRigidbody.position);
             }

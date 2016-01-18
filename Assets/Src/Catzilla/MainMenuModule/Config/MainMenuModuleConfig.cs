@@ -29,6 +29,15 @@ namespace Catzilla.MainMenuModule.Config {
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {}
+        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
+            var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
+                ContextKeys.CROSS_CONTEXT_DISPATCHER);
+            var mainMenuController =
+                injectionBinder.GetInstance<MainMenuController>();
+            eventBus.AddListener(MainMenuView.Event.ExitBtnClick,
+                mainMenuController.OnExitBtnClick);
+            eventBus.AddListener(MainMenuView.Event.StartBtnClick,
+                mainMenuController.OnStartBtnClick);
+        }
     }
 }

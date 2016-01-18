@@ -29,6 +29,15 @@ namespace Catzilla.GameOverMenuModule.Config {
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {}
+        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
+            var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
+                ContextKeys.CROSS_CONTEXT_DISPATCHER);
+            var gameOverMenuController =
+                injectionBinder.GetInstance<GameOverMenuController>();
+            eventBus.AddListener(GameOverMenuView.Event.ExitBtnClick,
+                gameOverMenuController.OnExitBtnClick);
+            eventBus.AddListener(GameOverMenuView.Event.RestartBtnClick,
+                gameOverMenuController.OnRestartBtnClick);
+        }
     }
 }

@@ -11,6 +11,6 @@ namespace Catzilla.LevelObjectModule.Model {
         Bench,
         Tree,
         Mine,
-        Food
+        // Food
     }
 }

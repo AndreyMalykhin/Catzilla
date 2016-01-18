@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using SmartLocalization;
+using Catzilla.AppModule.Model;
 using Catzilla.MainMenuModule.View;
 
 namespace Catzilla.MainMenuModule.Controller {
@@ -12,10 +13,25 @@ namespace Catzilla.MainMenuModule.Controller {
         [Inject]
         public MainMenuView MainMenu {get; set;}
 
+        [Inject]
+        public MainScreenView MainScreen {get; set;}
+
+        [Inject]
+        public Game Game {get; set;}
+
         [PostConstruct]
         public void OnReady() {
             MainMenu.StartText.text = Translator.GetTextValue("MainMenu.Start");
             MainMenu.ExitText.text = Translator.GetTextValue("MainMenu.Exit");
+        }
+
+        public void OnExitBtnClick() {
+            Game.Exit();
+        }
+
+        public void OnStartBtnClick() {
+            MainScreen.Hide();
+            Game.LoadLevel();
         }
     }
 }

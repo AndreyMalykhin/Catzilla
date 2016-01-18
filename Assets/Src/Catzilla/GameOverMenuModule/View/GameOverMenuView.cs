@@ -24,7 +24,7 @@ namespace Catzilla.GameOverMenuModule.View {
 
         [PostConstruct]
         public void OnReady() {
-            Debug.Log("GameOverMenuView.OnReady()");
+            // Debug.Log("GameOverMenuView.OnReady()");
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
             exitBtn.onClick.AddListener(() => {

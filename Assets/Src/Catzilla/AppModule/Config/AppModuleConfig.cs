@@ -10,6 +10,7 @@ using Catzilla.GameOverMenuModule.View;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.View;
 using Catzilla.AppModule.Controller;
+using Catzilla.AppModule.Model;
 
 namespace Catzilla.AppModule.Config {
     public class AppModuleConfig: IModuleConfig {
@@ -18,8 +19,8 @@ namespace Catzilla.AppModule.Config {
                 .To<AppController>()
                 .ToSingleton()
                 .CrossContext();
-            injectionBinder.Bind<GameController>()
-                .To<GameController>()
+            injectionBinder.Bind<Game>()
+                .To<Game>()
                 .ToSingleton()
                 .CrossContext();
             injectionBinder.Bind<Camera>()
@@ -32,30 +33,11 @@ namespace Catzilla.AppModule.Config {
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
             var contextEventBus = injectionBinder.GetInstance<IEventDispatcher>(
                 ContextKeys.CONTEXT_DISPATCHER);
-            var globalEventBus = injectionBinder.GetInstance<IEventDispatcher>(
-                ContextKeys.CROSS_CONTEXT_DISPATCHER);
-
+            // var globalEventBus = injectionBinder.GetInstance<IEventDispatcher>(
+            //     ContextKeys.CROSS_CONTEXT_DISPATCHER);
             var appController = injectionBinder.GetInstance<AppController>();
 			contextEventBus.AddListener(
                 ContextEvent.START, appController.OnStart);
-            globalEventBus.AddListener(MainMenuView.Event.ExitBtnClick,
-                appController.OnExit);
-            globalEventBus.AddListener(GameOverMenuView.Event.ExitBtnClick,
-                appController.OnExit);
-
-            var gameController = injectionBinder.GetInstance<GameController>();
-            globalEventBus.AddListener(MainMenuView.Event.StartBtnClick,
-                gameController.OnStartBtnClick);
-            globalEventBus.AddListener(GameOverMenuView.Event.RestartBtnClick,
-                gameController.OnRestartBtnClick);
-            globalEventBus.AddListener(PlayerView.Event.Death,
-                gameController.OnPlayerDeath);
-            globalEventBus.AddListener(PlayerView.Event.ScoreChange,
-                gameController.OnPlayerScoreChange);
-            globalEventBus.AddListener(LevelCompleteScreenView.Event.Hide,
-                gameController.OnLevelCompleteScreenHide);
-            globalEventBus.AddListener(LevelView.Event.Ready,
-                gameController.OnLevelReady);
         }
     }
 }
