@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Catzilla.AppModule.Model;
+using Catzilla.CommonModule.Model;
 
 namespace Catzilla.LevelModule.Controller {
     public class LevelCompleteScreenController {

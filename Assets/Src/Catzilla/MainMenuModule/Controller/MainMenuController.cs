@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using SmartLocalization;
-using Catzilla.AppModule.Model;
+using Catzilla.CommonModule.Model;
 using Catzilla.MainMenuModule.View;
 
 namespace Catzilla.MainMenuModule.Controller {

@@ -2,7 +2,7 @@
 using System.Collections;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Util;
-using Catzilla.AppModule.Model;
+using Catzilla.CommonModule.Model;
 using Catzilla.PlayerModule.Model;
 using Catzilla.GameOverMenuModule.View;
 using Catzilla.LevelModule.View;

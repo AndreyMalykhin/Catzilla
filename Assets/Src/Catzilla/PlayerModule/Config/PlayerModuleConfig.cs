@@ -5,7 +5,10 @@ using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using SmartLocalization;
 using Catzilla.CommonModule.Config;
+using Catzilla.LevelObjectModule.View;
 using Catzilla.PlayerModule.Model;
+using Catzilla.PlayerModule.View;
+using Catzilla.PlayerModule.Controller;
 
 namespace Catzilla.PlayerModule.Config {
     public class PlayerModuleConfig: IModuleConfig {
@@ -14,15 +17,21 @@ namespace Catzilla.PlayerModule.Config {
                 .To<PlayerSettingsStorage>()
                 .ToSingleton()
                 .CrossContext();
+            injectionBinder.Bind<PlayerScoreController>()
+                .To<PlayerScoreController>()
+                .ToSingleton()
+                .CrossContext();
         }
 
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
-            var translator = injectionBinder.GetInstance<LanguageManager>();
-            injectionBinder.Bind<string>()
-                .ToValue(translator.GetTextValue("Player.Score"))
-                .ToName("ScoreText")
-                .ToInject(false)
-                .CrossContext();
+            var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
+                ContextKeys.CROSS_CONTEXT_DISPATCHER);
+            var playerScoreController =
+                injectionBinder.GetInstance<PlayerScoreController>();
+            eventBus.AddListener(
+                PlayerView.Event.ScoreChange, playerScoreController.OnChange);
+            eventBus.AddListener(
+                PlayerScoreView.Event.Ready, playerScoreController.OnViewReady);
         }
     }
 }

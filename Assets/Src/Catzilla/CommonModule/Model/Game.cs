@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Catzilla.AppModule.Model {
+namespace Catzilla.CommonModule.Model {
     public class Game {
         [Inject("LevelScene")]
         public string LevelScene {get; set;}

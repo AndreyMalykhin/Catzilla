@@ -10,14 +10,17 @@ namespace Catzilla.LevelModule.Model {
         [Inject]
         public LevelAreaGenerator AreaGenerator {get; set;}
 
+        [Inject]
+        public LevelSettingsStorage LevelSettingsStorage {get; set;}
+
         private delegate EnvType State();
 
         private State state;
 
         public void NewLevel(int levelIndex, LevelView outputLevel) {
             Debug.Log("LevelGenerator.NewLevel()");
-            int completionScore = 1 + levelIndex * 2;
-            outputLevel.Init(levelIndex, completionScore);
+            LevelSettings levelSettings = LevelSettingsStorage.Get(levelIndex);
+            outputLevel.Init(levelIndex, levelSettings.CompletionScore);
             state = StateStart;
             bool spawnPlayer = true;
             NewArea(spawnPlayer, outputLevel);

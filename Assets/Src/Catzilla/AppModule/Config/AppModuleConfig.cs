@@ -10,17 +10,12 @@ using Catzilla.GameOverMenuModule.View;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.View;
 using Catzilla.AppModule.Controller;
-using Catzilla.AppModule.Model;
 
 namespace Catzilla.AppModule.Config {
     public class AppModuleConfig: IModuleConfig {
         void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
             injectionBinder.Bind<AppController>()
                 .To<AppController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<Game>()
-                .To<Game>()
                 .ToSingleton()
                 .CrossContext();
             injectionBinder.Bind<Camera>()

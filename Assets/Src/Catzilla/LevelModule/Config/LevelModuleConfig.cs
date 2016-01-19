@@ -25,6 +25,11 @@ namespace Catzilla.LevelModule.Config {
                 .ToValue(levelCompleteScreen)
                 .ToInject(false)
                 .CrossContext();
+            injectionBinder.Bind<LevelSettingsStorage>()
+                .ToValue(Resources.Load<LevelSettingsStorage>(
+                    "LevelSettingsStorage"))
+                .ToInject(false)
+                .CrossContext();
             injectionBinder.Bind<LevelController>()
                 .To<LevelController>()
                 .ToSingleton()

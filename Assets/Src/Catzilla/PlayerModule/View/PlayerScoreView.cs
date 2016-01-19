@@ -1,10 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using strange.extensions.context.api;
+using strange.extensions.dispatcher.eventdispatcher.api;
 
 namespace Catzilla.PlayerModule.View {
-    public class ScoreView: strange.extensions.mediation.impl.View {
-        [Inject("ScoreText")]
+    public class PlayerScoreView: strange.extensions.mediation.impl.View {
+        public enum Event {Ready}
+
+        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
+        public IEventDispatcher EventBus {get; set;}
+
         public string Text {get; set;}
 
         public int Value {
@@ -23,7 +29,9 @@ namespace Catzilla.PlayerModule.View {
         [PostConstruct]
         public void OnReady() {
             text = GetComponent<Text>();
+            Text = "Score: {0}";
             RenderValue();
+            EventBus.Dispatch(Event.Ready, this);
         }
 
         private void RenderValue() {

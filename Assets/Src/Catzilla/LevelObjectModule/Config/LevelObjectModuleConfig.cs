@@ -13,8 +13,9 @@ namespace Catzilla.LevelObjectModule.Config {
     public class LevelObjectModuleConfig: IModuleConfig {
         void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
             injectionBinder.Bind<ObjectTypeInfoStorage>()
-                .To<ObjectTypeInfoStorage>()
-                .ToSingleton()
+                .ToValue(Resources.Load<ObjectTypeInfoStorage>(
+                    "ObjectTypeInfoStorage"))
+                .ToInject(false)
                 .CrossContext();
             injectionBinder.Bind<PlayerController>()
                 .To<PlayerController>()

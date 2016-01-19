@@ -5,6 +5,7 @@ using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using SmartLocalization;
 using Catzilla.CommonModule.View;
+using Catzilla.CommonModule.Model;
 
 namespace Catzilla.CommonModule.Config {
     public class CommonModuleConfig: IModuleConfig {
@@ -12,6 +13,15 @@ namespace Catzilla.CommonModule.Config {
             InitTranslator(LanguageManager.Instance);
             injectionBinder.Bind<LanguageManager>()
                 .ToValue(LanguageManager.Instance)
+                .ToInject(false)
+                .CrossContext();
+            injectionBinder.Bind<Game>()
+                .To<Game>()
+                .ToSingleton()
+                .CrossContext();
+            var ui = GameObject.FindWithTag("UI").GetComponent<UIView>();
+            injectionBinder.Bind<UIView>()
+                .ToValue(ui)
                 .ToInject(false)
                 .CrossContext();
         }

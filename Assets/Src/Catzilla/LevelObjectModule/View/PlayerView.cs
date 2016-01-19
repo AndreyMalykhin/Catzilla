@@ -28,14 +28,14 @@ namespace Catzilla.LevelObjectModule.View {
 
         public int Score {
             get {
-                return score.Value;
+                return score;
             }
             set {
                 if (IsScoreFreezed) {
                     return;
                 }
 
-                score.Value = value;
+                score = value;
                 EventBus.Dispatch(Event.ScoreChange, this);
             }
         }
@@ -74,23 +74,25 @@ namespace Catzilla.LevelObjectModule.View {
         private int maxHealth = 100;
 
         [SerializeField]
-        private ScoreView score;
+        private Animator animator;
+
+        [SerializeField]
+        private PlayerHUDView HUDProto;
 
         [SerializeField]
         new private Camera camera;
 
         [SerializeField]
-        private Animator animator;
-
-        [SerializeField]
         new private Collider collider;
 
+        private int score;
         private int health;
-        private bool isDead = false;
+        private bool isDead;
         private float minX;
         private float maxX;
         private float targetX;
         private Rigidbody body;
+        private PlayerHUDView HUD;
 
         [PostConstruct]
         public void OnReady() {
@@ -101,7 +103,16 @@ namespace Catzilla.LevelObjectModule.View {
             minX = LevelMinX + halfWidth;
             maxX = LevelMaxX - halfWidth;
             health = maxHealth;
+            HUD = (PlayerHUDView) Instantiate(HUDProto);
             EventBus.Dispatch(Event.Ready, this);
+        }
+
+        protected override void OnDestroy() {
+            if (HUD != null) {
+                Destroy(HUD.gameObject);
+            }
+
+            base.OnDestroy();
         }
 
         private void Die() {
