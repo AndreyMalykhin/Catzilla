@@ -5,6 +5,7 @@ using Catzilla.LevelObjectModule.View;
 namespace Catzilla.LevelObjectModule.Model {
     [System.Serializable]
     public class ObjectTypeInfo {
+        public LevelObjectType Type;
         public int Width;
         public int Depth;
         public int SpawnPriority;

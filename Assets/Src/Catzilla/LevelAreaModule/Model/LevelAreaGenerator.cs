@@ -51,8 +51,8 @@ namespace Catzilla.LevelAreaModule.Model {
             bool spawnPlayer,
             int areaIndex,
             LevelView outputLevel) {
-            List<LevelAreaRect> spawnLocations =
-                EnvTypeInfoStorage.Get(envType).GetSpawnLocations(objectType);
+            List<LevelAreaRect> spawnLocations = EnvTypeInfoStorage.Get(envType)
+                .GetObjectSpawnLocations(objectType);
             int objectsCountToSpawn;
             ObjectTypeInfo objectTypeInfo =
                 ObjectTypeInfoStorage.Get(objectType);

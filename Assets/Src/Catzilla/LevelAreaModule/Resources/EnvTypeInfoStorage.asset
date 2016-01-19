@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e98d52c00cd466c8d18440909cf544, type: 3}
+  m_Name: EnvTypeInfoStorage
+  m_EditorClassIdentifier: 
+  items:
+  - Type: 0
+    ViewProto: {fileID: 11459446, guid: a40a955b9010a44e38e4bc3d288b2c90, type: 2}
+  - Type: 1
+    ViewProto: {fileID: 11459446, guid: 8a3bff49ffb6b45c4bfbf46c3d6634ad, type: 2}
+  - Type: 2
+    ViewProto: {fileID: 11459446, guid: c0b5238ce55a04e61a668309574c0f99, type: 2}
+  - Type: 3
+    ViewProto: {fileID: 11459446, guid: 6d34846bce7b247c5ab8f18e3e0573ae, type: 2}
+  - Type: 4
+    ViewProto: {fileID: 11459446, guid: 1682287fd11ef4f409c7b8a33eb14cd0, type: 2}
+  - Type: 5
+    ViewProto: {fileID: 11459446, guid: 5fa34472d6b8546bcb8c13db9afd0357, type: 2}
+  - Type: 6
+    ViewProto: {fileID: 11459446, guid: f6eb4a07f49db415b9b1027d811ed5df, type: 2}
+  - Type: 7
+    ViewProto: {fileID: 11459446, guid: 1d91e576ae6ec4d20b4dac53fbbaecc1, type: 2}
+  - Type: 8
+    ViewProto: {fileID: 11459446, guid: a75641ca281494fcc8ea477d8e240917, type: 2}

@@ -4,29 +4,28 @@ using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelObjectModule.Model;
 
 namespace Catzilla.LevelAreaModule.Model {
+    [System.Serializable]
     public class EnvTypeInfo {
-        public EnvView ViewProto {get; private set;}
+        public EnvType Type;
+        public EnvView ViewProto;
+        public IDictionary<LevelObjectType, List<LevelAreaRect>> SpawnLocations {get; set;}
 
-        private readonly IDictionary<LevelObjectType, List<LevelAreaRect>> spawnLocations;
-
-        public EnvTypeInfo(
-            EnvView viewProto,
-            IDictionary<LevelObjectType, List<LevelAreaRect>> spawnLocations) {
-            ViewProto = viewProto;
-            this.spawnLocations = spawnLocations;
-        }
+        private LevelObjectType[] objectTypes;
 
         public LevelObjectType[] GetObjectTypes() {
-            var objectTypesCollection = spawnLocations.Keys;
-            var objectTypesArray =
-                new LevelObjectType[objectTypesCollection.Count];
-            objectTypesCollection.CopyTo(objectTypesArray, 0);
-            return objectTypesArray;
+            if (objectTypes == null) {
+                var objectTypesCollection = SpawnLocations.Keys;
+                objectTypes =
+                    new LevelObjectType[objectTypesCollection.Count];
+                objectTypesCollection.CopyTo(objectTypes, 0);
+            }
+
+            return objectTypes;
         }
 
-        public List<LevelAreaRect> GetSpawnLocations(
+        public List<LevelAreaRect> GetObjectSpawnLocations(
             LevelObjectType objectType) {
-            return spawnLocations[objectType];
+            return SpawnLocations[objectType];
         }
     }
 }

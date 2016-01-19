@@ -4,18 +4,26 @@ using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelAreaModule.View;
 
 namespace Catzilla.LevelAreaModule.Model {
-    public class EnvTypeInfoStorage {
-        private readonly IDictionary<EnvType, EnvTypeInfo> envTypeInfos =
+    [CreateAssetMenuAttribute]
+    public class EnvTypeInfoStorage: ScriptableObject {
+        [SerializeField]
+        private EnvTypeInfo[] items;
+
+        private readonly IDictionary<EnvType, EnvTypeInfo> itemsMap =
             new Dictionary<EnvType, EnvTypeInfo>();
         private readonly List<LevelAreaRect> playerSpawnLocations = new List<LevelAreaRect>() {
             new LevelAreaRect(new LevelAreaPoint(6, 0), 3, 6)
         };
 
         public EnvTypeInfo Get(EnvType envType) {
-            return envTypeInfos[envType];
+            return itemsMap[envType];
         }
 
-        public EnvTypeInfoStorage() {
+        private void OnEnable() {
+            for (var i = 0; i < items.Length; ++i) {
+                itemsMap[items[i].Type] = items[i];
+            }
+
             InitTrackStartEnv();
             InitTrackMiddleEnv();
             InitTrackEndEnv();
@@ -47,8 +55,7 @@ namespace Catzilla.LevelAreaModule.Model {
             //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
             //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
             // };
-            var viewProto = Resources.Load<EnvView>("TrackStart");
-            envTypeInfos[EnvType.TrackStart] = new EnvTypeInfo(viewProto, spawnLocations);
+            itemsMap[EnvType.TrackStart].SpawnLocations = spawnLocations;
         }
 
         private void InitTrackMiddleEnv() {
@@ -73,8 +80,7 @@ namespace Catzilla.LevelAreaModule.Model {
             //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
             //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
             // };
-            var viewProto = Resources.Load<EnvView>("TrackMiddle");
-            envTypeInfos[EnvType.TrackMiddle] = new EnvTypeInfo(viewProto, spawnLocations);
+            itemsMap[EnvType.TrackMiddle].SpawnLocations = spawnLocations;
         }
 
         private void InitTrackEndEnv() {
@@ -99,8 +105,7 @@ namespace Catzilla.LevelAreaModule.Model {
             //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
             //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
             // };
-            var viewProto = Resources.Load<EnvView>("TrackEnd");
-            envTypeInfos[EnvType.TrackEnd] = new EnvTypeInfo(viewProto, spawnLocations);
+            itemsMap[EnvType.TrackEnd].SpawnLocations = spawnLocations;
         }
 
         private void InitHoodStartEnv() {
@@ -123,8 +128,7 @@ namespace Catzilla.LevelAreaModule.Model {
             //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
             //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
             // };
-            var viewProto = Resources.Load<EnvView>("HoodStart");
-            envTypeInfos[EnvType.HoodStart] = new EnvTypeInfo(viewProto, spawnLocations);
+            itemsMap[EnvType.HoodStart].SpawnLocations = spawnLocations;
         }
 
         private void InitHoodMiddleEnv() {
@@ -149,8 +153,7 @@ namespace Catzilla.LevelAreaModule.Model {
             //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
             //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
             // };
-            var viewProto = Resources.Load<EnvView>("HoodMiddle");
-            envTypeInfos[EnvType.HoodMiddle] = new EnvTypeInfo(viewProto, spawnLocations);
+            itemsMap[EnvType.HoodMiddle].SpawnLocations = spawnLocations;
         }
 
         private void InitHoodEndEnv() {
@@ -175,8 +178,7 @@ namespace Catzilla.LevelAreaModule.Model {
             //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
             //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
             // };
-            var viewProto = Resources.Load<EnvView>("HoodEnd");
-            envTypeInfos[EnvType.HoodEnd] = new EnvTypeInfo(viewProto, spawnLocations);
+            itemsMap[EnvType.HoodEnd].SpawnLocations = spawnLocations;
         }
 
         private void InitParkStartEnv() {
@@ -199,8 +201,7 @@ namespace Catzilla.LevelAreaModule.Model {
             //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
             //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
             // };
-            var viewProto = Resources.Load<EnvView>("ParkStart");
-            envTypeInfos[EnvType.ParkStart] = new EnvTypeInfo(viewProto, spawnLocations);
+            itemsMap[EnvType.ParkStart].SpawnLocations = spawnLocations;
         }
 
         private void InitParkMiddleEnv() {
@@ -225,8 +226,7 @@ namespace Catzilla.LevelAreaModule.Model {
             //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
             //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
             // };
-            var viewProto = Resources.Load<EnvView>("ParkMiddle");
-            envTypeInfos[EnvType.ParkMiddle] = new EnvTypeInfo(viewProto, spawnLocations);
+            itemsMap[EnvType.ParkMiddle].SpawnLocations = spawnLocations;
         }
 
         private void InitParkEndEnv() {
@@ -251,8 +251,7 @@ namespace Catzilla.LevelAreaModule.Model {
             //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
             //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
             // };
-            var viewProto = Resources.Load<EnvView>("ParkEnd");
-            envTypeInfos[EnvType.ParkEnd] = new EnvTypeInfo(viewProto, spawnLocations);
+            itemsMap[EnvType.ParkEnd].SpawnLocations = spawnLocations;
         }
     }
 }

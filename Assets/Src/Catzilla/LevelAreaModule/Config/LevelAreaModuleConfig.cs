@@ -21,8 +21,9 @@ namespace Catzilla.LevelAreaModule.Config {
                 .ToSingleton()
                 .CrossContext();
             injectionBinder.Bind<EnvTypeInfoStorage>()
-                .To<EnvTypeInfoStorage>()
-                .ToSingleton()
+                .ToValue(Resources.Load<EnvTypeInfoStorage>(
+                    "EnvTypeInfoStorage"))
+                .ToInject(false)
                 .CrossContext();
             injectionBinder.Bind<int>()
                 .ToValue(1 << 10)

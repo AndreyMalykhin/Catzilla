@@ -13,74 +13,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - Type: 0
-    TypeInfo:
-      Width: 3
-      Depth: 6
-      SpawnPriority: 0
-      SpawnChance: 0
-      SpawnBaseCount: 0
-      SpawnLevelFactor: 0
-      ViewProto: {fileID: 11467780, guid: 31e76151d9d1149f782dccfc751db133, type: 2}
+    Width: 3
+    Depth: 6
+    SpawnPriority: 0
+    SpawnChance: 0
+    SpawnBaseCount: 0
+    SpawnLevelFactor: 0
+    ViewProto: {fileID: 11467780, guid: 31e76151d9d1149f782dccfc751db133, type: 2}
   - Type: 4
-    TypeInfo:
-      Width: 6
-      Depth: 8
-      SpawnPriority: 1
-      SpawnChance: 1
-      SpawnBaseCount: 0
-      SpawnLevelFactor: 0
-      ViewProto: {fileID: 11466110, guid: d7ff927bcea514b0aa2d4d2e91fc4834, type: 2}
+    Width: 6
+    Depth: 8
+    SpawnPriority: 1
+    SpawnChance: 1
+    SpawnBaseCount: 0
+    SpawnLevelFactor: 0
+    ViewProto: {fileID: 11466110, guid: d7ff927bcea514b0aa2d4d2e91fc4834, type: 2}
   - Type: 3
-    TypeInfo:
-      Width: 2
-      Depth: 4
-      SpawnPriority: 2
-      SpawnChance: 1
-      SpawnBaseCount: 1
-      SpawnLevelFactor: 1
-      ViewProto: {fileID: 11414792, guid: 1561155c1eb1b4dd8b20c99800c081cd, type: 2}
+    Width: 2
+    Depth: 4
+    SpawnPriority: 2
+    SpawnChance: 1
+    SpawnBaseCount: 1
+    SpawnLevelFactor: 1
+    ViewProto: {fileID: 11414792, guid: 1561155c1eb1b4dd8b20c99800c081cd, type: 2}
   - Type: 5
-    TypeInfo:
-      Width: 1
-      Depth: 2
-      SpawnPriority: 3
-      SpawnChance: 1
-      SpawnBaseCount: 0
-      SpawnLevelFactor: 0
-      ViewProto: {fileID: 11415620, guid: 2c5eb218dc3e146e0bdd4c67bcc3a0fc, type: 2}
+    Width: 1
+    Depth: 2
+    SpawnPriority: 3
+    SpawnChance: 1
+    SpawnBaseCount: 0
+    SpawnLevelFactor: 0
+    ViewProto: {fileID: 11415620, guid: 2c5eb218dc3e146e0bdd4c67bcc3a0fc, type: 2}
   - Type: 6
-    TypeInfo:
-      Width: 1
-      Depth: 1
-      SpawnPriority: 4
-      SpawnChance: 1
-      SpawnBaseCount: 0
-      SpawnLevelFactor: 0
-      ViewProto: {fileID: 11418764, guid: ebafc7a142f1b49239bb80c5acd77cff, type: 2}
+    Width: 1
+    Depth: 1
+    SpawnPriority: 4
+    SpawnChance: 1
+    SpawnBaseCount: 0
+    SpawnLevelFactor: 0
+    ViewProto: {fileID: 11418764, guid: ebafc7a142f1b49239bb80c5acd77cff, type: 2}
   - Type: 1
-    TypeInfo:
-      Width: 1
-      Depth: 1
-      SpawnPriority: 4
-      SpawnChance: 1
-      SpawnBaseCount: 1
-      SpawnLevelFactor: 1
-      ViewProto: {fileID: 11407112, guid: 3b9d536b6da514d61909a345aa7d0a7d, type: 2}
+    Width: 1
+    Depth: 1
+    SpawnPriority: 4
+    SpawnChance: 1
+    SpawnBaseCount: 1
+    SpawnLevelFactor: 1
+    ViewProto: {fileID: 11407112, guid: 3b9d536b6da514d61909a345aa7d0a7d, type: 2}
   - Type: 2
-    TypeInfo:
-      Width: 1
-      Depth: 1
-      SpawnPriority: 4
-      SpawnChance: 1
-      SpawnBaseCount: 1
-      SpawnLevelFactor: 1
-      ViewProto: {fileID: 11429200, guid: 0324569a0fc1b453298859cca044e670, type: 2}
+    Width: 1
+    Depth: 1
+    SpawnPriority: 4
+    SpawnChance: 1
+    SpawnBaseCount: 1
+    SpawnLevelFactor: 1
+    ViewProto: {fileID: 11429200, guid: 0324569a0fc1b453298859cca044e670, type: 2}
   - Type: 7
-    TypeInfo:
-      Width: 1
-      Depth: 1
-      SpawnPriority: 5
-      SpawnChance: 1
-      SpawnBaseCount: 1
-      SpawnLevelFactor: 1
-      ViewProto: {fileID: 11483314, guid: 75af68cf68f6840439e1bb9c4cd4418d, type: 2}
+    Width: 1
+    Depth: 1
+    SpawnPriority: 5
+    SpawnChance: 1
+    SpawnBaseCount: 1
+    SpawnLevelFactor: 1
+    ViewProto: {fileID: 11483314, guid: 75af68cf68f6840439e1bb9c4cd4418d, type: 2}

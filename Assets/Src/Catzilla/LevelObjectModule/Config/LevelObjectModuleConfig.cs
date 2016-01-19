@@ -72,6 +72,11 @@ namespace Catzilla.LevelObjectModule.Config {
             eventBus.AddListener(ScoreableView.Event.TriggerEnter,
                 scoreableContoller.OnTriggerEnter);
 
+            var projectileContoller =
+                injectionBinder.GetInstance<ProjectileController>();
+            eventBus.AddListener(ProjectileView.Event.TriggerEnter,
+                projectileContoller.OnTriggerEnter);
+
             var shootingContoller =
                 injectionBinder.GetInstance<ShootingController>();
             eventBus.AddListener(PlayerView.Event.Ready,
