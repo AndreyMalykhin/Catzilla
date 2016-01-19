@@ -20,6 +20,7 @@ namespace Catzilla.LevelAreaModule.Model {
         }
 
         private void OnEnable() {
+            Debug.Log("EnvTypeInfoStorage.OnEnable()");
             for (var i = 0; i < items.Length; ++i) {
                 itemsMap[items[i].Type] = items[i];
             }

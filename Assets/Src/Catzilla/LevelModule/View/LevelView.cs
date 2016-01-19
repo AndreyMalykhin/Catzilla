@@ -53,6 +53,7 @@ namespace Catzilla.LevelModule.View {
 
         public LevelObjectView NewObject(
             ObjectTypeInfo typeInfo, LevelAreaPoint spawnPoint, int areaIndex) {
+            // Debug.LogFormat("LevelView.NewObject(); type={0}", typeInfo.Type);
             var position = new Vector3(
                 spawnPoint.X + typeInfo.Width / 2f - areaHalfWidth,
                 0f,

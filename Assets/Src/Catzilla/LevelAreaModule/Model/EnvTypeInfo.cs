@@ -8,8 +8,11 @@ namespace Catzilla.LevelAreaModule.Model {
     public class EnvTypeInfo {
         public EnvType Type;
         public EnvView ViewProto;
+        public int SpawnWeight = 1;
+
         public IDictionary<LevelObjectType, List<LevelAreaRect>> SpawnLocations {get; set;}
 
+        [System.NonSerialized]
         private LevelObjectType[] objectTypes;
 
         public LevelObjectType[] GetObjectTypes() {

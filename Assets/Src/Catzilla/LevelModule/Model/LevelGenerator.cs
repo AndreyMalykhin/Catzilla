@@ -13,74 +13,91 @@ namespace Catzilla.LevelModule.Model {
         [Inject]
         public LevelSettingsStorage LevelSettingsStorage {get; set;}
 
-        private delegate EnvType State();
+        [Inject]
+        public EnvTypeInfoStorage EnvTypeInfoStorage {get; set;}
 
-        private State state;
+        private enum State {Start, TrackMiddle, HoodMiddle, ParkMiddle}
+
+        private struct StateTransition {
+            public EnvType EnvType;
+            public State NextState;
+
+            public StateTransition(EnvType envType, State nextState) {
+                EnvType = envType;
+                NextState = nextState;
+            }
+        }
+
+        private State nextState;
+        private readonly IDictionary<State, StateTransition[]> states =
+            new Dictionary<State, StateTransition[]>();
+
+        [PostConstruct]
+        public void OnReady() {
+            states[State.Start] = new StateTransition[] {
+                new StateTransition(EnvType.HoodStart, State.HoodMiddle),
+                new StateTransition(EnvType.ParkStart, State.ParkMiddle),
+                new StateTransition(EnvType.TrackStart, State.TrackMiddle)
+            };
+            states[State.TrackMiddle] = new StateTransition[] {
+                new StateTransition(EnvType.TrackMiddle, State.TrackMiddle),
+                new StateTransition(EnvType.TrackEnd, State.Start)
+            };
+            states[State.HoodMiddle] = new StateTransition[] {
+                new StateTransition(EnvType.HoodMiddle, State.HoodMiddle),
+                new StateTransition(EnvType.HoodEnd, State.Start)
+            };
+            states[State.ParkMiddle] = new StateTransition[] {
+                new StateTransition(EnvType.ParkMiddle, State.ParkMiddle),
+                new StateTransition(EnvType.ParkEnd, State.Start)
+            };
+        }
 
         public void NewLevel(int levelIndex, LevelView outputLevel) {
             Debug.Log("LevelGenerator.NewLevel()");
             LevelSettings levelSettings = LevelSettingsStorage.Get(levelIndex);
             outputLevel.Init(levelIndex, levelSettings.CompletionScore);
-            state = StateStart;
+            nextState = State.Start;
             bool spawnPlayer = true;
             NewArea(spawnPlayer, outputLevel);
         }
 
         public void NewArea(LevelView outputLevel) {
-            Debug.Log("LevelGenerator.NewArea()");
+            // Debug.Log("LevelGenerator.NewArea()");
             bool spawnPlayer = false;
             NewArea(spawnPlayer, outputLevel);
         }
 
         private void NewArea(bool spawnPlayer, LevelView outputLevel) {
-            AreaGenerator.NewArea(state(), spawnPlayer, outputLevel);
+            AreaGenerator.NewArea(NextState(), spawnPlayer, outputLevel);
         }
 
-        private EnvType StateStart() {
-            switch (Random.Range(0, 3)) {
-                case 0:
-                    state = StateHoodMiddle;
-                    return EnvType.HoodStart;
-                case 1:
-                    state = StateParkMiddle;
-                    return EnvType.ParkStart;
-                default:
-                    state = StateTrackMiddle;
-                    return EnvType.TrackStart;
-            }
-        }
+        private EnvType NextState() {
+            StateTransition[] stateTransitions = states[nextState];
+            int stateTransitionsCount = stateTransitions.Length;
+            int weightsSum = 0;
 
-        private EnvType StateTrackMiddle() {
-            switch (Random.Range(0, 4)) {
-                case 0:
-                    state = StateStart;
-                    return EnvType.TrackEnd;
-                default:
-                    state = StateTrackMiddle;
-                    return EnvType.TrackMiddle;
+            for (int i = 0; i < stateTransitionsCount; ++i) {
+                weightsSum += EnvTypeInfoStorage.Get(
+                    stateTransitions[i].EnvType).SpawnWeight;
             }
-        }
 
-        private EnvType StateHoodMiddle() {
-            switch (Random.Range(0, 3)) {
-                case 0:
-                    state = StateStart;
-                    return EnvType.HoodEnd;
-                default:
-                    state = StateHoodMiddle;
-                    return EnvType.HoodMiddle;
-            }
-        }
+            int randomWeight = Random.Range(1, weightsSum + 1);
+            int weightIntervalEnd = 0;
 
-        private EnvType StateParkMiddle() {
-            switch (Random.Range(0, 2)) {
-                case 0:
-                    state = StateStart;
-                    return EnvType.ParkEnd;
-                default:
-                    state = StateParkMiddle;
-                    return EnvType.ParkMiddle;
+            for (int i = 0; i < stateTransitionsCount; ++i) {
+                var stateTransition = stateTransitions[i];
+                weightIntervalEnd += EnvTypeInfoStorage.Get(
+                    stateTransition.EnvType).SpawnWeight;
+
+                if (weightIntervalEnd >= randomWeight) {
+                    nextState = stateTransition.NextState;
+                    return stateTransition.EnvType;
+                }
             }
+
+            Debug.Assert(false);
+            return 0;
         }
     }
 }

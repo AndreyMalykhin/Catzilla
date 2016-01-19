@@ -22,6 +22,8 @@ namespace Catzilla.LevelAreaModule.Model {
 
         public void NewArea(
             EnvType envType, bool spawnPlayer, LevelView outputLevel) {
+            Debug.LogFormat(
+                "LevelAreaGenerator.NewArea(); envType={0}", envType);
             reservedSpawnPoints.Clear();
             LevelObjectType[] objectTypesToSpawn =
                 EnvTypeInfoStorage.Get(envType).GetObjectTypes();
