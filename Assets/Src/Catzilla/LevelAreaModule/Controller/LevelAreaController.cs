@@ -14,7 +14,7 @@ namespace Catzilla.LevelAreaModule.Controller {
 
         private LevelView level;
 
-        public void OnLevelReady(IEvent evt) {
+        public void OnLevelConstruct(IEvent evt) {
             level = (LevelView) evt.data;
         }
 

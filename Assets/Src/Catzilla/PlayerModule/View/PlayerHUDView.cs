@@ -8,7 +8,7 @@ namespace Catzilla.PlayerModule.View {
         public UIView UI {get; set;}
 
         [PostConstruct]
-        public void OnReady() {
+        public void OnConstruct() {
             bool isWorldPositionStays = false;
             var transform = (RectTransform) this.transform;
             transform.SetParent(UI.transform, isWorldPositionStays);

@@ -6,6 +6,7 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 using SmartLocalization;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Model;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.Config {
     public class CommonModuleConfig: IModuleConfig {
@@ -17,6 +18,10 @@ namespace Catzilla.CommonModule.Config {
                 .CrossContext();
             injectionBinder.Bind<Game>()
                 .To<Game>()
+                .ToSingleton()
+                .CrossContext();
+            injectionBinder.Bind<Ad>()
+                .To<Ad>()
                 .ToSingleton()
                 .CrossContext();
             var ui = GameObject.FindWithTag("UI").GetComponent<UIView>();

@@ -11,9 +11,6 @@ namespace Catzilla.LevelModule.Model {
         public LevelAreaGenerator AreaGenerator {get; set;}
 
         [Inject]
-        public LevelSettingsStorage LevelSettingsStorage {get; set;}
-
-        [Inject]
         public EnvTypeInfoStorage EnvTypeInfoStorage {get; set;}
 
         private enum State {Start, TrackMiddle, HoodMiddle, ParkMiddle}
@@ -33,7 +30,7 @@ namespace Catzilla.LevelModule.Model {
             new Dictionary<State, StateTransition[]>();
 
         [PostConstruct]
-        public void OnReady() {
+        public void OnConstruct() {
             states[State.Start] = new StateTransition[] {
                 new StateTransition(EnvType.HoodStart, State.HoodMiddle),
                 new StateTransition(EnvType.ParkStart, State.ParkMiddle),
@@ -55,8 +52,7 @@ namespace Catzilla.LevelModule.Model {
 
         public void NewLevel(int levelIndex, LevelView outputLevel) {
             Debug.Log("LevelGenerator.NewLevel()");
-            LevelSettings levelSettings = LevelSettingsStorage.Get(levelIndex);
-            outputLevel.Init(levelIndex, levelSettings.CompletionScore);
+            outputLevel.Init(levelIndex);
             nextState = State.Start;
             bool spawnPlayer = true;
             NewArea(spawnPlayer, outputLevel);

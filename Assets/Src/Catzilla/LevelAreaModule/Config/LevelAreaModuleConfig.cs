@@ -38,7 +38,7 @@ namespace Catzilla.LevelAreaModule.Config {
             var levelAreaController =
                 injectionBinder.GetInstance<LevelAreaController>();
             eventBus.AddListener(
-                LevelView.Event.Ready, levelAreaController.OnLevelReady);
+                LevelView.Event.Construct, levelAreaController.OnLevelConstruct);
             eventBus.AddListener(LevelAreaView.Event.TriggerEnter,
                 levelAreaController.OnTriggerEnter);
         }

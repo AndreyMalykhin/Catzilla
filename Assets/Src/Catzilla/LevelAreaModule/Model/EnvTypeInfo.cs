@@ -10,14 +10,25 @@ namespace Catzilla.LevelAreaModule.Model {
         public EnvView ViewProto;
         public int SpawnWeight = 1;
 
-        public IDictionary<LevelObjectType, List<LevelAreaRect>> SpawnLocations {get; set;}
+        public IDictionary<LevelObjectType, List<LevelAreaRect>> SpawnLocations {
+            get {
+                return spawnLocations;
+            }
+            set {
+                spawnLocations = value;
+                objectTypes = null;
+            }
+        }
 
         [System.NonSerialized]
         private LevelObjectType[] objectTypes;
 
+        [System.NonSerialized]
+        private IDictionary<LevelObjectType, List<LevelAreaRect>> spawnLocations;
+
         public LevelObjectType[] GetObjectTypes() {
             if (objectTypes == null) {
-                var objectTypesCollection = SpawnLocations.Keys;
+                var objectTypesCollection = spawnLocations.Keys;
                 objectTypes =
                     new LevelObjectType[objectTypesCollection.Count];
                 objectTypesCollection.CopyTo(objectTypes, 0);
@@ -28,7 +39,7 @@ namespace Catzilla.LevelAreaModule.Model {
 
         public List<LevelAreaRect> GetObjectSpawnLocations(
             LevelObjectType objectType) {
-            return SpawnLocations[objectType];
+            return spawnLocations[objectType];
         }
     }
 }

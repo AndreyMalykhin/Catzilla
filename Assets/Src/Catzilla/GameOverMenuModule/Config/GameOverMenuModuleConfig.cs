@@ -5,6 +5,7 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Config;
+using Catzilla.LevelObjectModule.View;
 using Catzilla.GameOverMenuModule.Controller;
 using Catzilla.GameOverMenuModule.View;
 
@@ -38,6 +39,10 @@ namespace Catzilla.GameOverMenuModule.Config {
                 gameOverMenuController.OnExitBtnClick);
             eventBus.AddListener(GameOverMenuView.Event.RestartBtnClick,
                 gameOverMenuController.OnRestartBtnClick);
+            eventBus.AddListener(GameOverMenuView.Event.ResurrectBtnClick,
+                gameOverMenuController.OnResurrectBtnClick);
+            eventBus.AddListener(PlayerView.Event.Construct,
+                gameOverMenuController.OnPlayerConstruct);
         }
     }
 }

@@ -51,6 +51,11 @@ namespace Catzilla.LevelObjectModule.Config {
                 .ToName("PlayerMeshTag")
                 .ToInject(false)
                 .CrossContext();
+            injectionBinder.Bind<string>()
+                .ToValue("Projectile")
+                .ToName("ProjectileTag")
+                .ToInject(false)
+                .CrossContext();
         }
 
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
@@ -79,10 +84,10 @@ namespace Catzilla.LevelObjectModule.Config {
 
             var shootingContoller =
                 injectionBinder.GetInstance<ShootingController>();
-            eventBus.AddListener(PlayerView.Event.Ready,
-                shootingContoller.OnPlayerReady);
-            eventBus.AddListener(ShootingView.Event.Ready,
-                shootingContoller.OnViewReady);
+            eventBus.AddListener(PlayerView.Event.Construct,
+                shootingContoller.OnPlayerConstruct);
+            eventBus.AddListener(ShootingView.Event.Construct,
+                shootingContoller.OnViewConstruct);
 
             var playerController =
                 injectionBinder.GetInstance<PlayerController>();
@@ -90,8 +95,10 @@ namespace Catzilla.LevelObjectModule.Config {
                 playerController.OnDeath);
             eventBus.AddListener(PlayerView.Event.ScoreChange,
                 playerController.OnScoreChange);
-            eventBus.AddListener(LevelView.Event.Ready,
-                playerController.OnLevelReady);
+            eventBus.AddListener(LevelView.Event.Construct,
+                playerController.OnLevelConstruct);
+            eventBus.AddListener(PlayerView.Event.Resurrect,
+                playerController.OnResurrect);
         }
     }
 }

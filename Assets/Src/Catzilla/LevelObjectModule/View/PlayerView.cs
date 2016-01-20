@@ -8,7 +8,13 @@ using Catzilla.PlayerModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class PlayerView: LevelObjectView {
-        public enum Event {Ready, HealthChange, Death, ScoreChange}
+        public enum Event {
+            Construct,
+            HealthChange,
+            Death,
+            ScoreChange,
+            Resurrect
+        }
 
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
@@ -95,8 +101,8 @@ namespace Catzilla.LevelObjectModule.View {
         private PlayerHUDView HUD;
 
         [PostConstruct]
-        public void OnReady() {
-            Debug.Log("PlayerView.OnReady()");
+        public void OnConstruct() {
+            Debug.Log("PlayerView.OnConstruct()");
             body = GetComponent<Rigidbody>();
             targetX = body.position.x;
             float halfWidth = collider.bounds.extents.x;
@@ -104,7 +110,15 @@ namespace Catzilla.LevelObjectModule.View {
             maxX = LevelMaxX - halfWidth;
             health = maxHealth;
             HUD = (PlayerHUDView) Instantiate(HUDProto);
-            EventBus.Dispatch(Event.Ready, this);
+            EventBus.Dispatch(Event.Construct, this);
+        }
+
+        public void Resurrect() {
+            isDead = false;
+            targetX = body.position.x;
+            Health = maxHealth;
+            animator.enabled = true;
+            EventBus.Dispatch(Event.Resurrect, this);
         }
 
         protected override void OnDestroy() {
@@ -126,6 +140,10 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void Update() {
+            if (isDead) {
+                return;
+            }
+
             if (Input.GetMouseButtonDown(0)) {
                 SetTargetX(Input.mousePosition);
             }

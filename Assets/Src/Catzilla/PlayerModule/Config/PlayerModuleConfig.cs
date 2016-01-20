@@ -6,6 +6,7 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 using SmartLocalization;
 using Catzilla.CommonModule.Config;
 using Catzilla.LevelObjectModule.View;
+using Catzilla.LevelModule.View;
 using Catzilla.PlayerModule.Model;
 using Catzilla.PlayerModule.View;
 using Catzilla.PlayerModule.Controller;
@@ -30,8 +31,10 @@ namespace Catzilla.PlayerModule.Config {
                 injectionBinder.GetInstance<PlayerScoreController>();
             eventBus.AddListener(
                 PlayerView.Event.ScoreChange, playerScoreController.OnChange);
-            eventBus.AddListener(
-                PlayerScoreView.Event.Ready, playerScoreController.OnViewReady);
+            eventBus.AddListener(PlayerScoreView.Event.Construct,
+                playerScoreController.OnViewConstruct);
+            eventBus.AddListener(LevelView.Event.Construct,
+                playerScoreController.OnLevelConstruct);
         }
     }
 }

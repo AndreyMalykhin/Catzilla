@@ -20,7 +20,7 @@ namespace Catzilla.MainMenuModule.Controller {
         public Game Game {get; set;}
 
         [PostConstruct]
-        public void OnReady() {
+        public void OnConstruct() {
             MainMenu.StartText.text = Translator.GetTextValue("MainMenu.Start");
             MainMenu.ExitText.text = Translator.GetTextValue("MainMenu.Exit");
         }

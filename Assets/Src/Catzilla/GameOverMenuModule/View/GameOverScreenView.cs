@@ -23,7 +23,7 @@ namespace Catzilla.GameOverMenuModule.View {
         private Image image;
 
         [PostConstruct]
-        public void OnReady() {
+        public void OnConstruct() {
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
             image = GetComponent<Image>();

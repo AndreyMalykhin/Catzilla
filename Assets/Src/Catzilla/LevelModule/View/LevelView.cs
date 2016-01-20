@@ -10,7 +10,7 @@ using Catzilla.LevelAreaModule.View;
 
 namespace Catzilla.LevelModule.View {
     public class LevelView: strange.extensions.mediation.impl.View {
-        public enum Event {Ready}
+        public enum Event {Construct}
 
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
@@ -22,7 +22,6 @@ namespace Catzilla.LevelModule.View {
         public float AreaDepth {get; set;}
 
         public int Index {get; private set;}
-        public int CompletionScore {get; private set;}
 
         [SerializeField]
         private LevelAreaView areaProto;
@@ -30,17 +29,16 @@ namespace Catzilla.LevelModule.View {
         private float areaHalfWidth;
         private float areaHalfDepth;
 
-        public void Init(int index, int completionScore) {
+        public void Init(int index) {
             Index = index;
-            CompletionScore = completionScore;
         }
 
         [PostConstruct]
-        public void OnReady() {
-            Debug.Log("LevelView.OnReady()");
+        public void OnConstruct() {
+            Debug.Log("LevelView.OnConstruct()");
             areaHalfWidth = AreaWidth / 2f;
             areaHalfDepth = AreaDepth / 2f;
-            EventBus.Dispatch(Event.Ready, this);
+            EventBus.Dispatch(Event.Construct, this);
         }
 
         public LevelAreaView NewArea(int index) {

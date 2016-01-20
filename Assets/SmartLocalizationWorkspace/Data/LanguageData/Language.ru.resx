@@ -132,6 +132,6 @@
 		<value>Играть</value>
 	</data>
 	<data name="Player.Score" xml:space="preserve">
-		<value>Очки: {0}</value>
+		<value>Очки: {0} / {1}</value>
 	</data>
 </root>

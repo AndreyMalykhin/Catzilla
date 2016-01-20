@@ -6,13 +6,14 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 
 namespace Catzilla.GameOverMenuModule.View {
     public class GameOverMenuView: strange.extensions.mediation.impl.View {
-        public enum Event {ExitBtnClick, RestartBtnClick}
+        public enum Event {ExitBtnClick, RestartBtnClick, ResurrectBtnClick}
 
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
 
         public Text RestartText;
         public Text ExitText;
+        public Text ResurrectText;
 
         [SerializeField]
         private Button exitBtn;
@@ -20,11 +21,14 @@ namespace Catzilla.GameOverMenuModule.View {
         [SerializeField]
         private Button restartBtn;
 
+        [SerializeField]
+        private Button resurrectBtn;
+
         private Canvas canvas;
 
         [PostConstruct]
-        public void OnReady() {
-            // Debug.Log("GameOverMenuView.OnReady()");
+        public void OnConstruct() {
+            // Debug.Log("GameOverMenuView.OnConstruct()");
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
             exitBtn.onClick.AddListener(() => {
@@ -32,6 +36,9 @@ namespace Catzilla.GameOverMenuModule.View {
             });
             restartBtn.onClick.AddListener(() => {
                 EventBus.Dispatch(Event.RestartBtnClick);
+            });
+            resurrectBtn.onClick.AddListener(() => {
+                EventBus.Dispatch(Event.ResurrectBtnClick);
             });
         }
 

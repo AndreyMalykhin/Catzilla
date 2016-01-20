@@ -5,7 +5,7 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 
 namespace Catzilla.LevelObjectModule.View {
     public class ShootingView: strange.extensions.mediation.impl.View {
-        public enum Event {Ready}
+        public enum Event {Construct}
 
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
@@ -24,9 +24,9 @@ namespace Catzilla.LevelObjectModule.View {
         private Rigidbody body;
 
         [PostConstruct]
-        public void OnReady() {
+        public void OnConstruct() {
             body = GetComponent<Rigidbody>();
-            EventBus.Dispatch(Event.Ready, this);
+            EventBus.Dispatch(Event.Construct, this);
         }
 
         protected override void Start() {

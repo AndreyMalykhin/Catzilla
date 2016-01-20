@@ -6,6 +6,7 @@ using Catzilla.CommonModule.Model;
 using Catzilla.PlayerModule.Model;
 using Catzilla.GameOverMenuModule.View;
 using Catzilla.LevelModule.View;
+using Catzilla.LevelModule.Model;
 using Catzilla.LevelObjectModule.View;
 
 namespace Catzilla.LevelObjectModule.Controller {
@@ -20,7 +21,13 @@ namespace Catzilla.LevelObjectModule.Controller {
         public LevelCompleteScreenView LevelCompleteScreen {get; set;}
 
         [Inject]
+        public LevelSettingsStorage LevelSettingsStorage {get; set;}
+
+        [Inject]
         public Game Game {get; set;}
+
+        [Inject("ProjectileTag")]
+        public string ProjectileTag {get; set;}
 
         private LevelView level;
 
@@ -32,16 +39,26 @@ namespace Catzilla.LevelObjectModule.Controller {
 
         public void OnScoreChange(IEvent evt) {
             var player = (PlayerView) evt.data;
+            LevelSettings levelSettings = LevelSettingsStorage.Get(level.Index);
 
-            if (player.Score < level.CompletionScore) {
+            if (player.Score < levelSettings.CompletionScore) {
                 return;
             }
 
             CompleteLevel(player);
         }
 
-        public void OnLevelReady(IEvent evt) {
+        public void OnLevelConstruct(IEvent evt) {
             level = (LevelView) evt.data;
+        }
+
+        public void OnResurrect() {
+            GameObject[] projectiles =
+                GameObject.FindGameObjectsWithTag(ProjectileTag);
+
+            for (int i = 0; i < projectiles.Length; ++i) {
+                GameObject.Destroy(projectiles[i]);
+            }
         }
 
         private void CompleteLevel(PlayerView player) {

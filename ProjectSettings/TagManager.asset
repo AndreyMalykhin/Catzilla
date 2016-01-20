@@ -12,6 +12,7 @@ TagManager:
   - LevelStartScreen
   - LevelCompleteScreen
   - UI
+  - Projectile
   layers:
   - Default
   - TransparentFX

@@ -22,7 +22,7 @@ namespace Catzilla.LevelModule.Controller {
         [Inject]
         public LanguageManager Translator {get; set;}
 
-        public void OnViewReady(IEvent evt) {
+        public void OnViewConstruct(IEvent evt) {
             PlayerSettingsStorage.GetCurrent((playerSettings) => {
                 var msg = string.Format(Translator.GetTextValue(
                     "LevelStartScreen.Level"), playerSettings.Level + 1);

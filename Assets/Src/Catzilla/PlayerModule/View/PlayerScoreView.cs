@@ -6,7 +6,7 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 
 namespace Catzilla.PlayerModule.View {
     public class PlayerScoreView: strange.extensions.mediation.impl.View {
-        public enum Event {Ready}
+        public enum Event {Construct}
 
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
@@ -19,23 +19,34 @@ namespace Catzilla.PlayerModule.View {
             }
             set {
                 this.value = value;
-                RenderValue();
+                Render();
+            }
+        }
+
+        public int MaxValue {
+            get {
+                return maxValue;
+            }
+            set {
+                this.maxValue = value;
+                Render();
             }
         }
 
         private int value;
+        private int maxValue;
         private Text text;
 
         [PostConstruct]
-        public void OnReady() {
+        public void OnConstruct() {
             text = GetComponent<Text>();
-            Text = "Score: {0}";
-            RenderValue();
-            EventBus.Dispatch(Event.Ready, this);
+            Text = "Score: {0} / {1}";
+            Render();
+            EventBus.Dispatch(Event.Construct, this);
         }
 
-        private void RenderValue() {
-            text.text = string.Format(Text, value);
+        private void Render() {
+            text.text = string.Format(Text, value, maxValue);
         }
     }
 }

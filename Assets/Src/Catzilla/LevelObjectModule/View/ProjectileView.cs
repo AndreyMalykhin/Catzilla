@@ -17,7 +17,7 @@ namespace Catzilla.LevelObjectModule.View {
         private Rigidbody body;
 
         [PostConstruct]
-        public void OnReady() {
+        public void OnConstruct() {
             body = GetComponent<Rigidbody>();
         }
 

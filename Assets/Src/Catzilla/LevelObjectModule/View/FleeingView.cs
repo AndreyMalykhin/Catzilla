@@ -13,7 +13,7 @@ namespace Catzilla.LevelObjectModule.View {
         private float speed;
 
         [PostConstruct]
-        public void OnReady() {
+        public void OnConstruct() {
             body = GetComponent<Rigidbody>();
             speed = Random.Range(minSpeed, maxSpeed);
         }

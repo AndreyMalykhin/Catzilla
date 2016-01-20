@@ -10,7 +10,7 @@ namespace Catzilla.MainMenuModule.View {
         private Canvas canvas;
 
         [PostConstruct]
-        public void OnReady() {
+        public void OnConstruct() {
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
         }

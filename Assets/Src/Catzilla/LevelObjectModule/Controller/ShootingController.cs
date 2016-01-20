@@ -9,12 +9,12 @@ namespace Catzilla.LevelObjectModule.Controller {
         private readonly List<ShootingView> shootersWithoutTarget =
             new List<ShootingView>(16);
 
-        public void OnPlayerReady(IEvent evt) {
+        public void OnPlayerConstruct(IEvent evt) {
             player = (PlayerView) evt.data;
             ProcessShootersWithoutTarget();
         }
 
-        public void OnViewReady(IEvent evt) {
+        public void OnViewConstruct(IEvent evt) {
             SetTarget((ShootingView) evt.data);
         }
 

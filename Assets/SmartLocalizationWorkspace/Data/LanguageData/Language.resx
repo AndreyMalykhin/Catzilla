@@ -132,6 +132,6 @@
 		<value>Play</value>
 	</data>
 	<data name="Player.Score" xml:space="preserve">
-		<value>Score: {0}</value>
+		<value>Score: {0} / {1}</value>
 	</data>
 </root>
