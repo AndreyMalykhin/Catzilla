@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 424354}
   - 54: {fileID: 5465430}
+  - 114: {fileID: 11444682}
   - 114: {fileID: 11429200}
   - 114: {fileID: 11483028}
   - 114: {fileID: 11487140}
@@ -176,6 +177,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cabe621d1034ff09371fab4a1430ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11444682
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d68737fed9ab4e9394e712c63ef1da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviour: {fileID: 11483028}
 --- !u!114 &11483028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -213,7 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec49cabd6cb447bb816f46388b98351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Root: {fileID: 0}
+  root: {fileID: 0}
 --- !u!114 &11496890
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -312,6 +325,10 @@ Prefab:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: behaviour
+      value: 
+      objectReference: {fileID: 11483028}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 102404}

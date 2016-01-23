@@ -53,10 +53,6 @@ namespace Catzilla.LevelAreaModule.Model {
                 new LevelAreaRect(new LevelAreaPoint(3, 7), 4, 17),
                 new LevelAreaRect(new LevelAreaPoint(9, 7), 4, 17)
             };
-            // spawnLocations[LevelObjectType.Food] = new List<LevelAreaRect>() {
-            //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
-            //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
-            // };
             itemsMap[EnvType.TrackStart].SpawnLocations = spawnLocations;
         }
 
@@ -78,10 +74,6 @@ namespace Catzilla.LevelAreaModule.Model {
             spawnLocations[LevelObjectType.Mine] = new List<LevelAreaRect>() {
                 new LevelAreaRect(new LevelAreaPoint(7, 7), 2, 17)
             };
-            // spawnLocations[LevelObjectType.Food] = new List<LevelAreaRect>() {
-            //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
-            //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
-            // };
             itemsMap[EnvType.TrackMiddle].SpawnLocations = spawnLocations;
         }
 
@@ -103,10 +95,6 @@ namespace Catzilla.LevelAreaModule.Model {
             spawnLocations[LevelObjectType.Mine] = new List<LevelAreaRect>() {
                 new LevelAreaRect(new LevelAreaPoint(7, 7), 2, 17)
             };
-            // spawnLocations[LevelObjectType.Food] = new List<LevelAreaRect>() {
-            //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
-            //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
-            // };
             itemsMap[EnvType.TrackEnd].SpawnLocations = spawnLocations;
         }
 
@@ -126,10 +114,6 @@ namespace Catzilla.LevelAreaModule.Model {
                 new LevelAreaRect(new LevelAreaPoint(3, 7), 4, 17),
                 new LevelAreaRect(new LevelAreaPoint(9, 7), 4, 17)
             };
-            // spawnLocations[LevelObjectType.Food] = new List<LevelAreaRect>() {
-            //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
-            //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
-            // };
             itemsMap[EnvType.HoodStart].SpawnLocations = spawnLocations;
         }
 
@@ -151,10 +135,6 @@ namespace Catzilla.LevelAreaModule.Model {
             spawnLocations[LevelObjectType.Mine] = new List<LevelAreaRect>() {
                 new LevelAreaRect(new LevelAreaPoint(7, 7), 2, 17)
             };
-            // spawnLocations[LevelObjectType.Food] = new List<LevelAreaRect>() {
-            //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
-            //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
-            // };
             itemsMap[EnvType.HoodMiddle].SpawnLocations = spawnLocations;
         }
 
@@ -176,10 +156,6 @@ namespace Catzilla.LevelAreaModule.Model {
             spawnLocations[LevelObjectType.Mine] = new List<LevelAreaRect>() {
                 new LevelAreaRect(new LevelAreaPoint(7, 7), 2, 17)
             };
-            // spawnLocations[LevelObjectType.Food] = new List<LevelAreaRect>() {
-            //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
-            //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
-            // };
             itemsMap[EnvType.HoodEnd].SpawnLocations = spawnLocations;
         }
 
@@ -199,10 +175,6 @@ namespace Catzilla.LevelAreaModule.Model {
                 new LevelAreaRect(new LevelAreaPoint(3, 7), 4, 17),
                 new LevelAreaRect(new LevelAreaPoint(9, 7), 4, 17)
             };
-            // spawnLocations[LevelObjectType.Food] = new List<LevelAreaRect>() {
-            //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
-            //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
-            // };
             itemsMap[EnvType.ParkStart].SpawnLocations = spawnLocations;
         }
 
@@ -224,10 +196,6 @@ namespace Catzilla.LevelAreaModule.Model {
             spawnLocations[LevelObjectType.Mine] = new List<LevelAreaRect>() {
                 new LevelAreaRect(new LevelAreaPoint(7, 7), 2, 17)
             };
-            // spawnLocations[LevelObjectType.Food] = new List<LevelAreaRect>() {
-            //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
-            //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
-            // };
             itemsMap[EnvType.ParkMiddle].SpawnLocations = spawnLocations;
         }
 
@@ -249,10 +217,6 @@ namespace Catzilla.LevelAreaModule.Model {
             spawnLocations[LevelObjectType.Mine] = new List<LevelAreaRect>() {
                 new LevelAreaRect(new LevelAreaPoint(7, 7), 2, 17)
             };
-            // spawnLocations[LevelObjectType.Food] = new List<LevelAreaRect>() {
-            //     new LevelAreaRect(new LevelAreaPoint(2, 7), 1, 17),
-            //     new LevelAreaRect(new LevelAreaPoint(13, 7), 1, 17)
-            // };
             itemsMap[EnvType.ParkEnd].SpawnLocations = spawnLocations;
         }
     }

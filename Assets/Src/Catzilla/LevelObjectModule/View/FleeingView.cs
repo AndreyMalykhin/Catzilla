@@ -18,16 +18,29 @@ namespace Catzilla.LevelObjectModule.View {
 
         [PostConstruct]
         public void OnConstruct() {
-            body = GetComponent<Rigidbody>();
             Restore();
         }
 
         public void Restore() {
             speed = Random.Range(minSpeed, maxSpeed);
-            body.velocity = new Vector3(0f, 0f, speed);
         }
 
 		public void Retain() {Debug.Assert(false);}
 		public void Release() {Debug.Assert(false);}
+
+        protected override void Awake() {
+            base.Awake();
+            body = GetComponent<Rigidbody>();
+        }
+
+        private void OnEnable() {
+            // Debug.Log("FleeingView.OnEnable()");
+            body.velocity = new Vector3(0f, 0f, speed);
+        }
+
+        private void OnDisable() {
+            // Debug.Log("FleeingView.OnDisable()");
+            body.velocity = Vector3.zero;
+        }
     }
 }

@@ -11,7 +11,22 @@ namespace Catzilla.CommonModule.View {
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
 
-        public GameObject Root;
+        [Inject]
+        public PoolStorageView PoolStorage {get; set;}
+
+        [SerializeField]
+        private PoolableView root;
+
+        private PoolableView poolable;
+
+        [PostConstruct]
+        public void OnConstruct() {
+            poolable = root == null ? GetComponent<PoolableView>() : root;
+        }
+
+        public void Dispose() {
+            PoolStorage.Return(poolable);
+        }
 
         private IEnumerator OnTriggerExit(Collider collider) {
             yield return new WaitForFixedUpdate();

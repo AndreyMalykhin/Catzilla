@@ -29,9 +29,9 @@ GameObject:
   - 54: {fileID: 5452302}
   - 114: {fileID: 11415620}
   - 114: {fileID: 11472518}
+  - 114: {fileID: 11469974}
   - 114: {fileID: 11469876}
   - 114: {fileID: 11434098}
-  - 114: {fileID: 11469974}
   m_Layer: 11
   m_Name: Bench
   m_TagString: Untagged
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec49cabd6cb447bb816f46388b98351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Root: {fileID: 0}
+  root: {fileID: 0}
 --- !u!114 &11469876
 MonoBehaviour:
   m_ObjectHideFlags: 1
