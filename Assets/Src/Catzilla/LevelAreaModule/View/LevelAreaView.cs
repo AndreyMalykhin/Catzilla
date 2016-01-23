@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using strange.extensions.context.api;
+using strange.extensions.pool.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Util;
@@ -22,16 +23,6 @@ namespace Catzilla.LevelAreaModule.View {
         private IEnumerator OnTriggerExit(Collider collider) {
             yield return new WaitForFixedUpdate();
             EventBus.Dispatch(Event.TriggerExit, new EventData(this, collider));
-        }
-
-        public EnvView NewEnv(EnvTypeInfo typeInfo) {
-            var env = (EnvView) Instantiate(
-                typeInfo.ViewProto,
-                transform.position,
-                Quaternion.identity);
-            env.transform.parent = transform;
-            env.GetComponent<DisposableView>().Init(gameObject);
-            return env;
         }
     }
 }

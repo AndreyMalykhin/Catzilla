@@ -13,6 +13,9 @@ TagManager:
   - LevelCompleteScreen
   - UI
   - Projectile
+  - PoolStorage
+  - Player.FieldOfView
+  - Level
   layers:
   - Default
   - TransparentFX
@@ -23,10 +26,10 @@ TagManager:
   - 
   - 
   - Player
-  - LevelArea
+  - LevelObjectSmashed
   - Env
   - LevelObject
-  - LevelObjectSmashed
+  - Projectile
   - 
   - 
   - 

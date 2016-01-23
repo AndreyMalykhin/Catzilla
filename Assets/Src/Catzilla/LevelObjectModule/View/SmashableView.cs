@@ -3,6 +3,7 @@ using System.Collections;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class SmashableView: strange.extensions.mediation.impl.View {
@@ -11,15 +12,29 @@ namespace Catzilla.LevelObjectModule.View {
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
 
+        [Inject]
+        public PoolStorageView PoolStorage {get; set;}
+
         [SerializeField]
         private SmashedView smashedProto;
 
+        private PoolableView poolable;
+        private int smashedPoolId;
+
+        [PostConstruct]
+        public void OnConstruct() {
+            poolable = GetComponent<PoolableView>();
+            smashedPoolId = smashedProto.GetComponent<PoolableView>().PoolId;
+        }
+
         public void Smash(Vector3 sourcePosition) {
             Transform transform = this.transform;
-            Destroy(gameObject);
-            var smashedView = (SmashedView) Instantiate(
-                smashedProto, transform.position, transform.rotation);
-            smashedView.Init(sourcePosition);
+            PoolStorage.Return(poolable);
+            var smashed =
+                PoolStorage.Get(smashedPoolId).GetComponent<SmashedView>();
+            smashed.transform.position = transform.position;
+            smashed.transform.rotation = transform.rotation;
+            smashed.Init(sourcePosition);
         }
 
         private IEnumerator OnTriggerEnter(Collider collider) {

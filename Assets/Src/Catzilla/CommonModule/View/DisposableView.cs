@@ -1,22 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
+using strange.extensions.context.api;
+using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class DisposableView: strange.extensions.mediation.impl.View {
-        [SerializeField]
-        private GameObject root;
+        public enum Event {TriggerExit}
 
-        public void Init(GameObject root) {
-            this.root = root;
-        }
+        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
+        public IEventDispatcher EventBus {get; set;}
 
-        private void OnBecameInvisible() {
-            Dispose();
-        }
+        public GameObject Root;
 
-        private void Dispose() {
-            // Debug.Log("DisposableView.Dispose()");
-            Destroy(root == null ? gameObject : root);
+        private IEnumerator OnTriggerExit(Collider collider) {
+            yield return new WaitForFixedUpdate();
+            EventBus.Dispatch(Event.TriggerExit, new EventData(this, collider));
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Catzilla.LevelAreaModule.Model {
     [System.Serializable]
     public class EnvTypeInfo {
         public EnvType Type;
-        public EnvView ViewProto;
+        public LevelAreaView ViewProto;
         public int SpawnWeight = 1;
 
         public IDictionary<LevelObjectType, List<LevelAreaRect>> SpawnLocations {

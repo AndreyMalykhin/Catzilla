@@ -13,29 +13,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - Type: 0
-    ViewProto: {fileID: 11459446, guid: a40a955b9010a44e38e4bc3d288b2c90, type: 2}
+    ViewProto: {fileID: 11461362, guid: 3e4be3fa7c4e54e45a2a956c8a4fde0c, type: 2}
     SpawnWeight: 1
   - Type: 1
-    ViewProto: {fileID: 11459446, guid: 8a3bff49ffb6b45c4bfbf46c3d6634ad, type: 2}
+    ViewProto: {fileID: 11461362, guid: fec91f6ff528f4ec2b71ec461c5f644f, type: 2}
     SpawnWeight: 3
   - Type: 2
-    ViewProto: {fileID: 11459446, guid: c0b5238ce55a04e61a668309574c0f99, type: 2}
+    ViewProto: {fileID: 11461362, guid: fdf825f4c79864c19bbaa66b8e0f6e94, type: 2}
     SpawnWeight: 1
   - Type: 3
-    ViewProto: {fileID: 11459446, guid: 6d34846bce7b247c5ab8f18e3e0573ae, type: 2}
+    ViewProto: {fileID: 11461362, guid: 881190ac123ff4fc3a8b41372ceceb81, type: 2}
     SpawnWeight: 1
   - Type: 4
-    ViewProto: {fileID: 11459446, guid: 1682287fd11ef4f409c7b8a33eb14cd0, type: 2}
+    ViewProto: {fileID: 11461362, guid: 89b880857bb954d4788e49fb5a46e571, type: 2}
     SpawnWeight: 3
   - Type: 5
-    ViewProto: {fileID: 11459446, guid: 5fa34472d6b8546bcb8c13db9afd0357, type: 2}
+    ViewProto: {fileID: 11461362, guid: b72d728f45850423399242f6e2ca5bdc, type: 2}
     SpawnWeight: 1
   - Type: 6
-    ViewProto: {fileID: 11459446, guid: f6eb4a07f49db415b9b1027d811ed5df, type: 2}
+    ViewProto: {fileID: 11461362, guid: 969e7a2421f8c4825a643da452a6d03b, type: 2}
     SpawnWeight: 1
   - Type: 7
-    ViewProto: {fileID: 11459446, guid: 1d91e576ae6ec4d20b4dac53fbbaecc1, type: 2}
+    ViewProto: {fileID: 11461362, guid: e3bc46baad0884a3a98837c2ee9b7e86, type: 2}
     SpawnWeight: 3
   - Type: 8
-    ViewProto: {fileID: 11459446, guid: a75641ca281494fcc8ea477d8e240917, type: 2}
+    ViewProto: {fileID: 11461362, guid: e4cdd3c644caf4cf58f707e70ae80ea6, type: 2}
     SpawnWeight: 1

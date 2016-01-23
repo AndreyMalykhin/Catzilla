@@ -1,43 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.View;
 
 namespace Catzilla.LevelObjectModule.Controller {
     public class ShootingController {
-        private PlayerView player;
-        private readonly List<ShootingView> shootersWithoutTarget =
-            new List<ShootingView>(16);
+        [Inject("PlayerFieldOfViewTag")]
+        public string PlayerFieldOfViewTag {get; set;}
 
-        public void OnPlayerConstruct(IEvent evt) {
-            player = (PlayerView) evt.data;
-            ProcessShootersWithoutTarget();
-        }
+        public void OnTriggerEnter(IEvent evt) {
+            var eventData = (EventData) evt.data;
+            var collider = (Collider) eventData.Data;
+            var shooter = (ShootingView) eventData.EventOwner;
 
-        public void OnViewConstruct(IEvent evt) {
-            SetTarget((ShootingView) evt.data);
-        }
-
-        private void SetTarget(ShootingView shooter) {
-            shootersWithoutTarget.Add(shooter);
-
-            if (player == null) {
+            if (collider == null
+                || !collider.CompareTag(PlayerFieldOfViewTag)) {
                 return;
             }
 
-            ProcessShootersWithoutTarget();
-        }
-
-        private void ProcessShootersWithoutTarget() {
-            for (int i = 0; i < shootersWithoutTarget.Count; ++i) {
-                if (shootersWithoutTarget[i] == null) {
-                    continue;
-                }
-
-                shootersWithoutTarget[i].Target = player.Collider;
-            }
-
-            shootersWithoutTarget.Clear();
+            shooter.Target =
+                collider.attachedRigidbody.GetComponent<PlayerView>().Collider;
         }
     }
 }

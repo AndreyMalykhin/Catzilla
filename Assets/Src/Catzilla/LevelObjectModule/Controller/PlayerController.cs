@@ -2,6 +2,7 @@
 using System.Collections;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Model;
 using Catzilla.PlayerModule.Model;
 using Catzilla.GameOverMenuModule.View;
@@ -22,6 +23,9 @@ namespace Catzilla.LevelObjectModule.Controller {
 
         [Inject]
         public LevelSettingsStorage LevelSettingsStorage {get; set;}
+
+        [Inject]
+        public PoolStorageView PoolStorage {get; set;}
 
         [Inject]
         public Game Game {get; set;}
@@ -53,11 +57,15 @@ namespace Catzilla.LevelObjectModule.Controller {
         }
 
         public void OnResurrect() {
+            CleanProjectiles();
+        }
+
+        private void CleanProjectiles() {
             GameObject[] projectiles =
                 GameObject.FindGameObjectsWithTag(ProjectileTag);
 
             for (int i = 0; i < projectiles.Length; ++i) {
-                GameObject.Destroy(projectiles[i]);
+                PoolStorage.Return(projectiles[i].GetComponent<PoolableView>());
             }
         }
 

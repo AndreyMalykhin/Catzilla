@@ -17,7 +17,7 @@ namespace Catzilla.LevelObjectModule.Model {
 
         private void OnEnable() {
             for (int i = 0; i < items.Length; ++i) {
-                itemsMap[items[i].Type] = items[i];
+                itemsMap.Add(items[i].Type, items[i]);
             }
         }
     }

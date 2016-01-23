@@ -12,6 +12,8 @@ namespace Catzilla.LevelObjectModule.Controller {
         public void OnTriggerEnter(IEvent evt) {
             var eventData = (EventData) evt.data;
             var collider = (Collider) eventData.Data;
+            // Debug.LogFormat(
+            //     "ScoreableController.OnTriggerEnter(); collider={0}", collider);
 
             if (collider != null && collider.CompareTag(PlayerTag)) {
                 var player =

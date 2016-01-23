@@ -37,6 +37,8 @@ namespace Catzilla.LevelObjectModule.View {
                 return score;
             }
             set {
+                Debug.Log("PlayerView.Score set");
+
                 if (IsScoreFreezed) {
                     return;
                 }
@@ -161,8 +163,7 @@ namespace Catzilla.LevelObjectModule.View {
             Ray ray = camera.ScreenPointToRay(mousePosition);
             RaycastHit hit;
 
-            if (!Physics.Raycast(ray, out hit, cameraRayLength, EnvLayer,
-                    QueryTriggerInteraction.Collide)) {
+            if (!Physics.Raycast(ray, out hit, cameraRayLength, EnvLayer)) {
                 return;
             }
 

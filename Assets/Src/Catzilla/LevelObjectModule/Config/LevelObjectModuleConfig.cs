@@ -4,6 +4,8 @@ using strange.extensions.injector.api;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Config;
+using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 using Catzilla.LevelModule.View;
 using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelObjectModule.View;
@@ -52,6 +54,11 @@ namespace Catzilla.LevelObjectModule.Config {
                 .ToInject(false)
                 .CrossContext();
             injectionBinder.Bind<string>()
+                .ToValue("Player.FieldOfView")
+                .ToName("PlayerFieldOfViewTag")
+                .ToInject(false)
+                .CrossContext();
+            injectionBinder.Bind<string>()
                 .ToValue("Projectile")
                 .ToName("ProjectileTag")
                 .ToInject(false)
@@ -84,10 +91,8 @@ namespace Catzilla.LevelObjectModule.Config {
 
             var shootingContoller =
                 injectionBinder.GetInstance<ShootingController>();
-            eventBus.AddListener(PlayerView.Event.Construct,
-                shootingContoller.OnPlayerConstruct);
-            eventBus.AddListener(ShootingView.Event.Construct,
-                shootingContoller.OnViewConstruct);
+            eventBus.AddListener(ShootingView.Event.TriggerEnter,
+                shootingContoller.OnTriggerEnter);
 
             var playerController =
                 injectionBinder.GetInstance<PlayerController>();

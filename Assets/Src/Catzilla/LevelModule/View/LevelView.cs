@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
-using Catzilla.LevelModule.Model;
+using Catzilla.CommonModule.View;
+using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelAreaModule.Model;
 using Catzilla.LevelAreaModule.View;
+using Catzilla.LevelModule.Model;
 
 namespace Catzilla.LevelModule.View {
     public class LevelView: strange.extensions.mediation.impl.View {
@@ -21,10 +23,10 @@ namespace Catzilla.LevelModule.View {
         [Inject("LevelAreaDepth")]
         public float AreaDepth {get; set;}
 
-        public int Index {get; private set;}
+        [Inject]
+        public PoolStorageView PoolStorage {get; set;}
 
-        [SerializeField]
-        private LevelAreaView areaProto;
+        public int Index {get; private set;}
 
         private float areaHalfWidth;
         private float areaHalfDepth;
@@ -41,12 +43,13 @@ namespace Catzilla.LevelModule.View {
             EventBus.Dispatch(Event.Construct, this);
         }
 
-        public LevelAreaView NewArea(int index) {
-            var position = new Vector3(0f, 0f, index * AreaDepth);
-            var areaView = (LevelAreaView) Instantiate(
-                areaProto, position, Quaternion.identity);
-            areaView.transform.parent = transform;
-            return areaView;
+        public void NewArea(int index, EnvTypeInfo envTypeInfo) {
+            var poolId =
+                envTypeInfo.ViewProto.GetComponent<PoolableView>().PoolId;
+            var area = PoolStorage.Get(poolId);
+            area.transform.position = new Vector3(0f, 0f, index * AreaDepth);
+            area.transform.rotation = Quaternion.identity;
+            area.transform.parent = transform;
         }
 
         public LevelObjectView NewObject(
@@ -56,8 +59,19 @@ namespace Catzilla.LevelModule.View {
                 spawnPoint.X + typeInfo.Width / 2f - areaHalfWidth,
                 0f,
                 spawnPoint.Z + typeInfo.Depth / 2f + areaIndex * AreaDepth - areaHalfDepth);
-            var obj = (LevelObjectView) Instantiate(
-                typeInfo.ViewProto, position, Quaternion.identity);
+            var poolable = typeInfo.ViewProto.GetComponent<PoolableView>();
+            LevelObjectView obj;
+
+            if (poolable == null) {
+                obj = (LevelObjectView) Instantiate(
+                    typeInfo.ViewProto, position, Quaternion.identity);
+            } else {
+                obj = PoolStorage.Get(poolable.PoolId)
+                    .GetComponent<LevelObjectView>();
+            }
+
+            obj.transform.position = position;
+            obj.transform.rotation = Quaternion.identity;
             obj.transform.parent = transform;
             return obj;
         }

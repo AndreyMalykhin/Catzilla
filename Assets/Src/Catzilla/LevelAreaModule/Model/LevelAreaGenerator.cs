@@ -31,9 +31,7 @@ namespace Catzilla.LevelAreaModule.Model {
                 return ObjectTypeInfoStorage.Get(lhs).SpawnPriority.CompareTo(
                     ObjectTypeInfoStorage.Get(rhs).SpawnPriority);
             });
-            LevelAreaView area = outputLevel.NewArea(nextAreaIndex);
-            EnvTypeInfo envTypeInfo = EnvTypeInfoStorage.Get(envType);
-            area.NewEnv(envTypeInfo);
+            outputLevel.NewArea(nextAreaIndex, EnvTypeInfoStorage.Get(envType));
 
             for (int i = 0; i < objectTypesToSpawn.Length; ++i) {
                 NewObjects(
