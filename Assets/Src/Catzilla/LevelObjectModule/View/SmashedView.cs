@@ -11,6 +11,8 @@ namespace Catzilla.LevelObjectModule.View {
         public PoolStorageView PoolStorage {get; set;}
 
 		public bool retain {get {return false;}}
+        public AudioClip SmashSound;
+        public AudioSource AudioSource;
 
         private struct Piece {
             public Rigidbody Body;

@@ -53,6 +53,8 @@ namespace Catzilla.GameOverMenuModule.Controller {
         public void OnResurrectBtnClick() {
             Ad.Show(() => {
                 GameOverScreen.Hide(() => {
+                    player.IsHealthFreezed = false;
+                    player.IsScoreFreezed = false;
                     player.Resurrect();
                     Game.Resume();
                 });

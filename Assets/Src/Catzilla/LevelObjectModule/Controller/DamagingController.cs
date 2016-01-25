@@ -13,11 +13,14 @@ namespace Catzilla.LevelObjectModule.Controller {
             var eventData = (EventData) evt.data;
             var collider = (Collider) eventData.Data;
 
-            if (collider != null && collider.CompareTag(PlayerTag)) {
-                var player =
-                    collider.attachedRigidbody.GetComponent<PlayerView>();
-                player.Health -= ((DamagingView) eventData.EventOwner).Damage;
+            if (collider == null || !collider.CompareTag(PlayerTag)) {
+                return;
             }
+
+            var player =
+                collider.attachedRigidbody.GetComponent<PlayerView>();
+            var damager = (DamagingView) eventData.EventOwner;
+            player.Health -= damager.Damage;
         }
     }
 }

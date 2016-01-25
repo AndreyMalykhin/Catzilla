@@ -28,14 +28,23 @@ namespace Catzilla.LevelObjectModule.Controller {
         public PoolStorageView PoolStorage {get; set;}
 
         [Inject]
+        public AudioManager AudioManager {get; set;}
+
+        [Inject]
         public Game Game {get; set;}
 
         [Inject("ProjectileTag")]
         public string ProjectileTag {get; set;}
 
+        [Inject("PlayerAudioChannel")]
+        public int PlayerAudioChannel {get; set;}
+
         private LevelView level;
 
-        public void OnDeath() {
+        public void OnDeath(IEvent evt) {
+            var player = (PlayerView) evt.data;
+            AudioManager.Play(
+                player.DeathSound, player.AudioSource, PlayerAudioChannel);
             GameOverScreen.Show(() => {
                 Game.Pause();
             });

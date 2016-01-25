@@ -9,6 +9,12 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("PlayerFieldOfViewTag")]
         public string PlayerFieldOfViewTag {get; set;}
 
+        [Inject("EffectsAudioChannel")]
+        public int EffectsAudioChannel {get; set;}
+
+        [Inject]
+        public AudioManager AudioManager {get; set;}
+
         public void OnTriggerEnter(IEvent evt) {
             var eventData = (EventData) evt.data;
             var collider = (Collider) eventData.Data;
@@ -21,6 +27,12 @@ namespace Catzilla.LevelObjectModule.Controller {
 
             shooter.Target =
                 collider.attachedRigidbody.GetComponent<PlayerView>().Collider;
+        }
+
+        public void OnShot(IEvent evt) {
+            var shooter = (ShootingView) evt.data;
+            AudioManager.Play(
+                shooter.ShotSound, shooter.AudioSource, EffectsAudioChannel);
         }
     }
 }

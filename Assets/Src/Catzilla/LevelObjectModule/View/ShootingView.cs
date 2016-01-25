@@ -9,7 +9,7 @@ using Catzilla.CommonModule.View;
 namespace Catzilla.LevelObjectModule.View {
     public class ShootingView
         : strange.extensions.mediation.impl.View, IPoolable {
-        public enum Event {TriggerEnter}
+        public enum Event {TriggerEnter, Shot}
 
         [Inject]
         public PoolStorageView PoolStorage {get; set;}
@@ -43,6 +43,8 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
 		public bool retain {get {return false;}}
+        public AudioClip ShotSound;
+        public AudioSource AudioSource;
 
         [SerializeField]
         private ProjectileView projectileProto;
@@ -102,7 +104,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private IEnumerator StartShooting() {
-            yield return new WaitForSeconds(Random.Range(0f, period));
+            yield return new WaitForSeconds(Random.Range(0.5f, period));
 
             while (true) {
                 if (target == null) {
@@ -119,6 +121,7 @@ namespace Catzilla.LevelObjectModule.View {
             var projectile = PoolStorage.Get(projectilePoolId);
             projectile.transform.position = projectileSource.position;
             projectile.transform.rotation = projectileSource.rotation;
+            EventBus.Dispatch(Event.Shot, this);
         }
     }
 }

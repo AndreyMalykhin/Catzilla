@@ -13,9 +13,12 @@ namespace Catzilla.LevelObjectModule.Controller {
             var eventData = (EventData) evt.data;
             var collider = (Collider) eventData.Data;
 
-            if (collider != null && collider.CompareTag(PlayerTag)) {
-                ((ProjectileView) eventData.EventOwner).Hit();
+            if (collider == null || !collider.CompareTag(PlayerTag)) {
+                return;
             }
+
+            var projectile = (ProjectileView) eventData.EventOwner;
+            projectile.Hit();
         }
     }
 }

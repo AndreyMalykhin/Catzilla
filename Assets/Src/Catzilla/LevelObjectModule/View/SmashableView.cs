@@ -27,7 +27,7 @@ namespace Catzilla.LevelObjectModule.View {
             smashedPoolId = smashedProto.GetComponent<PoolableView>().PoolId;
         }
 
-        public void Smash(Vector3 sourcePosition) {
+        public SmashedView Smash(Vector3 sourcePosition) {
             Transform transform = this.transform;
             PoolStorage.Return(poolable);
             var smashed =
@@ -35,6 +35,7 @@ namespace Catzilla.LevelObjectModule.View {
             smashed.transform.position = transform.position;
             smashed.transform.rotation = transform.rotation;
             smashed.Init(sourcePosition);
+            return smashed;
         }
 
         private IEnumerator OnTriggerEnter(Collider collider) {

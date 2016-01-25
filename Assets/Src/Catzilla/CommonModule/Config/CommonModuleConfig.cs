@@ -33,8 +33,8 @@ namespace Catzilla.CommonModule.Config {
                 .To<DisposableController>()
                 .ToSingleton()
                 .CrossContext();
-            injectionBinder.Bind<PoolableController>()
-                .To<PoolableController>()
+            injectionBinder.Bind<BtnController>()
+                .To<BtnController>()
                 .ToSingleton()
                 .CrossContext();
             var ui = GameObject.FindWithTag("UI").GetComponent<UIView>();
@@ -46,6 +46,26 @@ namespace Catzilla.CommonModule.Config {
                 .GetComponent<PoolStorageView>();
             injectionBinder.Bind<PoolStorageView>()
                 .ToValue(poolStorage)
+                .ToInject(false)
+                .CrossContext();
+            injectionBinder.Bind<AudioManager>()
+                .ToValue(Resources.Load<AudioManager>("AudioManager"))
+                .ToInject(false)
+                .ToSingleton()
+                .CrossContext();
+            injectionBinder.Bind<int>()
+                .ToValue(0)
+                .ToName("EffectsAudioChannel")
+                .ToInject(false)
+                .CrossContext();
+            injectionBinder.Bind<int>()
+                .ToValue(1)
+                .ToName("UIAudioChannel")
+                .ToInject(false)
+                .CrossContext();
+            injectionBinder.Bind<int>()
+                .ToValue(2)
+                .ToName("PlayerAudioChannel")
                 .ToInject(false)
                 .CrossContext();
         }
@@ -62,6 +82,11 @@ namespace Catzilla.CommonModule.Config {
                 injectionBinder.GetInstance<GameController>();
             eventBus.AddListener(
                 Game.Event.LevelLoad, gameController.OnLevelLoad);
+
+            var btnController =
+                injectionBinder.GetInstance<BtnController>();
+            eventBus.AddListener(
+                BtnView.Event.Click, btnController.OnClick);
         }
 
         private void InitTranslator(LanguageManager translator) {

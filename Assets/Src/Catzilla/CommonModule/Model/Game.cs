@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.Model {
     public class Game {
@@ -13,16 +14,19 @@ namespace Catzilla.CommonModule.Model {
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
 
+        [Inject]
+        public AudioManager AudioManager {get; set;}
+
         public void Pause() {
             Debug.Log("Game.Pause()");
             Time.timeScale = 0f;
-            AudioListener.pause = true;
+            AudioManager.IsPaused = true;
         }
 
         public void Resume() {
             Debug.Log("Game.Resume()");
             Time.timeScale = 1f;
-            AudioListener.pause = false;
+            AudioManager.IsPaused = false;
         }
 
         public void Exit() {

@@ -97,6 +97,8 @@ namespace Catzilla.LevelObjectModule.Config {
                 injectionBinder.GetInstance<ShootingController>();
             eventBus.AddListener(ShootingView.Event.TriggerEnter,
                 shootingContoller.OnTriggerEnter);
+            eventBus.AddListener(ShootingView.Event.Shot,
+                shootingContoller.OnShot);
 
             var activatableContoller =
                 injectionBinder.GetInstance<ActivatableController>();

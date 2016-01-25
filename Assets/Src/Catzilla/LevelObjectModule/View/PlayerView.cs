@@ -31,6 +31,8 @@ namespace Catzilla.LevelObjectModule.View {
         public Collider Collider {get {return collider;}}
         public bool IsHealthFreezed {get; set;}
         public bool IsScoreFreezed {get; set;}
+        public AudioClip DeathSound;
+        public AudioSource AudioSource;
 
         public int Score {
             get {
@@ -57,9 +59,11 @@ namespace Catzilla.LevelObjectModule.View {
                     return;
                 }
 
+                int oldValue = health;
                 health = value;
                 health = Mathf.Clamp(health, 0, maxHealth);
-                EventBus.Dispatch(Event.HealthChange);
+                EventBus.Dispatch(
+                    Event.HealthChange, new EventData(this, oldValue));
 
                 if (health > 0) {
                     return;
@@ -116,6 +120,10 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         public void Resurrect() {
+            if (!isDead) {
+                return;
+            }
+
             isDead = false;
             targetX = body.position.x;
             Health = maxHealth;
@@ -138,7 +146,7 @@ namespace Catzilla.LevelObjectModule.View {
 
             isDead = true;
             animator.enabled = false;
-            EventBus.Dispatch(Event.Death);
+            EventBus.Dispatch(Event.Death, this);
         }
 
         private void Update() {

@@ -9,14 +9,25 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("PlayerMeshTag")]
         public string PlayerTag {get; set;}
 
+        [Inject("EffectsAudioChannel")]
+        public int EffectsAudioChannel {get; set;}
+
+        [Inject]
+        public AudioManager AudioManager {get; set;}
+
         public void OnTriggerEnter(IEvent evt) {
             var eventData = (EventData) evt.data;
             var collider = (Collider) eventData.Data;
 
-            if (collider != null && collider.CompareTag(PlayerTag)) {
-                ((SmashableView) eventData.EventOwner).Smash(
-                    collider.attachedRigidbody.position);
+            if (collider == null || !collider.CompareTag(PlayerTag)) {
+                return;
             }
+
+            var smashable = (SmashableView) eventData.EventOwner;
+            SmashedView smashed =
+                smashable.Smash(collider.attachedRigidbody.position);
+            AudioManager.Play(smashed.SmashSound, smashed.AudioSource,
+                EffectsAudioChannel);
         }
     }
 }
