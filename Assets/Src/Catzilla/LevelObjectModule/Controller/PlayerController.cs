@@ -42,12 +42,12 @@ namespace Catzilla.LevelObjectModule.Controller {
         private LevelView level;
 
         public void OnDeath(IEvent evt) {
-            var player = (PlayerView) evt.data;
-            AudioManager.Play(
-                player.DeathSound, player.AudioSource, PlayerAudioChannel);
             GameOverScreen.Show(() => {
                 Game.Pause();
             });
+            var player = (PlayerView) evt.data;
+            AudioManager.Play(
+                player.DeathSound, player.AudioSource, PlayerAudioChannel);
         }
 
         public void OnScoreChange(IEvent evt) {
@@ -65,7 +65,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             level = (LevelView) evt.data;
         }
 
-        public void OnResurrect() {
+        public void OnResurrect(IEvent evt) {
             CleanProjectiles();
         }
 

@@ -26,6 +26,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             var smashable = (SmashableView) eventData.EventOwner;
             SmashedView smashed =
                 smashable.Smash(collider.attachedRigidbody.position);
+            smashed.AudioSource.pitch = Random.Range(0.9f, 1.1f);
             AudioManager.Play(smashed.SmashSound, smashed.AudioSource,
                 EffectsAudioChannel);
         }

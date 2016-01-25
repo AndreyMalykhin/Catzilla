@@ -31,6 +31,7 @@ namespace Catzilla.LevelObjectModule.Controller {
 
         public void OnShot(IEvent evt) {
             var shooter = (ShootingView) evt.data;
+            shooter.AudioSource.pitch = Random.Range(0.9f, 1.1f);
             AudioManager.Play(
                 shooter.ShotSound, shooter.AudioSource, EffectsAudioChannel);
         }

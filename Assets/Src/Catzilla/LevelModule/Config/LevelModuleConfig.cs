@@ -88,6 +88,8 @@ namespace Catzilla.LevelModule.Config {
                 injectionBinder.GetInstance<LevelCompleteScreenController>();
             eventBus.AddListener(LevelCompleteScreenView.Event.Hide,
                 levelCompleteScreenController.OnHide);
+            eventBus.AddListener(LevelCompleteScreenView.Event.Show,
+                levelCompleteScreenController.OnShow);
 
             var levelStartScreenController =
                 injectionBinder.GetInstance<LevelStartScreenController>();

@@ -55,6 +55,9 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private float period = 5f;
 
+        [SerializeField]
+        private float maxDelay = 2.5f;
+
         private Rigidbody body;
         private Collider target;
         private IEnumerator aimingCoroutine;
@@ -104,7 +107,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private IEnumerator StartShooting() {
-            yield return new WaitForSeconds(Random.Range(0.5f, period));
+            yield return new WaitForSeconds(0.5f + Random.Range(0f, maxDelay));
 
             while (true) {
                 if (target == null) {

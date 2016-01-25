@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Msg: {fileID: 2079724027}
-  duration: 2
+  duration: 1
 --- !u!1 &630704424
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,6 +496,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Msg: {fileID: 651865962}
+  ShowSound: {fileID: 8300000, guid: 9e4780800801d49f989e31d57c8e3759, type: 3}
+  AudioSource: {fileID: 1825311392}
   duration: 2
 --- !u!114 &651865962
 MonoBehaviour:
