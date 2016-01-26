@@ -17,9 +17,11 @@ namespace Catzilla.CommonModule.View {
 
         [PostConstruct]
         public void OnConstruct() {
-            GetComponent<Button>().onClick.AddListener(() => {
-                EventBus.Dispatch(Event.Click, this);
-            });
+            GetComponent<Button>().onClick.AddListener(OnClick);
+        }
+
+        private void OnClick() {
+            EventBus.Dispatch(Event.Click, this);
         }
     }
 }

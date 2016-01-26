@@ -935,6 +935,10 @@ Prefab:
       propertyPath: AudioSource
       value: 
       objectReference: {fileID: 1825311392}
+    - target: {fileID: 11455074, guid: 0409548e6aa1949528a8f54d2de5d8e7, type: 2}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0409548e6aa1949528a8f54d2de5d8e7, type: 2}
   m_IsPrefabParent: 0
@@ -1460,9 +1464,9 @@ MonoBehaviour:
   RestartText: {fileID: 1308118328}
   ExitText: {fileID: 1663602928}
   ResurrectText: {fileID: 701761162}
-  exitBtn: {fileID: 1025680621}
-  restartBtn: {fileID: 196741954}
-  resurrectBtn: {fileID: 701761163}
+  ExitBtn: {fileID: 1025680621}
+  RestartBtn: {fileID: 196741954}
+  ResurrectBtn: {fileID: 701761163}
 --- !u!114 &1408680218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1725,7 +1729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025af3589e93c447687ae239d8c89c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menu: {fileID: 1408680217}
+  Menu: {fileID: 1408680217}
   animationDuration: 1
 --- !u!1 &1825311387
 GameObject:
@@ -1740,6 +1744,7 @@ GameObject:
   - 114: {fileID: 1825311390}
   - 114: {fileID: 1825311389}
   - 114: {fileID: 1825311393}
+  - 114: {fileID: 1825311394}
   m_Layer: 5
   m_Name: UI
   m_TagString: UI
@@ -1904,6 +1909,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ignoreListenerPause: 1
+--- !u!114 &1825311394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1825311387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e1b27c533c74ba988638be10710078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - Key: GameOverMenu.Restart
+    Text: {fileID: 1308118328}
+  - Key: GameOverMenu.Resurrect
+    Text: {fileID: 701761162}
+  - Key: GameOverMenu.Exit
+    Text: {fileID: 1663602928}
+  - Key: MainMenu.Start
+    Text: {fileID: 193054178}
+  - Key: MainMenu.Exit
+    Text: {fileID: 741496123}
+  - Key: LevelCompleteScreen.Msg
+    Text: {fileID: 651865962}
 --- !u!1 &2079724025
 GameObject:
   m_ObjectHideFlags: 0

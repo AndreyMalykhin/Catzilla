@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
 
 namespace Catzilla.PlayerModule.Model {
     public class PlayerSettingsStorage {
         private PlayerSettings currentPlayerSettings = new PlayerSettings();
 
-        public void GetCurrent(Action<PlayerSettings> onDone) {
-            onDone(currentPlayerSettings);
+        public PlayerSettings GetCurrent() {
+            return currentPlayerSettings;
         }
 
-        public void Update(PlayerSettings settings, Action onDone) {
+        public void Update(PlayerSettings settings) {
             currentPlayerSettings = settings;
-            onDone();
         }
+
+        public void Sync() {}
     }
 }

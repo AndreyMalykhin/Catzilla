@@ -27,10 +27,7 @@ namespace Catzilla.LevelAreaModule.Model {
             reservedSpawnPoints.Clear();
             LevelObjectType[] objectTypesToSpawn =
                 EnvTypeInfoStorage.Get(envType).GetObjectTypes();
-            Array.Sort(objectTypesToSpawn, (lhs, rhs) => {
-                return ObjectTypeInfoStorage.Get(lhs).SpawnPriority.CompareTo(
-                    ObjectTypeInfoStorage.Get(rhs).SpawnPriority);
-            });
+            Array.Sort(objectTypesToSpawn, ObjectTypesComparator);
             outputLevel.NewArea(nextAreaIndex, EnvTypeInfoStorage.Get(envType));
 
             for (int i = 0; i < objectTypesToSpawn.Length; ++i) {
@@ -116,6 +113,12 @@ namespace Catzilla.LevelAreaModule.Model {
 
             return objectTypeInfo.SpawnBaseCount +
                 (int) (levelIndex * objectTypeInfo.SpawnLevelFactor);
+        }
+
+        private int ObjectTypesComparator(
+            LevelObjectType lhs, LevelObjectType rhs) {
+            return ObjectTypeInfoStorage.Get(lhs).SpawnPriority.CompareTo(
+                ObjectTypeInfoStorage.Get(rhs).SpawnPriority);
         }
     }
 }

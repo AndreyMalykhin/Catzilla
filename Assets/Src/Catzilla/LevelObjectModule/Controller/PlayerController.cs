@@ -42,9 +42,10 @@ namespace Catzilla.LevelObjectModule.Controller {
         private LevelView level;
 
         public void OnDeath(IEvent evt) {
-            GameOverScreen.Show(() => {
-                Game.Pause();
-            });
+            PlayerSettings playerSettings = PlayerSettingsStorage.GetCurrent();
+            GameOverScreen.Menu.ResurrectBtn.interactable =
+                playerSettings.AvailableResurrectionsCount > 0;
+            GameOverScreen.Show(OnGameOverScreenShow);
             var player = (PlayerView) evt.data;
             AudioManager.Play(
                 player.DeathSound, player.AudioSource, PlayerAudioChannel);
@@ -69,6 +70,10 @@ namespace Catzilla.LevelObjectModule.Controller {
             CleanProjectiles();
         }
 
+        private void OnGameOverScreenShow() {
+            Game.Pause();
+        }
+
         private void CleanProjectiles() {
             GameObject[] projectiles =
                 GameObject.FindGameObjectsWithTag(ProjectileTag);
@@ -81,13 +86,13 @@ namespace Catzilla.LevelObjectModule.Controller {
         private void CompleteLevel(PlayerView player) {
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;
-            PlayerSettingsStorage.GetCurrent((playerSettings) => {
-                ++playerSettings.Level;
-                playerSettings.MaxScore = player.Score;
-                PlayerSettingsStorage.Update(playerSettings, () => {
-                    LevelCompleteScreen.Show();
-                });
-            });
+            PlayerSettings playerSettings = PlayerSettingsStorage.GetCurrent();
+            ++playerSettings.Level;
+            ++playerSettings.AvailableResurrectionsCount;
+            playerSettings.ScoreRecord = player.Score;
+            PlayerSettingsStorage.Update(playerSettings);
+            PlayerSettingsStorage.Sync();
+            LevelCompleteScreen.Show();
         }
     }
 }

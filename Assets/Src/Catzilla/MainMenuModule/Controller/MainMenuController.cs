@@ -8,9 +8,6 @@ using Catzilla.MainMenuModule.View;
 namespace Catzilla.MainMenuModule.Controller {
     public class MainMenuController {
         [Inject]
-        public LanguageManager Translator {get; set;}
-
-        [Inject]
         public MainMenuView MainMenu {get; set;}
 
         [Inject]
@@ -18,12 +15,6 @@ namespace Catzilla.MainMenuModule.Controller {
 
         [Inject]
         public Game Game {get; set;}
-
-        [PostConstruct]
-        public void OnConstruct() {
-            MainMenu.StartText.text = Translator.GetTextValue("MainMenu.Start");
-            MainMenu.ExitText.text = Translator.GetTextValue("MainMenu.Exit");
-        }
 
         public void OnExitBtnClick() {
             Game.Exit();

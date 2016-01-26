@@ -13,8 +13,7 @@ namespace Catzilla.GameOverMenuModule.View {
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
 
-        [SerializeField]
-        private GameOverMenuView menu;
+        public GameOverMenuView Menu;
 
         [SerializeField]
         private float animationDuration = 1f;
@@ -27,9 +26,7 @@ namespace Catzilla.GameOverMenuModule.View {
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
             image = GetComponent<Image>();
-            Color currentColor = image.color;
-            image.color =
-                new Color(currentColor.r, currentColor.g, currentColor.b, 0f);
+            FadeOut();
         }
 
         public void Show(Action onDone) {
@@ -37,22 +34,23 @@ namespace Catzilla.GameOverMenuModule.View {
             image.DOFade(1f, animationDuration)
                 .SetUpdate(UpdateType.Normal, true)
                 .OnComplete(() => {
-                    menu.Show();
+                    Menu.Show();
                     onDone();
                     EventBus.Dispatch(Event.Show);
                 });
         }
 
-        public void Hide(Action onDone) {
-            menu.Hide();
-            var duration = 0f;
-            image.DOFade(0f, duration)
-                .SetUpdate(UpdateType.Normal, true)
-                .OnComplete(() => {
-                    canvas.enabled = false;
-                    onDone();
-                    EventBus.Dispatch(Event.Hide);
-                });
+        public void Hide() {
+            Menu.Hide();
+            canvas.enabled = false;
+            FadeOut();
+            EventBus.Dispatch(Event.Hide);
+        }
+
+        private void FadeOut() {
+            Color currentColor = image.color;
+            image.color =
+                new Color(currentColor.r, currentColor.g, currentColor.b, 0f);
         }
     }
 }

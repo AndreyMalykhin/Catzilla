@@ -14,15 +14,9 @@ namespace Catzilla.GameOverMenuModule.View {
         public Text RestartText;
         public Text ExitText;
         public Text ResurrectText;
-
-        [SerializeField]
-        private Button exitBtn;
-
-        [SerializeField]
-        private Button restartBtn;
-
-        [SerializeField]
-        private Button resurrectBtn;
+        public Button ExitBtn;
+        public Button RestartBtn;
+        public Button ResurrectBtn;
 
         private Canvas canvas;
 
@@ -31,13 +25,13 @@ namespace Catzilla.GameOverMenuModule.View {
             // Debug.Log("GameOverMenuView.OnConstruct()");
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
-            exitBtn.onClick.AddListener(() => {
+            ExitBtn.onClick.AddListener(() => {
                 EventBus.Dispatch(Event.ExitBtnClick);
             });
-            restartBtn.onClick.AddListener(() => {
+            RestartBtn.onClick.AddListener(() => {
                 EventBus.Dispatch(Event.RestartBtnClick);
             });
-            resurrectBtn.onClick.AddListener(() => {
+            ResurrectBtn.onClick.AddListener(() => {
                 EventBus.Dispatch(Event.ResurrectBtnClick);
             });
         }

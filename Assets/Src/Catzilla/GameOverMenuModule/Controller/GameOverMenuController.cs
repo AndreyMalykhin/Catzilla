@@ -6,18 +6,19 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.View;
+using Catzilla.PlayerModule.Model;
 using Catzilla.GameOverMenuModule.View;
 
 namespace Catzilla.GameOverMenuModule.Controller {
     public class GameOverMenuController {
         [Inject]
-        public LanguageManager Translator {get; set;}
-
-        [Inject]
         public GameOverMenuView GameOverMenu {get; set;}
 
         [Inject]
         public GameOverScreenView GameOverScreen {get; set;}
+
+        [Inject]
+        public PlayerSettingsStorage PlayerSettingsStorage {get; set;}
 
         [Inject]
         public Game Game {get; set;}
@@ -27,23 +28,14 @@ namespace Catzilla.GameOverMenuModule.Controller {
 
         private PlayerView player;
 
-        [PostConstruct]
-        public void OnConstruct() {
-            GameOverMenu.RestartText.text =
-                Translator.GetTextValue("GameOverMenu.Restart");
-            GameOverMenu.ExitText.text =
-                Translator.GetTextValue("GameOverMenu.Exit");
-        }
-
         public void OnExitBtnClick() {
             Game.Exit();
         }
 
         public void OnRestartBtnClick() {
-            GameOverScreen.Hide(() => {
-                Game.LoadLevel();
-                Game.Resume();
-            });
+            Game.LoadLevel();
+            Game.Resume();
+            GameOverScreen.Hide();
         }
 
         public void OnPlayerConstruct(IEvent evt) {
@@ -51,14 +43,18 @@ namespace Catzilla.GameOverMenuModule.Controller {
         }
 
         public void OnResurrectBtnClick() {
-            Ad.Show(() => {
-                GameOverScreen.Hide(() => {
-                    player.IsHealthFreezed = false;
-                    player.IsScoreFreezed = false;
-                    player.Resurrect();
-                    Game.Resume();
-                });
-            });
+            Ad.Show(OnAdShowFinish);
+        }
+
+        private void OnAdShowFinish() {
+            player.IsHealthFreezed = false;
+            player.IsScoreFreezed = false;
+            player.Resurrect();
+            PlayerSettings playerSettings =
+                PlayerSettingsStorage.GetCurrent();
+            --playerSettings.AvailableResurrectionsCount;
+            Game.Resume();
+            GameOverScreen.Hide();
         }
     }
 }

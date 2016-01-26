@@ -23,15 +23,14 @@ namespace Catzilla.LevelModule.Controller {
         public LanguageManager Translator {get; set;}
 
         public void OnViewConstruct(IEvent evt) {
-            PlayerSettingsStorage.GetCurrent((playerSettings) => {
-                var msg = string.Format(Translator.GetTextValue(
-                    "LevelStartScreen.Level"), playerSettings.Level + 1);
-                LevelStartScreen.Msg.text = msg;
-                LevelStartScreen.Show();
-                var level = (LevelView) evt.data;
-                level.gameObject.SetActive(false);
-                LevelGenerator.NewLevel(playerSettings.Level, level);
-            });
+            PlayerSettings playerSettings = PlayerSettingsStorage.GetCurrent();
+            var level = (LevelView) evt.data;
+            level.gameObject.SetActive(false);
+            LevelGenerator.NewLevel(playerSettings.Level, level);
+            var msg = string.Format(Translator.GetTextValue(
+                "LevelStartScreen.Level"), playerSettings.Level + 1);
+            LevelStartScreen.Msg.text = msg;
+            LevelStartScreen.Show();
         }
     }
 }
