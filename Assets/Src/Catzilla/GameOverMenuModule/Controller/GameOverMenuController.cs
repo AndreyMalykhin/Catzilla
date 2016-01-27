@@ -18,7 +18,7 @@ namespace Catzilla.GameOverMenuModule.Controller {
         public GameOverScreenView GameOverScreen {get; set;}
 
         [Inject]
-        public PlayerSettingsStorage PlayerSettingsStorage {get; set;}
+        public PlayerStateStorage PlayerStateStorage {get; set;}
 
         [Inject]
         public Game Game {get; set;}
@@ -50,9 +50,8 @@ namespace Catzilla.GameOverMenuModule.Controller {
             player.IsHealthFreezed = false;
             player.IsScoreFreezed = false;
             player.Resurrect();
-            PlayerSettings playerSettings =
-                PlayerSettingsStorage.GetCurrent();
-            --playerSettings.AvailableResurrectionsCount;
+            PlayerState playerState = PlayerStateStorage.Get();
+            --playerState.AvailableResurrectionsCount;
             Game.Resume();
             GameOverScreen.Hide();
         }

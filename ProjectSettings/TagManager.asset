@@ -16,6 +16,8 @@ TagManager:
   - PoolStorage
   - Player.FieldOfView
   - Level
+  - CoroutineManager
+  - ActivityIndicator
   layers:
   - Default
   - TransparentFX

@@ -14,7 +14,7 @@ namespace Catzilla.LevelModule.Controller {
         public LevelGenerator LevelGenerator {get; set;}
 
         [Inject]
-        public PlayerSettingsStorage PlayerSettingsStorage {get; set;}
+        public PlayerStateStorage PlayerStateStorage {get; set;}
 
         [Inject]
         public LevelStartScreenView LevelStartScreen {get; set;}
@@ -23,12 +23,12 @@ namespace Catzilla.LevelModule.Controller {
         public LanguageManager Translator {get; set;}
 
         public void OnViewConstruct(IEvent evt) {
-            PlayerSettings playerSettings = PlayerSettingsStorage.GetCurrent();
+            PlayerState playerState = PlayerStateStorage.Get();
             var level = (LevelView) evt.data;
             level.gameObject.SetActive(false);
-            LevelGenerator.NewLevel(playerSettings.Level, level);
+            LevelGenerator.NewLevel(playerState.Level, level);
             var msg = string.Format(Translator.GetTextValue(
-                "LevelStartScreen.Level"), playerSettings.Level + 1);
+                "LevelStartScreen.Level"), playerState.Level + 1);
             LevelStartScreen.Msg.text = msg;
             LevelStartScreen.Show();
         }

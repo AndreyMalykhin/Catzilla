@@ -25,6 +25,10 @@ namespace Catzilla.CommonModule.Config {
                 .To<GameController>()
                 .ToSingleton()
                 .CrossContext();
+            injectionBinder.Bind<ServerController>()
+                .To<ServerController>()
+                .ToSingleton()
+                .CrossContext();
             injectionBinder.Bind<Ad>()
                 .To<Ad>()
                 .ToSingleton()
@@ -37,6 +41,10 @@ namespace Catzilla.CommonModule.Config {
                 .To<BtnController>()
                 .ToSingleton()
                 .CrossContext();
+            injectionBinder.Bind<Server>()
+                .To<Server>()
+                .ToSingleton()
+                .CrossContext();
             var ui = GameObject.FindWithTag("UI").GetComponent<UIView>();
             injectionBinder.Bind<UIView>()
                 .ToValue(ui)
@@ -46,6 +54,18 @@ namespace Catzilla.CommonModule.Config {
                 .GetComponent<PoolStorageView>();
             injectionBinder.Bind<PoolStorageView>()
                 .ToValue(poolStorage)
+                .ToInject(false)
+                .CrossContext();
+            var coroutineManager = GameObject.FindWithTag("CoroutineManager")
+                .GetComponent<CoroutineManagerView>();
+            injectionBinder.Bind<CoroutineManagerView>()
+                .ToValue(coroutineManager)
+                .ToInject(false)
+                .CrossContext();
+            var activityIndicator = GameObject.FindWithTag("ActivityIndicator")
+                .GetComponent<ActivityIndicatorView>();
+            injectionBinder.Bind<ActivityIndicatorView>()
+                .ToValue(activityIndicator)
                 .ToInject(false)
                 .CrossContext();
             injectionBinder.Bind<AudioManager>()
@@ -87,6 +107,13 @@ namespace Catzilla.CommonModule.Config {
                 injectionBinder.GetInstance<BtnController>();
             eventBus.AddListener(
                 BtnView.Event.Click, btnController.OnClick);
+
+            var serverController =
+                injectionBinder.GetInstance<ServerController>();
+            eventBus.AddListener(
+                Server.Event.Request, serverController.OnRequest);
+            eventBus.AddListener(
+                Server.Event.Response, serverController.OnResponse);
         }
 
         private void InitTranslator(LanguageManager translator) {

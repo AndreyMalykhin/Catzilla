@@ -16,7 +16,7 @@ namespace Catzilla.LevelObjectModule.Controller {
         public GameOverScreenView GameOverScreen {get; set;}
 
         [Inject]
-        public PlayerSettingsStorage PlayerSettingsStorage {get; set;}
+        public PlayerStateStorage PlayerStateStorage {get; set;}
 
         [Inject]
         public LevelCompleteScreenView LevelCompleteScreen {get; set;}
@@ -31,6 +31,9 @@ namespace Catzilla.LevelObjectModule.Controller {
         public AudioManager AudioManager {get; set;}
 
         [Inject]
+        public Server Server {get; set;}
+
+        [Inject]
         public Game Game {get; set;}
 
         [Inject("ProjectileTag")]
@@ -42,17 +45,22 @@ namespace Catzilla.LevelObjectModule.Controller {
         private LevelView level;
 
         public void OnDeath(IEvent evt) {
-            PlayerSettings playerSettings = PlayerSettingsStorage.GetCurrent();
-            GameOverScreen.Menu.ResurrectBtn.interactable =
-                playerSettings.AvailableResurrectionsCount > 0;
-            GameOverScreen.Show(OnGameOverScreenShow);
             var player = (PlayerView) evt.data;
+            PlayerState playerState = PlayerStateStorage.Get();
+            PlayerStateStorage.Save(playerState);
+            PlayerStateStorage.Sync(Server);
+            GameOverScreen.Menu.ResurrectBtn.interactable =
+                playerState.AvailableResurrectionsCount > 0;
+            GameOverScreen.Show(OnGameOverScreenShow);
             AudioManager.Play(
                 player.DeathSound, player.AudioSource, PlayerAudioChannel);
         }
 
         public void OnScoreChange(IEvent evt) {
             var player = (PlayerView) evt.data;
+            PlayerState playerState = PlayerStateStorage.Get();
+            playerState.ScoreRecord =
+                Mathf.Max(playerState.ScoreRecord, player.Score);
             LevelSettings levelSettings = LevelSettingsStorage.Get(level.Index);
 
             if (player.Score < levelSettings.CompletionScore) {
@@ -86,12 +94,11 @@ namespace Catzilla.LevelObjectModule.Controller {
         private void CompleteLevel(PlayerView player) {
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;
-            PlayerSettings playerSettings = PlayerSettingsStorage.GetCurrent();
-            ++playerSettings.Level;
-            ++playerSettings.AvailableResurrectionsCount;
-            playerSettings.ScoreRecord = player.Score;
-            PlayerSettingsStorage.Update(playerSettings);
-            PlayerSettingsStorage.Sync();
+            PlayerState playerState = PlayerStateStorage.Get();
+            ++playerState.Level;
+            ++playerState.AvailableResurrectionsCount;
+            PlayerStateStorage.Save(playerState);
+            PlayerStateStorage.Sync(Server);
             LevelCompleteScreen.Show();
         }
     }

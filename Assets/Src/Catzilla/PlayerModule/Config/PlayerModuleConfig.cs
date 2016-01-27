@@ -14,8 +14,8 @@ using Catzilla.PlayerModule.Controller;
 namespace Catzilla.PlayerModule.Config {
     public class PlayerModuleConfig: IModuleConfig {
         void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
-            injectionBinder.Bind<PlayerSettingsStorage>()
-                .To<PlayerSettingsStorage>()
+            injectionBinder.Bind<PlayerStateStorage>()
+                .To<PlayerStateStorage>()
                 .ToSingleton()
                 .CrossContext();
             injectionBinder.Bind<PlayerScoreController>()
