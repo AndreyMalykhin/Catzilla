@@ -22,6 +22,10 @@ namespace Catzilla.PlayerModule.Config {
                 .To<PlayerScoreController>()
                 .ToSingleton()
                 .CrossContext();
+            injectionBinder.Bind<PlayerStateStorageController>()
+                .To<PlayerStateStorageController>()
+                .ToSingleton()
+                .CrossContext();
         }
 
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
@@ -35,6 +39,11 @@ namespace Catzilla.PlayerModule.Config {
                 playerScoreController.OnViewConstruct);
             eventBus.AddListener(LevelView.Event.Construct,
                 playerScoreController.OnLevelConstruct);
+
+            var playerStateStorageController =
+                injectionBinder.GetInstance<PlayerStateStorageController>();
+            eventBus.AddListener(PlayerStateStorage.Event.Save,
+                playerStateStorageController.OnSave);
         }
     }
 }

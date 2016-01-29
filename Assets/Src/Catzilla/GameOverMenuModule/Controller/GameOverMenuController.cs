@@ -5,6 +5,7 @@ using SmartLocalization;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.PlayerModule.Model;
 using Catzilla.GameOverMenuModule.View;
@@ -17,6 +18,9 @@ namespace Catzilla.GameOverMenuModule.Controller {
         [Inject]
         public GameOverScreenView GameOverScreen {get; set;}
 
+        [Inject("RewardEarnDlg")]
+        public DlgView RewardEarnDlg {get; set;}
+
         [Inject]
         public PlayerStateStorage PlayerStateStorage {get; set;}
 
@@ -26,7 +30,18 @@ namespace Catzilla.GameOverMenuModule.Controller {
         [Inject]
         public Ad Ad {get; set;}
 
+        [Inject]
+        public LanguageManager Translator {get; set;}
+
         private PlayerView player;
+
+        [PostConstruct]
+        public void OnConstruct() {
+            GameOverMenu.ResurrectTextTemplate =
+                Translator.GetTextValue("GameOverMenu.Resurrect");
+            GameOverMenu.AvailableResurrectionsCount =
+                PlayerStateStorage.Get().AvailableResurrectionsCount;
+        }
 
         public void OnExitBtnClick() {
             Game.Exit();
@@ -43,17 +58,29 @@ namespace Catzilla.GameOverMenuModule.Controller {
         }
 
         public void OnResurrectBtnClick() {
-            Ad.Show(OnAdShowFinish);
-        }
-
-        private void OnAdShowFinish() {
             player.IsHealthFreezed = false;
             player.IsScoreFreezed = false;
             player.Resurrect();
             PlayerState playerState = PlayerStateStorage.Get();
             --playerState.AvailableResurrectionsCount;
+            PlayerStateStorage.Save(playerState);
             Game.Resume();
             GameOverScreen.Hide();
+        }
+
+        public void OnRewardBtnClick() {
+            Ad.Show(OnAdView);
+        }
+
+        private void OnAdView() {
+            RewardPlayer();
+        }
+
+        private void RewardPlayer() {
+            PlayerState playerState = PlayerStateStorage.Get();
+            ++playerState.AvailableResurrectionsCount;
+            PlayerStateStorage.Save(playerState);
+            RewardEarnDlg.Show();
         }
     }
 }

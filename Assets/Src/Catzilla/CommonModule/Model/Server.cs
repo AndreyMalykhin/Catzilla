@@ -22,10 +22,11 @@ namespace Catzilla.CommonModule.Model {
 
         public float ConnectionTimeout {get; set;}
         public int PendingRequestsCount {get; private set;}
+        public bool IsConnected {get; private set;}
 
         [PostConstruct]
         public void OnConstruct() {
-            ConnectionTimeout = 10f;
+            ConnectionTimeout = 5f;
         }
 
         public void Connect(Action onSuccess, Action onFail = null) {
@@ -37,6 +38,7 @@ namespace Catzilla.CommonModule.Model {
                 return;
             }
 
+            IsConnected = true;
             onSuccess();
         }
 
@@ -105,6 +107,7 @@ namespace Catzilla.CommonModule.Model {
         public void Dispose() {
             Debug.Log("Server.Dispose()");
             GS.ShutDown();
+            IsConnected = false;
         }
 
         private IEnumerator WaitForConnection(
@@ -123,6 +126,7 @@ namespace Catzilla.CommonModule.Model {
                 timeLeft -= checkPeriod;
             }
 
+            IsConnected = true;
             OnResponse();
             onSuccess();
         }

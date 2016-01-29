@@ -122,6 +122,12 @@
 	<data name="GameOverMenu.Restart" xml:space="preserve">
 		<value>Restart</value>
 	</data>
+	<data name="GameOverMenu.Resurrect" xml:space="preserve">
+		<value>Resurrect ({0})</value>
+	</data>
+	<data name="GameOverMenu.Reward" xml:space="preserve">
+		<value>Earn reward</value>
+	</data>
 	<data name="LevelCompleteScreen.Msg" xml:space="preserve">
 		<value>Level complete!</value>
 	</data>
@@ -137,7 +143,10 @@
 	<data name="Player.Score" xml:space="preserve">
 		<value>Score: {0} / {1}</value>
 	</data>
-	<data name="GameOverMenu.Resurrect" xml:space="preserve">
-		<value>Resurrect</value>
+	<data name="RewardEarnDlg.Msg" xml:space="preserve">
+		<value>+1 resurrection</value>
+	</data>
+	<data name="Common.Ok" xml:space="preserve">
+		<value>OK</value>
 	</data>
 </root>

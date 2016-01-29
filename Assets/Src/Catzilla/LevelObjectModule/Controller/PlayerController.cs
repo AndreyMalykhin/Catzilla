@@ -47,10 +47,14 @@ namespace Catzilla.LevelObjectModule.Controller {
         public void OnDeath(IEvent evt) {
             var player = (PlayerView) evt.data;
             PlayerState playerState = PlayerStateStorage.Get();
+            playerState.ScoreRecord =
+                Mathf.Max(playerState.ScoreRecord, player.Score);
             PlayerStateStorage.Save(playerState);
-            PlayerStateStorage.Sync(Server);
-            GameOverScreen.Menu.ResurrectBtn.interactable =
-                playerState.AvailableResurrectionsCount > 0;
+
+            if (Server.IsConnected) {
+                PlayerStateStorage.Sync(Server);
+            }
+
             GameOverScreen.Show(OnGameOverScreenShow);
             AudioManager.Play(
                 player.DeathSound, player.AudioSource, PlayerAudioChannel);
@@ -58,9 +62,6 @@ namespace Catzilla.LevelObjectModule.Controller {
 
         public void OnScoreChange(IEvent evt) {
             var player = (PlayerView) evt.data;
-            PlayerState playerState = PlayerStateStorage.Get();
-            playerState.ScoreRecord =
-                Mathf.Max(playerState.ScoreRecord, player.Score);
             LevelSettings levelSettings = LevelSettingsStorage.Get(level.Index);
 
             if (player.Score < levelSettings.CompletionScore) {
@@ -97,8 +98,13 @@ namespace Catzilla.LevelObjectModule.Controller {
             PlayerState playerState = PlayerStateStorage.Get();
             ++playerState.Level;
             ++playerState.AvailableResurrectionsCount;
+            playerState.ScoreRecord = player.Score;
             PlayerStateStorage.Save(playerState);
-            PlayerStateStorage.Sync(Server);
+
+            if (Server.IsConnected) {
+                PlayerStateStorage.Sync(Server);
+            }
+
             LevelCompleteScreen.Show();
         }
     }

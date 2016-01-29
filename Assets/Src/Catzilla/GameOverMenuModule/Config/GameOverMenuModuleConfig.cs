@@ -5,6 +5,7 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Config;
+using Catzilla.CommonModule.View;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.GameOverMenuModule.Controller;
 using Catzilla.GameOverMenuModule.View;
@@ -24,6 +25,13 @@ namespace Catzilla.GameOverMenuModule.Config {
                 .ToValue(menu)
                 .ToInject(false)
                 .CrossContext();
+            var rewardEarnDlg = GameObject.FindWithTag(
+                "GameOverScreen.RewardEarnDlg").GetComponent<DlgView>();
+            injectionBinder.Bind<DlgView>()
+                .ToValue(rewardEarnDlg)
+                .ToName("RewardEarnDlg")
+                .ToInject(false)
+                .CrossContext();
             injectionBinder.Bind<GameOverMenuController>()
                 .To<GameOverMenuController>()
                 .ToSingleton()
@@ -41,6 +49,8 @@ namespace Catzilla.GameOverMenuModule.Config {
                 gameOverMenuController.OnRestartBtnClick);
             eventBus.AddListener(GameOverMenuView.Event.ResurrectBtnClick,
                 gameOverMenuController.OnResurrectBtnClick);
+            eventBus.AddListener(GameOverMenuView.Event.RewardBtnClick,
+                gameOverMenuController.OnRewardBtnClick);
             eventBus.AddListener(PlayerView.Event.Construct,
                 gameOverMenuController.OnPlayerConstruct);
         }

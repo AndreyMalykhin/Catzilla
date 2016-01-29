@@ -6,19 +6,38 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 
 namespace Catzilla.GameOverMenuModule.View {
     public class GameOverMenuView: strange.extensions.mediation.impl.View {
-        public enum Event {ExitBtnClick, RestartBtnClick, ResurrectBtnClick}
+        public enum Event {
+            ExitBtnClick,
+            RestartBtnClick,
+            ResurrectBtnClick,
+            RewardBtnClick
+        }
 
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
 
+        public int AvailableResurrectionsCount {
+            get {
+                return availableResurrectionsCount;
+            }
+            set {
+                availableResurrectionsCount = value;
+                RenderResurrectBtn();
+            }
+        }
+
+        public string ResurrectTextTemplate {get; set;}
         public Text RestartText;
         public Text ExitText;
         public Text ResurrectText;
+        public Text RewardText;
         public Button ExitBtn;
         public Button RestartBtn;
         public Button ResurrectBtn;
+        public Button RewardBtn;
 
         private Canvas canvas;
+        private int availableResurrectionsCount;
 
         [PostConstruct]
         public void OnConstruct() {
@@ -34,6 +53,11 @@ namespace Catzilla.GameOverMenuModule.View {
             ResurrectBtn.onClick.AddListener(() => {
                 EventBus.Dispatch(Event.ResurrectBtnClick);
             });
+            RewardBtn.onClick.AddListener(() => {
+                EventBus.Dispatch(Event.RewardBtnClick);
+            });
+            ResurrectTextTemplate = "Resurrect ({0})";
+            RenderResurrectBtn();
         }
 
         public void Show() {
@@ -42,6 +66,12 @@ namespace Catzilla.GameOverMenuModule.View {
 
         public void Hide() {
             canvas.enabled = false;
+        }
+
+        private void RenderResurrectBtn() {
+            ResurrectText.text = string.Format(
+                ResurrectTextTemplate, availableResurrectionsCount);
+            ResurrectBtn.interactable = availableResurrectionsCount > 0;
         }
     }
 }

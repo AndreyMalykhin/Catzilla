@@ -23,9 +23,9 @@ namespace Catzilla.LevelModule.Controller {
         public LanguageManager Translator {get; set;}
 
         public void OnViewConstruct(IEvent evt) {
-            PlayerState playerState = PlayerStateStorage.Get();
             var level = (LevelView) evt.data;
             level.gameObject.SetActive(false);
+            PlayerState playerState = PlayerStateStorage.Get();
             LevelGenerator.NewLevel(playerState.Level, level);
             var msg = string.Format(Translator.GetTextValue(
                 "LevelStartScreen.Level"), playerState.Level + 1);
