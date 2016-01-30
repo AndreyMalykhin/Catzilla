@@ -4,6 +4,7 @@ using strange.extensions.injector.api;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using SmartLocalization;
+using Facebook.Unity;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
@@ -21,12 +22,12 @@ namespace Catzilla.CommonModule.Config {
                 .To<Game>()
                 .ToSingleton()
                 .CrossContext();
-            injectionBinder.Bind<GameController>()
-                .To<GameController>()
+            injectionBinder.Bind<PoolStorageController>()
+                .To<PoolStorageController>()
                 .ToSingleton()
                 .CrossContext();
-            injectionBinder.Bind<ServerController>()
-                .To<ServerController>()
+            injectionBinder.Bind<ActivityIndicatorController>()
+                .To<ActivityIndicatorController>()
                 .ToSingleton()
                 .CrossContext();
             injectionBinder.Bind<Ad>()
@@ -98,22 +99,24 @@ namespace Catzilla.CommonModule.Config {
             eventBus.AddListener(DisposableView.Event.TriggerExit,
                 disposableController.OnTriggerExit);
 
-            var gameController =
-                injectionBinder.GetInstance<GameController>();
+            var poolStorageController =
+                injectionBinder.GetInstance<PoolStorageController>();
             eventBus.AddListener(
-                Game.Event.LevelLoad, gameController.OnLevelLoad);
+                Game.Event.LevelLoad, poolStorageController.OnLevelLoad);
 
             var btnController =
                 injectionBinder.GetInstance<BtnController>();
             eventBus.AddListener(
                 BtnView.Event.Click, btnController.OnClick);
 
-            var serverController =
-                injectionBinder.GetInstance<ServerController>();
-            eventBus.AddListener(
-                Server.Event.Request, serverController.OnRequest);
-            eventBus.AddListener(
-                Server.Event.Response, serverController.OnResponse);
+            var activityIndicatorController =
+                injectionBinder.GetInstance<ActivityIndicatorController>();
+            eventBus.AddListener(Server.Event.Request,
+                activityIndicatorController.OnServerRequest);
+            eventBus.AddListener(Server.Event.Response,
+                activityIndicatorController.OnServerResponse);
+
+            FB.Init();
         }
 
         private void InitTranslator(LanguageManager translator) {

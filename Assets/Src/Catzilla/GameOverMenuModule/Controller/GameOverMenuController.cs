@@ -8,6 +8,7 @@ using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.PlayerModule.Model;
+using Catzilla.LeaderboardModule.Model;
 using Catzilla.GameOverMenuModule.View;
 
 namespace Catzilla.GameOverMenuModule.Controller {
@@ -33,12 +34,28 @@ namespace Catzilla.GameOverMenuModule.Controller {
         [Inject]
         public LanguageManager Translator {get; set;}
 
+        [Inject]
+        public LeaderboardManager LeaderboardManager {get; set;}
+
         private PlayerView player;
 
         [PostConstruct]
         public void OnConstruct() {
             GameOverMenu.ResurrectTextTemplate =
                 Translator.GetTextValue("GameOverMenu.Resurrect");
+            GameOverMenu.AvailableResurrectionsCount =
+                PlayerStateStorage.Get().AvailableResurrectionsCount;
+        }
+
+        public void OnServerDispose() {
+            GameOverMenu.LeaderboardBtn.interactable = false;
+        }
+
+        public void OnLeaderboardBtnClick() {
+            LeaderboardManager.Show();
+        }
+
+        public void OnPlayerStateStorageSave() {
             GameOverMenu.AvailableResurrectionsCount =
                 PlayerStateStorage.Get().AvailableResurrectionsCount;
         }

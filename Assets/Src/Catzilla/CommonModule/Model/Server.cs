@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using GameSparks.Core;
 using GameSparks.Api;
 using GameSparks.Api.Requests;
@@ -12,7 +13,7 @@ using Catzilla.PlayerModule.Model;
 
 namespace Catzilla.CommonModule.Model {
     public class Server: IDisposable {
-        public enum Event {Request, Response}
+        public enum Event {Request, Response, Dispose}
 
         [Inject]
         public CoroutineManagerView CoroutineManager {get; set;}
@@ -23,6 +24,7 @@ namespace Catzilla.CommonModule.Model {
         public float ConnectionTimeout {get; set;}
         public int PendingRequestsCount {get; private set;}
         public bool IsConnected {get; private set;}
+        public bool IsDisposed {get; private set;}
 
         [PostConstruct]
         public void OnConstruct() {
@@ -54,6 +56,54 @@ namespace Catzilla.CommonModule.Model {
 
                     onSuccess();
             });
+            OnRequest();
+        }
+
+        public void LinkFacebookAccount(
+            string accessToken, Action onSuccess, Action onFail = null) {
+            Debug.LogFormat("Server.LinkFacebookAccount()");
+            new FacebookConnectRequest()
+                .SetAccessToken(accessToken)
+                .Send((response) => {
+                    OnResponse();
+
+                    if (response.HasErrors) {
+                        if (onFail != null) onFail();
+                        return;
+                    }
+
+                    onSuccess();
+                });
+            OnRequest();
+        }
+
+        public void GetScoreLeaderboard(
+            Action<List<ScoreLeaderboardItem>> onSuccess,
+            Action onFail = null) {
+            int itemsCount = 10;
+            new AroundMeLeaderboardRequest()
+                .SetEntryCount(itemsCount)
+                .SetLeaderboardShortCode("ScoreLeaderboard")
+                .Send((response) => {
+                    OnResponse();
+
+                    if (response.HasErrors) {
+                        if (onFail != null) onFail();
+                        return;
+                    }
+
+                    var items = new List<ScoreLeaderboardItem>(itemsCount);
+
+                    foreach (AroundMeLeaderboardResponse._LeaderboardData item in response.Data) {
+                        items.Add(new ScoreLeaderboardItem(
+                            item.Rank.GetValueOrDefault(),
+                            Int32.Parse(item.JSONData["ScoreRecord"].ToString()),
+                            item.UserName
+                        ));
+                    }
+
+                    onSuccess(items);
+                });
             OnRequest();
         }
 
@@ -108,6 +158,8 @@ namespace Catzilla.CommonModule.Model {
             Debug.Log("Server.Dispose()");
             GS.ShutDown();
             IsConnected = false;
+            IsDisposed = true;
+            EventBus.Dispatch(Event.Dispose, this);
         }
 
         private IEnumerator WaitForConnection(

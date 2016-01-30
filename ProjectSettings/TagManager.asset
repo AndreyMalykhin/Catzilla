@@ -19,6 +19,7 @@ TagManager:
   - CoroutineManager
   - ActivityIndicator
   - GameOverScreen.RewardEarnDlg
+  - LeaderboardsScreen
   layers:
   - Default
   - TransparentFX

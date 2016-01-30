@@ -116,11 +116,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+	<data name="Common.Back" xml:space="preserve">
+		<value>Back</value>
+	</data>
 	<data name="Common.Ok" xml:space="preserve">
 		<value>OK</value>
 	</data>
 	<data name="GameOverMenu.Exit" xml:space="preserve">
 		<value>Quit</value>
+	</data>
+	<data name="GameOverMenu.Leaderboard" xml:space="preserve">
+		<value>Leaderboard</value>
 	</data>
 	<data name="GameOverMenu.Restart" xml:space="preserve">
 		<value>Restart</value>
@@ -140,6 +146,9 @@
 	<data name="MainMenu.Exit" xml:space="preserve">
 		<value>Quit</value>
 	</data>
+	<data name="MainMenu.Leaderboard" xml:space="preserve">
+		<value>Leaderboard</value>
+	</data>
 	<data name="MainMenu.Start" xml:space="preserve">
 		<value>Play</value>
 	</data>
@@ -148,5 +157,14 @@
 	</data>
 	<data name="RewardEarnDlg.Msg" xml:space="preserve">
 		<value>+1 resurrection</value>
+	</data>
+	<data name="ScoreLeaderboard.Name" xml:space="preserve">
+		<value>Name</value>
+	</data>
+	<data name="ScoreLeaderboard.Rank" xml:space="preserve">
+		<value>Rank</value>
+	</data>
+	<data name="ScoreLeaderboard.Score" xml:space="preserve">
+		<value>Score</value>
 	</data>
 </root>

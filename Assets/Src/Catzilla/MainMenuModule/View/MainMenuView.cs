@@ -6,19 +6,14 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 
 namespace Catzilla.MainMenuModule.View {
     public class MainMenuView: strange.extensions.mediation.impl.View {
-        public enum Event {ExitBtnClick, StartBtnClick}
+        public enum Event {ExitBtnClick, StartBtnClick, LeaderboardBtnClick}
 
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
 
-        public Text StartText;
-        public Text ExitText;
-
-        [SerializeField]
-        private Button startBtn;
-
-        [SerializeField]
-        private Button exitBtn;
+        public Button StartBtn;
+        public Button ExitBtn;
+        public Button LeaderboardBtn;
 
         private Canvas canvas;
 
@@ -27,11 +22,14 @@ namespace Catzilla.MainMenuModule.View {
             // Debug.Log("MainMenuView.OnConstruct()");
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
-            exitBtn.onClick.AddListener(() => {
+            ExitBtn.onClick.AddListener(() => {
                 EventBus.Dispatch(Event.ExitBtnClick);
             });
-            startBtn.onClick.AddListener(() => {
+            StartBtn.onClick.AddListener(() => {
                 EventBus.Dispatch(Event.StartBtnClick);
+            });
+            LeaderboardBtn.onClick.AddListener(() => {
+                EventBus.Dispatch(Event.LeaderboardBtnClick);
             });
         }
 

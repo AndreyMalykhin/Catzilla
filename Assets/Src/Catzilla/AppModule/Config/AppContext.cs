@@ -4,6 +4,7 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using Catzilla.CommonModule.Config;
 using Catzilla.MainMenuModule.Config;
+using Catzilla.LeaderboardModule.Config;
 using Catzilla.GameOverMenuModule.Config;
 using Catzilla.LevelModule.Config;
 using Catzilla.LevelAreaModule.Config;
@@ -22,6 +23,7 @@ namespace Catzilla.AppModule.Config {
                 new CommonModuleConfig(),
                 new MainMenuModuleConfig(),
                 new GameOverMenuModuleConfig(),
+                new LeaderboardModuleConfig(),
                 new PlayerModuleConfig(),
                 new LevelObjectModuleConfig(),
                 new LevelAreaModuleConfig(),

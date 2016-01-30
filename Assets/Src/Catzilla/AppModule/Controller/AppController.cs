@@ -19,7 +19,7 @@ namespace Catzilla.AppModule.Controller {
         public PlayerStateStorage PlayerStateStorage {get; set;}
 
         public void OnStart() {
-            Debug.Log("AppController.OnStart()");
+            // Debug.Log("AppController.OnStart()");
             Server.Connect(OnServerConnectSuccess, OnServerConnectFail);
         }
 

@@ -10,7 +10,8 @@ namespace Catzilla.GameOverMenuModule.View {
             ExitBtnClick,
             RestartBtnClick,
             ResurrectBtnClick,
-            RewardBtnClick
+            RewardBtnClick,
+            LeaderboardBtnClick
         }
 
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
@@ -31,10 +32,12 @@ namespace Catzilla.GameOverMenuModule.View {
         public Text ExitText;
         public Text ResurrectText;
         public Text RewardText;
+        public Text LeaderboardText;
         public Button ExitBtn;
         public Button RestartBtn;
         public Button ResurrectBtn;
         public Button RewardBtn;
+        public Button LeaderboardBtn;
 
         private Canvas canvas;
         private int availableResurrectionsCount;
@@ -55,6 +58,9 @@ namespace Catzilla.GameOverMenuModule.View {
             });
             RewardBtn.onClick.AddListener(() => {
                 EventBus.Dispatch(Event.RewardBtnClick);
+            });
+            LeaderboardBtn.onClick.AddListener(() => {
+                EventBus.Dispatch(Event.LeaderboardBtnClick);
             });
             ResurrectTextTemplate = "Resurrect ({0})";
             RenderResurrectBtn();

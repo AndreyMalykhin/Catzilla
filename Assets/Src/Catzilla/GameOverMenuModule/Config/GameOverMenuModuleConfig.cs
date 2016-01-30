@@ -6,7 +6,9 @@ using strange.extensions.context.impl;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.View;
+using Catzilla.CommonModule.Model;
 using Catzilla.LevelObjectModule.View;
+using Catzilla.PlayerModule.Model;
 using Catzilla.GameOverMenuModule.Controller;
 using Catzilla.GameOverMenuModule.View;
 
@@ -51,8 +53,14 @@ namespace Catzilla.GameOverMenuModule.Config {
                 gameOverMenuController.OnResurrectBtnClick);
             eventBus.AddListener(GameOverMenuView.Event.RewardBtnClick,
                 gameOverMenuController.OnRewardBtnClick);
+            eventBus.AddListener(GameOverMenuView.Event.LeaderboardBtnClick,
+                gameOverMenuController.OnLeaderboardBtnClick);
+            eventBus.AddListener(Server.Event.Dispose,
+                gameOverMenuController.OnServerDispose);
             eventBus.AddListener(PlayerView.Event.Construct,
                 gameOverMenuController.OnPlayerConstruct);
+            eventBus.AddListener(PlayerStateStorage.Event.Save,
+                gameOverMenuController.OnPlayerStateStorageSave);
         }
     }
 }

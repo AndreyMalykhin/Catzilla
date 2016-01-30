@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
-using SmartLocalization;
 using Catzilla.CommonModule.Model;
+using Catzilla.LeaderboardModule.Model;
 using Catzilla.MainMenuModule.View;
 
 namespace Catzilla.MainMenuModule.Controller {
@@ -16,6 +14,13 @@ namespace Catzilla.MainMenuModule.Controller {
         [Inject]
         public Game Game {get; set;}
 
+        [Inject]
+        public LeaderboardManager LeaderboardManager {get; set;}
+
+        public void OnServerDispose() {
+            MainMenu.LeaderboardBtn.interactable = false;
+        }
+
         public void OnExitBtnClick() {
             Game.Exit();
         }
@@ -23,6 +28,10 @@ namespace Catzilla.MainMenuModule.Controller {
         public void OnStartBtnClick() {
             MainScreen.Hide();
             Game.LoadLevel();
+        }
+
+        public void OnLeaderboardBtnClick() {
+            LeaderboardManager.Show();
         }
     }
 }

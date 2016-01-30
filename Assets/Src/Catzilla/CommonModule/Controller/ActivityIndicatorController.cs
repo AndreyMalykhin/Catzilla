@@ -5,15 +5,15 @@ using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.View;
 
 namespace Catzilla.CommonModule.Controller {
-    public class ServerController {
+    public class ActivityIndicatorController {
         [Inject]
         public ActivityIndicatorView ActivityIndicator {get; set;}
 
-        public void OnRequest() {
+        public void OnServerRequest() {
             ActivityIndicator.Show();
         }
 
-        public void OnResponse(IEvent evt) {
+        public void OnServerResponse(IEvent evt) {
             var server = (Server) evt.data;
 
             if (server.PendingRequestsCount > 0) {

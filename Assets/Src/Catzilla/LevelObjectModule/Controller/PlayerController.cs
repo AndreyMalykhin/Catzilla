@@ -51,7 +51,7 @@ namespace Catzilla.LevelObjectModule.Controller {
                 Mathf.Max(playerState.ScoreRecord, player.Score);
             PlayerStateStorage.Save(playerState);
 
-            if (Server.IsConnected) {
+            if (!Server.IsDisposed) {
                 PlayerStateStorage.Sync(Server);
             }
 
@@ -101,7 +101,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             playerState.ScoreRecord = player.Score;
             PlayerStateStorage.Save(playerState);
 
-            if (Server.IsConnected) {
+            if (!Server.IsDisposed) {
                 PlayerStateStorage.Sync(Server);
             }
 
