@@ -18,13 +18,13 @@ namespace Catzilla.CommonModule.Model {
         public AudioManager AudioManager {get; set;}
 
         public void Pause() {
-            Debug.Log("Game.Pause()");
+            // DebugUtils.Log("Game.Pause()");
             Time.timeScale = 0f;
             AudioManager.IsPaused = true;
         }
 
         public void Resume() {
-            Debug.Log("Game.Resume()");
+            // DebugUtils.Log("Game.Resume()");
             Time.timeScale = 1f;
             AudioManager.IsPaused = false;
         }
@@ -34,7 +34,7 @@ namespace Catzilla.CommonModule.Model {
         }
 
         public void LoadLevel() {
-            Debug.Log("Game.LoadLevel()");
+            // DebugUtils.Log("Game.LoadLevel()");
             SceneManager.LoadScene(LevelScene);
             EventBus.Dispatch(Event.LevelLoad);
         }

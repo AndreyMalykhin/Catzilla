@@ -11,7 +11,10 @@ namespace Catzilla.PlayerModule.View {
         [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
         public IEventDispatcher EventBus {get; set;}
 
-        public string Text {get; set;}
+        public string Text {
+            get {return text;}
+            set {text = value;}
+        }
 
         public int Value {
             get {
@@ -35,18 +38,18 @@ namespace Catzilla.PlayerModule.View {
 
         private int value;
         private int maxValue;
-        private Text text;
+        private string text = "Score: {0} / {1}";
+        private Text textView;
 
         [PostConstruct]
         public void OnConstruct() {
-            text = GetComponent<Text>();
-            Text = "Score: {0} / {1}";
+            textView = GetComponent<Text>();
             Render();
             EventBus.Dispatch(Event.Construct, this);
         }
 
         private void Render() {
-            text.text = string.Format(Text, value, maxValue);
+            textView.text = string.Format(text, value, maxValue);
         }
     }
 }

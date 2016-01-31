@@ -43,18 +43,18 @@ namespace Catzilla.CommonModule.View {
             instance.transform.parent = transform;
             instance.gameObject.SetActive(false);
             poolsMap[instance.PoolId].ReturnInstance(instance);
-            // Debug.LogFormat("PoolStorageView.Return(); left={0}; instance={1}",
+            // DebugUtils.Log("PoolStorageView.Return(); left={0}; instance={1}",
             //     poolsMap[instance.PoolId].available, instance);
         }
 
         public void Delete(PoolableView instance) {
-            // Debug.LogFormat("PoolStorageView.Delete(); left={0}; instance={1}",
+            // DebugUtils.Log("PoolStorageView.Delete(); left={0}; instance={1}",
             //     poolsMap[instance.PoolId].instanceCount, instance);
             poolsMap[instance.PoolId].Remove(instance);
         }
 
         public void Reset() {
-            Debug.Log("PoolStorageView.Reset()");
+            // DebugUtils.Log("PoolStorageView.Reset()");
 
             foreach (Transform child in transform) {
                 GameObject.Destroy(child.gameObject);

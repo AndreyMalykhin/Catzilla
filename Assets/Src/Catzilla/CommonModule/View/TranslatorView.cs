@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using SmartLocalization;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class TranslatorView: strange.extensions.mediation.impl.View {
         [Inject]
-        public LanguageManager Translator {get; set;}
+        public Translator Translator {get; set;}
 
         [System.Serializable]
         private struct Item {
@@ -21,7 +21,7 @@ namespace Catzilla.CommonModule.View {
         public void OnConstruct() {
             for (int i = 0; i < items.Length; ++i) {
                 Item item = items[i];
-                item.Text.text = Translator.GetTextValue(item.Key);
+                item.Text.text = Translator.Translate(item.Key);
             }
         }
     }

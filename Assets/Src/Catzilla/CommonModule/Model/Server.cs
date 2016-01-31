@@ -8,6 +8,7 @@ using GameSparks.Api.Requests;
 using GameSparks.Api.Responses;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.context.api;
+using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.PlayerModule.Model;
 
@@ -32,7 +33,7 @@ namespace Catzilla.CommonModule.Model {
         }
 
         public void Connect(Action onSuccess, Action onFail = null) {
-            Debug.Log("Server.Connect()");
+            // DebugUtils.Log("Server.Connect()");
 
             if (!GS.Available) {
                 OnRequest();
@@ -44,9 +45,11 @@ namespace Catzilla.CommonModule.Model {
             onSuccess();
         }
 
-        public void Login(Action onSuccess, Action onFail = null) {
-            Debug.Log("Server.Login()");
-            new DeviceAuthenticationRequest().Send((response) => {
+        public void Login(string name, Action onSuccess, Action onFail = null) {
+            // DebugUtils.Log("Server.Login()");
+            new DeviceAuthenticationRequest()
+                .SetDisplayName(name)
+                .Send((response) => {
                     OnResponse();
 
                     if (response.HasErrors) {
@@ -55,15 +58,16 @@ namespace Catzilla.CommonModule.Model {
                     }
 
                     onSuccess();
-            });
+                });
             OnRequest();
         }
 
         public void LinkFacebookAccount(
             string accessToken, Action onSuccess, Action onFail = null) {
-            Debug.LogFormat("Server.LinkFacebookAccount()");
+            // DebugUtils.Log("Server.LinkFacebookAccount()");
             new FacebookConnectRequest()
                 .SetAccessToken(accessToken)
+                .SetErrorOnSwitch(true)
                 .Send((response) => {
                     OnResponse();
 
@@ -109,7 +113,7 @@ namespace Catzilla.CommonModule.Model {
 
         public void SavePlayer(PlayerState player,
             Action onSuccess = null, Action onFail = null) {
-            Debug.LogFormat("Server.SavePlayer()");
+            // DebugUtils.Log("Server.SavePlayer()");
             new LogEventRequest()
                 .SetEventKey("PlayerSave")
                 .SetEventAttribute("Level", player.Level)
@@ -129,7 +133,7 @@ namespace Catzilla.CommonModule.Model {
 
         public void GetPlayer(
             Action<PlayerState> onSuccess, Action onFail = null) {
-            Debug.LogFormat("Server.GetPlayer()");
+            // DebugUtils.Log("Server.GetPlayer()");
             new LogEventRequest().SetEventKey("PlayerGet").Send((response) => {
                 OnResponse();
 
@@ -155,7 +159,7 @@ namespace Catzilla.CommonModule.Model {
         }
 
         public void Dispose() {
-            Debug.Log("Server.Dispose()");
+            // DebugUtils.Log("Server.Dispose()");
             GS.ShutDown();
             IsConnected = false;
             IsDisposed = true;

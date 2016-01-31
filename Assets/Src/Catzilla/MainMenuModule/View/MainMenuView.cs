@@ -19,7 +19,7 @@ namespace Catzilla.MainMenuModule.View {
 
         [PostConstruct]
         public void OnConstruct() {
-            // Debug.Log("MainMenuView.OnConstruct()");
+            // DebugUtils.Log("MainMenuView.OnConstruct()");
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
             ExitBtn.onClick.AddListener(() => {

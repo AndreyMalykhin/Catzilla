@@ -37,7 +37,7 @@ namespace Catzilla.LevelModule.View {
 
         [PostConstruct]
         public void OnConstruct() {
-            Debug.Log("LevelView.OnConstruct()");
+            // DebugUtils.Log("LevelView.OnConstruct()");
             areaHalfWidth = AreaWidth / 2f;
             areaHalfDepth = AreaDepth / 2f;
             EventBus.Dispatch(Event.Construct, this);
@@ -54,7 +54,7 @@ namespace Catzilla.LevelModule.View {
 
         public LevelObjectView NewObject(
             ObjectTypeInfo typeInfo, LevelAreaPoint spawnPoint, int areaIndex) {
-            // Debug.LogFormat("LevelView.NewObject(); type={0}", typeInfo.Type);
+            // DebugUtils.Log("LevelView.NewObject(); type={0}", typeInfo.Type);
             var position = new Vector3(
                 spawnPoint.X + typeInfo.Width / 2f - areaHalfWidth,
                 0f,

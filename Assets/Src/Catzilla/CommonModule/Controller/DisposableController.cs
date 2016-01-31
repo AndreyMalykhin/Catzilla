@@ -12,7 +12,7 @@ namespace Catzilla.CommonModule.Controller {
         public void OnTriggerExit(IEvent evt) {
             var eventData = (EventData) evt.data;
             var collider = (Collider) eventData.Data;
-            // Debug.LogFormat(
+            // DebugUtils.Log(
             //     "DisposableController.OnTriggerExit(); collider={0}", collider);
 
             if (collider == null

@@ -132,7 +132,7 @@
 		<value>Играть снова</value>
 	</data>
 	<data name="GameOverMenu.Resurrect" xml:space="preserve">
-		<value>Воскресить</value>
+		<value>Воскресить ({0})</value>
 	</data>
 	<data name="GameOverMenu.Reward" xml:space="preserve">
 		<value>Получить приз</value>

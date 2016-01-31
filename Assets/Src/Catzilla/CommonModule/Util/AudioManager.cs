@@ -23,7 +23,7 @@ namespace Catzilla.CommonModule.Util {
 
         public void Play(
             AudioClip sound, AudioSource audioSource, int channel) {
-            // Debug.LogFormat("AudioManager.Play(); sound={0};", sound);
+            // DebugUtils.Log("AudioManager.Play(); sound={0};", sound);
             int freeSlot = GetFreeChannelSlot(channel);
 
             if (freeSlot == -1) {

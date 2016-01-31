@@ -4,7 +4,6 @@ using strange.extensions.injector.api;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using SmartLocalization;
-using Facebook.Unity;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
@@ -13,10 +12,9 @@ using Catzilla.CommonModule.Controller;
 namespace Catzilla.CommonModule.Config {
     public class CommonModuleConfig: IModuleConfig {
         void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
-            InitTranslator(LanguageManager.Instance);
-            injectionBinder.Bind<LanguageManager>()
-                .ToValue(LanguageManager.Instance)
-                .ToInject(false)
+            injectionBinder.Bind<Translator>()
+                .To<Translator>()
+                .ToSingleton()
                 .CrossContext();
             injectionBinder.Bind<Game>()
                 .To<Game>()
@@ -94,6 +92,7 @@ namespace Catzilla.CommonModule.Config {
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
             var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
                 ContextKeys.CROSS_CONTEXT_DISPATCHER);
+
             var disposableController =
                 injectionBinder.GetInstance<DisposableController>();
             eventBus.AddListener(DisposableView.Event.TriggerExit,
@@ -115,18 +114,6 @@ namespace Catzilla.CommonModule.Config {
                 activityIndicatorController.OnServerRequest);
             eventBus.AddListener(Server.Event.Response,
                 activityIndicatorController.OnServerResponse);
-
-            FB.Init();
-        }
-
-        private void InitTranslator(LanguageManager translator) {
-            GameObject.DontDestroyOnLoad(translator);
-            SmartCultureInfo language =
-                translator.GetDeviceCultureIfSupported();
-
-            if (language != null) {
-                translator.ChangeLanguage(language);
-            }
         }
     }
 }

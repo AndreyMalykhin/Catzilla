@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Catzilla.CommonModule.Util;
 using Catzilla.LevelAreaModule.Model;
 using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelObjectModule.View;
@@ -51,7 +52,7 @@ namespace Catzilla.LevelModule.Model {
         }
 
         public void NewLevel(int levelIndex, LevelView outputLevel) {
-            Debug.Log("LevelGenerator.NewLevel()");
+            // DebugUtils.Log("LevelGenerator.NewLevel()");
             outputLevel.Init(levelIndex);
             nextState = State.Start;
             bool spawnPlayer = true;
@@ -59,7 +60,7 @@ namespace Catzilla.LevelModule.Model {
         }
 
         public void NewArea(LevelView outputLevel) {
-            // Debug.Log("LevelGenerator.NewArea()");
+            // DebugUtils.Log("LevelGenerator.NewArea()");
             bool spawnPlayer = false;
             NewArea(spawnPlayer, outputLevel);
         }

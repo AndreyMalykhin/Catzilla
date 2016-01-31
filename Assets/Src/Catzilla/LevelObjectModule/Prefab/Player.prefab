@@ -338,7 +338,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeathSound: {fileID: 8300000, guid: 7b1a6f0e82bb648aa8d0338272804aed, type: 3}
-  ResurrectionSound: {fileID: 8300000, guid: 8ab1bcb4558a94fc78780e3a980daf1f, type: 3}
   AudioSource: {fileID: 8291638}
   frontSpeed: 5
   sideSpeed: 5
@@ -491,6 +490,14 @@ Prefab:
       propertyPath: ResurrectionSound
       value: 
       objectReference: {fileID: 8300000, guid: 8ab1bcb4558a94fc78780e3a980daf1f, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3ef43c270a6e5459c95dec7249e18c6c, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 103594}

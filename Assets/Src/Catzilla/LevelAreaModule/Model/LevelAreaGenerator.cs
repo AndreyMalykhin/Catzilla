@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelModule.View;
 using Catzilla.LevelAreaModule.View;
@@ -22,8 +23,8 @@ namespace Catzilla.LevelAreaModule.Model {
 
         public void NewArea(
             EnvType envType, bool spawnPlayer, LevelView outputLevel) {
-            Debug.LogFormat(
-                "LevelAreaGenerator.NewArea(); envType={0}", envType);
+            // DebugUtils.Log(
+            //     "LevelAreaGenerator.NewArea(); envType={0}", envType);
             reservedSpawnPoints.Clear();
             LevelObjectType[] objectTypesToSpawn =
                 EnvTypeInfoStorage.Get(envType).GetObjectTypes();

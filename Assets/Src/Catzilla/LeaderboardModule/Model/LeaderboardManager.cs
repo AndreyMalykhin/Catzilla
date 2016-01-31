@@ -32,8 +32,8 @@ namespace Catzilla.LeaderboardModule.Model {
                 return;
             }
 
-            Server.LinkFacebookAccount(
-                loginResult.AccessToken.TokenString, OnFacebookAccountLink);
+            Server.LinkFacebookAccount(loginResult.AccessToken.TokenString,
+                OnFacebookAccountLink, OnFacebookAccountLink);
         }
 
         private void OnFacebookAccountLink() {

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.context.api;
+using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
 
 namespace Catzilla.PlayerModule.Model {
@@ -28,7 +29,7 @@ namespace Catzilla.PlayerModule.Model {
         }
 
         public void Save(PlayerState player) {
-            Debug.Log("PlayerStateStorage.Save()");
+            // DebugUtils.Log("PlayerStateStorage.Save()");
             this.player = player;
             PlayerPrefs.SetInt("Level", player.Level);
             PlayerPrefs.SetInt("ScoreRecord", player.ScoreRecord);
@@ -40,7 +41,7 @@ namespace Catzilla.PlayerModule.Model {
 
         public void Sync(
             Server server, Action onSuccess = null, Action onFail = null) {
-            Debug.Log("PlayerStateStorage.Sync()");
+            // DebugUtils.Log("PlayerStateStorage.Sync()");
             server.GetPlayer(
                 (remotePlayer) => {
                     PlayerState localPlayer = Get();

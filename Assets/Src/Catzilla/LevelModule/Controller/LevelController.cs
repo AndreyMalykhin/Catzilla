@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using strange.extensions.dispatcher.eventdispatcher.api;
-using SmartLocalization;
 using Catzilla.CommonModule.Util;
 using Catzilla.PlayerModule.Model;
 using Catzilla.LevelAreaModule.View;
@@ -20,14 +19,14 @@ namespace Catzilla.LevelModule.Controller {
         public LevelStartScreenView LevelStartScreen {get; set;}
 
         [Inject]
-        public LanguageManager Translator {get; set;}
+        public Translator Translator {get; set;}
 
         public void OnViewConstruct(IEvent evt) {
             var level = (LevelView) evt.data;
             level.gameObject.SetActive(false);
             PlayerState playerState = PlayerStateStorage.Get();
             LevelGenerator.NewLevel(playerState.Level, level);
-            var msg = string.Format(Translator.GetTextValue(
+            var msg = string.Format(Translator.Translate(
                 "LevelStartScreen.Level"), playerState.Level + 1);
             LevelStartScreen.Msg.text = msg;
             LevelStartScreen.Show();

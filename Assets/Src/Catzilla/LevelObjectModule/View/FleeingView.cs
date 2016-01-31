@@ -34,12 +34,12 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void OnEnable() {
-            // Debug.Log("FleeingView.OnEnable()");
+            // DebugUtils.Log("FleeingView.OnEnable()");
             body.velocity = new Vector3(0f, 0f, speed);
         }
 
         private void OnDisable() {
-            // Debug.Log("FleeingView.OnDisable()");
+            // DebugUtils.Log("FleeingView.OnDisable()");
             body.velocity = Vector3.zero;
         }
     }

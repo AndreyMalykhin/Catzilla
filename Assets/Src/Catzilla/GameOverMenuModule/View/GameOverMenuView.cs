@@ -27,7 +27,11 @@ namespace Catzilla.GameOverMenuModule.View {
             }
         }
 
-        public string ResurrectTextTemplate {get; set;}
+        public string ResurrectTextTemplate {
+            get {return resurrectTextTemplate;}
+            set {resurrectTextTemplate = value;}
+        }
+
         public Text RestartText;
         public Text ExitText;
         public Text ResurrectText;
@@ -41,10 +45,11 @@ namespace Catzilla.GameOverMenuModule.View {
 
         private Canvas canvas;
         private int availableResurrectionsCount;
+        private string resurrectTextTemplate = "Resurrect ({0})";
 
         [PostConstruct]
         public void OnConstruct() {
-            // Debug.Log("GameOverMenuView.OnConstruct()");
+            // DebugUtils.Log("GameOverMenuView.OnConstruct()");
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
             ExitBtn.onClick.AddListener(() => {
@@ -62,7 +67,6 @@ namespace Catzilla.GameOverMenuModule.View {
             LeaderboardBtn.onClick.AddListener(() => {
                 EventBus.Dispatch(Event.LeaderboardBtnClick);
             });
-            ResurrectTextTemplate = "Resurrect ({0})";
             RenderResurrectBtn();
         }
 
@@ -76,7 +80,7 @@ namespace Catzilla.GameOverMenuModule.View {
 
         private void RenderResurrectBtn() {
             ResurrectText.text = string.Format(
-                ResurrectTextTemplate, availableResurrectionsCount);
+                resurrectTextTemplate, availableResurrectionsCount);
             ResurrectBtn.interactable = availableResurrectionsCount > 0;
         }
     }

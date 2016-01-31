@@ -47,6 +47,8 @@ namespace Catzilla.LevelObjectModule.Controller {
         public void OnDeath(IEvent evt) {
             var player = (PlayerView) evt.data;
             PlayerState playerState = PlayerStateStorage.Get();
+            AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
+            AnalyticsUtils.LogEvent("Player.Death");
             playerState.ScoreRecord =
                 Mathf.Max(playerState.ScoreRecord, player.Score);
             PlayerStateStorage.Save(playerState);
@@ -77,6 +79,9 @@ namespace Catzilla.LevelObjectModule.Controller {
 
         public void OnResurrect(IEvent evt) {
             CleanProjectiles();
+            AnalyticsUtils.AddCategorizedEventParam(
+                "Level", PlayerStateStorage.Get().Level);
+            AnalyticsUtils.LogEvent("Player.Resurrection");
         }
 
         private void OnGameOverScreenShow() {
@@ -96,9 +101,12 @@ namespace Catzilla.LevelObjectModule.Controller {
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;
             PlayerState playerState = PlayerStateStorage.Get();
+            AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
+            AnalyticsUtils.LogEvent("Level.Completion");
             ++playerState.Level;
             ++playerState.AvailableResurrectionsCount;
-            playerState.ScoreRecord = player.Score;
+            playerState.ScoreRecord =
+                Mathf.Max(playerState.ScoreRecord, player.Score);
             PlayerStateStorage.Save(playerState);
 
             if (!Server.IsDisposed) {

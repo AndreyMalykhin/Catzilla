@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using SmartLocalization;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.View;
 using Catzilla.LevelModule.Model;
@@ -10,7 +10,7 @@ using Catzilla.PlayerModule.View;
 namespace Catzilla.PlayerModule.Controller {
     public class PlayerScoreController {
         [Inject]
-        public LanguageManager Translator {get; set;}
+        public Translator Translator {get; set;}
 
         [Inject]
         public LevelSettingsStorage LevelSettingsStorage {get; set;}
@@ -24,7 +24,7 @@ namespace Catzilla.PlayerModule.Controller {
 
         public void OnViewConstruct(IEvent evt) {
             score = (PlayerScoreView) evt.data;
-            score.Text = Translator.GetTextValue("Player.Score");
+            score.Text = Translator.Translate("Player.Score");
             score.MaxValue =
                 LevelSettingsStorage.Get(level.Index).CompletionScore;
         }

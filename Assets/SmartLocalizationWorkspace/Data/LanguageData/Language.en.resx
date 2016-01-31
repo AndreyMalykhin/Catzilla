@@ -132,7 +132,7 @@
 		<value>Restart</value>
 	</data>
 	<data name="GameOverMenu.Resurrect" xml:space="preserve">
-		<value>Resurrect</value>
+		<value>Resurrect ({0})</value>
 	</data>
 	<data name="GameOverMenu.Reward" xml:space="preserve">
 		<value>Earn reward</value>

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class ActivityIndicatorView: strange.extensions.mediation.impl.View {
@@ -16,13 +17,13 @@ namespace Catzilla.CommonModule.View {
         }
 
         public void Show() {
-            Debug.Log("ActivityIndicatorView.Show()");
+            // DebugUtils.Log("ActivityIndicatorView.Show()");
             canvas.enabled = true;
             animator.enabled = true;
         }
 
         public void Hide() {
-            Debug.Log("ActivityIndicatorView.Hide()");
+            // DebugUtils.Log("ActivityIndicatorView.Hide()");
             canvas.enabled = false;
             animator.enabled = false;
         }

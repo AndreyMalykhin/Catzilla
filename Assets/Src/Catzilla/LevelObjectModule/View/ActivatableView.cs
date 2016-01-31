@@ -24,7 +24,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         public void Activate() {
-            // Debug.Log("ActivatableView.Activate()");
+            // DebugUtils.Log("ActivatableView.Activate()");
             behaviour.enabled = true;
         }
 

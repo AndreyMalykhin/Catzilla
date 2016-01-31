@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using SmartLocalization;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
@@ -32,7 +31,7 @@ namespace Catzilla.GameOverMenuModule.Controller {
         public Ad Ad {get; set;}
 
         [Inject]
-        public LanguageManager Translator {get; set;}
+        public Translator Translator {get; set;}
 
         [Inject]
         public LeaderboardManager LeaderboardManager {get; set;}
@@ -42,7 +41,7 @@ namespace Catzilla.GameOverMenuModule.Controller {
         [PostConstruct]
         public void OnConstruct() {
             GameOverMenu.ResurrectTextTemplate =
-                Translator.GetTextValue("GameOverMenu.Resurrect");
+                Translator.Translate("GameOverMenu.Resurrect");
             GameOverMenu.AvailableResurrectionsCount =
                 PlayerStateStorage.Get().AvailableResurrectionsCount;
         }
@@ -52,6 +51,10 @@ namespace Catzilla.GameOverMenuModule.Controller {
         }
 
         public void OnLeaderboardBtnClick() {
+            AnalyticsUtils.AddEventParam("Origin", "GameOverMenu");
+            AnalyticsUtils.AddCategorizedEventParam(
+                "Level", PlayerStateStorage.Get().Level);
+            AnalyticsUtils.LogEvent("Leaderboard.View");
             LeaderboardManager.Show();
         }
 
@@ -61,10 +64,14 @@ namespace Catzilla.GameOverMenuModule.Controller {
         }
 
         public void OnExitBtnClick() {
+            AnalyticsUtils.LogEvent("Game.Exit");
             Game.Exit();
         }
 
         public void OnRestartBtnClick() {
+            AnalyticsUtils.AddCategorizedEventParam(
+                "Level", PlayerStateStorage.Get().Level);
+            AnalyticsUtils.LogEvent("Game.Restart");
             Game.LoadLevel();
             Game.Resume();
             GameOverScreen.Hide();
@@ -86,10 +93,16 @@ namespace Catzilla.GameOverMenuModule.Controller {
         }
 
         public void OnRewardBtnClick() {
+            AnalyticsUtils.AddCategorizedEventParam(
+                "Level", PlayerStateStorage.Get().Level);
+            AnalyticsUtils.LogEvent("Ad.Show");
             Ad.Show(OnAdView);
         }
 
         private void OnAdView() {
+            AnalyticsUtils.AddCategorizedEventParam(
+                "Level", PlayerStateStorage.Get().Level);
+            AnalyticsUtils.LogEvent("Ad.View");
             RewardPlayer();
         }
 

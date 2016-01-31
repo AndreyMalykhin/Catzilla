@@ -39,7 +39,7 @@ namespace Catzilla.LevelObjectModule.View {
                 return score;
             }
             set {
-                Debug.Log("PlayerView.Score set");
+                // DebugUtils.Log("PlayerView.Score set");
 
                 if (IsScoreFreezed) {
                     return;
@@ -108,7 +108,7 @@ namespace Catzilla.LevelObjectModule.View {
 
         [PostConstruct]
         public void OnConstruct() {
-            Debug.Log("PlayerView.OnConstruct()");
+            // DebugUtils.Log("PlayerView.OnConstruct()");
             body = GetComponent<Rigidbody>();
             targetX = body.position.x;
             float halfWidth = collider.bounds.extents.x;

@@ -120,7 +120,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void Shoot() {
-            // Debug.Log("ShootingView.Shoot()");
+            // DebugUtils.Log("ShootingView.Shoot()");
             var projectile = PoolStorage.Get(projectilePoolId);
             projectile.transform.position = projectileSource.position;
             projectile.transform.rotation = projectileSource.rotation;

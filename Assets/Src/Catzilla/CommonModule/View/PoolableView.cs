@@ -33,7 +33,7 @@ namespace Catzilla.CommonModule.View {
 		public void Release() {Debug.Assert(false);}
 
         protected override void OnDestroy() {
-            // Debug.Log("PoolableView.OnDestroy()");
+            // DebugUtils.Log("PoolableView.OnDestroy()");
             // can be null while app is destroying
             if (EventBus != null) {
                 EventBus.Dispatch(Event.Destroy, this);
