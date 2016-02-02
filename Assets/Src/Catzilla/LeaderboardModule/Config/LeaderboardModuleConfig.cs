@@ -5,6 +5,7 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Config;
+using Catzilla.CommonModule.Util;
 using Catzilla.LeaderboardModule.View;
 using Catzilla.LeaderboardModule.Model;
 using Catzilla.LeaderboardModule.Controller;
@@ -29,11 +30,10 @@ namespace Catzilla.LeaderboardModule.Config {
         }
 
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
-                ContextKeys.CROSS_CONTEXT_DISPATCHER);
+            var eventBus = injectionBinder.GetInstance<EventBus>();
             var leaderboardsScreenController =
                 injectionBinder.GetInstance<LeaderboardsScreenController>();
-            eventBus.AddListener(LeaderboardsScreenView.Event.BackBtnClick,
+            eventBus.On(LeaderboardsScreenView.Event.BackBtnClick,
                 leaderboardsScreenController.OnBackBtnClick);
         }
     }

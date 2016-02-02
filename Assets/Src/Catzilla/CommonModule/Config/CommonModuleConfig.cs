@@ -12,6 +12,10 @@ using Catzilla.CommonModule.Controller;
 namespace Catzilla.CommonModule.Config {
     public class CommonModuleConfig: IModuleConfig {
         void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
+            injectionBinder.Bind<EventBus>()
+                .To<EventBus>()
+                .ToSingleton()
+                .CrossContext();
             injectionBinder.Bind<Translator>()
                 .To<Translator>()
                 .ToSingleton()
@@ -90,29 +94,28 @@ namespace Catzilla.CommonModule.Config {
         }
 
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
-                ContextKeys.CROSS_CONTEXT_DISPATCHER);
+            var eventBus = injectionBinder.GetInstance<EventBus>();
 
             var disposableController =
                 injectionBinder.GetInstance<DisposableController>();
-            eventBus.AddListener(DisposableView.Event.TriggerExit,
+            eventBus.On(DisposableView.Event.TriggerExit,
                 disposableController.OnTriggerExit);
 
             var poolStorageController =
                 injectionBinder.GetInstance<PoolStorageController>();
-            eventBus.AddListener(
+            eventBus.On(
                 Game.Event.LevelLoad, poolStorageController.OnLevelLoad);
 
             var btnController =
                 injectionBinder.GetInstance<BtnController>();
-            eventBus.AddListener(
+            eventBus.On(
                 BtnView.Event.Click, btnController.OnClick);
 
             var activityIndicatorController =
                 injectionBinder.GetInstance<ActivityIndicatorController>();
-            eventBus.AddListener(Server.Event.Request,
+            eventBus.On(Server.Event.Request,
                 activityIndicatorController.OnServerRequest);
-            eventBus.AddListener(Server.Event.Response,
+            eventBus.On(Server.Event.Response,
                 activityIndicatorController.OnServerResponse);
         }
     }

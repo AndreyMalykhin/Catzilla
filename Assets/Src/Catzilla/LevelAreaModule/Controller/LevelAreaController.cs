@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
 using Catzilla.LevelModule.Model;
 using Catzilla.LevelModule.View;
 
@@ -14,16 +15,18 @@ namespace Catzilla.LevelAreaModule.Controller {
 
         private LevelView level;
 
-        public void OnLevelConstruct(IEvent evt) {
-            level = (LevelView) evt.data;
+        public void OnLevelConstruct(Evt evt) {
+            level = (LevelView) evt.Source;
         }
 
-        public void OnTriggerEnter(IEvent evt) {
-            var collider = (Collider) evt.data;
+        public void OnTriggerEnter(Evt evt) {
+            var collider = (Collider) evt.Data;
 
-            if (collider != null && collider.CompareTag(PlayerTag)) {
-                 LevelGenerator.NewArea(level);
+            if (collider == null || !collider.CompareTag(PlayerTag)) {
+                return;
             }
+
+            LevelGenerator.NewArea(level);
         }
     }
 }

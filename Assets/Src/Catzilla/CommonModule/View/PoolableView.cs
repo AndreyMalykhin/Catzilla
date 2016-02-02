@@ -11,8 +11,8 @@ namespace Catzilla.CommonModule.View {
         : strange.extensions.mediation.impl.View, IPoolable {
         public enum Event {Destroy}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         public int PoolId;
 		public bool retain {get {return false;}}
@@ -36,7 +36,7 @@ namespace Catzilla.CommonModule.View {
             // DebugUtils.Log("PoolableView.OnDestroy()");
             // can be null while app is destroying
             if (EventBus != null) {
-                EventBus.Dispatch(Event.Destroy, this);
+                EventBus.Fire(Event.Destroy, new Evt(this));
             }
 
             base.OnDestroy();

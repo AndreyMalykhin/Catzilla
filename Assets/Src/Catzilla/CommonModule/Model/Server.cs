@@ -19,8 +19,8 @@ namespace Catzilla.CommonModule.Model {
         [Inject]
         public CoroutineManagerView CoroutineManager {get; set;}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         public float ConnectionTimeout {get; set;}
         public int PendingRequestsCount {get; private set;}
@@ -163,7 +163,7 @@ namespace Catzilla.CommonModule.Model {
             GS.ShutDown();
             IsConnected = false;
             IsDisposed = true;
-            EventBus.Dispatch(Event.Dispose, this);
+            EventBus.Fire(Event.Dispose, new Evt(this));
         }
 
         private IEnumerator WaitForConnection(
@@ -189,12 +189,12 @@ namespace Catzilla.CommonModule.Model {
 
         private void OnRequest() {
             ++PendingRequestsCount;
-            EventBus.Dispatch(Event.Request, this);
+            EventBus.Fire(Event.Request, new Evt(this));
         }
 
         private void OnResponse() {
             --PendingRequestsCount;
-            EventBus.Dispatch(Event.Response, this);
+            EventBus.Fire(Event.Response, new Evt(this));
         }
     }
 }

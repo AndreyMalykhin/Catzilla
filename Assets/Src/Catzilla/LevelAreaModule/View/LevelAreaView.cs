@@ -10,19 +10,18 @@ using Catzilla.LevelObjectModule.View;
 
 namespace Catzilla.LevelAreaModule.View {
     public class LevelAreaView: strange.extensions.mediation.impl.View {
-        public enum Event {TriggerEnter, TriggerExit}
+        public enum Event {TriggerEnter}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
-        private IEnumerator OnTriggerEnter(Collider collider) {
-            yield return new WaitForFixedUpdate();
-            EventBus.Dispatch(Event.TriggerEnter, collider);
+        private void OnTriggerEnter(Collider collider) {
+            ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
+                Event.TriggerEnter, new Evt(this, collider));
         }
 
-        private IEnumerator OnTriggerExit(Collider collider) {
-            yield return new WaitForFixedUpdate();
-            EventBus.Dispatch(Event.TriggerExit, new EventData(this, collider));
+        private EventBus GetEventBus() {
+            return EventBus;
         }
     }
 }

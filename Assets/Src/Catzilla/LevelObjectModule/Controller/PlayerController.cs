@@ -44,8 +44,8 @@ namespace Catzilla.LevelObjectModule.Controller {
 
         private LevelView level;
 
-        public void OnDeath(IEvent evt) {
-            var player = (PlayerView) evt.data;
+        public void OnDeath(Evt evt) {
+            var player = (PlayerView) evt.Source;
             PlayerState playerState = PlayerStateStorage.Get();
             AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
             AnalyticsUtils.LogEvent("Player.Death");
@@ -62,8 +62,8 @@ namespace Catzilla.LevelObjectModule.Controller {
                 player.DeathSound, player.AudioSource, PlayerAudioChannel);
         }
 
-        public void OnScoreChange(IEvent evt) {
-            var player = (PlayerView) evt.data;
+        public void OnScoreChange(Evt evt) {
+            var player = (PlayerView) evt.Source;
             LevelSettings levelSettings = LevelSettingsStorage.Get(level.Index);
 
             if (player.Score < levelSettings.CompletionScore) {
@@ -73,11 +73,11 @@ namespace Catzilla.LevelObjectModule.Controller {
             CompleteLevel(player);
         }
 
-        public void OnLevelConstruct(IEvent evt) {
-            level = (LevelView) evt.data;
+        public void OnLevelConstruct(Evt evt) {
+            level = (LevelView) evt.Source;
         }
 
-        public void OnResurrect(IEvent evt) {
+        public void OnResurrect(Evt evt) {
             CleanProjectiles();
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
@@ -97,6 +97,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
         }
 
+        // TODO move Save()
         private void CompleteLevel(PlayerView player) {
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;

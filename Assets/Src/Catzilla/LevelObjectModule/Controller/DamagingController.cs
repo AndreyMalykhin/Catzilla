@@ -9,9 +9,8 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("PlayerMeshTag")]
         public string PlayerTag {get; set;}
 
-        public void OnTriggerEnter(IEvent evt) {
-            var eventData = (EventData) evt.data;
-            var collider = (Collider) eventData.Data;
+        public void OnTriggerEnter(Evt evt) {
+            var collider = (Collider) evt.Data;
 
             if (collider == null || !collider.CompareTag(PlayerTag)) {
                 return;
@@ -19,7 +18,7 @@ namespace Catzilla.LevelObjectModule.Controller {
 
             var player =
                 collider.attachedRigidbody.GetComponent<PlayerView>();
-            var damager = (DamagingView) eventData.EventOwner;
+            var damager = (DamagingView) evt.Source;
             player.Health -= damager.Damage;
         }
     }

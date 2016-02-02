@@ -5,6 +5,7 @@ using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using SmartLocalization;
 using Catzilla.CommonModule.Config;
+using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.View;
 using Catzilla.PlayerModule.Model;
@@ -25,15 +26,14 @@ namespace Catzilla.PlayerModule.Config {
         }
 
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
-                ContextKeys.CROSS_CONTEXT_DISPATCHER);
+            var eventBus = injectionBinder.GetInstance<EventBus>();
             var playerScoreController =
                 injectionBinder.GetInstance<PlayerScoreController>();
-            eventBus.AddListener(
+            eventBus.On(
                 PlayerView.Event.ScoreChange, playerScoreController.OnChange);
-            eventBus.AddListener(PlayerScoreView.Event.Construct,
+            eventBus.On(PlayerScoreView.Event.Construct,
                 playerScoreController.OnViewConstruct);
-            eventBus.AddListener(LevelView.Event.Construct,
+            eventBus.On(LevelView.Event.Construct,
                 playerScoreController.OnLevelConstruct);
         }
     }

@@ -1,3 +1,4 @@
+using Catzilla.CommonModule.Util;
 using Catzilla.LeaderboardModule.View;
 
 namespace Catzilla.LeaderboardModule.Controller {
@@ -5,7 +6,7 @@ namespace Catzilla.LeaderboardModule.Controller {
         [Inject]
         public LeaderboardsScreenView LeaderboardsScreen {get; set;}
 
-        public void OnBackBtnClick() {
+        public void OnBackBtnClick(Evt evt) {
             LeaderboardsScreen.Hide();
         }
     }

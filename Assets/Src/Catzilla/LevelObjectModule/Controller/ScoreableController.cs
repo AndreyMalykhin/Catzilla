@@ -9,16 +9,15 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("PlayerMeshTag")]
         public string PlayerTag {get; set;}
 
-        public void OnTriggerEnter(IEvent evt) {
-            var eventData = (EventData) evt.data;
-            var collider = (Collider) eventData.Data;
+        public void OnTriggerEnter(Evt evt) {
+            var collider = (Collider) evt.Data;
             // DebugUtils.Log(
             //     "ScoreableController.OnTriggerEnter(); collider={0}", collider);
 
             if (collider != null && collider.CompareTag(PlayerTag)) {
                 var player =
                     collider.attachedRigidbody.GetComponent<PlayerView>();
-                player.Score += ((ScoreableView) eventData.EventOwner).Score;
+                player.Score += ((ScoreableView) evt.Source).Score;
             }
         }
     }

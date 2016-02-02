@@ -5,6 +5,7 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Config;
+using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Model;
 using Catzilla.LevelObjectModule.View;
@@ -41,25 +42,24 @@ namespace Catzilla.GameOverMenuModule.Config {
         }
 
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
-                ContextKeys.CROSS_CONTEXT_DISPATCHER);
+            var eventBus = injectionBinder.GetInstance<EventBus>();
             var gameOverMenuController =
                 injectionBinder.GetInstance<GameOverMenuController>();
-            eventBus.AddListener(GameOverMenuView.Event.ExitBtnClick,
+            eventBus.On(GameOverMenuView.Event.ExitBtnClick,
                 gameOverMenuController.OnExitBtnClick);
-            eventBus.AddListener(GameOverMenuView.Event.RestartBtnClick,
+            eventBus.On(GameOverMenuView.Event.RestartBtnClick,
                 gameOverMenuController.OnRestartBtnClick);
-            eventBus.AddListener(GameOverMenuView.Event.ResurrectBtnClick,
+            eventBus.On(GameOverMenuView.Event.ResurrectBtnClick,
                 gameOverMenuController.OnResurrectBtnClick);
-            eventBus.AddListener(GameOverMenuView.Event.RewardBtnClick,
+            eventBus.On(GameOverMenuView.Event.RewardBtnClick,
                 gameOverMenuController.OnRewardBtnClick);
-            eventBus.AddListener(GameOverMenuView.Event.LeaderboardBtnClick,
+            eventBus.On(GameOverMenuView.Event.LeaderboardBtnClick,
                 gameOverMenuController.OnLeaderboardBtnClick);
-            eventBus.AddListener(Server.Event.Dispose,
+            eventBus.On(Server.Event.Dispose,
                 gameOverMenuController.OnServerDispose);
-            eventBus.AddListener(PlayerView.Event.Construct,
+            eventBus.On(PlayerView.Event.Construct,
                 gameOverMenuController.OnPlayerConstruct);
-            eventBus.AddListener(PlayerStateStorage.Event.Save,
+            eventBus.On(PlayerStateStorage.Event.Save,
                 gameOverMenuController.OnPlayerStateStorageSave);
         }
     }

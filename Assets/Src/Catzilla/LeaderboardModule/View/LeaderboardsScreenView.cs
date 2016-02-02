@@ -3,14 +3,15 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LeaderboardModule.View {
     public class LeaderboardsScreenView
         : strange.extensions.mediation.impl.View {
         public enum Event {BackBtnClick}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         public ScoreLeaderboardView ScoreLeaderboard;
 
@@ -35,7 +36,7 @@ namespace Catzilla.LeaderboardModule.View {
         }
 
         private void OnBackBtnClick() {
-            EventBus.Dispatch(Event.BackBtnClick, this);
+            EventBus.Fire(Event.BackBtnClick, new Evt(this));
         }
     }
 }

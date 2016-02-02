@@ -4,6 +4,7 @@ using strange.extensions.injector.api;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Config;
+using Catzilla.CommonModule.Util;
 using Catzilla.LevelModule.View;
 using Catzilla.LevelAreaModule.Model;
 using Catzilla.LevelAreaModule.View;
@@ -33,13 +34,12 @@ namespace Catzilla.LevelAreaModule.Config {
         }
 
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
-                ContextKeys.CROSS_CONTEXT_DISPATCHER);
+            var eventBus = injectionBinder.GetInstance<EventBus>();
             var levelAreaController =
                 injectionBinder.GetInstance<LevelAreaController>();
-            eventBus.AddListener(
+            eventBus.On(
                 LevelView.Event.Construct, levelAreaController.OnLevelConstruct);
-            eventBus.AddListener(LevelAreaView.Event.TriggerEnter,
+            eventBus.On(LevelAreaView.Event.TriggerEnter,
                 levelAreaController.OnTriggerEnter);
         }
     }

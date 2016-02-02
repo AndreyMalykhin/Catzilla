@@ -28,8 +28,6 @@ namespace Catzilla.AppModule.Config {
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
             var contextEventBus = injectionBinder.GetInstance<IEventDispatcher>(
                 ContextKeys.CONTEXT_DISPATCHER);
-            // var globalEventBus = injectionBinder.GetInstance<IEventDispatcher>(
-            //     ContextKeys.CROSS_CONTEXT_DISPATCHER);
             var appController = injectionBinder.GetInstance<AppController>();
 			contextEventBus.AddListener(
                 ContextEvent.START, appController.OnStart);

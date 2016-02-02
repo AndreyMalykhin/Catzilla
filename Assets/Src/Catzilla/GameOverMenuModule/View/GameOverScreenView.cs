@@ -5,13 +5,14 @@ using System.Collections;
 using DG.Tweening;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.GameOverMenuModule.View {
     public class GameOverScreenView: strange.extensions.mediation.impl.View {
         public enum Event {Show, Hide}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         public GameOverMenuView Menu;
 
@@ -36,7 +37,7 @@ namespace Catzilla.GameOverMenuModule.View {
                 .OnComplete(() => {
                     Menu.Show();
                     onDone();
-                    EventBus.Dispatch(Event.Show);
+                    EventBus.Fire(Event.Show, new Evt(this));
                 });
         }
 
@@ -44,7 +45,7 @@ namespace Catzilla.GameOverMenuModule.View {
             Menu.Hide();
             canvas.enabled = false;
             FadeOut();
-            EventBus.Dispatch(Event.Hide);
+            EventBus.Fire(Event.Hide, new Evt(this));
         }
 
         private void FadeOut() {

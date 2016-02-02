@@ -3,13 +3,14 @@ using UnityEngine.UI;
 using System.Collections;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelModule.View {
     public class LevelStartScreenView: strange.extensions.mediation.impl.View {
         public enum Event {Hide}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         public Text Msg;
 
@@ -32,7 +33,7 @@ namespace Catzilla.LevelModule.View {
         private IEnumerator Hide() {
             yield return new WaitForSeconds(duration);
             canvas.enabled = false;
-            EventBus.Dispatch(Event.Hide);
+            EventBus.Fire(Event.Hide, new Evt(this));
         }
     }
 }

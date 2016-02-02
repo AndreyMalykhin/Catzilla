@@ -14,8 +14,8 @@ namespace Catzilla.LevelModule.View {
     public class LevelView: strange.extensions.mediation.impl.View {
         public enum Event {Construct}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         [Inject("LevelAreaWidth")]
         public float AreaWidth {get; set;}
@@ -40,7 +40,7 @@ namespace Catzilla.LevelModule.View {
             // DebugUtils.Log("LevelView.OnConstruct()");
             areaHalfWidth = AreaWidth / 2f;
             areaHalfDepth = AreaDepth / 2f;
-            EventBus.Dispatch(Event.Construct, this);
+            EventBus.Fire(Event.Construct, new Evt(this));
         }
 
         public void NewArea(int index, EnvTypeInfo envTypeInfo) {

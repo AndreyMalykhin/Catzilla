@@ -15,15 +15,14 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject]
         public AudioManager AudioManager {get; set;}
 
-        public void OnTriggerEnter(IEvent evt) {
-            var eventData = (EventData) evt.data;
-            var collider = (Collider) eventData.Data;
+        public void OnTriggerEnter(Evt evt) {
+            var collider = (Collider) evt.Data;
 
             if (collider == null || !collider.CompareTag(PlayerTag)) {
                 return;
             }
 
-            var smashable = (SmashableView) eventData.EventOwner;
+            var smashable = (SmashableView) evt.Source;
             SmashedView smashed =
                 smashable.Smash(collider.attachedRigidbody.position);
             smashed.AudioSource.pitch = Random.Range(0.9f, 1.1f);

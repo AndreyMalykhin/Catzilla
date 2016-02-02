@@ -12,8 +12,8 @@ namespace Catzilla.CommonModule.Controller {
         [Inject("UIAudioChannel")]
         public int UIAudioChannel {get; set;}
 
-        public void OnClick(IEvent evt) {
-            var btn = (BtnView) evt.data;
+        public void OnClick(Evt evt) {
+            var btn = (BtnView) evt.Source;
             AudioManager.Play(btn.ClickSound, btn.AudioSource, UIAudioChannel);
         }
     }

@@ -2,13 +2,14 @@
 using System;
 using System.Collections;
 using Catzilla.CommonModule.View;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.Controller {
     public class PoolStorageController {
         [Inject]
         public PoolStorageView PoolStorage {get; set;}
 
-        public void OnLevelLoad() {
+        public void OnLevelLoad(Evt evt) {
             PoolStorage.Reset();
             GC.Collect();
         }

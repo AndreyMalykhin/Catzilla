@@ -9,16 +9,15 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("PlayerFieldOfViewTag")]
         public string PlayerFieldOfViewTag {get; set;}
 
-        public void OnTriggerEnter(IEvent evt) {
-            var eventData = (EventData) evt.data;
-            var collider = (Collider) eventData.Data;
+        public void OnTriggerEnter(Evt evt) {
+            var collider = (Collider) evt.Data;
 
             if (collider == null
                 || !collider.CompareTag(PlayerFieldOfViewTag)) {
                 return;
             }
 
-            var activatable = (ActivatableView) eventData.EventOwner;
+            var activatable = (ActivatableView) evt.Source;
             activatable.Activate();
         }
     }

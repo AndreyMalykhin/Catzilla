@@ -3215,35 +3215,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolsParams:
   - ViewProto: {fileID: 11469974, guid: 2c5eb218dc3e146e0bdd4c67bcc3a0fc, type: 2}
-    InitialSize: 8
+    InitialSize: 32
   - ViewProto: {fileID: 11454844, guid: 3b9d536b6da514d61909a345aa7d0a7d, type: 2}
-    InitialSize: 16
+    InitialSize: 32
   - ViewProto: {fileID: 11401604, guid: 0324569a0fc1b453298859cca044e670, type: 2}
-    InitialSize: 16
+    InitialSize: 32
   - ViewProto: {fileID: 11488714, guid: d7ff927bcea514b0aa2d4d2e91fc4834, type: 2}
-    InitialSize: 8
+    InitialSize: 32
   - ViewProto: {fileID: 11466988, guid: 75af68cf68f6840439e1bb9c4cd4418d, type: 2}
-    InitialSize: 16
+    InitialSize: 32
   - ViewProto: {fileID: 11497770, guid: ebafc7a142f1b49239bb80c5acd77cff, type: 2}
-    InitialSize: 16
+    InitialSize: 32
   - ViewProto: {fileID: 11429934, guid: 1561155c1eb1b4dd8b20c99800c081cd, type: 2}
-    InitialSize: 16
+    InitialSize: 32
   - ViewProto: {fileID: 11433468, guid: 362fec4312e394d09be04ce01ef081a4, type: 2}
     InitialSize: 32
   - ViewProto: {fileID: 11468128, guid: 84a7cbd956c9d4dc3b8e06942f864551, type: 2}
-    InitialSize: 16
+    InitialSize: 32
   - ViewProto: {fileID: 11417676, guid: 68c0164f709bf4a52bd1da3509a6910d, type: 2}
-    InitialSize: 8
+    InitialSize: 32
   - ViewProto: {fileID: 11499484, guid: a4a80c2c2e7614e828f081de00b10b42, type: 2}
-    InitialSize: 16
+    InitialSize: 32
   - ViewProto: {fileID: 11419130, guid: 679d75287457f49d3b8ba0f45c33017b, type: 2}
-    InitialSize: 16
+    InitialSize: 32
   - ViewProto: {fileID: 11469642, guid: 615f9b19fd38143bbbd159117751ca56, type: 2}
-    InitialSize: 8
+    InitialSize: 32
   - ViewProto: {fileID: 11459938, guid: 5a9252e89022e40edafbc212d33fadb3, type: 2}
-    InitialSize: 16
+    InitialSize: 32
   - ViewProto: {fileID: 11453682, guid: c694f9174b7b6496bb8cd96d2baf15cb, type: 2}
-    InitialSize: 16
+    InitialSize: 32
   - ViewProto: {fileID: 11475788, guid: fdf825f4c79864c19bbaa66b8e0f6e94, type: 2}
     InitialSize: 4
   - ViewProto: {fileID: 11459888, guid: fec91f6ff528f4ec2b71ec461c5f644f, type: 2}

@@ -3,13 +3,14 @@ using UnityEngine.UI;
 using System.Collections;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.MainMenuModule.View {
     public class MainMenuView: strange.extensions.mediation.impl.View {
         public enum Event {ExitBtnClick, StartBtnClick, LeaderboardBtnClick}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         public Button StartBtn;
         public Button ExitBtn;
@@ -23,13 +24,13 @@ namespace Catzilla.MainMenuModule.View {
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
             ExitBtn.onClick.AddListener(() => {
-                EventBus.Dispatch(Event.ExitBtnClick);
+                EventBus.Fire(Event.ExitBtnClick, new Evt(this));
             });
             StartBtn.onClick.AddListener(() => {
-                EventBus.Dispatch(Event.StartBtnClick);
+                EventBus.Fire(Event.StartBtnClick, new Evt(this));
             });
             LeaderboardBtn.onClick.AddListener(() => {
-                EventBus.Dispatch(Event.LeaderboardBtnClick);
+                EventBus.Fire(Event.LeaderboardBtnClick, new Evt(this));
             });
         }
 

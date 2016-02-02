@@ -13,8 +13,8 @@ namespace Catzilla.LevelObjectModule.View {
         [Inject]
         public PoolStorageView PoolStorage {get; set;}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         [SerializeField]
         private float speed = 5f;
@@ -36,10 +36,13 @@ namespace Catzilla.LevelObjectModule.View {
             Fly();
         }
 
-        private IEnumerator OnTriggerEnter(Collider collider) {
-            yield return new WaitForFixedUpdate();
-            EventBus.Dispatch(
-                Event.TriggerEnter, new EventData(this, collider));
+        private void OnTriggerEnter(Collider collider) {
+            ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
+                Event.TriggerEnter, new Evt(this, collider));
+        }
+
+        private EventBus GetEventBus() {
+            return EventBus;
         }
 
         private void Fly() {

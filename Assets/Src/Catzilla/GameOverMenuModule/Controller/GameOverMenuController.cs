@@ -46,11 +46,11 @@ namespace Catzilla.GameOverMenuModule.Controller {
                 PlayerStateStorage.Get().AvailableResurrectionsCount;
         }
 
-        public void OnServerDispose() {
+        public void OnServerDispose(Evt evt) {
             GameOverMenu.LeaderboardBtn.interactable = false;
         }
 
-        public void OnLeaderboardBtnClick() {
+        public void OnLeaderboardBtnClick(Evt evt) {
             AnalyticsUtils.AddEventParam("Origin", "GameOverMenu");
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
@@ -58,17 +58,17 @@ namespace Catzilla.GameOverMenuModule.Controller {
             LeaderboardManager.Show();
         }
 
-        public void OnPlayerStateStorageSave() {
+        public void OnPlayerStateStorageSave(Evt evt) {
             GameOverMenu.AvailableResurrectionsCount =
                 PlayerStateStorage.Get().AvailableResurrectionsCount;
         }
 
-        public void OnExitBtnClick() {
+        public void OnExitBtnClick(Evt evt) {
             AnalyticsUtils.LogEvent("Game.Exit");
             Game.Exit();
         }
 
-        public void OnRestartBtnClick() {
+        public void OnRestartBtnClick(Evt evt) {
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Game.Restart");
@@ -77,11 +77,11 @@ namespace Catzilla.GameOverMenuModule.Controller {
             GameOverScreen.Hide();
         }
 
-        public void OnPlayerConstruct(IEvent evt) {
-            player = (PlayerView) evt.data;
+        public void OnPlayerConstruct(Evt evt) {
+            player = (PlayerView) evt.Source;
         }
 
-        public void OnResurrectBtnClick() {
+        public void OnResurrectBtnClick(Evt evt) {
             player.IsHealthFreezed = false;
             player.IsScoreFreezed = false;
             player.Resurrect();
@@ -92,7 +92,7 @@ namespace Catzilla.GameOverMenuModule.Controller {
             GameOverScreen.Hide();
         }
 
-        public void OnRewardBtnClick() {
+        public void OnRewardBtnClick(Evt evt) {
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Ad.Show");

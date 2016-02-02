@@ -10,8 +10,8 @@ namespace Catzilla.PlayerModule.Model {
     public class PlayerStateStorage {
         public enum Event {Save}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         private PlayerState player;
 
@@ -36,7 +36,7 @@ namespace Catzilla.PlayerModule.Model {
             PlayerPrefs.SetInt("AvailableResurrectionsCount",
                 player.AvailableResurrectionsCount);
             PlayerPrefs.Save();
-            EventBus.Dispatch(Event.Save, this);
+            EventBus.Fire(Event.Save, new Evt(this));
         }
 
         public void Sync(

@@ -9,8 +9,8 @@ namespace Catzilla.LevelObjectModule.View {
     public class SmashableView: strange.extensions.mediation.impl.View {
         public enum Event {TriggerEnter}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         [Inject]
         public PoolStorageView PoolStorage {get; set;}
@@ -23,6 +23,7 @@ namespace Catzilla.LevelObjectModule.View {
 
         [PostConstruct]
         public void OnConstruct() {
+            // DebugUtils.Log("SmashableView.OnConstruct()");
             poolable = GetComponent<PoolableView>();
             smashedPoolId = smashedProto.GetComponent<PoolableView>().PoolId;
         }
@@ -38,10 +39,13 @@ namespace Catzilla.LevelObjectModule.View {
             return smashed;
         }
 
-        private IEnumerator OnTriggerEnter(Collider collider) {
-            yield return new WaitForFixedUpdate();
-            EventBus.Dispatch(
-                Event.TriggerEnter, new EventData(this, collider));
+        private void OnTriggerEnter(Collider collider) {
+            ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
+                Event.TriggerEnter, new Evt(this, collider));
+        }
+
+        private EventBus GetEventBus() {
+            return EventBus;
         }
     }
 }

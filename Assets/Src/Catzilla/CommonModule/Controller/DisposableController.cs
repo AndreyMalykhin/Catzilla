@@ -9,9 +9,8 @@ namespace Catzilla.CommonModule.Controller {
         [Inject("PlayerFieldOfViewTag")]
         public string PlayerFieldOfViewTag {get; set;}
 
-        public void OnTriggerExit(IEvent evt) {
-            var eventData = (EventData) evt.data;
-            var collider = (Collider) eventData.Data;
+        public void OnTriggerExit(Evt evt) {
+            var collider = (Collider) evt.Data;
             // DebugUtils.Log(
             //     "DisposableController.OnTriggerExit(); collider={0}", collider);
 
@@ -20,7 +19,7 @@ namespace Catzilla.CommonModule.Controller {
                 return;
             }
 
-            var disposable = (DisposableView) eventData.EventOwner;
+            var disposable = (DisposableView) evt.Source;
             disposable.Dispose();
         }
     }

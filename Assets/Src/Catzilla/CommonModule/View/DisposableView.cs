@@ -8,8 +8,8 @@ namespace Catzilla.CommonModule.View {
     public class DisposableView: strange.extensions.mediation.impl.View {
         public enum Event {TriggerExit}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         [Inject]
         public PoolStorageView PoolStorage {get; set;}
@@ -28,9 +28,13 @@ namespace Catzilla.CommonModule.View {
             PoolStorage.Return(poolable);
         }
 
-        private IEnumerator OnTriggerExit(Collider collider) {
-            yield return new WaitForFixedUpdate();
-            EventBus.Dispatch(Event.TriggerExit, new EventData(this, collider));
+        private void OnTriggerExit(Collider collider) {
+            ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
+                Event.TriggerExit, new Evt(this, collider));
+        }
+
+        private EventBus GetEventBus() {
+            return EventBus;
         }
     }
 }

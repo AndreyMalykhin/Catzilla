@@ -70,50 +70,49 @@ namespace Catzilla.LevelObjectModule.Config {
         }
 
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
-                ContextKeys.CROSS_CONTEXT_DISPATCHER);
+            var eventBus = injectionBinder.GetInstance<EventBus>();
 
             var smashableContoller =
                 injectionBinder.GetInstance<SmashableController>();
-            eventBus.AddListener(SmashableView.Event.TriggerEnter,
+            eventBus.On(SmashableView.Event.TriggerEnter,
                 smashableContoller.OnTriggerEnter);
 
             var damagingContoller =
                 injectionBinder.GetInstance<DamagingController>();
-            eventBus.AddListener(DamagingView.Event.TriggerEnter,
+            eventBus.On(DamagingView.Event.TriggerEnter,
                 damagingContoller.OnTriggerEnter);
 
             var scoreableContoller =
                 injectionBinder.GetInstance<ScoreableController>();
-            eventBus.AddListener(ScoreableView.Event.TriggerEnter,
+            eventBus.On(ScoreableView.Event.TriggerEnter,
                 scoreableContoller.OnTriggerEnter);
 
             var projectileContoller =
                 injectionBinder.GetInstance<ProjectileController>();
-            eventBus.AddListener(ProjectileView.Event.TriggerEnter,
+            eventBus.On(ProjectileView.Event.TriggerEnter,
                 projectileContoller.OnTriggerEnter);
 
             var shootingContoller =
                 injectionBinder.GetInstance<ShootingController>();
-            eventBus.AddListener(ShootingView.Event.TriggerEnter,
+            eventBus.On(ShootingView.Event.TriggerEnter,
                 shootingContoller.OnTriggerEnter);
-            eventBus.AddListener(ShootingView.Event.Shot,
+            eventBus.On(ShootingView.Event.Shot,
                 shootingContoller.OnShot);
 
             var activatableContoller =
                 injectionBinder.GetInstance<ActivatableController>();
-            eventBus.AddListener(ActivatableView.Event.TriggerEnter,
+            eventBus.On(ActivatableView.Event.TriggerEnter,
                 activatableContoller.OnTriggerEnter);
 
             var playerController =
                 injectionBinder.GetInstance<PlayerController>();
-            eventBus.AddListener(PlayerView.Event.Death,
+            eventBus.On(PlayerView.Event.Death,
                 playerController.OnDeath);
-            eventBus.AddListener(PlayerView.Event.ScoreChange,
+            eventBus.On(PlayerView.Event.ScoreChange,
                 playerController.OnScoreChange);
-            eventBus.AddListener(LevelView.Event.Construct,
+            eventBus.On(LevelView.Event.Construct,
                 playerController.OnLevelConstruct);
-            eventBus.AddListener(PlayerView.Event.Resurrect,
+            eventBus.On(PlayerView.Event.Resurrect,
                 playerController.OnResurrect);
         }
     }

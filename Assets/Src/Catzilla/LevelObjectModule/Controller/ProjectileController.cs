@@ -9,15 +9,14 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("PlayerMeshTag")]
         public string PlayerTag {get; set;}
 
-        public void OnTriggerEnter(IEvent evt) {
-            var eventData = (EventData) evt.data;
-            var collider = (Collider) eventData.Data;
+        public void OnTriggerEnter(Evt evt) {
+            var collider = (Collider) evt.Data;
 
             if (collider == null || !collider.CompareTag(PlayerTag)) {
                 return;
             }
 
-            var projectile = (ProjectileView) eventData.EventOwner;
+            var projectile = (ProjectileView) evt.Source;
             projectile.Hit();
         }
     }

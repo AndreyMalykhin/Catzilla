@@ -21,8 +21,8 @@ namespace Catzilla.LevelModule.Controller {
         [Inject]
         public Translator Translator {get; set;}
 
-        public void OnViewConstruct(IEvent evt) {
-            var level = (LevelView) evt.data;
+        public void OnViewConstruct(Evt evt) {
+            var level = (LevelView) evt.Source;
             level.gameObject.SetActive(false);
             PlayerState playerState = PlayerStateStorage.Get();
             LevelGenerator.NewLevel(playerState.Level, level);

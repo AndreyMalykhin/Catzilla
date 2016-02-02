@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.GameOverMenuModule.View {
     public class GameOverMenuView: strange.extensions.mediation.impl.View {
@@ -14,8 +15,8 @@ namespace Catzilla.GameOverMenuModule.View {
             LeaderboardBtnClick
         }
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         public int AvailableResurrectionsCount {
             get {
@@ -53,19 +54,19 @@ namespace Catzilla.GameOverMenuModule.View {
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
             ExitBtn.onClick.AddListener(() => {
-                EventBus.Dispatch(Event.ExitBtnClick);
+                EventBus.Fire(Event.ExitBtnClick, new Evt(this));
             });
             RestartBtn.onClick.AddListener(() => {
-                EventBus.Dispatch(Event.RestartBtnClick);
+                EventBus.Fire(Event.RestartBtnClick, new Evt(this));
             });
             ResurrectBtn.onClick.AddListener(() => {
-                EventBus.Dispatch(Event.ResurrectBtnClick);
+                EventBus.Fire(Event.ResurrectBtnClick, new Evt(this));
             });
             RewardBtn.onClick.AddListener(() => {
-                EventBus.Dispatch(Event.RewardBtnClick);
+                EventBus.Fire(Event.RewardBtnClick, new Evt(this));
             });
             LeaderboardBtn.onClick.AddListener(() => {
-                EventBus.Dispatch(Event.LeaderboardBtnClick);
+                EventBus.Fire(Event.LeaderboardBtnClick, new Evt(this));
             });
             RenderResurrectBtn();
         }

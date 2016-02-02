@@ -9,8 +9,8 @@ namespace Catzilla.CommonModule.View {
     public class BtnView: strange.extensions.mediation.impl.View {
         public enum Event {Click}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         public AudioClip ClickSound;
         public AudioSource AudioSource;
@@ -21,7 +21,7 @@ namespace Catzilla.CommonModule.View {
         }
 
         private void OnClick() {
-            EventBus.Dispatch(Event.Click, this);
+            EventBus.Fire(Event.Click, new Evt(this));
         }
     }
 }

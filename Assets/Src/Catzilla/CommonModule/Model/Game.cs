@@ -11,8 +11,8 @@ namespace Catzilla.CommonModule.Model {
         [Inject("LevelScene")]
         public string LevelScene {get; set;}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         [Inject]
         public AudioManager AudioManager {get; set;}
@@ -36,7 +36,7 @@ namespace Catzilla.CommonModule.Model {
         public void LoadLevel() {
             // DebugUtils.Log("Game.LoadLevel()");
             SceneManager.LoadScene(LevelScene);
-            EventBus.Dispatch(Event.LevelLoad);
+            EventBus.Fire(Event.LevelLoad, new Evt(this));
         }
     }
 }

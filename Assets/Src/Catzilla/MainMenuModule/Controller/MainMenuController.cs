@@ -22,22 +22,22 @@ namespace Catzilla.MainMenuModule.Controller {
         [Inject]
         public PlayerStateStorage PlayerStateStorage {get; set;}
 
-        public void OnServerDispose() {
+        public void OnServerDispose(Evt evt) {
             MainMenu.LeaderboardBtn.interactable = false;
         }
 
-        public void OnExitBtnClick() {
+        public void OnExitBtnClick(Evt evt) {
             AnalyticsUtils.LogEvent("Game.Exit");
             Game.Exit();
         }
 
-        public void OnStartBtnClick() {
+        public void OnStartBtnClick(Evt evt) {
             AnalyticsUtils.LogEvent("Game.Start");
             MainScreen.Hide();
             Game.LoadLevel();
         }
 
-        public void OnLeaderboardBtnClick() {
+        public void OnLeaderboardBtnClick(Evt evt) {
             AnalyticsUtils.AddEventParam("Origin", "MainMenu");
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);

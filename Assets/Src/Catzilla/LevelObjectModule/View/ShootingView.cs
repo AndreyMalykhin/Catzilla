@@ -14,8 +14,8 @@ namespace Catzilla.LevelObjectModule.View {
         [Inject]
         public PoolStorageView PoolStorage {get; set;}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         public Collider Target {
             get {
@@ -78,10 +78,13 @@ namespace Catzilla.LevelObjectModule.View {
 		public void Retain() {Debug.Assert(false);}
 		public void Release() {Debug.Assert(false);}
 
-        private IEnumerator OnTriggerEnter(Collider collider) {
-            yield return new WaitForFixedUpdate();
-            EventBus.Dispatch(
-                Event.TriggerEnter, new EventData(this, collider));
+        private void OnTriggerEnter(Collider collider) {
+            ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
+                Event.TriggerEnter, new Evt(this, collider));
+        }
+
+        private EventBus GetEventBus() {
+            return EventBus;
         }
 
         private IEnumerator StartAiming() {
@@ -124,7 +127,7 @@ namespace Catzilla.LevelObjectModule.View {
             var projectile = PoolStorage.Get(projectilePoolId);
             projectile.transform.position = projectileSource.position;
             projectile.transform.rotation = projectileSource.rotation;
-            EventBus.Dispatch(Event.Shot, this);
+            EventBus.Fire(Event.Shot, new Evt(this));
         }
     }
 }

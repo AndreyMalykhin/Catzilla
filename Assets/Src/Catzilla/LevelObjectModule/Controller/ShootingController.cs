@@ -15,22 +15,21 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject]
         public AudioManager AudioManager {get; set;}
 
-        public void OnTriggerEnter(IEvent evt) {
-            var eventData = (EventData) evt.data;
-            var collider = (Collider) eventData.Data;
-            var shooter = (ShootingView) eventData.EventOwner;
+        public void OnTriggerEnter(Evt evt) {
+            var collider = (Collider) evt.Data;
 
             if (collider == null
                 || !collider.CompareTag(PlayerFieldOfViewTag)) {
                 return;
             }
 
+            var shooter = (ShootingView) evt.Source;
             shooter.Target =
                 collider.attachedRigidbody.GetComponent<PlayerView>().Collider;
         }
 
-        public void OnShot(IEvent evt) {
-            var shooter = (ShootingView) evt.data;
+        public void OnShot(Evt evt) {
+            var shooter = (ShootingView) evt.Source;
             shooter.AudioSource.pitch = Random.Range(0.9f, 1.1f);
             AudioManager.Play(
                 shooter.ShotSound, shooter.AudioSource, EffectsAudioChannel);

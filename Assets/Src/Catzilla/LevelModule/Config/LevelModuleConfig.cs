@@ -4,10 +4,11 @@ using strange.extensions.injector.api;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Config;
+using Catzilla.CommonModule.Util;
+using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelModule.Controller;
 using Catzilla.LevelModule.Model;
 using Catzilla.LevelModule.View;
-using Catzilla.LevelAreaModule.View;
 
 namespace Catzilla.LevelModule.Config {
     public class LevelModuleConfig: IModuleConfig {
@@ -76,26 +77,25 @@ namespace Catzilla.LevelModule.Config {
         }
 
         void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<IEventDispatcher>(
-                ContextKeys.CROSS_CONTEXT_DISPATCHER);
+            var eventBus = injectionBinder.GetInstance<EventBus>();
 
             var levelController =
                 injectionBinder.GetInstance<LevelController>();
-            eventBus.AddListener(
+            eventBus.On(
                 LevelView.Event.Construct, levelController.OnViewConstruct);
 
             var levelCompleteScreenController =
                 injectionBinder.GetInstance<LevelCompleteScreenController>();
-            eventBus.AddListener(LevelCompleteScreenView.Event.Hide,
+            eventBus.On(LevelCompleteScreenView.Event.Hide,
                 levelCompleteScreenController.OnHide);
-            eventBus.AddListener(LevelCompleteScreenView.Event.Show,
+            eventBus.On(LevelCompleteScreenView.Event.Show,
                 levelCompleteScreenController.OnShow);
 
             var levelStartScreenController =
                 injectionBinder.GetInstance<LevelStartScreenController>();
-            eventBus.AddListener(LevelStartScreenView.Event.Hide,
+            eventBus.On(LevelStartScreenView.Event.Hide,
                 levelStartScreenController.OnHide);
-            eventBus.AddListener(LevelView.Event.Construct,
+            eventBus.On(LevelView.Event.Construct,
                 levelStartScreenController.OnLevelConstruct);
         }
     }

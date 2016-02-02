@@ -16,8 +16,8 @@ namespace Catzilla.LevelObjectModule.View {
             Resurrect
         }
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         [Inject("LevelMinX")]
         public float LevelMinX {get; set;}
@@ -46,7 +46,7 @@ namespace Catzilla.LevelObjectModule.View {
                 }
 
                 score = value;
-                EventBus.Dispatch(Event.ScoreChange, this);
+                EventBus.Fire(Event.ScoreChange, new Evt(this));
             }
         }
 
@@ -62,8 +62,8 @@ namespace Catzilla.LevelObjectModule.View {
                 int oldValue = health;
                 health = value;
                 health = Mathf.Clamp(health, 0, maxHealth);
-                EventBus.Dispatch(
-                    Event.HealthChange, new EventData(this, oldValue));
+                EventBus.Fire(
+                    Event.HealthChange, new Evt(this, oldValue));
 
                 if (health > 0) {
                     return;
@@ -116,7 +116,7 @@ namespace Catzilla.LevelObjectModule.View {
             maxX = LevelMaxX - halfWidth;
             health = maxHealth;
             HUD = (PlayerHUDView) Instantiate(HUDProto);
-            EventBus.Dispatch(Event.Construct, this);
+            EventBus.Fire(Event.Construct, new Evt(this));
         }
 
         public void Resurrect() {
@@ -128,7 +128,7 @@ namespace Catzilla.LevelObjectModule.View {
             targetX = body.position.x;
             Health = maxHealth;
             animator.enabled = true;
-            EventBus.Dispatch(Event.Resurrect, this);
+            EventBus.Fire(Event.Resurrect, new Evt(this));
         }
 
         protected override void OnDestroy() {
@@ -146,7 +146,7 @@ namespace Catzilla.LevelObjectModule.View {
 
             isDead = true;
             animator.enabled = false;
-            EventBus.Dispatch(Event.Death, this);
+            EventBus.Fire(Event.Death, new Evt(this));
         }
 
         private void Update() {

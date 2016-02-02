@@ -12,7 +12,7 @@ GameObject:
   - 114: {fileID: 11461362}
   - 114: {fileID: 11459958}
   - 114: {fileID: 11485846}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: ParkEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,6 +164,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: PoolId
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

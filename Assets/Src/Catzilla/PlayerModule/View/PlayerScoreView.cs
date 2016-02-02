@@ -3,13 +3,14 @@ using UnityEngine.UI;
 using System.Collections;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.PlayerModule.View {
     public class PlayerScoreView: strange.extensions.mediation.impl.View {
         public enum Event {Construct}
 
-        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-        public IEventDispatcher EventBus {get; set;}
+        [Inject]
+        public EventBus EventBus {get; set;}
 
         public string Text {
             get {return text;}
@@ -45,7 +46,7 @@ namespace Catzilla.PlayerModule.View {
         public void OnConstruct() {
             textView = GetComponent<Text>();
             Render();
-            EventBus.Dispatch(Event.Construct, this);
+            EventBus.Fire(Event.Construct, new Evt(this));
         }
 
         private void Render() {

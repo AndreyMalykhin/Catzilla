@@ -16,13 +16,13 @@ namespace Catzilla.LevelModule.Controller {
         [Inject("UIAudioChannel")]
         public int UIAudioChannel {get; set;}
 
-        public void OnShow(IEvent evt) {
-            var screen = (LevelCompleteScreenView) evt.data;
+        public void OnShow(Evt evt) {
+            var screen = (LevelCompleteScreenView) evt.Source;
             AudioManager.Play(
                 screen.ShowSound, screen.AudioSource, UIAudioChannel);
         }
 
-        public void OnHide() {
+        public void OnHide(Evt evt) {
             Game.LoadLevel();
         }
     }

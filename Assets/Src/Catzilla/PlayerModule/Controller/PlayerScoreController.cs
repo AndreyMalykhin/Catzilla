@@ -18,19 +18,19 @@ namespace Catzilla.PlayerModule.Controller {
         private PlayerScoreView score;
         private LevelView level;
 
-        public void OnLevelConstruct(IEvent evt) {
-            level = (LevelView) evt.data;
+        public void OnLevelConstruct(Evt evt) {
+            level = (LevelView) evt.Source;
         }
 
-        public void OnViewConstruct(IEvent evt) {
-            score = (PlayerScoreView) evt.data;
+        public void OnViewConstruct(Evt evt) {
+            score = (PlayerScoreView) evt.Source;
             score.Text = Translator.Translate("Player.Score");
             score.MaxValue =
                 LevelSettingsStorage.Get(level.Index).CompletionScore;
         }
 
-        public void OnChange(IEvent evt) {
-            var player = (PlayerView) evt.data;
+        public void OnChange(Evt evt) {
+            var player = (PlayerView) evt.Source;
             score.Value = player.Score;
         }
     }
