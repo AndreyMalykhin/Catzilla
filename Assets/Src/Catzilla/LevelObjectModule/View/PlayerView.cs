@@ -33,6 +33,8 @@ namespace Catzilla.LevelObjectModule.View {
         public bool IsScoreFreezed {get; set;}
         public AudioClip DeathSound;
         public AudioSource AudioSource;
+        public float SmashForce = 10f;
+        public float SmashUpwardsModifier = 0f;
 
         public int Score {
             get {

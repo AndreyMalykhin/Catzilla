@@ -28,14 +28,15 @@ namespace Catzilla.LevelObjectModule.View {
             smashedPoolId = smashedProto.GetComponent<PoolableView>().PoolId;
         }
 
-        public SmashedView Smash(Vector3 sourcePosition) {
+        public SmashedView Smash(
+            float force, float upwardsModifier, Vector3 sourcePosition) {
             Transform transform = this.transform;
             PoolStorage.Return(poolable);
             var smashed =
                 PoolStorage.Get(smashedPoolId).GetComponent<SmashedView>();
             smashed.transform.position = transform.position;
             smashed.transform.rotation = transform.rotation;
-            smashed.Init(sourcePosition);
+            smashed.Init(force, upwardsModifier, sourcePosition);
             return smashed;
         }
 
