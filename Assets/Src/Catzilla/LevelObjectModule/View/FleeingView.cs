@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using strange.extensions.pool.api;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelObjectModule.View {
     public class FleeingView
@@ -25,8 +26,8 @@ namespace Catzilla.LevelObjectModule.View {
             speed = Random.Range(minSpeed, maxSpeed);
         }
 
-		public void Retain() {Debug.Assert(false);}
-		public void Release() {Debug.Assert(false);}
+		public void Retain() {DebugUtils.Assert(false);}
+		public void Release() {DebugUtils.Assert(false);}
 
         protected override void Awake() {
             base.Awake();

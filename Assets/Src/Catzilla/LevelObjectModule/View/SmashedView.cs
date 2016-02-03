@@ -71,8 +71,8 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
-		public void Retain() {Debug.Assert(false);}
-		public void Release() {Debug.Assert(false);}
+		public void Retain() {DebugUtils.Assert(false);}
+		public void Release() {DebugUtils.Assert(false);}
 
         private IEnumerator Smash(float smashForce, float smashUpwardsModifier,
             Vector3 smashSourcePosition) {

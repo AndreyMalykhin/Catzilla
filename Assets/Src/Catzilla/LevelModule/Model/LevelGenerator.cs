@@ -17,8 +17,8 @@ namespace Catzilla.LevelModule.Model {
         private enum State {Start, TrackMiddle, HoodMiddle, ParkMiddle}
 
         private struct StateTransition {
-            public EnvType EnvType;
-            public State NextState;
+            public readonly EnvType EnvType;
+            public readonly State NextState;
 
             public StateTransition(EnvType envType, State nextState) {
                 EnvType = envType;
@@ -69,32 +69,34 @@ namespace Catzilla.LevelModule.Model {
             AreaGenerator.NewArea(NextState(), spawnPlayer, outputLevel);
         }
 
+        // TODO
         private EnvType NextState() {
-            StateTransition[] stateTransitions = states[nextState];
-            int stateTransitionsCount = stateTransitions.Length;
-            int weightsSum = 0;
+            return EnvType.TrackStart;
+            // StateTransition[] stateTransitions = states[nextState];
+            // int stateTransitionsCount = stateTransitions.Length;
+            // int weightsSum = 0;
 
-            for (int i = 0; i < stateTransitionsCount; ++i) {
-                weightsSum += EnvTypeInfoStorage.Get(
-                    stateTransitions[i].EnvType).SpawnWeight;
-            }
+            // for (int i = 0; i < stateTransitionsCount; ++i) {
+            //     weightsSum += EnvTypeInfoStorage.Get(
+            //         stateTransitions[i].EnvType).SpawnWeight;
+            // }
 
-            int randomWeight = Random.Range(1, weightsSum + 1);
-            int weightIntervalEnd = 0;
+            // int randomWeight = Random.Range(1, weightsSum + 1);
+            // int weightIntervalEnd = 0;
 
-            for (int i = 0; i < stateTransitionsCount; ++i) {
-                var stateTransition = stateTransitions[i];
-                weightIntervalEnd += EnvTypeInfoStorage.Get(
-                    stateTransition.EnvType).SpawnWeight;
+            // for (int i = 0; i < stateTransitionsCount; ++i) {
+            //     var stateTransition = stateTransitions[i];
+            //     weightIntervalEnd += EnvTypeInfoStorage.Get(
+            //         stateTransition.EnvType).SpawnWeight;
 
-                if (weightIntervalEnd >= randomWeight) {
-                    nextState = stateTransition.NextState;
-                    return stateTransition.EnvType;
-                }
-            }
+            //     if (weightIntervalEnd >= randomWeight) {
+            //         nextState = stateTransition.NextState;
+            //         return stateTransition.EnvType;
+            //     }
+            // }
 
-            Debug.Assert(false);
-            return 0;
+            // DebugUtils.Assert(false);
+            // return 0;
         }
     }
 }

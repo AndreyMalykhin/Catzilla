@@ -29,8 +29,8 @@ namespace Catzilla.CommonModule.View {
             }
         }
 
-		public void Retain() {Debug.Assert(false);}
-		public void Release() {Debug.Assert(false);}
+		public void Retain() {DebugUtils.Assert(false);}
+		public void Release() {DebugUtils.Assert(false);}
 
         protected override void OnDestroy() {
             // DebugUtils.Log("PoolableView.OnDestroy()");

@@ -17,9 +17,6 @@ namespace Catzilla.LevelModule.View {
         [Inject]
         public EventBus EventBus {get; set;}
 
-        [Inject("LevelAreaWidth")]
-        public float AreaWidth {get; set;}
-
         [Inject("LevelAreaDepth")]
         public float AreaDepth {get; set;}
 
@@ -28,9 +25,6 @@ namespace Catzilla.LevelModule.View {
 
         public int Index {get; private set;}
 
-        private float areaHalfWidth;
-        private float areaHalfDepth;
-
         public void Init(int index) {
             Index = index;
         }
@@ -38,8 +32,6 @@ namespace Catzilla.LevelModule.View {
         [PostConstruct]
         public void OnConstruct() {
             // DebugUtils.Log("LevelView.OnConstruct()");
-            areaHalfWidth = AreaWidth / 2f;
-            areaHalfDepth = AreaDepth / 2f;
             EventBus.Fire(Event.Construct, new Evt(this));
         }
 
@@ -53,12 +45,12 @@ namespace Catzilla.LevelModule.View {
         }
 
         public LevelObjectView NewObject(
-            ObjectTypeInfo typeInfo, LevelAreaPoint spawnPoint, int areaIndex) {
+            ObjectTypeInfo typeInfo, Vector3 spawnPoint, int areaIndex) {
             // DebugUtils.Log("LevelView.NewObject(); type={0}", typeInfo.Type);
             var position = new Vector3(
-                spawnPoint.X + typeInfo.Width / 2f - areaHalfWidth,
-                0f,
-                spawnPoint.Z + typeInfo.Depth / 2f + areaIndex * AreaDepth - areaHalfDepth);
+                spawnPoint.x,
+                spawnPoint.y,
+                spawnPoint.z + areaIndex * AreaDepth);
             var poolable = typeInfo.ViewProto.GetComponent<PoolableView>();
             LevelObjectView obj;
 
