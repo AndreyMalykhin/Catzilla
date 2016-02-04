@@ -12,8 +12,9 @@ using Catzilla.LevelModule.View;
 using Catzilla.AppModule.Controller;
 
 namespace Catzilla.AppModule.Config {
-    public class AppModuleConfig: IModuleConfig {
-        void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
+    [CreateAssetMenuAttribute]
+    public class AppModuleConfig: ModuleConfig {
+        public override void InitBindings(IInjectionBinder injectionBinder) {
             injectionBinder.Bind<AppController>()
                 .To<AppController>()
                 .ToSingleton()
@@ -25,7 +26,7 @@ namespace Catzilla.AppModule.Config {
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
+        public override void PostBindings(IInjectionBinder injectionBinder) {
             var contextEventBus = injectionBinder.GetInstance<IEventDispatcher>(
                 ContextKeys.CONTEXT_DISPATCHER);
             var appController = injectionBinder.GetInstance<AppController>();

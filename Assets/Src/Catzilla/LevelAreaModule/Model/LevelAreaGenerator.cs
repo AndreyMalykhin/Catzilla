@@ -88,19 +88,21 @@ namespace Catzilla.LevelAreaModule.Model {
             var spawnLocation = spawnLocations[
                 UnityEngine.Random.Range(0, spawnLocations.Count)];
             Vector3 spawnLocationSize = spawnLocation.size;
-            DebugUtils.Assert(spawnLocationSize.x >= objectTypeInfo.Width);
-            DebugUtils.Assert(spawnLocationSize.z >= objectTypeInfo.Depth);
+            int objectWidth = objectTypeInfo.Width;
+            int objectDepth = objectTypeInfo.Depth;
+            DebugUtils.Assert(spawnLocationSize.x >= objectWidth);
+            DebugUtils.Assert(spawnLocationSize.z >= objectDepth);
             int x = UnityEngine.Random.Range(
                 0,
-                Mathf.RoundToInt(spawnLocationSize.x) / objectTypeInfo.Width);
+                Mathf.RoundToInt(spawnLocationSize.x) / objectWidth);
             int z = UnityEngine.Random.Range(
                 0,
-                Mathf.RoundToInt(spawnLocationSize.z) / objectTypeInfo.Depth);
+                Mathf.RoundToInt(spawnLocationSize.z) / objectDepth);
             Vector3 spawnLocationStart = spawnLocation.min;
             return new Vector3(
-                spawnLocationStart.x + x * objectTypeInfo.Width,
+                spawnLocationStart.x + objectWidth / 2f + x * objectWidth,
                 spawnLocation.center.y,
-                spawnLocationStart.z + z * objectTypeInfo.Depth);
+                spawnLocationStart.z + objectDepth / 2f + z * objectDepth);
         }
 
         private bool IsSpawnPointReserved(Vector3 point) {

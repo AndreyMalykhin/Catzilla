@@ -13,19 +13,32 @@ using Catzilla.PlayerModule.View;
 using Catzilla.PlayerModule.Controller;
 
 namespace Catzilla.PlayerModule.Config {
-    public class PlayerModuleConfig: IModuleConfig {
-        void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
-            injectionBinder.Bind<PlayerStateStorage>()
-                .To<PlayerStateStorage>()
-                .ToSingleton()
-                .CrossContext();
+    [CreateAssetMenuAttribute]
+    public class PlayerModuleConfig: ModuleConfig {
+        [SerializeField]
+        private PlayerStateStorage playerStateStorage;
+
+        [SerializeField]
+        private PlayerStateStorage playerStateStorageStub;
+
+        public override void InitBindings(IInjectionBinder injectionBinder) {
+            if (Debug.isDebugBuild) {
+                injectionBinder.Bind<PlayerStateStorage>()
+                    .ToValue(playerStateStorageStub)
+                    .CrossContext();
+            } else {
+                injectionBinder.Bind<PlayerStateStorage>()
+                    .ToValue(playerStateStorage)
+                    .CrossContext();
+            }
+
             injectionBinder.Bind<PlayerScoreController>()
                 .To<PlayerScoreController>()
                 .ToSingleton()
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
+        public override void PostBindings(IInjectionBinder injectionBinder) {
             var eventBus = injectionBinder.GetInstance<EventBus>();
             var playerScoreController =
                 injectionBinder.GetInstance<PlayerScoreController>();

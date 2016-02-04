@@ -7,44 +7,50 @@ using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
 
 namespace Catzilla.PlayerModule.Model {
-    public class PlayerStateStorage {
+    [CreateAssetMenuAttribute]
+    public class PlayerStateStorage: ScriptableObject {
         public enum Event {Save}
 
         [Inject]
         public EventBus EventBus {get; set;}
 
-        private PlayerState player;
+        protected PlayerState Player;
 
-        public PlayerState Get() {
-            if (player == null) {
-                player = new PlayerState{
-                    Level = PlayerPrefs.GetInt("Level", 0),
-                    ScoreRecord = PlayerPrefs.GetInt("ScoreRecord", 0),
-                    AvailableResurrectionsCount =
-                        PlayerPrefs.GetInt("AvailableResurrectionsCount", 1)
-                };
+        public virtual PlayerState Get() {
+            if (Player == null) {
+                bool isPlayerExists = PlayerPrefs.HasKey("Level");
+
+                if (isPlayerExists) {
+                    Player = new PlayerState{
+                        Level = PlayerPrefs.GetInt("Level"),
+                        ScoreRecord = PlayerPrefs.GetInt("ScoreRecord"),
+                        AvailableResurrectionsCount =
+                            PlayerPrefs.GetInt("AvailableResurrectionsCount")
+                    };
+                }
             }
 
-            return player;
+            return Player;
         }
 
-        public void Save(PlayerState player) {
+        public virtual void Save(PlayerState player) {
             // DebugUtils.Log("PlayerStateStorage.Save()");
-            this.player = player;
-            PlayerPrefs.SetInt("Level", player.Level);
-            PlayerPrefs.SetInt("ScoreRecord", player.ScoreRecord);
+            Player = player;
+            PlayerPrefs.SetInt("Level", Player.Level);
+            PlayerPrefs.SetInt("ScoreRecord", Player.ScoreRecord);
             PlayerPrefs.SetInt("AvailableResurrectionsCount",
-                player.AvailableResurrectionsCount);
+                Player.AvailableResurrectionsCount);
             PlayerPrefs.Save();
             EventBus.Fire(Event.Save, new Evt(this));
         }
 
-        public void Sync(
+        public virtual void Sync(
             Server server, Action onSuccess = null, Action onFail = null) {
             // DebugUtils.Log("PlayerStateStorage.Sync()");
             server.GetPlayer(
                 (remotePlayer) => {
                     PlayerState localPlayer = Get();
+                    DebugUtils.Assert(localPlayer != null);
 
                     if (remotePlayer != null) {
                         localPlayer.Level =

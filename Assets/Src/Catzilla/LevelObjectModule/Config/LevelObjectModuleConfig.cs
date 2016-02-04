@@ -12,12 +12,14 @@ using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelObjectModule.Controller;
 
 namespace Catzilla.LevelObjectModule.Config {
-    public class LevelObjectModuleConfig: IModuleConfig {
-        void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
+    [CreateAssetMenuAttribute]
+    public class LevelObjectModuleConfig: ModuleConfig {
+        [SerializeField]
+        private ObjectTypeInfoStorage objectTypeInfoStorage;
+
+        public override void InitBindings(IInjectionBinder injectionBinder) {
             injectionBinder.Bind<ObjectTypeInfoStorage>()
-                .ToValue(Resources.Load<ObjectTypeInfoStorage>(
-                    "ObjectTypeInfoStorage"))
-                .ToInject(false)
+                .ToValue(objectTypeInfoStorage)
                 .CrossContext();
             injectionBinder.Bind<PlayerController>()
                 .To<PlayerController>()
@@ -69,7 +71,7 @@ namespace Catzilla.LevelObjectModule.Config {
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
+        public override void PostBindings(IInjectionBinder injectionBinder) {
             var eventBus = injectionBinder.GetInstance<EventBus>();
 
             var smashableContoller =

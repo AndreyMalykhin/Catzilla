@@ -10,8 +10,28 @@ using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Controller;
 
 namespace Catzilla.CommonModule.Config {
-    public class CommonModuleConfig: IModuleConfig {
-        void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
+    [CreateAssetMenuAttribute]
+    public class CommonModuleConfig: ModuleConfig {
+        [SerializeField]
+        private Server server;
+
+        [SerializeField]
+        private Server serverStub;
+
+        [SerializeField]
+        private AudioManager audioManager;
+
+        public override void InitBindings(IInjectionBinder injectionBinder) {
+            if (Debug.isDebugBuild) {
+                injectionBinder.Bind<Server>()
+                    .ToValue(serverStub)
+                    .CrossContext();
+            } else {
+                injectionBinder.Bind<Server>()
+                    .ToValue(server)
+                    .CrossContext();
+            }
+
             injectionBinder.Bind<EventBus>()
                 .To<EventBus>()
                 .ToSingleton()
@@ -44,10 +64,6 @@ namespace Catzilla.CommonModule.Config {
                 .To<BtnController>()
                 .ToSingleton()
                 .CrossContext();
-            injectionBinder.Bind<Server>()
-                .To<Server>()
-                .ToSingleton()
-                .CrossContext();
             var ui = GameObject.FindWithTag("UI").GetComponent<UIView>();
             injectionBinder.Bind<UIView>()
                 .ToValue(ui)
@@ -72,9 +88,7 @@ namespace Catzilla.CommonModule.Config {
                 .ToInject(false)
                 .CrossContext();
             injectionBinder.Bind<AudioManager>()
-                .ToValue(Resources.Load<AudioManager>("AudioManager"))
-                .ToInject(false)
-                .ToSingleton()
+                .ToValue(audioManager)
                 .CrossContext();
             injectionBinder.Bind<int>()
                 .ToValue(0)
@@ -93,7 +107,7 @@ namespace Catzilla.CommonModule.Config {
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
+        public override void PostBindings(IInjectionBinder injectionBinder) {
             var eventBus = injectionBinder.GetInstance<EventBus>();
 
             var disposableController =

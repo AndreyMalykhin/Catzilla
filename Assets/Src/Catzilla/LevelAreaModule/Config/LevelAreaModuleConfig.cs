@@ -11,8 +11,12 @@ using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelAreaModule.Controller;
 
 namespace Catzilla.LevelAreaModule.Config {
-    public class LevelAreaModuleConfig: IModuleConfig {
-        void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
+    [CreateAssetMenuAttribute]
+    public class LevelAreaModuleConfig: ModuleConfig {
+        [SerializeField]
+        private EnvTypeInfoStorage envTypeInfoStorage;
+
+        public override void InitBindings(IInjectionBinder injectionBinder) {
             injectionBinder.Bind<LevelAreaGenerator>()
                 .To<LevelAreaGenerator>()
                 .ToSingleton()
@@ -22,9 +26,7 @@ namespace Catzilla.LevelAreaModule.Config {
                 .ToSingleton()
                 .CrossContext();
             injectionBinder.Bind<EnvTypeInfoStorage>()
-                .ToValue(Resources.Load<EnvTypeInfoStorage>(
-                    "EnvTypeInfoStorage"))
-                .ToInject(false)
+                .ToValue(envTypeInfoStorage)
                 .CrossContext();
             injectionBinder.Bind<int>()
                 .ToValue(1 << 10)
@@ -33,7 +35,7 @@ namespace Catzilla.LevelAreaModule.Config {
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
+        public override void PostBindings(IInjectionBinder injectionBinder) {
             var eventBus = injectionBinder.GetInstance<EventBus>();
             var levelAreaController =
                 injectionBinder.GetInstance<LevelAreaController>();

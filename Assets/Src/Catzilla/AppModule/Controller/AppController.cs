@@ -21,6 +21,10 @@ namespace Catzilla.AppModule.Controller {
 
         public void OnStart() {
             // DebugUtils.Log("AppController.OnStart()");
+            if (PlayerStateStorage.Get() == null) {
+                PlayerStateStorage.Save(new PlayerState());
+            }
+
             FB.Init(OnFacebookInit);
         }
 

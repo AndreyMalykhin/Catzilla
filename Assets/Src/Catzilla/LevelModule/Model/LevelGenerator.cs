@@ -30,25 +30,26 @@ namespace Catzilla.LevelModule.Model {
         private readonly IDictionary<State, StateTransition[]> states =
             new Dictionary<State, StateTransition[]>();
 
+        // TODO
         [PostConstruct]
         public void OnConstruct() {
             states[State.Start] = new StateTransition[] {
-                new StateTransition(EnvType.HoodStart, State.HoodMiddle),
-                new StateTransition(EnvType.ParkStart, State.ParkMiddle),
+                // new StateTransition(EnvType.HoodStart, State.HoodMiddle),
+                // new StateTransition(EnvType.ParkStart, State.ParkMiddle),
                 new StateTransition(EnvType.TrackStart, State.TrackMiddle)
             };
             states[State.TrackMiddle] = new StateTransition[] {
                 new StateTransition(EnvType.TrackMiddle, State.TrackMiddle),
                 new StateTransition(EnvType.TrackEnd, State.Start)
             };
-            states[State.HoodMiddle] = new StateTransition[] {
-                new StateTransition(EnvType.HoodMiddle, State.HoodMiddle),
-                new StateTransition(EnvType.HoodEnd, State.Start)
-            };
-            states[State.ParkMiddle] = new StateTransition[] {
-                new StateTransition(EnvType.ParkMiddle, State.ParkMiddle),
-                new StateTransition(EnvType.ParkEnd, State.Start)
-            };
+            // states[State.HoodMiddle] = new StateTransition[] {
+            //     new StateTransition(EnvType.HoodMiddle, State.HoodMiddle),
+            //     new StateTransition(EnvType.HoodEnd, State.Start)
+            // };
+            // states[State.ParkMiddle] = new StateTransition[] {
+            //     new StateTransition(EnvType.ParkMiddle, State.ParkMiddle),
+            //     new StateTransition(EnvType.ParkEnd, State.Start)
+            // };
         }
 
         public void NewLevel(int levelIndex, LevelView outputLevel) {
@@ -69,34 +70,32 @@ namespace Catzilla.LevelModule.Model {
             AreaGenerator.NewArea(NextState(), spawnPlayer, outputLevel);
         }
 
-        // TODO
         private EnvType NextState() {
-            return EnvType.TrackStart;
-            // StateTransition[] stateTransitions = states[nextState];
-            // int stateTransitionsCount = stateTransitions.Length;
-            // int weightsSum = 0;
+            StateTransition[] stateTransitions = states[nextState];
+            int stateTransitionsCount = stateTransitions.Length;
+            int weightsSum = 0;
 
-            // for (int i = 0; i < stateTransitionsCount; ++i) {
-            //     weightsSum += EnvTypeInfoStorage.Get(
-            //         stateTransitions[i].EnvType).SpawnWeight;
-            // }
+            for (int i = 0; i < stateTransitionsCount; ++i) {
+                weightsSum += EnvTypeInfoStorage.Get(
+                    stateTransitions[i].EnvType).SpawnWeight;
+            }
 
-            // int randomWeight = Random.Range(1, weightsSum + 1);
-            // int weightIntervalEnd = 0;
+            int randomWeight = Random.Range(1, weightsSum + 1);
+            int weightIntervalEnd = 0;
 
-            // for (int i = 0; i < stateTransitionsCount; ++i) {
-            //     var stateTransition = stateTransitions[i];
-            //     weightIntervalEnd += EnvTypeInfoStorage.Get(
-            //         stateTransition.EnvType).SpawnWeight;
+            for (int i = 0; i < stateTransitionsCount; ++i) {
+                var stateTransition = stateTransitions[i];
+                weightIntervalEnd += EnvTypeInfoStorage.Get(
+                    stateTransition.EnvType).SpawnWeight;
 
-            //     if (weightIntervalEnd >= randomWeight) {
-            //         nextState = stateTransition.NextState;
-            //         return stateTransition.EnvType;
-            //     }
-            // }
+                if (weightIntervalEnd >= randomWeight) {
+                    nextState = stateTransition.NextState;
+                    return stateTransition.EnvType;
+                }
+            }
 
-            // DebugUtils.Assert(false);
-            // return 0;
+            DebugUtils.Assert(false);
+            return 0;
         }
     }
 }

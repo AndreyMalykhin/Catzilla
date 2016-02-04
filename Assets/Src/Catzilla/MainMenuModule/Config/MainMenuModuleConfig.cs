@@ -11,8 +11,9 @@ using Catzilla.MainMenuModule.Controller;
 using Catzilla.MainMenuModule.View;
 
 namespace Catzilla.MainMenuModule.Config {
-    public class MainMenuModuleConfig: IModuleConfig {
-        void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
+    [CreateAssetMenuAttribute]
+    public class MainMenuModuleConfig: ModuleConfig {
+        public override void InitBindings(IInjectionBinder injectionBinder) {
             var screen = GameObject.FindWithTag("MainScreen")
                 .GetComponent<MainScreenView>();
             injectionBinder.Bind<MainScreenView>()
@@ -31,7 +32,7 @@ namespace Catzilla.MainMenuModule.Config {
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
+        public override void PostBindings(IInjectionBinder injectionBinder) {
             var eventBus = injectionBinder.GetInstance<EventBus>();
             var mainMenuController =
                 injectionBinder.GetInstance<MainMenuController>();

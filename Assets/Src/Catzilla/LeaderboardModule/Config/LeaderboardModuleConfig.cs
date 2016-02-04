@@ -11,8 +11,9 @@ using Catzilla.LeaderboardModule.Model;
 using Catzilla.LeaderboardModule.Controller;
 
 namespace Catzilla.LeaderboardModule.Config {
-    public class LeaderboardModuleConfig: IModuleConfig {
-        void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
+    [CreateAssetMenuAttribute]
+    public class LeaderboardModuleConfig: ModuleConfig {
+        public override void InitBindings(IInjectionBinder injectionBinder) {
             var leaderboardsScreen = GameObject.FindWithTag(
                 "LeaderboardsScreen").GetComponent<LeaderboardsScreenView>();
             injectionBinder.Bind<LeaderboardsScreenView>()
@@ -29,7 +30,7 @@ namespace Catzilla.LeaderboardModule.Config {
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
+        public override void PostBindings(IInjectionBinder injectionBinder) {
             var eventBus = injectionBinder.GetInstance<EventBus>();
             var leaderboardsScreenController =
                 injectionBinder.GetInstance<LeaderboardsScreenController>();

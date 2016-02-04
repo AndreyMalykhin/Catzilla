@@ -13,7 +13,8 @@ using Catzilla.CommonModule.View;
 using Catzilla.PlayerModule.Model;
 
 namespace Catzilla.CommonModule.Model {
-    public class Server: IDisposable {
+    [CreateAssetMenuAttribute]
+    public class Server: ScriptableObject, IDisposable {
         public enum Event {Request, Response, Dispose}
 
         [Inject]
@@ -23,16 +24,16 @@ namespace Catzilla.CommonModule.Model {
         public EventBus EventBus {get; set;}
 
         public float ConnectionTimeout {get; set;}
-        public int PendingRequestsCount {get; private set;}
-        public bool IsConnected {get; private set;}
-        public bool IsDisposed {get; private set;}
+        public int PendingRequestsCount {get; protected set;}
+        public bool IsConnected {get; protected set;}
+        public bool IsDisposed {get; protected set;}
 
         [PostConstruct]
-        public void OnConstruct() {
+        public virtual void OnConstruct() {
             ConnectionTimeout = 5f;
         }
 
-        public void Connect(Action onSuccess, Action onFail = null) {
+        public virtual void Connect(Action onSuccess, Action onFail = null) {
             // DebugUtils.Log("Server.Connect()");
 
             if (!GS.Available) {
@@ -45,7 +46,8 @@ namespace Catzilla.CommonModule.Model {
             onSuccess();
         }
 
-        public void Login(string name, Action onSuccess, Action onFail = null) {
+        public virtual void Login(
+            string name, Action onSuccess, Action onFail = null) {
             // DebugUtils.Log("Server.Login()");
             new DeviceAuthenticationRequest()
                 .SetDisplayName(name)
@@ -62,7 +64,7 @@ namespace Catzilla.CommonModule.Model {
             OnRequest();
         }
 
-        public void LinkFacebookAccount(
+        public virtual void LinkFacebookAccount(
             string accessToken, Action onSuccess, Action onFail = null) {
             // DebugUtils.Log("Server.LinkFacebookAccount()");
             new FacebookConnectRequest()
@@ -81,7 +83,7 @@ namespace Catzilla.CommonModule.Model {
             OnRequest();
         }
 
-        public void GetScoreLeaderboard(
+        public virtual void GetScoreLeaderboard(
             Action<List<ScoreLeaderboardItem>> onSuccess,
             Action onFail = null) {
             int itemsCount = 10;
@@ -111,7 +113,7 @@ namespace Catzilla.CommonModule.Model {
             OnRequest();
         }
 
-        public void SavePlayer(PlayerState player,
+        public virtual void SavePlayer(PlayerState player,
             Action onSuccess = null, Action onFail = null) {
             // DebugUtils.Log("Server.SavePlayer()");
             new LogEventRequest()
@@ -131,7 +133,7 @@ namespace Catzilla.CommonModule.Model {
             OnRequest();
         }
 
-        public void GetPlayer(
+        public virtual void GetPlayer(
             Action<PlayerState> onSuccess, Action onFail = null) {
             // DebugUtils.Log("Server.GetPlayer()");
             new LogEventRequest().SetEventKey("PlayerGet").Send((response) => {
@@ -158,7 +160,7 @@ namespace Catzilla.CommonModule.Model {
             OnRequest();
         }
 
-        public void Dispose() {
+        public virtual void Dispose() {
             // DebugUtils.Log("Server.Dispose()");
             GS.ShutDown();
             IsConnected = false;

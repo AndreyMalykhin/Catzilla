@@ -14,8 +14,9 @@ using Catzilla.GameOverMenuModule.Controller;
 using Catzilla.GameOverMenuModule.View;
 
 namespace Catzilla.GameOverMenuModule.Config {
-    public class GameOverMenuModuleConfig: IModuleConfig {
-        void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
+    [CreateAssetMenuAttribute]
+    public class GameOverMenuModuleConfig: ModuleConfig {
+        public override void InitBindings(IInjectionBinder injectionBinder) {
             var screen = GameObject.FindWithTag("GameOverScreen")
                 .GetComponent<GameOverScreenView>();
             injectionBinder.Bind<GameOverScreenView>()
@@ -41,7 +42,7 @@ namespace Catzilla.GameOverMenuModule.Config {
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
+        public override void PostBindings(IInjectionBinder injectionBinder) {
             var eventBus = injectionBinder.GetInstance<EventBus>();
             var gameOverMenuController =
                 injectionBinder.GetInstance<GameOverMenuController>();

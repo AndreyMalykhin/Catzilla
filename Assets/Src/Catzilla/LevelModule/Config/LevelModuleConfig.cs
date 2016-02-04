@@ -11,8 +11,12 @@ using Catzilla.LevelModule.Model;
 using Catzilla.LevelModule.View;
 
 namespace Catzilla.LevelModule.Config {
-    public class LevelModuleConfig: IModuleConfig {
-        void IModuleConfig.InitBindings(IInjectionBinder injectionBinder) {
+    [CreateAssetMenuAttribute]
+    public class LevelModuleConfig: ModuleConfig {
+        [SerializeField]
+        private LevelSettingsStorage levelSettingsStorage;
+
+        public override void InitBindings(IInjectionBinder injectionBinder) {
             var levelStartScreen = GameObject.FindWithTag("LevelStartScreen")
                 .GetComponent<LevelStartScreenView>();
             injectionBinder.Bind<LevelStartScreenView>()
@@ -27,9 +31,7 @@ namespace Catzilla.LevelModule.Config {
                 .ToInject(false)
                 .CrossContext();
             injectionBinder.Bind<LevelSettingsStorage>()
-                .ToValue(Resources.Load<LevelSettingsStorage>(
-                    "LevelSettingsStorage"))
-                .ToInject(false)
+                .ToValue(levelSettingsStorage)
                 .CrossContext();
             injectionBinder.Bind<LevelController>()
                 .To<LevelController>()
@@ -76,7 +78,7 @@ namespace Catzilla.LevelModule.Config {
                 .CrossContext();
         }
 
-        void IModuleConfig.PostBindings(IInjectionBinder injectionBinder) {
+        public override void PostBindings(IInjectionBinder injectionBinder) {
             var eventBus = injectionBinder.GetInstance<EventBus>();
 
             var levelController =

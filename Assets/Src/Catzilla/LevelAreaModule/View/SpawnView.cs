@@ -24,8 +24,12 @@ namespace Catzilla.LevelAreaModule.View {
         [SerializeField]
         private int itemsAcrossZ = 1;
 
+        [SerializeField]
+        private Color color = Color.green;
+
         private void OnDrawGizmos() {
-            Gizmos.DrawWireCube(transform.position, GetSize());
+            Gizmos.color = color;
+            Gizmos.DrawCube(transform.position, GetSize());
         }
 
         private Vector3 GetSize() {

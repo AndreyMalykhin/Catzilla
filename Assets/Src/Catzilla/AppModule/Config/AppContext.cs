@@ -3,42 +3,27 @@ using System.Collections;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using Catzilla.CommonModule.Config;
-using Catzilla.MainMenuModule.Config;
-using Catzilla.LeaderboardModule.Config;
-using Catzilla.GameOverMenuModule.Config;
-using Catzilla.LevelModule.Config;
-using Catzilla.LevelAreaModule.Config;
-using Catzilla.LevelObjectModule.Config;
-using Catzilla.PlayerModule.Config;
 
 namespace Catzilla.AppModule.Config {
     public class AppContext: MVCSContext {
-        public AppContext(MonoBehaviour view): base(view) {}
+        private ModuleConfig[] moduleConfigs;
 
-		public AppContext(MonoBehaviour view, ContextStartupFlags flags)
-            : base(view, flags) {}
+        public AppContext(MonoBehaviour view, ModuleConfig[] moduleConfigs)
+            : base(view, false) {
+            this.moduleConfigs = moduleConfigs;
+            Start();
+            Launch();
+        }
 
         protected override void mapBindings() {
-            IModuleConfig[] modules = {
-                new CommonModuleConfig(),
-                new MainMenuModuleConfig(),
-                new GameOverMenuModuleConfig(),
-                new LeaderboardModuleConfig(),
-                new PlayerModuleConfig(),
-                new LevelObjectModuleConfig(),
-                new LevelAreaModuleConfig(),
-                new LevelModuleConfig(),
-                new AppModuleConfig()
-            };
-
-            for (int i = 0; i < modules.Length; ++i) {
-                modules[i].InitBindings(injectionBinder);
+            for (int i = 0; i < moduleConfigs.Length; ++i) {
+                moduleConfigs[i].InitBindings(injectionBinder);
             }
 
             injectionBinder.ReflectAll();
 
-            for (int i = 0; i < modules.Length; ++i) {
-                modules[i].PostBindings(injectionBinder);
+            for (int i = 0; i < moduleConfigs.Length; ++i) {
+                moduleConfigs[i].PostBindings(injectionBinder);
             }
         }
     }

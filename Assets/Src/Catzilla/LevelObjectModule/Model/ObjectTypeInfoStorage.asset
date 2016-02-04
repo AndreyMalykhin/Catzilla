@@ -49,8 +49,8 @@ MonoBehaviour:
     Depth: 1
     SpawnPriority: 4
     SpawnChance: 1
-    SpawnBaseCount: 0
-    SpawnLevelFactor: 0
+    SpawnBaseCount: 1
+    SpawnLevelFactor: 1
     ViewProto: {fileID: 11418764, guid: ebafc7a142f1b49239bb80c5acd77cff, type: 2}
   - Type: 1
     Width: 1
