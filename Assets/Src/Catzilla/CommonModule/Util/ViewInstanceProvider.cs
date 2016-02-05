@@ -21,7 +21,7 @@ namespace Catzilla.CommonModule.Util {
 
         public object GetInstance(Type key) {
             var instance = (PoolableView) GameObject.Instantiate(proto);
-            instance.transform.parent = parent;
+            instance.transform.SetParent(parent, !instance.IsUI);
             instance.gameObject.SetActive(false);
             return instance;
         }

@@ -11,54 +11,62 @@ namespace Catzilla.CommonModule.Util {
         }
 
         [System.Serializable]
-        private struct Channel {
+        private struct ChannelParams {
             public string Name;
             public int SimultaneousSoundsCount;
         }
 
-        [SerializeField]
-        private Channel[] channels;
-
-        private AudioSource[][] recentlyPlayedSources;
-
-        public void Play(
-            AudioClip sound, AudioSource audioSource, int channel) {
-            // DebugUtils.Log("AudioManager.Play(); sound={0};", sound);
-            int freeSlot = GetFreeChannelSlot(channel);
-
-            if (freeSlot == -1) {
-                return;
-            }
-
-            recentlyPlayedSources[channel][freeSlot] = audioSource;
-            audioSource.clip = sound;
-            audioSource.Play();
+        private class Channel {
+            public int NextSourceIndex;
+            public AudioSource[] RecentSources;
         }
 
-        private int GetFreeChannelSlot(int channel) {
-            AudioSource[] channelRecentlyPlayedSources =
-                recentlyPlayedSources[channel];
+        [SerializeField]
+        private ChannelParams[] channelsParams;
 
-            for (int i = 0; i < channelRecentlyPlayedSources.Length; ++i) {
-                if (channelRecentlyPlayedSources[i] != null
-                    && channelRecentlyPlayedSources[i].isPlaying) {
-                    continue;
+        private Channel[] channels;
+
+        public void Play(
+            AudioClip sound, AudioSource audioSource, int channelId) {
+            // DebugUtils.Log("AudioManager.Play(); sound={0};", sound);
+            Channel channel = channels[channelId];
+            AudioSource[] recentSources = channel.RecentSources;
+            float volumeAttenuation = 1f / recentSources.Length;
+
+            for (int i = 0; i < recentSources.Length; ++i) {
+                if (recentSources[i] != null) {
+                    recentSources[i].volume -= volumeAttenuation;
                 }
-
-                return i;
             }
 
-            return -1;
+            int nextSourceIndex = channel.NextSourceIndex;
+            // AudioSource recentSource = recentSources[nextSourceIndex];
+
+            // if (recentSource != null) {
+            //     recentSource.Stop();
+            // }
+
+            recentSources[nextSourceIndex] = audioSource;
+            ++nextSourceIndex;
+
+            if (nextSourceIndex >= recentSources.Length) {
+                channel.NextSourceIndex = 0;
+            }
+
+            audioSource.clip = sound;
+            audioSource.volume = 1f;
+            audioSource.Play();
         }
 
         private void OnEnable() {
             // because of unity's bug
             IsPaused = false;
-            recentlyPlayedSources = new AudioSource[channels.Length][];
+            channels = new Channel[channelsParams.Length];
 
-            for (int i = 0; i < channels.Length; ++i) {
-                recentlyPlayedSources[i] =
-                    new AudioSource[channels[i].SimultaneousSoundsCount];
+            for (int i = 0; i < channelsParams.Length; ++i) {
+                var recentSources =
+                    new AudioSource[channelsParams[i].SimultaneousSoundsCount];
+                channels[i] = new Channel{RecentSources = recentSources};
             }
         }
     }

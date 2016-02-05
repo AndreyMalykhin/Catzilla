@@ -388,6 +388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PoolId: 0
+  IsUI: 0
 --- !u!114 &11472518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -400,6 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Score: 1
+  Collider: {fileID: 6547676}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -485,6 +487,10 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Collider
+      value: 
+      objectReference: {fileID: 6547676}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152140}

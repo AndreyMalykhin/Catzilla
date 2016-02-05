@@ -17,6 +17,9 @@ namespace Catzilla.LevelObjectModule.Config {
         [SerializeField]
         private ObjectTypeInfoStorage objectTypeInfoStorage;
 
+        [SerializeField]
+        private WorldSpacePopupView scorePopupProto;
+
         public override void InitBindings(IInjectionBinder injectionBinder) {
             injectionBinder.Bind<ObjectTypeInfoStorage>()
                 .ToValue(objectTypeInfoStorage)
@@ -48,6 +51,11 @@ namespace Catzilla.LevelObjectModule.Config {
             injectionBinder.Bind<ActivatableController>()
                 .To<ActivatableController>()
                 .ToSingleton()
+                .CrossContext();
+            injectionBinder.Bind<WorldSpacePopupView>()
+                .ToValue(scorePopupProto)
+                .ToName("ScorePopupProto")
+                .ToInject(false)
                 .CrossContext();
             injectionBinder.Bind<LevelObjectType>()
                 .ToValue(LevelObjectType.Player)

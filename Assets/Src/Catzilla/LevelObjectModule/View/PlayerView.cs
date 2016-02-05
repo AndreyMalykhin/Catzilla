@@ -28,13 +28,20 @@ namespace Catzilla.LevelObjectModule.View {
         [Inject("EnvLayer")]
         public int EnvLayer {get; set;}
 
-        public Collider Collider {get {return collider;}}
-        public bool IsHealthFreezed {get; set;}
-        public bool IsScoreFreezed {get; set;}
+        public Collider Collider;
+        public Camera MainCamera;
+        public Camera UICamera;
+        public PlayerHUDView HUDProto;
+        public Animator Animator;
         public AudioClip DeathSound;
         public AudioSource AudioSource;
+        public bool IsHealthFreezed;
+        public bool IsScoreFreezed;
         public float SmashForce = 10f;
         public float SmashUpwardsModifier = 0f;
+        public float FrontSpeed = 5f;
+        public float SideSpeed = 5f;
+        public int MaxHealth = 100;
 
         public int Score {
             get {
@@ -63,7 +70,7 @@ namespace Catzilla.LevelObjectModule.View {
 
                 int oldValue = health;
                 health = value;
-                health = Mathf.Clamp(health, 0, maxHealth);
+                health = Mathf.Clamp(health, 0, MaxHealth);
                 EventBus.Fire(
                     Event.HealthChange, new Evt(this, oldValue));
 
@@ -74,30 +81,6 @@ namespace Catzilla.LevelObjectModule.View {
                 Die();
             }
         }
-
-        [SerializeField]
-        private float frontSpeed = 5f;
-
-        [SerializeField]
-        private float sideSpeed = 5f;
-
-        [SerializeField]
-        private float cameraRayLength = 100f;
-
-        [SerializeField]
-        private int maxHealth = 100;
-
-        [SerializeField]
-        private Animator animator;
-
-        [SerializeField]
-        private PlayerHUDView HUDProto;
-
-        [SerializeField]
-        new private Camera camera;
-
-        [SerializeField]
-        new private Collider collider;
 
         private int score;
         private int health;
@@ -113,10 +96,10 @@ namespace Catzilla.LevelObjectModule.View {
             // DebugUtils.Log("PlayerView.OnConstruct()");
             body = GetComponent<Rigidbody>();
             targetX = body.position.x;
-            float halfWidth = collider.bounds.extents.x;
+            float halfWidth = Collider.bounds.extents.x;
             minX = LevelMinX + halfWidth;
             maxX = LevelMaxX - halfWidth;
-            health = maxHealth;
+            health = MaxHealth;
             HUD = (PlayerHUDView) Instantiate(HUDProto);
             EventBus.Fire(Event.Construct, new Evt(this));
         }
@@ -128,8 +111,8 @@ namespace Catzilla.LevelObjectModule.View {
 
             isDead = false;
             targetX = body.position.x;
-            Health = maxHealth;
-            animator.enabled = true;
+            Health = MaxHealth;
+            Animator.enabled = true;
             EventBus.Fire(Event.Resurrect, new Evt(this));
         }
 
@@ -147,7 +130,7 @@ namespace Catzilla.LevelObjectModule.View {
             }
 
             isDead = true;
-            animator.enabled = false;
+            Animator.enabled = false;
             EventBus.Fire(Event.Death, new Evt(this));
         }
 
@@ -161,6 +144,10 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
+        private void LateUpdate() {
+            MoveCamera();
+        }
+
         private void FixedUpdate() {
             if (isDead) {
                 return;
@@ -170,10 +157,11 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void SetTargetX(Vector3 mousePosition) {
-            Ray ray = camera.ScreenPointToRay(mousePosition);
+            Ray ray = MainCamera.ScreenPointToRay(mousePosition);
             RaycastHit hit;
 
-            if (!Physics.Raycast(ray, out hit, cameraRayLength, EnvLayer)) {
+            if (!Physics.Raycast(
+                    ray, out hit, MainCamera.farClipPlane, EnvLayer)) {
                 return;
             }
 
@@ -183,9 +171,17 @@ namespace Catzilla.LevelObjectModule.View {
         private void Move() {
             Vector3 currentPosition = body.position;
             float newX = Mathf.MoveTowards(
-                currentPosition.x, targetX, sideSpeed * Time.deltaTime);
-            float newZ = currentPosition.z + frontSpeed * Time.deltaTime;
+                currentPosition.x, targetX, SideSpeed * Time.deltaTime);
+            float newZ = currentPosition.z + FrontSpeed * Time.deltaTime;
             body.MovePosition(new Vector3(newX, currentPosition.y, newZ));
+        }
+
+        private void MoveCamera() {
+            Vector3 currentCameraPosition = MainCamera.transform.position;
+            var newCameraPosition = new Vector3(
+                0f, currentCameraPosition.y, currentCameraPosition.z);
+            MainCamera.transform.position = newCameraPosition;
+            UICamera.transform.position = newCameraPosition;
         }
     }
 }

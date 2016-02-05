@@ -500,6 +500,7 @@ Transform:
   - {fileID: 1572147012}
   - {fileID: 455620972}
   - {fileID: 200715832}
+  - {fileID: 1306214666}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!114 &487016944
@@ -611,75 +612,75 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22415718, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22415718, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22415718, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 22415718, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -28.862995
       objectReference: {fileID: 0}
     - target: {fileID: 22415718, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 22415718, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 27.72599
       objectReference: {fileID: 0}
     - target: {fileID: 22440494, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22440494, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22440494, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 165
       objectReference: {fileID: 0}
     - target: {fileID: 22440494, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -28.862995
       objectReference: {fileID: 0}
     - target: {fileID: 22440494, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 22440494, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 27.72599
       objectReference: {fileID: 0}
     - target: {fileID: 22499668, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22499668, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22499668, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 385.03482
       objectReference: {fileID: 0}
     - target: {fileID: 22499668, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -28.862995
       objectReference: {fileID: 0}
     - target: {fileID: 22499668, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 310.06964
       objectReference: {fileID: 0}
     - target: {fileID: 22499668, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 27.72599
       objectReference: {fileID: 0}
     - target: {fileID: 11420906, guid: b006ab7dedd1f48a7a0cd3ba397e74e2, type: 2}
       propertyPath: m_Text
@@ -2689,6 +2690,74 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 523211499}
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+--- !u!1 &1306214665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1306214666}
+  - 114: {fileID: 1306214667}
+  m_Layer: 0
+  m_Name: Translator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1306214666
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1306214665}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 487016943}
+  m_RootOrder: 6
+--- !u!114 &1306214667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1306214665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e1b27c533c74ba988638be10710078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - Key: GameOverMenu.Restart
+    Text: {fileID: 1308118328}
+  - Key: GameOverMenu.Reward
+    Text: {fileID: 770801640}
+  - Key: GameOverMenu.Exit
+    Text: {fileID: 1663602928}
+  - Key: MainMenu.Start
+    Text: {fileID: 193054178}
+  - Key: MainMenu.Exit
+    Text: {fileID: 741496123}
+  - Key: LevelCompleteScreen.Msg
+    Text: {fileID: 651865962}
+  - Key: RewardEarnDlg.Msg
+    Text: {fileID: 364828805}
+  - Key: Common.Ok
+    Text: {fileID: 672412526}
+  - Key: MainMenu.Leaderboard
+    Text: {fileID: 781784473}
+  - Key: ScoreLeaderboard.Rank
+    Text: {fileID: 362433623}
+  - Key: ScoreLeaderboard.Score
+    Text: {fileID: 1220108901}
+  - Key: ScoreLeaderboard.Name
+    Text: {fileID: 1627972722}
+  - Key: Common.Back
+    Text: {fileID: 1370589674}
+  - Key: GameOverMenu.Leaderboard
+    Text: {fileID: 2129717404}
 --- !u!114 &1308118328 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11473588, guid: 0409548e6aa1949528a8f54d2de5d8e7,
@@ -3357,6 +3426,8 @@ MonoBehaviour:
     InitialSize: 4
   - ViewProto: {fileID: 11407360, guid: 881190ac123ff4fc3a8b41372ceceb81, type: 2}
     InitialSize: 4
+  - ViewProto: {fileID: 11482260, guid: f055717bd0d0c40bfbf78926508e3dbc, type: 2}
+    InitialSize: 8
 --- !u!114 &1627972722 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11455788, guid: b006ab7dedd1f48a7a0cd3ba397e74e2,
@@ -3484,7 +3555,6 @@ GameObject:
   - 114: {fileID: 1825311390}
   - 114: {fileID: 1825311389}
   - 114: {fileID: 1825311393}
-  - 114: {fileID: 1825311394}
   m_Layer: 5
   m_Name: UI
   m_TagString: UI
@@ -3652,46 +3722,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ignoreListenerPause: 1
---- !u!114 &1825311394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1825311387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e1b27c533c74ba988638be10710078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - Key: GameOverMenu.Restart
-    Text: {fileID: 1308118328}
-  - Key: GameOverMenu.Reward
-    Text: {fileID: 770801640}
-  - Key: GameOverMenu.Exit
-    Text: {fileID: 1663602928}
-  - Key: MainMenu.Start
-    Text: {fileID: 193054178}
-  - Key: MainMenu.Exit
-    Text: {fileID: 741496123}
-  - Key: LevelCompleteScreen.Msg
-    Text: {fileID: 651865962}
-  - Key: RewardEarnDlg.Msg
-    Text: {fileID: 364828805}
-  - Key: Common.Ok
-    Text: {fileID: 672412526}
-  - Key: MainMenu.Leaderboard
-    Text: {fileID: 781784473}
-  - Key: ScoreLeaderboard.Rank
-    Text: {fileID: 362433623}
-  - Key: ScoreLeaderboard.Score
-    Text: {fileID: 1220108901}
-  - Key: ScoreLeaderboard.Name
-    Text: {fileID: 1627972722}
-  - Key: Common.Back
-    Text: {fileID: 1370589674}
-  - Key: GameOverMenu.Leaderboard
-    Text: {fileID: 2129717404}
 --- !u!1 &2079724025
 GameObject:
   m_ObjectHideFlags: 0

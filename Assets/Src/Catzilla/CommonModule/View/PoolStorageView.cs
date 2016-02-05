@@ -5,7 +5,7 @@ using strange.extensions.pool.impl;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
-    public class PoolStorageView: strange.extensions.mediation.impl.View {
+    public class PoolStorageView: MonoBehaviour {
         [System.Serializable]
         private struct PoolParams {
             public PoolableView ViewProto;
@@ -18,29 +18,15 @@ namespace Catzilla.CommonModule.View {
         private readonly IDictionary<int, IPool<PoolableView>> poolsMap =
             new Dictionary<int, IPool<PoolableView>>();
 
-        [PostConstruct]
-        public void OnConstruct() {
-            for (int i = 0; i < poolsParams.Length; ++i) {
-                PoolParams poolParams = poolsParams[i];
-                var instanceProvider =
-                    new ViewInstanceProvider(poolParams.ViewProto, transform);
-                var pool = new Pool<PoolableView>{
-                    instanceProvider = instanceProvider
-                };
-                Fill(pool, poolParams.InitialSize);
-                poolsMap.Add(poolParams.ViewProto.PoolId, pool);
-            }
-        }
-
         public PoolableView Get(int poolId) {
             PoolableView instance = poolsMap[poolId].GetInstance();
-            instance.transform.parent = null;
+            instance.transform.SetParent(null, !instance.IsUI);
             instance.gameObject.SetActive(true);
             return instance;
         }
 
         public void Return(PoolableView instance) {
-            instance.transform.parent = transform;
+            instance.transform.SetParent(transform, !instance.IsUI);
             instance.gameObject.SetActive(false);
             poolsMap[instance.PoolId].ReturnInstance(instance);
             // DebugUtils.Log("PoolStorageView.Return(); left={0}; instance={1}",
@@ -65,6 +51,19 @@ namespace Catzilla.CommonModule.View {
                 int instancesCount = pool.instanceCount;
                 pool.Clean();
                 Fill(pool, instancesCount);
+            }
+        }
+
+        private void Awake() {
+            for (int i = 0; i < poolsParams.Length; ++i) {
+                PoolParams poolParams = poolsParams[i];
+                var instanceProvider =
+                    new ViewInstanceProvider(poolParams.ViewProto, transform);
+                var pool = new Pool<PoolableView>{
+                    instanceProvider = instanceProvider
+                };
+                Fill(pool, poolParams.InitialSize);
+                poolsMap.Add(poolParams.ViewProto.PoolId, pool);
             }
         }
 

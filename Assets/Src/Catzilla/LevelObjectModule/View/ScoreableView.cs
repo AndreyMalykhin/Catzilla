@@ -12,6 +12,7 @@ namespace Catzilla.LevelObjectModule.View {
         public EventBus EventBus {get; set;}
 
         public int Score = 1;
+        public Collider Collider;
 
         private void OnTriggerEnter(Collider collider) {
             ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,

@@ -529,6 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PoolId: 1
+  IsUI: 0
 --- !u!114 &11479234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -553,6 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Score: 1
+  Collider: {fileID: 6559614}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -654,6 +656,10 @@ Prefab:
       propertyPath: SmashSound
       value: 
       objectReference: {fileID: 8300000, guid: 589bb341a98e14ded8a84427d07f6728, type: 3}
+    - target: {fileID: 0}
+      propertyPath: Collider
+      value: 
+      objectReference: {fileID: 6559614}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 102404}

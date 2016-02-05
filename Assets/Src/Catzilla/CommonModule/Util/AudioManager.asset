@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa671772a2e9478aa4208e13187e54c, type: 3}
   m_Name: AudioManager
   m_EditorClassIdentifier: 
-  channels:
+  channelsParams:
   - Name: Effects
-    SimultaneousSoundsCount: 2
+    SimultaneousSoundsCount: 4
   - Name: UI
     SimultaneousSoundsCount: 1
   - Name: Player

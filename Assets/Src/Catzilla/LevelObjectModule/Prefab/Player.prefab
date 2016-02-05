@@ -18,6 +18,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &121812
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 472358}
+  - 20: {fileID: 2010502}
+  - 92: {fileID: 9207372}
+  m_Layer: 8
+  m_Name: MainCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &144000
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,9 +45,8 @@ GameObject:
   - 4: {fileID: 432502}
   - 20: {fileID: 2046270}
   - 92: {fileID: 9241696}
-  - 114: {fileID: 11486978}
   m_Layer: 8
-  m_Name: Camera
+  m_Name: UICamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,6 +98,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 446088}
+  - {fileID: 472358}
   - {fileID: 432502}
   - {fileID: 457836}
   m_Father: {fileID: 0}
@@ -97,7 +114,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 406494}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &446088
 Transform:
   m_ObjectHideFlags: 1
@@ -121,13 +138,25 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 406494}
-  m_RootOrder: 2
---- !u!20 &2046270
+  m_RootOrder: 3
+--- !u!4 &472358
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121812}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 24, z: 9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 406494}
+  m_RootOrder: 1
+--- !u!20 &2010502
 Camera:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 144000}
+  m_GameObject: {fileID: 121812}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
@@ -139,14 +168,48 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 50
   field of view: 60
   orthographic: 0
   orthographic size: 12
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967263
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
+--- !u!20 &2046270
+Camera:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144000}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 50
+  field of view: 60
+  orthographic: 0
+  orthographic size: 12
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 32
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -302,6 +365,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!92 &9207372
+Behaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121812}
+  m_Enabled: 1
 --- !u!92 &9241696
 Behaviour:
   m_ObjectHideFlags: 1
@@ -337,29 +407,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6030a66ca874a588da3cb254f2a0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collider: {fileID: 6507940}
+  MainCamera: {fileID: 2010502}
+  UICamera: {fileID: 2046270}
+  HUDProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
+  Animator: {fileID: 9533428}
   DeathSound: {fileID: 8300000, guid: 7b1a6f0e82bb648aa8d0338272804aed, type: 3}
   AudioSource: {fileID: 8291638}
+  IsHealthFreezed: 1
+  IsScoreFreezed: 1
   SmashForce: 100
   SmashUpwardsModifier: -5
-  frontSpeed: 5
-  sideSpeed: 5
-  cameraRayLength: 100
-  maxHealth: 100000
-  animator: {fileID: 9533428}
-  HUDProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
-  camera: {fileID: 2046270}
-  collider: {fileID: 6507940}
---- !u!114 &11486978
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 144000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc4a0baf6561b47c08c7fbd6eb473c0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  FrontSpeed: 5
+  SideSpeed: 5
+  MaxHealth: 100
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -531,6 +592,34 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Size.z
       value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: far clip plane
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: UICamera
+      value: 
+      objectReference: {fileID: 2046270}
+    - target: {fileID: 0}
+      propertyPath: MainCamera
+      value: 
+      objectReference: {fileID: 2010502}
+    - target: {fileID: 0}
+      propertyPath: Collider
+      value: 
+      objectReference: {fileID: 6507940}
+    - target: {fileID: 0}
+      propertyPath: Animator
+      value: 
+      objectReference: {fileID: 9533428}
+    - target: {fileID: 0}
+      propertyPath: IsHealthFreezed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: IsScoreFreezed
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

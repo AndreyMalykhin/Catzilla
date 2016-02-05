@@ -21,6 +21,9 @@ namespace Catzilla.CommonModule.Config {
         [SerializeField]
         private AudioManager audioManager;
 
+        [SerializeField]
+        private PopupManager popupManager;
+
         public override void InitBindings(IInjectionBinder injectionBinder) {
             if (Debug.isDebugBuild) {
                 injectionBinder.Bind<Server>()
@@ -89,6 +92,9 @@ namespace Catzilla.CommonModule.Config {
                 .CrossContext();
             injectionBinder.Bind<AudioManager>()
                 .ToValue(audioManager)
+                .CrossContext();
+            injectionBinder.Bind<PopupManager>()
+                .ToValue(popupManager)
                 .CrossContext();
             injectionBinder.Bind<int>()
                 .ToValue(0)

@@ -15,6 +15,7 @@ namespace Catzilla.CommonModule.View {
         public EventBus EventBus {get; set;}
 
         public int PoolId;
+        public bool IsUI;
 		public bool retain {get {return false;}}
 
 		public void Restore() {

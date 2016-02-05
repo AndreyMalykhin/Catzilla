@@ -4,17 +4,9 @@ using System.Collections;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
-    public class ActivityIndicatorView: strange.extensions.mediation.impl.View {
+    public class ActivityIndicatorView: MonoBehaviour {
         private Canvas canvas;
         private Animator animator;
-
-        [PostConstruct]
-        public void OnConstruct() {
-            canvas = GetComponent<Canvas>();
-            animator = GetComponent<Animator>();
-            canvas.enabled = false;
-            animator.enabled = false;
-        }
 
         public void Show() {
             // DebugUtils.Log("ActivityIndicatorView.Show()");
@@ -24,6 +16,13 @@ namespace Catzilla.CommonModule.View {
 
         public void Hide() {
             // DebugUtils.Log("ActivityIndicatorView.Hide()");
+            canvas.enabled = false;
+            animator.enabled = false;
+        }
+
+        private void Awake() {
+            canvas = GetComponent<Canvas>();
+            animator = GetComponent<Animator>();
             canvas.enabled = false;
             animator.enabled = false;
         }

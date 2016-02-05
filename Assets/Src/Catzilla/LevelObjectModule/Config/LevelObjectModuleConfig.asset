@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
+  scorePopupProto: {fileID: 11463962, guid: f055717bd0d0c40bfbf78926508e3dbc, type: 2}
