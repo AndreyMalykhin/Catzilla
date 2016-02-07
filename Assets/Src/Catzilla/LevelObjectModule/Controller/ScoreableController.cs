@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Diagnostics;
+using System.Text;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
@@ -18,6 +20,8 @@ namespace Catzilla.LevelObjectModule.Controller {
 
         [Inject]
         public PopupManager PopupManager {get; set;}
+
+        private readonly StringBuilder strBuilder = new StringBuilder(8);
 
         public void OnTriggerEnter(Evt evt) {
             var collider = (Collider) evt.Data;
@@ -39,10 +43,12 @@ namespace Catzilla.LevelObjectModule.Controller {
             ScoreableView scoreable, PlayerView player) {
             int poolId = ScorePopupProto.GetComponent<PoolableView>().PoolId;
             var popup =
-                PoolStorage.Get(poolId).GetComponent<WorldSpacePopupView>();
+                PoolStorage.Take(poolId).GetComponent<WorldSpacePopupView>();
             popup.PlaceAbove(scoreable.Collider.bounds);
             popup.LookAtTarget = player.MainCamera;
-            popup.Msg.text = string.Format("+{0}", scoreable.Score);
+            popup.Msg.text =
+                strBuilder.Append('+').Append(scoreable.Score).ToString();
+            strBuilder.Length = 0;
             popup.OnHide = OnScorePopupHide;
             PopupManager.Show(popup);
         }

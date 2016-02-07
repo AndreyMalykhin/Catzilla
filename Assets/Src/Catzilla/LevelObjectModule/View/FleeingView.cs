@@ -1,13 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.pool.api;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelObjectModule.View {
     public class FleeingView
         : strange.extensions.mediation.impl.View, IPoolable {
-		public bool retain {get {return false;}}
-
         [SerializeField]
         private float minSpeed = 2f;
 
@@ -19,15 +16,12 @@ namespace Catzilla.LevelObjectModule.View {
 
         [PostConstruct]
         public void OnConstruct() {
-            Restore();
+            Reset();
         }
 
-        public void Restore() {
+        public void Reset() {
             speed = Random.Range(minSpeed, maxSpeed);
         }
-
-		public void Retain() {DebugUtils.Assert(false);}
-		public void Release() {DebugUtils.Assert(false);}
 
         protected override void Awake() {
             base.Awake();

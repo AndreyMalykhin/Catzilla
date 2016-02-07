@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using strange.extensions.context.api;
-using strange.extensions.pool.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
@@ -42,7 +41,6 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
-		public bool retain {get {return false;}}
         public AudioClip ShotSound;
         public AudioSource AudioSource;
 
@@ -71,12 +69,9 @@ namespace Catzilla.LevelObjectModule.View {
                 projectileProto.GetComponent<PoolableView>().PoolId;
         }
 
-        public void Restore() {
+        public void Reset() {
             Target = null;
         }
-
-		public void Retain() {DebugUtils.Assert(false);}
-		public void Release() {DebugUtils.Assert(false);}
 
         private void OnTriggerEnter(Collider collider) {
             ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
@@ -124,7 +119,7 @@ namespace Catzilla.LevelObjectModule.View {
 
         private void Shoot() {
             // DebugUtils.Log("ShootingView.Shoot()");
-            var projectile = PoolStorage.Get(projectilePoolId);
+            var projectile = PoolStorage.Take(projectilePoolId);
             projectile.transform.position = projectileSource.position;
             projectile.transform.rotation = projectileSource.rotation;
             EventBus.Fire(Event.Shot, new Evt(this));

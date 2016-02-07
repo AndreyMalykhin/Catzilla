@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
-using strange.extensions.pool.api;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Util;
@@ -16,22 +15,18 @@ namespace Catzilla.CommonModule.View {
 
         public int PoolId;
         public bool IsUI;
-		public bool retain {get {return false;}}
 
-		public void Restore() {
+		public void Reset() {
             var components = GetComponents<MonoBehaviour>();
 
             for (var i = 0; i < components.Length; ++i) {
                 var component = components[i];
 
                 if (component != this && component is IPoolable) {
-                    ((IPoolable) component).Restore();
+                    ((IPoolable) component).Reset();
                 }
             }
         }
-
-		public void Retain() {DebugUtils.Assert(false);}
-		public void Release() {DebugUtils.Assert(false);}
 
         protected override void OnDestroy() {
             // DebugUtils.Log("PoolableView.OnDestroy()");

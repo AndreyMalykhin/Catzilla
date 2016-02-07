@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using strange.extensions.pool.api;
-using strange.extensions.pool.impl;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
@@ -15,11 +13,11 @@ namespace Catzilla.CommonModule.View {
         [SerializeField]
         private PoolParams[] poolsParams;
 
-        private readonly IDictionary<int, IPool<PoolableView>> poolsMap =
-            new Dictionary<int, IPool<PoolableView>>();
+        private readonly IDictionary<int, Pool<PoolableView>> poolsMap =
+            new Dictionary<int, Pool<PoolableView>>();
 
-        public PoolableView Get(int poolId) {
-            PoolableView instance = poolsMap[poolId].GetInstance();
+        public PoolableView Take(int poolId) {
+            PoolableView instance = poolsMap[poolId].Take();
             instance.transform.SetParent(null, !instance.IsUI);
             instance.gameObject.SetActive(true);
             return instance;
@@ -28,15 +26,9 @@ namespace Catzilla.CommonModule.View {
         public void Return(PoolableView instance) {
             instance.transform.SetParent(transform, !instance.IsUI);
             instance.gameObject.SetActive(false);
-            poolsMap[instance.PoolId].ReturnInstance(instance);
+            poolsMap[instance.PoolId].Return(instance);
             // DebugUtils.Log("PoolStorageView.Return(); left={0}; instance={1}",
             //     poolsMap[instance.PoolId].available, instance);
-        }
-
-        public void Delete(PoolableView instance) {
-            // DebugUtils.Log("PoolStorageView.Delete(); left={0}; instance={1}",
-            //     poolsMap[instance.PoolId].instanceCount, instance);
-            poolsMap[instance.PoolId].Remove(instance);
         }
 
         public void Reset() {
@@ -46,11 +38,11 @@ namespace Catzilla.CommonModule.View {
                 GameObject.Destroy(child.gameObject);
             }
 
-            foreach (KeyValuePair<int, IPool<PoolableView>> item in poolsMap) {
+            foreach (KeyValuePair<int, Pool<PoolableView>> item in poolsMap) {
                 var pool = item.Value;
-                int instancesCount = pool.instanceCount;
-                pool.Clean();
-                Fill(pool, instancesCount);
+                int poolSize = pool.Size;
+                pool.Clear();
+                pool.Add(poolSize);
             }
         }
 
@@ -59,19 +51,10 @@ namespace Catzilla.CommonModule.View {
                 PoolParams poolParams = poolsParams[i];
                 var instanceProvider =
                     new ViewInstanceProvider(poolParams.ViewProto, transform);
-                var pool = new Pool<PoolableView>{
-                    instanceProvider = instanceProvider
-                };
-                Fill(pool, poolParams.InitialSize);
+                var pool = new Pool<PoolableView>(
+                    instanceProvider, poolParams.InitialSize);
+                pool.Add(poolParams.InitialSize);
                 poolsMap.Add(poolParams.ViewProto.PoolId, pool);
-            }
-        }
-
-        private void Fill(IPool<PoolableView> pool, int instancesCount) {
-            for (int i = 0; i < instancesCount; ++i) {
-                var instance =
-                    (PoolableView) pool.instanceProvider.GetInstance(null);
-                pool.Add(instance);
             }
         }
     }

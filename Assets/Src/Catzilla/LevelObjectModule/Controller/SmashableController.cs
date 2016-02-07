@@ -9,7 +9,7 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("PlayerMeshTag")]
         public string PlayerTag {get; set;}
 
-        [Inject("EffectsAudioChannel")]
+        [Inject("EffectsHighPrioAudioChannel")]
         public int EffectsAudioChannel {get; set;}
 
         [Inject]

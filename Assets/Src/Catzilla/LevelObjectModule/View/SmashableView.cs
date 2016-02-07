@@ -33,7 +33,7 @@ namespace Catzilla.LevelObjectModule.View {
             Transform transform = this.transform;
             PoolStorage.Return(poolable);
             var smashed =
-                PoolStorage.Get(smashedPoolId).GetComponent<SmashedView>();
+                PoolStorage.Take(smashedPoolId).GetComponent<SmashedView>();
             smashed.transform.position = transform.position;
             smashed.transform.rotation = transform.rotation;
             smashed.Init(force, upwardsModifier, sourcePosition);

@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections;
-using strange.extensions.pool.api;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
@@ -12,7 +11,6 @@ namespace Catzilla.CommonModule.View {
         public float Speed = 10f;
         public float Offset = 0f;
         public Action<WorldSpacePopupView> OnHide {get; set;}
-		public bool retain {get {return false;}}
 
         public Camera LookAtTarget {
             get {
@@ -56,14 +54,11 @@ namespace Catzilla.CommonModule.View {
             FitIntoCamera();
         }
 
-        public void Restore() {
+        public void Reset() {
             canvas.enabled = false;
             LookAtTarget = null;
             OnHide = null;
         }
-
-		public void Retain() {DebugUtils.Assert(false);}
-		public void Release() {DebugUtils.Assert(false);}
 
         private void FitIntoCamera() {
             if (lookAtTarget == null) {

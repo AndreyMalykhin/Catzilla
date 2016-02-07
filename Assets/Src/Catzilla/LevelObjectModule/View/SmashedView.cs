@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.pool.api;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 
@@ -10,7 +9,6 @@ namespace Catzilla.LevelObjectModule.View {
         [Inject]
         public PoolStorageView PoolStorage {get; set;}
 
-		public bool retain {get {return false;}}
         public AudioClip SmashSound;
         public AudioSource AudioSource;
 
@@ -37,6 +35,10 @@ namespace Catzilla.LevelObjectModule.View {
 
         private PoolableView poolable;
         private Piece[] pieces;
+        private float smashForce;
+        private float smashUpwardsModifier;
+        private Vector3 smashSourcePosition;
+        private bool isSmashed;
 
         [PostConstruct]
         public void OnConstruct() {
@@ -57,11 +59,14 @@ namespace Catzilla.LevelObjectModule.View {
 
         public void Init(float smashForce, float smashUpwardsModifier,
             Vector3 smashSourcePosition) {
-            StartCoroutine(
-                Smash(smashForce, smashUpwardsModifier, smashSourcePosition));
+            this.smashForce = smashForce;
+            this.smashUpwardsModifier = smashUpwardsModifier;
+            this.smashSourcePosition = smashSourcePosition;
         }
 
-        public void Restore() {
+        public void Reset() {
+            isSmashed = false;
+
             for (int i = 0; i < pieces.Length; ++i) {
                 Piece piece = pieces[i];
                 Rigidbody pieceBody = piece.Body;
@@ -71,12 +76,15 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
-		public void Retain() {DebugUtils.Assert(false);}
-		public void Release() {DebugUtils.Assert(false);}
+        private void FixedUpdate() {
+            if (isSmashed) {
+                return;
+            }
 
-        private IEnumerator Smash(float smashForce, float smashUpwardsModifier,
-            Vector3 smashSourcePosition) {
-            yield return new WaitForFixedUpdate();
+            Smash();
+        }
+
+        private void Smash() {
             float explosionRadius = 0f;
 
             if (overrideSmashParams) {
@@ -91,6 +99,7 @@ namespace Catzilla.LevelObjectModule.View {
             }
 
             Invoke("Dispose", lifetime);
+            isSmashed = true;
         }
 
         private void Dispose() {

@@ -24,8 +24,11 @@ namespace Catzilla.CommonModule.Config {
         [SerializeField]
         private PopupManager popupManager;
 
+        [SerializeField]
+        private bool isServerStubbed = true;
+
         public override void InitBindings(IInjectionBinder injectionBinder) {
-            if (Debug.isDebugBuild) {
+            if (Debug.isDebugBuild && isServerStubbed) {
                 injectionBinder.Bind<Server>()
                     .ToValue(serverStub)
                     .CrossContext();
@@ -98,16 +101,21 @@ namespace Catzilla.CommonModule.Config {
                 .CrossContext();
             injectionBinder.Bind<int>()
                 .ToValue(0)
-                .ToName("EffectsAudioChannel")
+                .ToName("EffectsHighPrioAudioChannel")
                 .ToInject(false)
                 .CrossContext();
             injectionBinder.Bind<int>()
                 .ToValue(1)
-                .ToName("UIAudioChannel")
+                .ToName("EffectsLowPrioAudioChannel")
                 .ToInject(false)
                 .CrossContext();
             injectionBinder.Bind<int>()
                 .ToValue(2)
+                .ToName("UIAudioChannel")
+                .ToInject(false)
+                .CrossContext();
+            injectionBinder.Bind<int>()
+                .ToValue(3)
                 .ToName("PlayerAudioChannel")
                 .ToInject(false)
                 .CrossContext();

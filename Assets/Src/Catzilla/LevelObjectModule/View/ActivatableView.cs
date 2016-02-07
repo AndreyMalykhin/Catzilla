@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using strange.extensions.context.api;
-using strange.extensions.pool.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Util;
 
@@ -13,14 +12,12 @@ namespace Catzilla.LevelObjectModule.View {
         [Inject]
         public EventBus EventBus {get; set;}
 
-		public bool retain {get {return false;}}
-
         [SerializeField]
         private MonoBehaviour behaviour;
 
         [PostConstruct]
         public void OnConstruct() {
-            Restore();
+            Reset();
         }
 
         public void Activate() {
@@ -28,12 +25,9 @@ namespace Catzilla.LevelObjectModule.View {
             behaviour.enabled = true;
         }
 
-        public void Restore() {
+        public void Reset() {
             behaviour.enabled = false;
         }
-
-		public void Retain() {DebugUtils.Assert(false);}
-		public void Release() {DebugUtils.Assert(false);}
 
         private void OnTriggerEnter(Collider collider) {
             ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,

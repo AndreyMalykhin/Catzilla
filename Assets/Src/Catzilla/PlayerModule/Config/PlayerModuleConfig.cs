@@ -21,8 +21,11 @@ namespace Catzilla.PlayerModule.Config {
         [SerializeField]
         private PlayerStateStorage playerStateStorageStub;
 
+        [SerializeField]
+        private bool isPlayerStateStorageStubbed = true;
+
         public override void InitBindings(IInjectionBinder injectionBinder) {
-            if (Debug.isDebugBuild) {
+            if (Debug.isDebugBuild && isPlayerStateStorageStubbed) {
                 injectionBinder.Bind<PlayerStateStorage>()
                     .ToValue(playerStateStorageStub)
                     .CrossContext();

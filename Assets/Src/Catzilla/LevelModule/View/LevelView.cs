@@ -38,7 +38,7 @@ namespace Catzilla.LevelModule.View {
         public void NewArea(int index, EnvTypeInfo envTypeInfo) {
             var poolId =
                 envTypeInfo.ViewProto.GetComponent<PoolableView>().PoolId;
-            var area = PoolStorage.Get(poolId);
+            var area = PoolStorage.Take(poolId);
             area.transform.position = new Vector3(0f, 0f, index * AreaDepth);
             area.transform.rotation = Quaternion.identity;
             area.transform.parent = transform;
@@ -52,13 +52,13 @@ namespace Catzilla.LevelModule.View {
                 spawnPoint.y,
                 spawnPoint.z + areaIndex * AreaDepth);
             var poolable = typeInfo.ViewProto.GetComponent<PoolableView>();
-            LevelObjectView obj;
+            LevelObjectView obj = null;
 
             if (poolable == null) {
                 obj = (LevelObjectView) Instantiate(
                     typeInfo.ViewProto, position, Quaternion.identity);
             } else {
-                obj = PoolStorage.Get(poolable.PoolId)
+                obj = PoolStorage.Take(poolable.PoolId)
                     .GetComponent<LevelObjectView>();
             }
 

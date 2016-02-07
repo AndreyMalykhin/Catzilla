@@ -18,9 +18,8 @@ namespace Catzilla.CommonModule.Util {
             UnityEngine.Assertions.Assert.IsTrue(condition);
         }
 
-        public static string TicksToMilliseconds(Stopwatch stopwatch) {
-            return (stopwatch.ElapsedTicks / (double) Stopwatch.Frequency *
-                1000).ToString();
+        public static double TicksToMilliseconds(Stopwatch stopwatch) {
+            return stopwatch.ElapsedTicks / (double) Stopwatch.Frequency * 1000;
         }
     }
 }
