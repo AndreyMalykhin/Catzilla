@@ -58,12 +58,31 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
 
             GameOverScreen.Show(OnGameOverScreenShow);
-            AudioManager.Play(
-                player.DeathSound, player.AudioSource, PlayerAudioChannel);
+
+            if (player.DeathSound != null) {
+                AudioManager.Play(
+                    player.DeathSound, player.AudioSource, PlayerAudioChannel);
+            }
+        }
+
+        public void OnFootstep(Evt evt) {
+            var player = (PlayerView) evt.Source;
+
+            if (player.FootstepSound != null) {
+                var pitch = Random.Range(0.8f, 1.2f);
+                AudioManager.Play(player.FootstepSound, player.AudioSource,
+                    PlayerAudioChannel, pitch);
+            }
         }
 
         public void OnScoreChange(Evt evt) {
             var player = (PlayerView) evt.Source;
+
+            if (player.ScoreSound != null) {
+                AudioManager.Play(player.ScoreSound, player.AudioSource,
+                    PlayerAudioChannel);
+            }
+
             LevelSettings levelSettings = LevelSettingsStorage.Get(level.Index);
 
             if (player.Score < levelSettings.CompletionScore) {

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.Model;
@@ -19,29 +20,43 @@ namespace Catzilla.LevelAreaModule.Model {
 
         private readonly IDictionary<Vector3, bool> reservedSpawnPoints =
             new Dictionary<Vector3, bool>();
-        private int nextAreaIndex = 0;
 
         public void NewArea(
-            EnvType envType, bool spawnPlayer, LevelView outputLevel) {
+            EnvType envType,
+            bool spawnPlayer,
+            LevelView outputLevel,
+            Action<LevelAreaView> onDone = null) {
             // DebugUtils.Log(
             //     "LevelAreaGenerator.NewArea(); envType={0}", envType);
+            outputLevel.StartCoroutine(DoNewArea(
+                envType, spawnPlayer, outputLevel, onDone));
+        }
+
+        private IEnumerator DoNewArea(
+            EnvType envType,
+            bool spawnPlayer,
+            LevelView outputLevel,
+            Action<LevelAreaView> onDone = null) {
             reservedSpawnPoints.Clear();
             EnvTypeInfo envTypeInfo = EnvTypeInfoStorage.Get(envType);
             LevelObjectType[] objectTypesToSpawn =
                 envTypeInfo.SpawnMap.GetObjectTypes();
             Array.Sort(objectTypesToSpawn, ObjectTypesComparator);
-            outputLevel.NewArea(nextAreaIndex, envTypeInfo);
+            LevelAreaView area = outputLevel.NewArea(envTypeInfo);
 
             for (int i = 0; i < objectTypesToSpawn.Length; ++i) {
                 NewObjects(
                     objectTypesToSpawn[i],
                     envTypeInfo,
                     spawnPlayer,
-                    nextAreaIndex,
+                    area.Index,
                     outputLevel);
+                yield return null;
             }
 
-            ++nextAreaIndex;
+            if (onDone != null) {
+                onDone(area);
+            }
         }
 
         private void NewObjects(

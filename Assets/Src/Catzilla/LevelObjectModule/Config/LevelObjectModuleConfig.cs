@@ -124,6 +124,8 @@ namespace Catzilla.LevelObjectModule.Config {
                 playerController.OnLevelConstruct);
             eventBus.On(PlayerView.Event.Resurrect,
                 playerController.OnResurrect);
+            eventBus.On(PlayerView.Event.Footstep,
+                playerController.OnFootstep);
         }
     }
 }

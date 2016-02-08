@@ -41,11 +41,15 @@ namespace Catzilla.LevelObjectModule.Controller {
 
         private void ShowScorePopup(
             ScoreableView scoreable, PlayerView player) {
+            if (player.IsScoreFreezed) {
+                return;
+            }
+
             int poolId = ScorePopupProto.GetComponent<PoolableView>().PoolId;
             var popup =
                 PoolStorage.Take(poolId).GetComponent<WorldSpacePopupView>();
             popup.PlaceAbove(scoreable.Collider.bounds);
-            popup.LookAtTarget = player.MainCamera;
+            popup.LookAtTarget = player.Camera;
             popup.Msg.text =
                 strBuilder.Append('+').Append(scoreable.Score).ToString();
             strBuilder.Length = 0;

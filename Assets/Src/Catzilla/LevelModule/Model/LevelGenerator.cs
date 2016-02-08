@@ -1,19 +1,15 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelAreaModule.Model;
+using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.View;
 
 namespace Catzilla.LevelModule.Model {
     public class LevelGenerator {
-        [Inject]
-        public LevelAreaGenerator AreaGenerator {get; set;}
-
-        [Inject]
-        public EnvTypeInfoStorage EnvTypeInfoStorage {get; set;}
-
         private enum State {Start, TrackMiddle, HoodMiddle, ParkMiddle}
 
         private struct StateTransition {
@@ -25,6 +21,14 @@ namespace Catzilla.LevelModule.Model {
                 NextState = nextState;
             }
         }
+
+        [Inject]
+        public LevelAreaGenerator AreaGenerator {get; set;}
+
+        [Inject]
+        public EnvTypeInfoStorage EnvTypeInfoStorage {get; set;}
+
+        public int InitialAreasCount {get {return 2;}}
 
         private State nextState;
         private readonly IDictionary<State, StateTransition[]> states =
@@ -52,22 +56,35 @@ namespace Catzilla.LevelModule.Model {
             // };
         }
 
-        public void NewLevel(int levelIndex, LevelView outputLevel) {
+        public void NewLevel(
+            int levelIndex, LevelView outputLevel, Action onDone = null) {
             // DebugUtils.Log("LevelGenerator.NewLevel()");
             outputLevel.Init(levelIndex);
             nextState = State.Start;
             bool spawnPlayer = true;
-            NewArea(spawnPlayer, outputLevel);
+            NewArea(spawnPlayer, outputLevel, (area1) => {
+                    NewArea(false, outputLevel, (area2) => {
+                    if (onDone != null) onDone();
+                });
+            });
         }
 
-        public void NewArea(LevelView outputLevel) {
+        public void NewArea(
+            LevelView outputLevel, Action<LevelAreaView> onDone = null) {
             // DebugUtils.Log("LevelGenerator.NewArea()");
             bool spawnPlayer = false;
-            NewArea(spawnPlayer, outputLevel);
+            NewArea(spawnPlayer, outputLevel, onDone);
         }
 
-        private void NewArea(bool spawnPlayer, LevelView outputLevel) {
-            AreaGenerator.NewArea(NextState(), spawnPlayer, outputLevel);
+        private void NewArea(
+            bool spawnPlayer,
+            LevelView outputLevel,
+            Action<LevelAreaView> onDone = null) {
+            AreaGenerator.NewArea(
+                NextState(),
+                spawnPlayer,
+                outputLevel,
+                onDone);
         }
 
         private EnvType NextState() {
@@ -80,7 +97,7 @@ namespace Catzilla.LevelModule.Model {
                     stateTransitions[i].EnvType).SpawnWeight;
             }
 
-            int randomWeight = Random.Range(1, weightsSum + 1);
+            int randomWeight = UnityEngine.Random.Range(1, weightsSum + 1);
             int weightIntervalEnd = 0;
 
             for (int i = 0; i < stateTransitionsCount; ++i) {

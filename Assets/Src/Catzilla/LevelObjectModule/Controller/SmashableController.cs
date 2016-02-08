@@ -28,9 +28,12 @@ namespace Catzilla.LevelObjectModule.Controller {
                 player.SmashForce,
                 player.SmashUpwardsModifier,
                 collider.attachedRigidbody.position);
-            smashed.AudioSource.pitch = Random.Range(0.9f, 1.1f);
-            AudioManager.Play(smashed.SmashSound, smashed.AudioSource,
-                EffectsAudioChannel);
+
+            if (smashed.SmashSound != null) {
+                var pitch = Random.Range(0.9f, 1.1f);
+                AudioManager.Play(smashed.SmashSound, smashed.AudioSource,
+                    EffectsAudioChannel, pitch);
+            }
         }
     }
 }

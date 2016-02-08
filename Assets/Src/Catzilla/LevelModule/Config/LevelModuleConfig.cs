@@ -41,10 +41,6 @@ namespace Catzilla.LevelModule.Config {
                 .To<LevelCompleteScreenController>()
                 .ToSingleton()
                 .CrossContext();
-            injectionBinder.Bind<LevelStartScreenController>()
-                .To<LevelStartScreenController>()
-                .ToSingleton()
-                .CrossContext();
             injectionBinder.Bind<LevelGenerator>()
                 .To<LevelGenerator>()
                 .ToSingleton()
@@ -92,13 +88,6 @@ namespace Catzilla.LevelModule.Config {
                 levelCompleteScreenController.OnHide);
             eventBus.On(LevelCompleteScreenView.Event.Show,
                 levelCompleteScreenController.OnShow);
-
-            var levelStartScreenController =
-                injectionBinder.GetInstance<LevelStartScreenController>();
-            eventBus.On(LevelStartScreenView.Event.Hide,
-                levelStartScreenController.OnHide);
-            eventBus.On(LevelView.Event.Construct,
-                levelStartScreenController.OnLevelConstruct);
         }
     }
 }

@@ -73,7 +73,7 @@ namespace Catzilla.GameOverMenuModule.Controller {
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Game.Restart");
             Game.LoadLevel();
-            Game.Resume();
+            // Game.Resume();
             GameOverScreen.Hide();
         }
 

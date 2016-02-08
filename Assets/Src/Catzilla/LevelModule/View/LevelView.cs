@@ -25,9 +25,7 @@ namespace Catzilla.LevelModule.View {
 
         public int Index {get; private set;}
 
-        public void Init(int index) {
-            Index = index;
-        }
+        private int nextAreaIndex = 0;
 
         [PostConstruct]
         public void OnConstruct() {
@@ -35,13 +33,21 @@ namespace Catzilla.LevelModule.View {
             EventBus.Fire(Event.Construct, new Evt(this));
         }
 
-        public void NewArea(int index, EnvTypeInfo envTypeInfo) {
+        public void Init(int index) {
+            Index = index;
+        }
+
+        public LevelAreaView NewArea(EnvTypeInfo envTypeInfo) {
             var poolId =
                 envTypeInfo.ViewProto.GetComponent<PoolableView>().PoolId;
-            var area = PoolStorage.Take(poolId);
-            area.transform.position = new Vector3(0f, 0f, index * AreaDepth);
+            var area = PoolStorage.Take(poolId).GetComponent<LevelAreaView>();
+            area.Init(nextAreaIndex);
+            area.transform.position =
+                new Vector3(0f, 0f, nextAreaIndex * AreaDepth);
             area.transform.rotation = Quaternion.identity;
             area.transform.parent = transform;
+            ++nextAreaIndex;
+            return area;
         }
 
         public LevelObjectView NewObject(

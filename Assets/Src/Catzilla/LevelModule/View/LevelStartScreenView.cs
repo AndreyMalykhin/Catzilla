@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
@@ -7,15 +8,8 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelModule.View {
     public class LevelStartScreenView: strange.extensions.mediation.impl.View {
-        public enum Event {Hide}
-
-        [Inject]
-        public EventBus EventBus {get; set;}
-
         public Text Msg;
-
-        [SerializeField]
-        private float duration = 2f;
+        public float HideDelay = 1f;
 
         private Canvas canvas;
 
@@ -27,13 +21,19 @@ namespace Catzilla.LevelModule.View {
 
         public void Show() {
             canvas.enabled = true;
-            StartCoroutine(Hide());
         }
 
-        private IEnumerator Hide() {
-            yield return new WaitForSeconds(duration);
+        public void Hide(Action onDone = null) {
+            StartCoroutine(DoHide(onDone));
+        }
+
+        private IEnumerator DoHide(Action onDone = null) {
+            yield return new WaitForSecondsRealtime(HideDelay);
             canvas.enabled = false;
-            EventBus.Fire(Event.Hide, new Evt(this));
+
+            if (onDone != null) {
+                onDone();
+            }
         }
     }
 }

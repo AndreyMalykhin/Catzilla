@@ -21,8 +21,8 @@ namespace Catzilla.CommonModule.Util {
 
         private AudioSource[][] recentlyPlayedSources;
 
-        public void Play(
-            AudioClip sound, AudioSource audioSource, int channelId) {
+        public void Play(AudioClip sound, AudioSource audioSource,
+            int channelId, float pitch = 1f) {
             // DebugUtils.Log("AudioManager.Play(); sound={0};", sound);
             int freeSlot = GetFreeChannelSlot(channelId);
 
@@ -32,6 +32,7 @@ namespace Catzilla.CommonModule.Util {
 
             recentlyPlayedSources[channelId][freeSlot] = audioSource;
             audioSource.clip = sound;
+            audioSource.pitch = pitch;
             audioSource.Play();
         }
 

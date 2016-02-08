@@ -2,6 +2,7 @@
 using System.Collections;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.Model;
 using Catzilla.PlayerModule.Model;
 using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelModule.Model;
@@ -21,15 +22,32 @@ namespace Catzilla.LevelModule.Controller {
         [Inject]
         public Translator Translator {get; set;}
 
+        [Inject("MainCamera")]
+        public Camera MainCamera {get; set;}
+
+        [Inject]
+        public Game Game {get; set;}
+
+        private LevelView level;
+
         public void OnViewConstruct(Evt evt) {
-            var level = (LevelView) evt.Source;
-            level.gameObject.SetActive(false);
+            level = (LevelView) evt.Source;
             PlayerState playerState = PlayerStateStorage.Get();
-            LevelGenerator.NewLevel(playerState.Level, level);
             var msg = string.Format(Translator.Translate(
                 "LevelStartScreen.Level"), playerState.Level + 1);
             LevelStartScreen.Msg.text = msg;
             LevelStartScreen.Show();
+            Game.Pause();
+            LevelGenerator.NewLevel(playerState.Level, level, OnLevelGenerate);
+        }
+
+        private void OnLevelGenerate() {
+            MainCamera.gameObject.SetActive(false);
+            LevelStartScreen.Hide(OnStartScreenHide);
+        }
+
+        private void OnStartScreenHide() {
+            Game.Resume();
         }
     }
 }

@@ -14,7 +14,11 @@ namespace Catzilla.CommonModule.Controller {
 
         public void OnClick(Evt evt) {
             var btn = (BtnView) evt.Source;
-            AudioManager.Play(btn.ClickSound, btn.AudioSource, UIAudioChannel);
+
+            if (btn.ClickSound != null) {
+                AudioManager.Play(
+                    btn.ClickSound, btn.AudioSource, UIAudioChannel);
+            }
         }
     }
 }

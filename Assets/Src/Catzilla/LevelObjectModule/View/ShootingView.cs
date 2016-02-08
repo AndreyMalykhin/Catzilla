@@ -26,8 +26,13 @@ namespace Catzilla.LevelObjectModule.View {
                 }
 
                 if (target != null) {
-                    StopCoroutine(aimingCoroutine);
-                    StopCoroutine(shootingCoroutine);
+                    if (aimingCoroutine != null) {
+                        StopCoroutine(aimingCoroutine);
+                    }
+
+                    if (shootingCoroutine != null) {
+                        StopCoroutine(shootingCoroutine);
+                    }
                 }
 
                 target = value;

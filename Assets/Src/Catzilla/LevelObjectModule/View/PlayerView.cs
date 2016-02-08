@@ -13,7 +13,8 @@ namespace Catzilla.LevelObjectModule.View {
             HealthChange,
             Death,
             ScoreChange,
-            Resurrect
+            Resurrect,
+            Footstep
         }
 
         [Inject]
@@ -29,11 +30,12 @@ namespace Catzilla.LevelObjectModule.View {
         public int EnvLayer {get; set;}
 
         public Collider Collider;
-        public Camera MainCamera;
-        public Camera UICamera;
+        public Camera Camera;
         public PlayerHUDView HUDProto;
         public Animator Animator;
         public AudioClip DeathSound;
+        public AudioClip ScoreSound;
+        public AudioClip FootstepSound;
         public AudioSource AudioSource;
         public bool IsHealthFreezed;
         public bool IsScoreFreezed;
@@ -42,6 +44,7 @@ namespace Catzilla.LevelObjectModule.View {
         public float FrontSpeed = 5f;
         public float SideSpeed = 5f;
         public int MaxHealth = 100;
+        public float CameraShakeDuration = 0.5f;
 
         public int Score {
             get {
@@ -82,12 +85,16 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
+        private Vector3 cameraShakeAmount;
+        private IEnumerator cameraShakeCoroutine;
+        private Vector3 cameraStartPosition;
         private int score;
         private int health;
         private bool isDead;
         private float minX;
         private float maxX;
         private float targetX;
+        private float nextFootstepTime;
         private Rigidbody body;
         private PlayerHUDView HUD;
 
@@ -100,6 +107,7 @@ namespace Catzilla.LevelObjectModule.View {
             minX = LevelMinX + halfWidth;
             maxX = LevelMaxX - halfWidth;
             health = MaxHealth;
+            cameraStartPosition = Camera.transform.localPosition;
             HUD = (PlayerHUDView) Instantiate(HUDProto);
             EventBus.Fire(Event.Construct, new Evt(this));
         }
@@ -157,11 +165,11 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void SetTargetX(Vector3 mousePosition) {
-            Ray ray = MainCamera.ScreenPointToRay(mousePosition);
+            Ray ray = Camera.ScreenPointToRay(mousePosition);
             RaycastHit hit;
 
             if (!Physics.Raycast(
-                    ray, out hit, MainCamera.farClipPlane, EnvLayer)) {
+                    ray, out hit, Camera.farClipPlane, EnvLayer)) {
                 return;
             }
 
@@ -177,11 +185,36 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void MoveCamera() {
-            Vector3 currentCameraPosition = MainCamera.transform.position;
-            var newCameraPosition = new Vector3(
-                0f, currentCameraPosition.y, currentCameraPosition.z);
-            MainCamera.transform.position = newCameraPosition;
-            UICamera.transform.position = newCameraPosition;
+            var newPosition = new Vector3(
+                cameraStartPosition.x - transform.position.x,
+                cameraStartPosition.y,
+                cameraStartPosition.z) + Camera.transform.up *
+                cameraShakeAmount.y;
+            Camera.transform.localPosition = newPosition;
+        }
+
+        private void OnFootstep() {
+            if (cameraShakeCoroutine != null) {
+                StopCoroutine(cameraShakeCoroutine);
+            }
+
+            cameraShakeCoroutine = ShakeCamera();
+            StartCoroutine(cameraShakeCoroutine);
+            EventBus.Fire(Event.Footstep, new Evt(this));
+        }
+
+        private IEnumerator ShakeCamera() {
+            float remainingTime = CameraShakeDuration;
+
+            while (remainingTime > 0f) {
+                float amplitude = -1f * remainingTime / CameraShakeDuration;
+                cameraShakeAmount = new Vector3(
+                    0f, Mathf.PerlinNoise(Time.time, 0f) * amplitude, 0f);
+                remainingTime -= Time.deltaTime;
+                yield return null;
+            }
+
+            cameraShakeAmount = Vector3.zero;
         }
     }
 }

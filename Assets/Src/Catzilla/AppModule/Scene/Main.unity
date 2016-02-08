@@ -830,7 +830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Msg: {fileID: 2079724027}
-  duration: 1
+  HideDelay: 1
 --- !u!1 &574027690
 GameObject:
   m_ObjectHideFlags: 0

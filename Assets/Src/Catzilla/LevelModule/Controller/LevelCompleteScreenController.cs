@@ -18,8 +18,11 @@ namespace Catzilla.LevelModule.Controller {
 
         public void OnShow(Evt evt) {
             var screen = (LevelCompleteScreenView) evt.Source;
-            AudioManager.Play(
-                screen.ShowSound, screen.AudioSource, UIAudioChannel);
+
+            if (screen.ShowSound != null) {
+                AudioManager.Play(
+                    screen.ShowSound, screen.AudioSource, UIAudioChannel);
+            }
         }
 
         public void OnHide(Evt evt) {

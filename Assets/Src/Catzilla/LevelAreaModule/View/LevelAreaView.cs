@@ -14,6 +14,12 @@ namespace Catzilla.LevelAreaModule.View {
         [Inject]
         public EventBus EventBus {get; set;}
 
+        public int Index {get; private set;}
+
+        public void Init(int index) {
+            Index = index;
+        }
+
         private void OnTriggerEnter(Collider collider) {
             ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
                 Event.TriggerEnter, new Evt(this, collider));

@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 406494}
   - 54: {fileID: 5462906}
   - 82: {fileID: 8291638}
+  - 95: {fileID: 9551204}
   - 114: {fileID: 11467780}
   m_Layer: 8
   m_Name: Player
@@ -37,7 +38,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &144000
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -78,7 +79,6 @@ GameObject:
   - 4: {fileID: 446088}
   - 33: {fileID: 3336514}
   - 23: {fileID: 2378812}
-  - 95: {fileID: 9533428}
   - 65: {fileID: 6507940}
   m_Layer: 8
   m_Name: Mesh
@@ -99,7 +99,6 @@ Transform:
   m_Children:
   - {fileID: 446088}
   - {fileID: 472358}
-  - {fileID: 432502}
   - {fileID: 457836}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -109,12 +108,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144000}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 24, z: 9}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 406494}
-  m_RootOrder: 2
+  m_Father: {fileID: 472358}
+  m_RootOrder: 0
 --- !u!4 &446088
 Transform:
   m_ObjectHideFlags: 1
@@ -138,7 +137,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 406494}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &472358
 Transform:
   m_ObjectHideFlags: 1
@@ -148,7 +147,8 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 24, z: 9}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 432502}
   m_Father: {fileID: 406494}
   m_RootOrder: 1
 --- !u!20 &2010502
@@ -379,13 +379,13 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144000}
   m_Enabled: 1
---- !u!95 &9533428
+--- !u!95 &9551204
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 193986}
+  m_GameObject: {fileID: 103594}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3ef43c270a6e5459c95dec7249e18c6c, type: 2}
@@ -408,19 +408,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Collider: {fileID: 6507940}
-  MainCamera: {fileID: 2010502}
-  UICamera: {fileID: 2046270}
+  Camera: {fileID: 2010502}
   HUDProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
-  Animator: {fileID: 9533428}
+  Animator: {fileID: 9551204}
   DeathSound: {fileID: 8300000, guid: 7b1a6f0e82bb648aa8d0338272804aed, type: 3}
+  ScoreSound: {fileID: 8300000, guid: b56a3d32c633c480fbfe6b1232b109b0, type: 3}
+  FootstepSound: {fileID: 8300000, guid: 74eadb627a3494e709dc16ffcb0f5771, type: 3}
   AudioSource: {fileID: 8291638}
   IsHealthFreezed: 1
-  IsScoreFreezed: 1
+  IsScoreFreezed: 0
   SmashForce: 100
   SmashUpwardsModifier: -5
   FrontSpeed: 5
   SideSpeed: 5
   MaxHealth: 100
+  CameraShakeDuration: 0.5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -491,7 +493,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: animator
       value: 
-      objectReference: {fileID: 9533428}
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: collider
       value: 
@@ -612,14 +614,34 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: Animator
       value: 
-      objectReference: {fileID: 9533428}
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: IsHealthFreezed
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: IsScoreFreezed
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ScoreSound
+      value: 
+      objectReference: {fileID: 8300000, guid: b56a3d32c633c480fbfe6b1232b109b0, type: 3}
+    - target: {fileID: 0}
+      propertyPath: FootstepSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 74eadb627a3494e709dc16ffcb0f5771, type: 3}
+    - target: {fileID: 0}
+      propertyPath: SideFootstepPeriod
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Camera
+      value: 
+      objectReference: {fileID: 2010502}
+    - target: {fileID: 0}
+      propertyPath: CameraShakeDuration
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
