@@ -39,8 +39,9 @@ namespace Catzilla.LevelObjectModule.View {
         public AudioSource AudioSource;
         public bool IsHealthFreezed;
         public bool IsScoreFreezed;
-        public float SmashForce = 10f;
-        public float SmashUpwardsModifier = 0f;
+        public float MinSmashForce = 75f;
+        public float MaxSmashForce = 125f;
+        public float SmashUpwardsModifier = -5f;
         public float FrontSpeed = 5f;
         public float SideSpeed = 5f;
         public int MaxHealth = 100;

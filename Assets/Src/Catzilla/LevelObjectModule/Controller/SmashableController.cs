@@ -25,7 +25,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             var smashable = (SmashableView) evt.Source;
             var player = collider.attachedRigidbody.GetComponent<PlayerView>();
             SmashedView smashed = smashable.Smash(
-                player.SmashForce,
+                Random.Range(player.MinSmashForce, player.MaxSmashForce),
                 player.SmashUpwardsModifier,
                 collider.attachedRigidbody.position);
 

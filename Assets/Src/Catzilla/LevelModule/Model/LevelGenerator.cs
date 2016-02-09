@@ -34,26 +34,25 @@ namespace Catzilla.LevelModule.Model {
         private readonly IDictionary<State, StateTransition[]> states =
             new Dictionary<State, StateTransition[]>();
 
-        // TODO
         [PostConstruct]
         public void OnConstruct() {
             states[State.Start] = new StateTransition[] {
-                // new StateTransition(EnvType.HoodStart, State.HoodMiddle),
-                // new StateTransition(EnvType.ParkStart, State.ParkMiddle),
+                new StateTransition(EnvType.HoodStart, State.HoodMiddle),
+                new StateTransition(EnvType.ParkStart, State.ParkMiddle),
                 new StateTransition(EnvType.TrackStart, State.TrackMiddle)
             };
             states[State.TrackMiddle] = new StateTransition[] {
                 new StateTransition(EnvType.TrackMiddle, State.TrackMiddle),
                 new StateTransition(EnvType.TrackEnd, State.Start)
             };
-            // states[State.HoodMiddle] = new StateTransition[] {
-            //     new StateTransition(EnvType.HoodMiddle, State.HoodMiddle),
-            //     new StateTransition(EnvType.HoodEnd, State.Start)
-            // };
-            // states[State.ParkMiddle] = new StateTransition[] {
-            //     new StateTransition(EnvType.ParkMiddle, State.ParkMiddle),
-            //     new StateTransition(EnvType.ParkEnd, State.Start)
-            // };
+            states[State.HoodMiddle] = new StateTransition[] {
+                new StateTransition(EnvType.HoodMiddle, State.HoodMiddle),
+                new StateTransition(EnvType.HoodEnd, State.Start)
+            };
+            states[State.ParkMiddle] = new StateTransition[] {
+                new StateTransition(EnvType.ParkMiddle, State.ParkMiddle),
+                new StateTransition(EnvType.ParkEnd, State.Start)
+            };
         }
 
         public void NewLevel(

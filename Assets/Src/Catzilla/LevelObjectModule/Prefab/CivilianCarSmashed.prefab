@@ -695,10 +695,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a581a1a48e147cc940123b4fddf918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SmashSound: {fileID: 0}
+  SmashSound: {fileID: 8300000, guid: 589bb341a98e14ded8a84427d07f6728, type: 3}
   AudioSource: {fileID: 8271190}
-  pieceMinMass: 0.5
-  pieceMaxMass: 1
   lifetime: 2
   overrideSmashParams: 0
   overrideSmashUpwardsModifier: 0
@@ -789,7 +787,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: SmashSound
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8300000, guid: 589bb341a98e14ded8a84427d07f6728, type: 3}
     - target: {fileID: 0}
       propertyPath: explosionForce
       value: 500

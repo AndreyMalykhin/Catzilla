@@ -19,12 +19,6 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         [SerializeField]
-        private float pieceMinMass = 0.5f;
-
-        [SerializeField]
-        private float pieceMaxMass = 1f;
-
-        [SerializeField]
         private float lifetime = 2f;
 
         [SerializeField]
@@ -93,7 +87,6 @@ namespace Catzilla.LevelObjectModule.View {
 
             for (int i = 0; i < pieces.Length; ++i) {
                 Rigidbody pieceBody = pieces[i].Body;
-                pieceBody.mass = Random.Range(pieceMinMass, pieceMaxMass);
                 pieceBody.AddExplosionForce(smashForce, smashSourcePosition,
                     explosionRadius, smashUpwardsModifier);
             }

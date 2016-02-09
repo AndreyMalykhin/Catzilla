@@ -47,19 +47,22 @@ namespace Catzilla.PlayerModule.Model {
         public virtual void Sync(
             Server server, Action onSuccess = null, Action onFail = null) {
             // DebugUtils.Log("PlayerStateStorage.Sync()");
+            bool isFirstSync = PlayerPrefs.GetInt("WasEverSynced") == 0;
+
+            if (isFirstSync) {
+                PlayerPrefs.SetInt("WasEverSynced", 1);
+            }
+
             server.GetPlayer(
                 (remotePlayer) => {
                     PlayerState localPlayer = Get();
                     DebugUtils.Assert(localPlayer != null);
 
-                    if (remotePlayer != null) {
-                        localPlayer.Level =
-                            Mathf.Max(localPlayer.Level, remotePlayer.Level);
-                        localPlayer.ScoreRecord = Mathf.Max(
-                            localPlayer.ScoreRecord, remotePlayer.ScoreRecord);
-                        localPlayer.AvailableResurrectionsCount = Mathf.Max(
-                            localPlayer.AvailableResurrectionsCount,
-                            remotePlayer.AvailableResurrectionsCount);
+                    if (isFirstSync && remotePlayer != null) {
+                        localPlayer.Level = remotePlayer.Level;
+                        localPlayer.ScoreRecord = remotePlayer.ScoreRecord;
+                        localPlayer.AvailableResurrectionsCount =
+                            remotePlayer.AvailableResurrectionsCount;
                     }
 
                     server.SavePlayer(localPlayer, onSuccess, onFail);

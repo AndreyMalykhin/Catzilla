@@ -412,12 +412,13 @@ MonoBehaviour:
   HUDProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
   Animator: {fileID: 9551204}
   DeathSound: {fileID: 8300000, guid: 7b1a6f0e82bb648aa8d0338272804aed, type: 3}
-  ScoreSound: {fileID: 8300000, guid: b56a3d32c633c480fbfe6b1232b109b0, type: 3}
+  ScoreSound: {fileID: 0}
   FootstepSound: {fileID: 8300000, guid: 74eadb627a3494e709dc16ffcb0f5771, type: 3}
   AudioSource: {fileID: 8291638}
   IsHealthFreezed: 1
-  IsScoreFreezed: 0
-  SmashForce: 100
+  IsScoreFreezed: 1
+  MinSmashForce: 100
+  MaxSmashForce: 125
   SmashUpwardsModifier: -5
   FrontSpeed: 5
   SideSpeed: 5
@@ -621,12 +622,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: IsScoreFreezed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ScoreSound
       value: 
-      objectReference: {fileID: 8300000, guid: b56a3d32c633c480fbfe6b1232b109b0, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: FootstepSound
       value: 
@@ -642,6 +643,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: CameraShakeDuration
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MinSmashForce
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

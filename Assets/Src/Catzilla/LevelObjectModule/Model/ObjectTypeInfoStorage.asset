@@ -25,8 +25,8 @@ MonoBehaviour:
     Depth: 8
     SpawnPriority: 1
     SpawnChance: 1
-    SpawnBaseCount: 0
-    SpawnLevelFactor: 0
+    SpawnBaseCount: 1
+    SpawnLevelFactor: 1
     ViewProto: {fileID: 11466110, guid: d7ff927bcea514b0aa2d4d2e91fc4834, type: 2}
   - Type: 3
     Width: 2
@@ -41,8 +41,8 @@ MonoBehaviour:
     Depth: 2
     SpawnPriority: 3
     SpawnChance: 1
-    SpawnBaseCount: 0
-    SpawnLevelFactor: 0
+    SpawnBaseCount: 1
+    SpawnLevelFactor: 1
     ViewProto: {fileID: 11415620, guid: 2c5eb218dc3e146e0bdd4c67bcc3a0fc, type: 2}
   - Type: 6
     Width: 1
@@ -66,7 +66,7 @@ MonoBehaviour:
     SpawnPriority: 4
     SpawnChance: 1
     SpawnBaseCount: 1
-    SpawnLevelFactor: 1
+    SpawnLevelFactor: 0.33
     ViewProto: {fileID: 11429200, guid: 0324569a0fc1b453298859cca044e670, type: 2}
   - Type: 7
     Width: 1
@@ -74,5 +74,5 @@ MonoBehaviour:
     SpawnPriority: 5
     SpawnChance: 1
     SpawnBaseCount: 1
-    SpawnLevelFactor: 1
+    SpawnLevelFactor: 0.33
     ViewProto: {fileID: 11483314, guid: 75af68cf68f6840439e1bb9c4cd4418d, type: 2}

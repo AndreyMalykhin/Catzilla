@@ -10,11 +10,11 @@ GameObject:
   - 4: {fileID: 450928}
   - 114: {fileID: 11416914}
   m_Layer: 0
-  m_Name: Cop (2)
+  m_Name: Mine (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &107754
 GameObject:
@@ -26,11 +26,11 @@ GameObject:
   - 4: {fileID: 479202}
   - 114: {fileID: 11459022}
   m_Layer: 0
-  m_Name: Mine (1)
+  m_Name: Mine (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &109790
 GameObject:
@@ -42,11 +42,11 @@ GameObject:
   - 4: {fileID: 405510}
   - 114: {fileID: 11444778}
   m_Layer: 0
-  m_Name: Cop
+  m_Name: Mine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &112778
 GameObject:
@@ -58,11 +58,11 @@ GameObject:
   - 4: {fileID: 435656}
   - 114: {fileID: 11495056}
   m_Layer: 0
-  m_Name: Cop (4)
+  m_Name: Mine (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &121440
 GameObject:
@@ -74,11 +74,11 @@ GameObject:
   - 4: {fileID: 489986}
   - 114: {fileID: 11458492}
   m_Layer: 0
-  m_Name: Mine (3)
+  m_Name: Cop (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &122464
 GameObject:
@@ -94,7 +94,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &123612
 GameObject:
@@ -110,7 +110,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &130010
 GameObject:
@@ -122,11 +122,11 @@ GameObject:
   - 4: {fileID: 466014}
   - 114: {fileID: 11447154}
   m_Layer: 0
-  m_Name: Cop (6)
+  m_Name: Mine (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &139368
 GameObject:
@@ -138,11 +138,11 @@ GameObject:
   - 4: {fileID: 471090}
   - 114: {fileID: 11436456}
   m_Layer: 0
-  m_Name: Cop (7)
+  m_Name: Mine (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &141672
 GameObject:
@@ -158,7 +158,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &144974
 GameObject:
@@ -170,11 +170,11 @@ GameObject:
   - 4: {fileID: 477922}
   - 114: {fileID: 11489650}
   m_Layer: 0
-  m_Name: Mine (2)
+  m_Name: Mine (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &149622
 GameObject:
@@ -190,7 +190,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &153896
 GameObject:
@@ -206,7 +206,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &163610
 GameObject:
@@ -222,7 +222,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &168832
 GameObject:
@@ -238,7 +238,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &170270
 GameObject:
@@ -250,11 +250,11 @@ GameObject:
   - 4: {fileID: 412954}
   - 114: {fileID: 11441502}
   m_Layer: 0
-  m_Name: Cop (3)
+  m_Name: Mine (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &170780
 GameObject:
@@ -266,11 +266,11 @@ GameObject:
   - 4: {fileID: 437684}
   - 114: {fileID: 11471372}
   m_Layer: 0
-  m_Name: Cop (5)
+  m_Name: Mine (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &173780
 GameObject:
@@ -286,7 +286,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &180220
 GameObject:
@@ -302,7 +302,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &183112
 GameObject:
@@ -318,7 +318,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &183638
 GameObject:
@@ -334,7 +334,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &185182
 GameObject:
@@ -350,7 +350,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &190140
 GameObject:
@@ -366,7 +366,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &194628
 GameObject:
@@ -378,11 +378,11 @@ GameObject:
   - 4: {fileID: 487778}
   - 114: {fileID: 11480422}
   m_Layer: 0
-  m_Name: Mine
+  m_Name: Cop (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &196266
 GameObject:
@@ -398,7 +398,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &199222
 GameObject:
@@ -410,11 +410,11 @@ GameObject:
   - 4: {fileID: 420350}
   - 114: {fileID: 11457922}
   m_Layer: 0
-  m_Name: Cop (1)
+  m_Name: Mine (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &404220
 Transform:
@@ -427,7 +427,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 15
+  m_RootOrder: 13
 --- !u!4 &405510
 Transform:
   m_ObjectHideFlags: 1
@@ -439,7 +439,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 17
+  m_RootOrder: 15
 --- !u!4 &408070
 Transform:
   m_ObjectHideFlags: 1
@@ -475,7 +475,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 20
+  m_RootOrder: 18
 --- !u!4 &418516
 Transform:
   m_ObjectHideFlags: 1
@@ -487,7 +487,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 14
+  m_RootOrder: 12
 --- !u!4 &420350
 Transform:
   m_ObjectHideFlags: 1
@@ -499,7 +499,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 18
+  m_RootOrder: 16
 --- !u!4 &424388
 Transform:
   m_ObjectHideFlags: 1
@@ -535,7 +535,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 21
+  m_RootOrder: 19
 --- !u!4 &437684
 Transform:
   m_ObjectHideFlags: 1
@@ -547,7 +547,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 22
+  m_RootOrder: 20
 --- !u!4 &438210
 Transform:
   m_ObjectHideFlags: 1
@@ -583,7 +583,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 19
+  m_RootOrder: 17
 --- !u!4 &466014
 Transform:
   m_ObjectHideFlags: 1
@@ -595,7 +595,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 23
+  m_RootOrder: 21
 --- !u!4 &471090
 Transform:
   m_ObjectHideFlags: 1
@@ -607,7 +607,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 24
+  m_RootOrder: 22
 --- !u!4 &472156
 Transform:
   m_ObjectHideFlags: 1
@@ -619,7 +619,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 16
+  m_RootOrder: 14
 --- !u!4 &473842
 Transform:
   m_ObjectHideFlags: 1
@@ -667,7 +667,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 12
+  m_RootOrder: 24
 --- !u!4 &479202
 Transform:
   m_ObjectHideFlags: 1
@@ -679,7 +679,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 11
+  m_RootOrder: 23
 --- !u!4 &487778
 Transform:
   m_ObjectHideFlags: 1
@@ -715,7 +715,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498358}
-  m_RootOrder: 13
+  m_RootOrder: 11
 --- !u!4 &498358
 Transform:
   m_ObjectHideFlags: 1
@@ -737,8 +737,6 @@ Transform:
   - {fileID: 476108}
   - {fileID: 443914}
   - {fileID: 487778}
-  - {fileID: 479202}
-  - {fileID: 477922}
   - {fileID: 489986}
   - {fileID: 418516}
   - {fileID: 404220}
@@ -751,6 +749,8 @@ Transform:
   - {fileID: 437684}
   - {fileID: 466014}
   - {fileID: 471090}
+  - {fileID: 479202}
+  - {fileID: 477922}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!114 &11402146
@@ -793,8 +793,6 @@ MonoBehaviour:
   - {fileID: 11479844}
   - {fileID: 11480762}
   - {fileID: 11480422}
-  - {fileID: 11459022}
-  - {fileID: 11489650}
   - {fileID: 11458492}
   - {fileID: 11461562}
   - {fileID: 11433522}
@@ -807,6 +805,8 @@ MonoBehaviour:
   - {fileID: 11471372}
   - {fileID: 11447154}
   - {fileID: 11436456}
+  - {fileID: 11459022}
+  - {fileID: 11489650}
   width: 16
   depth: 24
 --- !u!114 &11410306
@@ -839,10 +839,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
-  objectType: 2
+  objectType: 7
   itemsAcrossX: 1
   itemsAcrossZ: 5
-  color: {r: 0, g: 0.08965492, b: 1, a: 1}
+  color: {r: 1, g: 0, b: 0.05882353, a: 1}
 --- !u!114 &11418218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -890,10 +890,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
-  objectType: 2
+  objectType: 7
   itemsAcrossX: 1
   itemsAcrossZ: 5
-  color: {r: 0, g: 0.08965492, b: 1, a: 1}
+  color: {r: 1, g: 0, b: 0.05882353, a: 1}
 --- !u!114 &11441502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -907,10 +907,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
-  objectType: 2
+  objectType: 7
   itemsAcrossX: 1
   itemsAcrossZ: 5
-  color: {r: 0, g: 0.08965492, b: 1, a: 1}
+  color: {r: 1, g: 0, b: 0.05882353, a: 1}
 --- !u!114 &11444778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -924,10 +924,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
-  objectType: 2
+  objectType: 7
   itemsAcrossX: 1
   itemsAcrossZ: 5
-  color: {r: 0, g: 0.08965492, b: 1, a: 1}
+  color: {r: 1, g: 0, b: 0.05882353, a: 1}
 --- !u!114 &11447154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -941,10 +941,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
-  objectType: 2
+  objectType: 7
   itemsAcrossX: 1
   itemsAcrossZ: 5
-  color: {r: 0, g: 0.08965492, b: 1, a: 1}
+  color: {r: 1, g: 0, b: 0.05882353, a: 1}
 --- !u!114 &11453052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -975,10 +975,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
-  objectType: 2
+  objectType: 7
   itemsAcrossX: 1
   itemsAcrossZ: 5
-  color: {r: 0, g: 0.08965492, b: 1, a: 1}
+  color: {r: 1, g: 0, b: 0.05882353, a: 1}
 --- !u!114 &11458492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -992,10 +992,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
-  objectType: 7
+  objectType: 2
   itemsAcrossX: 1
   itemsAcrossZ: 24
-  color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  color: {r: 0, g: 0.08627451, b: 1, a: 1}
 --- !u!114 &11459022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1043,10 +1043,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
-  objectType: 2
+  objectType: 7
   itemsAcrossX: 1
   itemsAcrossZ: 5
-  color: {r: 0, g: 0.08965492, b: 1, a: 1}
+  color: {r: 1, g: 0, b: 0.05882353, a: 1}
 --- !u!114 &11472068
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1111,10 +1111,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
-  objectType: 7
+  objectType: 2
   itemsAcrossX: 1
   itemsAcrossZ: 24
-  color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  color: {r: 0, g: 0.08627451, b: 1, a: 1}
 --- !u!114 &11480762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1196,10 +1196,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
-  objectType: 2
+  objectType: 7
   itemsAcrossX: 1
   itemsAcrossZ: 5
-  color: {r: 0, g: 0.08965492, b: 1, a: 1}
+  color: {r: 1, g: 0, b: 0.05882353, a: 1}
 --- !u!114 &11496040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1254,7 +1254,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
