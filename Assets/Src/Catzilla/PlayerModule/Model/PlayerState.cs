@@ -1,14 +1,29 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.PlayerModule.Model {
-    public class PlayerState {
-        public int Level {get; set;}
-        public int ScoreRecord {get; set;}
-        public int AvailableResurrectionsCount {get; set;}
+    [System.Serializable]
+    public class PlayerState: ISerializationCallbackReceiver {
+        public int Level;
+        public int ScoreRecord;
+        public int AvailableResurrectionsCount = 1;
+        public DateTime SaveDate;
 
-        public PlayerState() {
-            AvailableResurrectionsCount = 1;
+        [SerializeField]
+        private long serializedSaveDate;
+
+        public void OnBeforeSerialize() {
+            DebugUtils.Log(
+                "PlayerState.OnBeforeSerialize(); saveDate={0}", SaveDate);
+            serializedSaveDate = SaveDate.ToBinary();
+        }
+
+        public void OnAfterDeserialize() {
+            SaveDate = DateTime.FromBinary(serializedSaveDate);
+            DebugUtils.Log(
+                "PlayerState.OnAfterDeserialize(); saveDate={0}", SaveDate);
         }
     }
 }

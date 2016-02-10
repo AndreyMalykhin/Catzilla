@@ -1,52 +1,45 @@
+using UnityEngine;
 using System.Collections.Generic;
-using Facebook.Unity;
 using Catzilla.CommonModule.Model;
+using Catzilla.CommonModule.Util;
+using Catzilla.PlayerModule.Model;
 using Catzilla.LeaderboardModule.View;
 
 namespace Catzilla.LeaderboardModule.Model {
     public class LeaderboardManager {
         [Inject]
-        public LeaderboardsScreenView LeaderboardsScreen {get; set;}
-
-        [Inject]
         public Server Server {get; set;}
 
+        [Inject]
+        public PlayerStateStorage PlayerStateStorage {get; set;}
+
         public void Show() {
-            if (!FB.IsLoggedIn) {
-                var permissions = new string[] {
-                    "public_profile", "email", "user_friends"};
-                FB.LogInWithReadPermissions(permissions, OnFacebookLogin);
+            if (!Server.IsLoggedIn) {
+                Server.Login(OnLoginSuccess, OnLoginFail);
                 return;
             }
 
             DoShow();
         }
 
-        private void OnFacebookLogin(ILoginResult loginResult) {
-            if (!string.IsNullOrEmpty(loginResult.Error)) {
-                // TODO
-                return;
-            }
-
-            if (!FB.IsLoggedIn) {
-                return;
-            }
-
-            Server.LinkFacebookAccount(loginResult.AccessToken.TokenString,
-                OnFacebookAccountLink, OnFacebookAccountLink);
+        private void OnLoginSuccess() {
+            PlayerStateStorage.Sync(Server, OnSyncSuccess, OnSyncFail);
         }
 
-        private void OnFacebookAccountLink() {
+        private void OnLoginFail() {
+            // DebugUtils.Log("LeaderboardManager.OnLoginFail()");
+        }
+
+        private void OnSyncSuccess() {
             DoShow();
+        }
+
+        private void OnSyncFail() {
+            // DebugUtils.Log("LeaderboardManager.OnSyncFail()");
         }
 
         private void DoShow() {
-            Server.GetScoreLeaderboard(OnScoreLeaderboardGet);
-        }
-
-        private void OnScoreLeaderboardGet(List<ScoreLeaderboardItem> items) {
-            LeaderboardsScreen.ScoreLeaderboard.Items = items;
-            LeaderboardsScreen.Show();
+            Social.ShowLeaderboardUI();
         }
     }
 }

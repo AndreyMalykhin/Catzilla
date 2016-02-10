@@ -42,8 +42,12 @@ namespace Catzilla.GameOverMenuModule.Controller {
         public void OnConstruct() {
             GameOverMenu.ResurrectTextTemplate =
                 Translator.Translate("GameOverMenu.Resurrect");
-            GameOverMenu.AvailableResurrectionsCount =
-                PlayerStateStorage.Get().AvailableResurrectionsCount;
+            PlayerState playerState = PlayerStateStorage.Get();
+
+            if (playerState != null) {
+                GameOverMenu.AvailableResurrectionsCount =
+                    playerState.AvailableResurrectionsCount;
+            }
         }
 
         public void OnServerDispose(Evt evt) {

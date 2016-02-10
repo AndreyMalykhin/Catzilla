@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using strange.extensions.context.api;
-using GameSparks.Core;
-using Facebook.Unity;
 using Catzilla.MainMenuModule.View;
 using Catzilla.PlayerModule.Model;
 using Catzilla.CommonModule.Model;
@@ -25,31 +24,20 @@ namespace Catzilla.AppModule.Controller {
                 PlayerStateStorage.Save(new PlayerState());
             }
 
-            FB.Init(OnFacebookInit);
-        }
-
-        private void OnFacebookInit() {
-            if (FB.IsInitialized) {
-                FB.ActivateApp();
-            }
-
             Server.Connect(OnServerConnectSuccess, OnServerConnectFail);
         }
 
         private void OnServerConnectSuccess() {
-            Server.Login("anonymous", OnLoginSuccess, OnLoginFail);
+            if (Server.IsLoggedIn) {
+                PlayerStateStorage.Sync(Server, OnPlayerSync, OnPlayerSync);
+                return;
+            }
+
+            ShowMainScreen();
         }
 
         private void OnServerConnectFail() {
             Server.Dispose();
-            ShowMainScreen();
-        }
-
-        private void OnLoginSuccess() {
-            PlayerStateStorage.Sync(Server, OnPlayerSync, OnPlayerSync);
-        }
-
-        private void OnLoginFail() {
             ShowMainScreen();
         }
 
@@ -64,8 +52,10 @@ namespace Catzilla.AppModule.Controller {
 
         private void RewardPlayer() {
             PlayerState playerState = PlayerStateStorage.Get();
-            playerState.AvailableResurrectionsCount =
-                Mathf.Max(playerState.AvailableResurrectionsCount, 1);
+
+            if (playerState.AvailableResurrectionsCount <= 0) {
+                playerState.AvailableResurrectionsCount = 1;
+            }
         }
     }
 }
