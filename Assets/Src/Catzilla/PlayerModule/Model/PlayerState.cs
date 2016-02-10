@@ -15,15 +15,15 @@ namespace Catzilla.PlayerModule.Model {
         private long serializedSaveDate;
 
         public void OnBeforeSerialize() {
-            DebugUtils.Log(
-                "PlayerState.OnBeforeSerialize(); saveDate={0}", SaveDate);
+            // DebugUtils.Log(
+            //     "PlayerState.OnBeforeSerialize(); saveDate={0}", SaveDate);
             serializedSaveDate = SaveDate.ToBinary();
         }
 
         public void OnAfterDeserialize() {
             SaveDate = DateTime.FromBinary(serializedSaveDate);
-            DebugUtils.Log(
-                "PlayerState.OnAfterDeserialize(); saveDate={0}", SaveDate);
+            // DebugUtils.Log(
+            //     "PlayerState.OnAfterDeserialize(); saveDate={0}", SaveDate);
         }
     }
 }

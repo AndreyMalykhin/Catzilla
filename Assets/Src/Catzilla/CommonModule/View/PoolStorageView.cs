@@ -31,29 +31,28 @@ namespace Catzilla.CommonModule.View {
             //     poolsMap[instance.PoolId].available, instance);
         }
 
-        public void Reset() {
-            // DebugUtils.Log("PoolStorageView.Reset()");
+        public void Add(int poolId, int count) {
+            // DebugUtils.Log("PoolStorageView.Add()");
+            poolsMap[poolId].Add(count);
+        }
 
-            foreach (Transform child in transform) {
-                GameObject.Destroy(child.gameObject);
-            }
-
+        public void Refill() {
+            // DebugUtils.Log("PoolStorageView.Refill()");
             foreach (KeyValuePair<int, Pool<PoolableView>> item in poolsMap) {
                 var pool = item.Value;
-                int poolSize = pool.Size;
-                pool.Clear();
-                pool.Add(poolSize);
+                pool.Add(pool.Capacity - pool.Size);
             }
         }
 
         private void Awake() {
+            // DebugUtils.Log("PoolStorageView.Awake()");
+
             for (int i = 0; i < poolsParams.Length; ++i) {
                 PoolParams poolParams = poolsParams[i];
                 var instanceProvider =
                     new ViewInstanceProvider(poolParams.ViewProto, transform);
                 var pool = new Pool<PoolableView>(
                     instanceProvider, poolParams.InitialSize);
-                pool.Add(poolParams.InitialSize);
                 poolsMap.Add(poolParams.ViewProto.PoolId, pool);
             }
         }

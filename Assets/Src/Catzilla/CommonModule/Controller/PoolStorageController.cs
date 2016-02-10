@@ -10,7 +10,7 @@ namespace Catzilla.CommonModule.Controller {
         public PoolStorageView PoolStorage {get; set;}
 
         public void OnLevelLoad(Evt evt) {
-            PoolStorage.Reset();
+            PoolStorage.Refill();
             GC.Collect();
         }
     }

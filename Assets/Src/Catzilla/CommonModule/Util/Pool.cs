@@ -7,14 +7,15 @@ namespace Catzilla.CommonModule.Util {
         }
 
         public int Size {get {return instances.Count;}}
+        public int Capacity {get; private set;}
 
         private readonly IInstanceProvider instanceProvider;
         private readonly List<T> instances;
-        private int capacity;
 
         public Pool(IInstanceProvider instanceProvider, int size) {
             this.instanceProvider = instanceProvider;
             instances = new List<T>(size);
+            Capacity = size;
             Add(size);
         }
 
@@ -25,7 +26,7 @@ namespace Catzilla.CommonModule.Util {
 
         public T Take() {
             if (instances.Count == 0) {
-                Add(capacity);
+                Add(Capacity);
             }
 
             int topIndex = instances.Count - 1;
@@ -39,7 +40,9 @@ namespace Catzilla.CommonModule.Util {
                 instances.Add(instanceProvider.Get());
             }
 
-            capacity += instances.Count;
+            if (instances.Count > Capacity) {
+                Capacity = instances.Count * 2;
+            }
         }
 
         public void Clear() {
