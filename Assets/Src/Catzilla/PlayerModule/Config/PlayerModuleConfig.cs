@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.injector.api;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using SmartLocalization;
 using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.Util;
@@ -24,33 +22,32 @@ namespace Catzilla.PlayerModule.Config {
         [SerializeField]
         private bool isPlayerStateStorageStubbed = true;
 
-        public override void InitBindings(IInjectionBinder injectionBinder) {
+        [SerializeField]
+        private GiftManager giftManager;
+
+        public override void InitBindings(DiContainer container) {
+            PlayerStateStorage finalPlayerStateStorage = playerStateStorage;
+
             if (Debug.isDebugBuild && isPlayerStateStorageStubbed) {
-                injectionBinder.Bind<PlayerStateStorage>()
-                    .ToValue(playerStateStorageStub)
-                    .CrossContext();
-            } else {
-                injectionBinder.Bind<PlayerStateStorage>()
-                    .ToValue(playerStateStorage)
-                    .CrossContext();
+                finalPlayerStateStorage = playerStateStorageStub;
             }
 
-            injectionBinder.Bind<PlayerScoreController>()
-                .To<PlayerScoreController>()
-                .ToSingleton()
-                .CrossContext();
+            container.Bind<PlayerStateStorage>()
+                .ToInstance(finalPlayerStateStorage);
+            container.Bind<GiftManager>().ToInstance(giftManager);
+            container.Bind<PlayerScoreController>().ToSingle();
         }
 
-        public override void PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<EventBus>();
+        public override void PostBindings(DiContainer container) {
+            container.Inject(container.Resolve<PlayerStateStorage>());
+            container.Inject(container.Resolve<GiftManager>());
+            var eventBus = container.Resolve<EventBus>();
             var playerScoreController =
-                injectionBinder.GetInstance<PlayerScoreController>();
+                container.Resolve<PlayerScoreController>();
             eventBus.On(
                 PlayerView.Event.ScoreChange, playerScoreController.OnChange);
             eventBus.On(PlayerScoreView.Event.Construct,
                 playerScoreController.OnViewConstruct);
-            eventBus.On(LevelView.Event.Construct,
-                playerScoreController.OnLevelConstruct);
         }
     }
 }

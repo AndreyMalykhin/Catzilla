@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
-    public class SmashedView
-        : strange.extensions.mediation.impl.View, IPoolable {
+    public class SmashedView: MonoBehaviour, IPoolable {
         [Inject]
         public PoolStorageView PoolStorage {get; set;}
 
@@ -34,7 +34,7 @@ namespace Catzilla.LevelObjectModule.View {
         private Vector3 smashSourcePosition;
         private bool isSmashed;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             poolable = GetComponent<PoolableView>();
             var pieceBodies = GetComponentsInChildren<Rigidbody>();

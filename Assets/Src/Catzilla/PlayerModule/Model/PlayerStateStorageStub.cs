@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.context.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
 
@@ -18,7 +17,7 @@ namespace Catzilla.PlayerModule.Model {
         [SerializeField]
         private int availableResurrectionsCount = 1;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             DebugUtils.Assert(Debug.isDebugBuild);
         }

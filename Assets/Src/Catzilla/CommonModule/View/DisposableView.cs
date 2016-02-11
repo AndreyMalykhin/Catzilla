@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
-    public class DisposableView: strange.extensions.mediation.impl.View {
+    public class DisposableView: MonoBehaviour {
         public enum Event {TriggerExit}
 
         [Inject]
@@ -19,7 +18,7 @@ namespace Catzilla.CommonModule.View {
 
         private PoolableView poolable;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             poolable = root == null ? GetComponent<PoolableView>() : root;
         }

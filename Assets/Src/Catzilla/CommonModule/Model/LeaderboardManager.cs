@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Zenject;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
 using Catzilla.PlayerModule.Model;
-using Catzilla.LeaderboardModule.View;
 
-namespace Catzilla.LeaderboardModule.Model {
+namespace Catzilla.CommonModule.Model {
     public class LeaderboardManager {
         [Inject]
         public Server Server {get; set;}

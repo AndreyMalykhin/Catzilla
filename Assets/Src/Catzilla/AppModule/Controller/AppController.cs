@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
-using strange.extensions.context.api;
+using Zenject;
 using Catzilla.MainMenuModule.View;
 using Catzilla.PlayerModule.Model;
 using Catzilla.CommonModule.Model;
+using Catzilla.CommonModule.Util;
 using Catzilla.AppModule.Controller;
 
 namespace Catzilla.AppModule.Controller {
@@ -18,12 +19,19 @@ namespace Catzilla.AppModule.Controller {
         [Inject]
         public PlayerStateStorage PlayerStateStorage {get; set;}
 
-        public void OnStart() {
+        [Inject]
+        public GiftManager GiftManager {get; set;}
+
+        public void OnStart(Evt evt) {
             // DebugUtils.Log("AppController.OnStart()");
-            if (PlayerStateStorage.Get() == null) {
-                PlayerStateStorage.Save(new PlayerState());
+            PlayerState playerState = PlayerStateStorage.Get();
+
+            if (playerState == null) {
+                playerState = new PlayerState();
             }
 
+            playerState.LastSeenDate = DateTime.UtcNow;
+            PlayerStateStorage.Save(playerState);
             Server.Connect(OnServerConnectSuccess, OnServerConnectFail);
         }
 
@@ -47,14 +55,11 @@ namespace Catzilla.AppModule.Controller {
 
         private void ShowMainScreen() {
             MainScreen.Show();
-            RewardPlayer();
-        }
-
-        private void RewardPlayer() {
             PlayerState playerState = PlayerStateStorage.Get();
 
-            if (playerState.AvailableResurrectionsCount <= 0) {
-                playerState.AvailableResurrectionsCount = 1;
+            if (GiftManager.IsDeserved(playerState)) {
+                GiftManager.Give(playerState);
+                PlayerStateStorage.Save(playerState);
             }
         }
     }

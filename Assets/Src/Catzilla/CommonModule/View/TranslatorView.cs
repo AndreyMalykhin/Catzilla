@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
-    public class TranslatorView: strange.extensions.mediation.impl.View {
+    public class TranslatorView: MonoBehaviour {
         [Inject]
         public Translator Translator {get; set;}
 
@@ -17,7 +18,7 @@ namespace Catzilla.CommonModule.View {
         [SerializeField]
         private Item[] items;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             for (int i = 0; i < items.Length; ++i) {
                 Item item = items[i];

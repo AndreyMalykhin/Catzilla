@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Zenject;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.MainMenuModule.View {
-    public class MainScreenView: strange.extensions.mediation.impl.View {
+    public class MainScreenView: MonoBehaviour {
         [SerializeField]
         private MainMenuView menu;
 
         private Canvas canvas;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
+            // DebugUtils.Log("MainScreenView.OnConstruct()");
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
         }

@@ -2,8 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.context.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.PlayerModule.Model;
@@ -11,7 +10,7 @@ using Catzilla.PlayerModule.Model;
 namespace Catzilla.CommonModule.Model {
     [CreateAssetMenuAttribute]
     public class ServerStub: Server {
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             DebugUtils.Assert(Debug.isDebugBuild);
         }

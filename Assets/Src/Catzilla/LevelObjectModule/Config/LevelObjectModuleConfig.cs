@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.injector.api;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
@@ -20,108 +18,68 @@ namespace Catzilla.LevelObjectModule.Config {
         [SerializeField]
         private WorldSpacePopupView scorePopupProto;
 
-        public override void InitBindings(IInjectionBinder injectionBinder) {
-            injectionBinder.Bind<ObjectTypeInfoStorage>()
-                .ToValue(objectTypeInfoStorage)
-                .CrossContext();
-            injectionBinder.Bind<PlayerController>()
-                .To<PlayerController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<SmashableController>()
-                .To<SmashableController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<DamagingController>()
-                .To<DamagingController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<ShootingController>()
-                .To<ShootingController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<ScoreableController>()
-                .To<ScoreableController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<ProjectileController>()
-                .To<ProjectileController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<ActivatableController>()
-                .To<ActivatableController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<WorldSpacePopupView>()
-                .ToValue(scorePopupProto)
-                .ToName("ScorePopupProto")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<LevelObjectType>()
-                .ToValue(LevelObjectType.Player)
-                .ToName("PlayerObjectType")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<string>()
-                .ToValue("Player.Mesh")
-                .ToName("PlayerMeshTag")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<string>()
-                .ToValue("Player.FieldOfView")
-                .ToName("PlayerFieldOfViewTag")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<string>()
-                .ToValue("Projectile")
-                .ToName("ProjectileTag")
-                .ToInject(false)
-                .CrossContext();
+        public override void InitBindings(DiContainer container) {
+            container.Bind<ObjectTypeInfoStorage>()
+                .ToInstance(objectTypeInfoStorage);
+            container.Bind<PlayerController>().ToSingle();
+            container.Bind<SmashableController>().ToSingle();
+            container.Bind<DamagingController>().ToSingle();
+            container.Bind<ShootingController>().ToSingle();
+            container.Bind<ScoreableController>().ToSingle();
+            container.Bind<ProjectileController>().ToSingle();
+            container.Bind<ActivatableController>().ToSingle();
+            container.Bind<WorldSpacePopupView>("ScorePopupProto")
+                .ToInstance(scorePopupProto);
+            container.Bind<LevelObjectType>("PlayerObjectType")
+                .ToInstance(LevelObjectType.Player);
+            container.Bind<string>("PlayerMeshTag").ToInstance("Player.Mesh");
+            container.Bind<string>("PlayerFieldOfViewTag")
+                .ToInstance("Player.FieldOfView");
+            container.Bind<string>("ProjectileTag").ToInstance("Projectile");
         }
 
-        public override void PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<EventBus>();
+        public override void PostBindings(DiContainer container) {
+            container.Inject(container.Resolve<ObjectTypeInfoStorage>());
+            var eventBus = container.Resolve<EventBus>();
 
             var smashableContoller =
-                injectionBinder.GetInstance<SmashableController>();
+                container.Resolve<SmashableController>();
             eventBus.On(SmashableView.Event.TriggerEnter,
                 smashableContoller.OnTriggerEnter);
 
             var damagingContoller =
-                injectionBinder.GetInstance<DamagingController>();
+                container.Resolve<DamagingController>();
             eventBus.On(DamagingView.Event.TriggerEnter,
                 damagingContoller.OnTriggerEnter);
 
             var scoreableContoller =
-                injectionBinder.GetInstance<ScoreableController>();
+                container.Resolve<ScoreableController>();
             eventBus.On(ScoreableView.Event.TriggerEnter,
                 scoreableContoller.OnTriggerEnter);
 
             var projectileContoller =
-                injectionBinder.GetInstance<ProjectileController>();
+                container.Resolve<ProjectileController>();
             eventBus.On(ProjectileView.Event.TriggerEnter,
                 projectileContoller.OnTriggerEnter);
 
             var shootingContoller =
-                injectionBinder.GetInstance<ShootingController>();
+                container.Resolve<ShootingController>();
             eventBus.On(ShootingView.Event.TriggerEnter,
                 shootingContoller.OnTriggerEnter);
             eventBus.On(ShootingView.Event.Shot,
                 shootingContoller.OnShot);
 
             var activatableContoller =
-                injectionBinder.GetInstance<ActivatableController>();
+                container.Resolve<ActivatableController>();
             eventBus.On(ActivatableView.Event.TriggerEnter,
                 activatableContoller.OnTriggerEnter);
 
             var playerController =
-                injectionBinder.GetInstance<PlayerController>();
+                container.Resolve<PlayerController>();
             eventBus.On(PlayerView.Event.Death,
                 playerController.OnDeath);
             eventBus.On(PlayerView.Event.ScoreChange,
                 playerController.OnScoreChange);
-            eventBus.On(LevelView.Event.Construct,
-                playerController.OnLevelConstruct);
             eventBus.On(PlayerView.Event.Resurrect,
                 playerController.OnResurrect);
             eventBus.On(PlayerView.Event.Footstep,

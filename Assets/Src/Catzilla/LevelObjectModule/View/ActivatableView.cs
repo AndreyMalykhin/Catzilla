@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelObjectModule.View {
     public class ActivatableView
-        : strange.extensions.mediation.impl.View, IPoolable {
+        : MonoBehaviour, IPoolable {
         public enum Event {TriggerEnter}
 
         [Inject]
@@ -15,7 +14,7 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private MonoBehaviour behaviour;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             Reset();
         }

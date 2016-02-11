@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
@@ -12,6 +13,9 @@ namespace Catzilla.CommonModule.View {
 
         [SerializeField]
         private PoolParams[] poolsParams;
+
+        [Inject]
+        private IInstantiator instantiator;
 
         private readonly IDictionary<int, Pool<PoolableView>> poolsMap =
             new Dictionary<int, Pool<PoolableView>>();
@@ -44,13 +48,14 @@ namespace Catzilla.CommonModule.View {
             }
         }
 
-        private void Awake() {
-            // DebugUtils.Log("PoolStorageView.Awake()");
+        [PostInject]
+        public void OnConstruct() {
+            // DebugUtils.Log("PoolStorageView.OnConstruct()");
 
             for (int i = 0; i < poolsParams.Length; ++i) {
                 PoolParams poolParams = poolsParams[i];
-                var instanceProvider =
-                    new ViewInstanceProvider(poolParams.ViewProto, transform);
+                var instanceProvider = new ViewInstanceProvider(
+                    poolParams.ViewProto, transform, instantiator);
                 var pool = new Pool<PoolableView>(
                     instanceProvider, poolParams.InitialSize);
                 poolsMap.Add(poolParams.ViewProto.PoolId, pool);

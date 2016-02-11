@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
+using Zenject;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
-using Catzilla.LeaderboardModule.Model;
 using Catzilla.PlayerModule.Model;
 using Catzilla.MainMenuModule.View;
 

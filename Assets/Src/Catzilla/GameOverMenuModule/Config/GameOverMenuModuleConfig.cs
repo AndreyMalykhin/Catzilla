@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.injector.api;
-using strange.extensions.context.api;
-using strange.extensions.context.impl;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
@@ -16,36 +13,23 @@ using Catzilla.GameOverMenuModule.View;
 namespace Catzilla.GameOverMenuModule.Config {
     [CreateAssetMenuAttribute]
     public class GameOverMenuModuleConfig: ModuleConfig {
-        public override void InitBindings(IInjectionBinder injectionBinder) {
+        public override void InitBindings(DiContainer container) {
             var screen = GameObject.FindWithTag("GameOverScreen")
                 .GetComponent<GameOverScreenView>();
-            injectionBinder.Bind<GameOverScreenView>()
-                .ToValue(screen)
-                .ToInject(false)
-                .CrossContext();
+            container.Bind<GameOverScreenView>().ToInstance(screen);
             var menu = GameObject.FindWithTag("GameOverScreen.Menu")
                 .GetComponent<GameOverMenuView>();
-            injectionBinder.Bind<GameOverMenuView>()
-                .ToValue(menu)
-                .ToInject(false)
-                .CrossContext();
+            container.Bind<GameOverMenuView>().ToInstance(menu);
             var rewardEarnDlg = GameObject.FindWithTag(
                 "GameOverScreen.RewardEarnDlg").GetComponent<DlgView>();
-            injectionBinder.Bind<DlgView>()
-                .ToValue(rewardEarnDlg)
-                .ToName("RewardEarnDlg")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<GameOverMenuController>()
-                .To<GameOverMenuController>()
-                .ToSingleton()
-                .CrossContext();
+            container.Bind<DlgView>("RewardEarnDlg").ToInstance(rewardEarnDlg);
+            container.Bind<GameOverMenuController>().ToSingle();
         }
 
-        public override void PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<EventBus>();
+        public override void PostBindings(DiContainer container) {
+            var eventBus = container.Resolve<EventBus>();
             var gameOverMenuController =
-                injectionBinder.GetInstance<GameOverMenuController>();
+                container.Resolve<GameOverMenuController>();
             eventBus.On(GameOverMenuView.Event.ExitBtnClick,
                 gameOverMenuController.OnExitBtnClick);
             eventBus.On(GameOverMenuView.Event.RestartBtnClick,

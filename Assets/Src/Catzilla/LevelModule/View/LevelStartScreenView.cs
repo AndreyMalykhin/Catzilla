@@ -2,18 +2,17 @@
 using UnityEngine.UI;
 using System;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelModule.View {
-    public class LevelStartScreenView: strange.extensions.mediation.impl.View {
+    public class LevelStartScreenView: MonoBehaviour {
         public Text Msg;
         public float HideDelay = 1f;
 
         private Canvas canvas;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;

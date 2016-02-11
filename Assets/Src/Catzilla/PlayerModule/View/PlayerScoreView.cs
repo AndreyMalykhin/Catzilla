@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.PlayerModule.View {
-    public class PlayerScoreView: strange.extensions.mediation.impl.View {
+    public class PlayerScoreView: MonoBehaviour {
         public enum Event {Construct}
 
         [Inject]
@@ -42,7 +41,7 @@ namespace Catzilla.PlayerModule.View {
         private string text = "Score: {0} / {1}";
         private Text textView;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             textView = GetComponent<Text>();
             Render();

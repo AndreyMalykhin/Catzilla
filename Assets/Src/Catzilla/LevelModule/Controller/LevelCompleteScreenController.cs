@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelModule.View;
 
 namespace Catzilla.LevelModule.Controller {
     public class LevelCompleteScreenController {
-        [Inject]
-        public Game Game {get; set;}
-
         [Inject]
         public AudioManager AudioManager {get; set;}
 
@@ -23,10 +20,6 @@ namespace Catzilla.LevelModule.Controller {
                 AudioManager.Play(
                     screen.ShowSound, screen.AudioSource, UIAudioChannel);
             }
-        }
-
-        public void OnHide(Evt evt) {
-            Game.LoadLevel();
         }
     }
 }

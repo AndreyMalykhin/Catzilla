@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.injector.api;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelModule.View;
@@ -16,29 +14,18 @@ namespace Catzilla.LevelAreaModule.Config {
         [SerializeField]
         private EnvTypeInfoStorage envTypeInfoStorage;
 
-        public override void InitBindings(IInjectionBinder injectionBinder) {
-            injectionBinder.Bind<LevelAreaGenerator>()
-                .To<LevelAreaGenerator>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<LevelAreaController>()
-                .To<LevelAreaController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<EnvTypeInfoStorage>()
-                .ToValue(envTypeInfoStorage)
-                .CrossContext();
-            injectionBinder.Bind<int>()
-                .ToValue(1 << 10)
-                .ToName("EnvLayer")
-                .ToInject(false)
-                .CrossContext();
+        public override void InitBindings(DiContainer container) {
+            container.Bind<LevelAreaGenerator>().ToSingle();
+            container.Bind<LevelAreaController>().ToSingle();
+            container.Bind<EnvTypeInfoStorage>().ToInstance(envTypeInfoStorage);
+            container.Bind<int>("EnvLayer").ToInstance(1 << 10);
         }
 
-        public override void PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<EventBus>();
+        public override void PostBindings(DiContainer container) {
+            container.Inject(container.Resolve<EnvTypeInfoStorage>());
+            var eventBus = container.Resolve<EventBus>();
             var levelAreaController =
-                injectionBinder.GetInstance<LevelAreaController>();
+                container.Resolve<LevelAreaController>();
             eventBus.On(
                 LevelView.Event.Construct,
                 levelAreaController.OnLevelConstruct);

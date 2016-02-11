@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;

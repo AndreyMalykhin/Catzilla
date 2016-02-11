@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelObjectModule.View {
-    public class FleeingView
-        : strange.extensions.mediation.impl.View, IPoolable {
+    public class FleeingView: MonoBehaviour, IPoolable {
         [SerializeField]
         private float minSpeed = 2f;
 
@@ -14,7 +14,7 @@ namespace Catzilla.LevelObjectModule.View {
         private Rigidbody body;
         private float speed;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             Reset();
         }
@@ -23,8 +23,7 @@ namespace Catzilla.LevelObjectModule.View {
             speed = Random.Range(minSpeed, maxSpeed);
         }
 
-        protected override void Awake() {
-            base.Awake();
+        private void Awake() {
             body = GetComponent<Rigidbody>();
         }
 

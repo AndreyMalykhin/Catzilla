@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Model;
@@ -42,8 +42,6 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("PlayerAudioChannel")]
         public int PlayerAudioChannel {get; set;}
 
-        private LevelView level;
-
         public void OnDeath(Evt evt) {
             var player = (PlayerView) evt.Source;
             PlayerState playerState = PlayerStateStorage.Get();
@@ -77,23 +75,14 @@ namespace Catzilla.LevelObjectModule.Controller {
 
         public void OnScoreChange(Evt evt) {
             var player = (PlayerView) evt.Source;
-
-            if (player.ScoreSound != null) {
-                AudioManager.Play(player.ScoreSound, player.AudioSource,
-                    PlayerAudioChannel);
-            }
-
-            LevelSettings levelSettings = LevelSettingsStorage.Get(level.Index);
+            LevelSettings levelSettings =
+                LevelSettingsStorage.Get(PlayerStateStorage.Get().Level);
 
             if (player.Score < levelSettings.CompletionScore) {
                 return;
             }
 
             CompleteLevel(player);
-        }
-
-        public void OnLevelConstruct(Evt evt) {
-            level = (LevelView) evt.Source;
         }
 
         public void OnResurrect(Evt evt) {
@@ -116,7 +105,6 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
         }
 
-        // TODO move Save()
         private void CompleteLevel(PlayerView player) {
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;
@@ -133,7 +121,12 @@ namespace Catzilla.LevelObjectModule.Controller {
                 PlayerStateStorage.Sync(Server);
             }
 
+            LevelCompleteScreen.OnHide = OnLevelCompleteScreenHide;
             LevelCompleteScreen.Show();
+        }
+
+        private void OnLevelCompleteScreenHide() {
+            Game.LoadLevel();
         }
     }
 }

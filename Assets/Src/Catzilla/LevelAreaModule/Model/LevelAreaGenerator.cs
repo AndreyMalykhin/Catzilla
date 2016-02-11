@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelModule.View;

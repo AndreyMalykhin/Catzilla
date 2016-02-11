@@ -15,3 +15,4 @@ MonoBehaviour:
   playerStateStorageStub: {fileID: 11400000, guid: fc662c19ecfaf40d5ad81507efc9ed48,
     type: 2}
   isPlayerStateStorageStubbed: 0
+  giftManager: {fileID: 11400000, guid: e335f292789ad42a186cb7d88992e8c0, type: 2}

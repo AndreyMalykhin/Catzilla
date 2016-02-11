@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.MainMenuModule.View {
-    public class MainMenuView: strange.extensions.mediation.impl.View {
+    public class MainMenuView: MonoBehaviour {
         public enum Event {ExitBtnClick, StartBtnClick, LeaderboardBtnClick}
 
         [Inject]
@@ -18,7 +17,7 @@ namespace Catzilla.MainMenuModule.View {
 
         private Canvas canvas;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             // DebugUtils.Log("MainMenuView.OnConstruct()");
             canvas = GetComponent<Canvas>();

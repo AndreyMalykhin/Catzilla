@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.Model;
@@ -11,7 +10,7 @@ using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelModule.Model;
 
 namespace Catzilla.LevelModule.View {
-    public class LevelView: strange.extensions.mediation.impl.View {
+    public class LevelView: MonoBehaviour {
         public enum Event {Construct}
 
         [Inject]
@@ -23,11 +22,14 @@ namespace Catzilla.LevelModule.View {
         [Inject]
         public PoolStorageView PoolStorage {get; set;}
 
+        [Inject]
+        public IInstantiator Instantiator {get; set;}
+
         public int Index {get; private set;}
 
         private int nextAreaIndex = 0;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             // DebugUtils.Log("LevelView.OnConstruct()");
             EventBus.Fire(Event.Construct, new Evt(this));
@@ -61,8 +63,9 @@ namespace Catzilla.LevelModule.View {
             LevelObjectView obj = null;
 
             if (poolable == null) {
-                obj = (LevelObjectView) Instantiate(
-                    typeInfo.ViewProto, position, Quaternion.identity);
+                obj = Instantiator.InstantiatePrefab(
+                    typeInfo.ViewProto.gameObject)
+                    .GetComponent<LevelObjectView>();
             } else {
                 obj = PoolStorage.Take(poolable.PoolId)
                     .GetComponent<LevelObjectView>();

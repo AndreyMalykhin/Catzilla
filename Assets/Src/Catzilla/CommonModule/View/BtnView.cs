@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
-    public class BtnView: strange.extensions.mediation.impl.View {
+    public class BtnView: MonoBehaviour {
         public enum Event {Click}
 
         [Inject]
@@ -15,7 +14,7 @@ namespace Catzilla.CommonModule.View {
         public AudioClip ClickSound;
         public AudioSource AudioSource;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             GetComponent<Button>().onClick.AddListener(OnClick);
         }

@@ -2,10 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class WorldSpacePopupView: MonoBehaviour, IPoolable {
+        public enum Event {Show}
+
+        [Inject]
+        public EventBus EventBus {get; set;}
+
+        public AudioSource AudioSource;
+        public AudioClip ShowSound;
         public Text Msg;
         public float Lifetime = 5f;
         public float Speed = 10f;
@@ -26,6 +34,13 @@ namespace Catzilla.CommonModule.View {
         private Camera lookAtTarget;
         private readonly Vector3[] corners = new Vector3[4];
 
+        [PostInject]
+        public void OnConstruct() {
+            // DebugUtils.Log("WorldSpacePopupView.OnConstruct()");
+            canvas = GetComponent<Canvas>();
+            canvas.enabled = false;
+        }
+
         public void Show() {
             if (canvas.enabled) {
                 return;
@@ -33,6 +48,7 @@ namespace Catzilla.CommonModule.View {
 
             canvas.enabled = true;
             Invoke("Hide", Lifetime);
+            EventBus.Fire(Event.Show, new Evt(this));
         }
 
         public void Hide() {
@@ -94,11 +110,6 @@ namespace Catzilla.CommonModule.View {
             }
 
             transform.Translate(0f, Speed * Time.deltaTime, 0f);
-        }
-
-        private void Awake() {
-            canvas = GetComponent<Canvas>();
-            canvas.enabled = false;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelAreaModule.Model;
 using Catzilla.LevelAreaModule.View;
@@ -34,7 +35,7 @@ namespace Catzilla.LevelModule.Model {
         private readonly IDictionary<State, StateTransition[]> states =
             new Dictionary<State, StateTransition[]>();
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             states[State.Start] = new StateTransition[] {
                 new StateTransition(EnvType.HoodStart, State.HoodMiddle),

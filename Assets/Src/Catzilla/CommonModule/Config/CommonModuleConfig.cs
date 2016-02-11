@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.injector.api;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
 using SmartLocalization;
+using Zenject;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
@@ -27,124 +25,77 @@ namespace Catzilla.CommonModule.Config {
         [SerializeField]
         private bool isServerStubbed = true;
 
-        public override void InitBindings(IInjectionBinder injectionBinder) {
+        public override void InitBindings(DiContainer container) {
+            Server finalServer = server;
+
             if (Debug.isDebugBuild && isServerStubbed) {
-                injectionBinder.Bind<Server>()
-                    .ToValue(serverStub)
-                    .CrossContext();
-            } else {
-                injectionBinder.Bind<Server>()
-                    .ToValue(server)
-                    .CrossContext();
+                finalServer = serverStub;
             }
 
-            injectionBinder.Bind<EventBus>()
-                .To<EventBus>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<Translator>()
-                .To<Translator>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<Game>()
-                .To<Game>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<PoolStorageController>()
-                .To<PoolStorageController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<ActivityIndicatorController>()
-                .To<ActivityIndicatorController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<Ad>()
-                .To<Ad>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<DisposableController>()
-                .To<DisposableController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<BtnController>()
-                .To<BtnController>()
-                .ToSingleton()
-                .CrossContext();
+            container.Bind<Server>().ToInstance(finalServer);
+            container.Bind<EventBus>().ToSingle();
+            container.Bind<Translator>().ToSingle();
+            container.Bind<Game>().ToSingle();
+            container.Bind<PoolStorageController>().ToSingle();
+            container.Bind<ActivityIndicatorController>().ToSingle();
+            container.Bind<Ad>().ToSingle();
+            container.Bind<DisposableController>().ToSingle();
+            container.Bind<WorldSpacePopupController>().ToSingle();
+            container.Bind<BtnController>().ToSingle();
+            container.Bind<LeaderboardManager>().ToSingle();
             var ui = GameObject.FindWithTag("UI").GetComponent<UIView>();
-            injectionBinder.Bind<UIView>()
-                .ToValue(ui)
-                .ToInject(false)
-                .CrossContext();
+            container.Bind<UIView>().ToInstance(ui);
             var poolStorage = GameObject.FindWithTag("PoolStorage")
                 .GetComponent<PoolStorageView>();
-            injectionBinder.Bind<PoolStorageView>()
-                .ToValue(poolStorage)
-                .ToInject(false)
-                .CrossContext();
+            container.Bind<PoolStorageView>().ToInstance(poolStorage);
             var coroutineManager = GameObject.FindWithTag("CoroutineManager")
                 .GetComponent<CoroutineManagerView>();
-            injectionBinder.Bind<CoroutineManagerView>()
-                .ToValue(coroutineManager)
-                .ToInject(false)
-                .CrossContext();
+            container.Bind<CoroutineManagerView>().ToInstance(coroutineManager);
             var activityIndicator = GameObject.FindWithTag("ActivityIndicator")
                 .GetComponent<ActivityIndicatorView>();
-            injectionBinder.Bind<ActivityIndicatorView>()
-                .ToValue(activityIndicator)
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<AudioManager>()
-                .ToValue(audioManager)
-                .CrossContext();
-            injectionBinder.Bind<PopupManager>()
-                .ToValue(popupManager)
-                .CrossContext();
-            injectionBinder.Bind<int>()
-                .ToValue(0)
-                .ToName("EffectsHighPrioAudioChannel")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<int>()
-                .ToValue(1)
-                .ToName("EffectsLowPrioAudioChannel")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<int>()
-                .ToValue(2)
-                .ToName("UIAudioChannel")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<int>()
-                .ToValue(3)
-                .ToName("PlayerAudioChannel")
-                .ToInject(false)
-                .CrossContext();
+            container.Bind<ActivityIndicatorView>()
+                .ToInstance(activityIndicator);
+            container.Bind<Camera>("MainCamera").ToInstance(Camera.main);
+            container.Bind<AudioManager>().ToInstance(audioManager);
+            container.Bind<PopupManager>().ToInstance(popupManager);
+            container.Bind<int>("EffectsHighPrioAudioChannel").ToInstance(0);
+            container.Bind<int>("EffectsLowPrioAudioChannel").ToInstance(1);
+            container.Bind<int>("UIAudioChannel").ToInstance(2);
+            container.Bind<int>("PlayerAudioChannel").ToInstance(3);
         }
 
-        public override void PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<EventBus>();
+        public override void PostBindings(DiContainer container) {
+            container.Inject(container.Resolve<Server>());
+            container.Inject(container.Resolve<AudioManager>());
+            container.Inject(container.Resolve<PopupManager>());
+            var eventBus = container.Resolve<EventBus>();
 
             var disposableController =
-                injectionBinder.GetInstance<DisposableController>();
+                container.Resolve<DisposableController>();
             eventBus.On(DisposableView.Event.TriggerExit,
                 disposableController.OnTriggerExit);
 
             var poolStorageController =
-                injectionBinder.GetInstance<PoolStorageController>();
+                container.Resolve<PoolStorageController>();
             eventBus.On(
                 Game.Event.LevelLoad, poolStorageController.OnLevelLoad);
 
             var btnController =
-                injectionBinder.GetInstance<BtnController>();
+                container.Resolve<BtnController>();
             eventBus.On(
                 BtnView.Event.Click, btnController.OnClick);
 
             var activityIndicatorController =
-                injectionBinder.GetInstance<ActivityIndicatorController>();
+                container.Resolve<ActivityIndicatorController>();
             eventBus.On(Server.Event.Request,
                 activityIndicatorController.OnServerRequest);
             eventBus.On(Server.Event.Response,
                 activityIndicatorController.OnServerResponse);
+
+            var worldSpacePopupController =
+                container.Resolve<WorldSpacePopupController>();
+            eventBus.On(WorldSpacePopupView.Event.Show,
+                worldSpacePopupController.OnShow);
         }
     }
 }

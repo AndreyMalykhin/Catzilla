@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using System.Collections;
+using Zenject;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 
 namespace Catzilla.CommonModule.Model {
     public class Game {
@@ -16,6 +17,12 @@ namespace Catzilla.CommonModule.Model {
 
         [Inject]
         public AudioManager AudioManager {get; set;}
+
+        [Inject]
+        public DiContainer Container {get; set;}
+
+        [Inject]
+        public CoroutineManagerView CoroutineManager {get; set;}
 
         public void Pause() {
             // DebugUtils.Log("Game.Pause()");
@@ -35,7 +42,13 @@ namespace Catzilla.CommonModule.Model {
 
         public void LoadLevel() {
             // DebugUtils.Log("Game.LoadLevel()");
+            CoroutineManager.Run(DoLoadLevel());
+        }
+
+        private IEnumerator DoLoadLevel() {
             SceneManager.LoadScene(LevelScene);
+            yield return null;
+            Container.InjectGameObject(GameObject.FindWithTag("Level"));
             EventBus.Fire(Event.LevelLoad, new Evt(this));
         }
     }

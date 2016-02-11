@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using SmartLocalization;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.PlayerModule.View;
 
@@ -29,12 +28,14 @@ namespace Catzilla.LevelObjectModule.View {
         [Inject("EnvLayer")]
         public int EnvLayer {get; set;}
 
+        [Inject]
+        public IInstantiator Instantiator {get; set;}
+
         public Collider Collider;
         public Camera Camera;
         public PlayerHUDView HUDProto;
         public Animator Animator;
         public AudioClip DeathSound;
-        public AudioClip ScoreSound;
         public AudioClip FootstepSound;
         public AudioSource AudioSource;
         public bool IsHealthFreezed;
@@ -46,6 +47,7 @@ namespace Catzilla.LevelObjectModule.View {
         public float SideSpeed = 5f;
         public int MaxHealth = 100;
         public float CameraShakeDuration = 0.5f;
+        public float CameraShakeMaxAmount = 1f;
 
         public int Score {
             get {
@@ -99,7 +101,7 @@ namespace Catzilla.LevelObjectModule.View {
         private Rigidbody body;
         private PlayerHUDView HUD;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             // DebugUtils.Log("PlayerView.OnConstruct()");
             body = GetComponent<Rigidbody>();
@@ -109,7 +111,8 @@ namespace Catzilla.LevelObjectModule.View {
             maxX = LevelMaxX - halfWidth;
             health = MaxHealth;
             cameraStartPosition = Camera.transform.localPosition;
-            HUD = (PlayerHUDView) Instantiate(HUDProto);
+            HUD = Instantiator.InstantiatePrefab(HUDProto.gameObject)
+                .GetComponent<PlayerHUDView>();
             EventBus.Fire(Event.Construct, new Evt(this));
         }
 
@@ -125,12 +128,10 @@ namespace Catzilla.LevelObjectModule.View {
             EventBus.Fire(Event.Resurrect, new Evt(this));
         }
 
-        protected override void OnDestroy() {
+        private void OnDestroy() {
             if (HUD != null) {
                 Destroy(HUD.gameObject);
             }
-
-            base.OnDestroy();
         }
 
         private void Die() {
@@ -208,7 +209,8 @@ namespace Catzilla.LevelObjectModule.View {
             float remainingTime = CameraShakeDuration;
 
             while (remainingTime > 0f) {
-                float amplitude = -1f * remainingTime / CameraShakeDuration;
+                float amplitude =
+                    -CameraShakeMaxAmount * remainingTime / CameraShakeDuration;
                 cameraShakeAmount = new Vector3(
                     0f, Mathf.PerlinNoise(Time.time, 0f) * amplitude, 0f);
                 remainingTime -= Time.deltaTime;

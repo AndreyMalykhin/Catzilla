@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class PoolableView
-        : strange.extensions.mediation.impl.View, IPoolable {
+        : MonoBehaviour, IPoolable {
         public enum Event {Destroy}
 
         [Inject]
@@ -28,14 +27,12 @@ namespace Catzilla.CommonModule.View {
             }
         }
 
-        protected override void OnDestroy() {
+        private void OnDestroy() {
             // DebugUtils.Log("PoolableView.OnDestroy()");
             // can be null while app is destroying
             if (EventBus != null) {
                 EventBus.Fire(Event.Destroy, new Evt(this));
             }
-
-            base.OnDestroy();
         }
     }
 }

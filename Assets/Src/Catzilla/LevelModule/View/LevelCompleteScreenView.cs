@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelModule.View {
-    public class LevelCompleteScreenView
-        : strange.extensions.mediation.impl.View {
-        public enum Event {Hide, Show}
+    public class LevelCompleteScreenView: MonoBehaviour {
+        public enum Event {Show}
 
         [Inject]
         public EventBus EventBus {get; set;}
@@ -16,13 +15,14 @@ namespace Catzilla.LevelModule.View {
         public Text Msg;
         public AudioClip ShowSound;
         public AudioSource AudioSource;
+        public Action OnHide {get; set;}
 
         [SerializeField]
         private float duration = 2f;
 
         private Canvas canvas;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;
@@ -30,14 +30,16 @@ namespace Catzilla.LevelModule.View {
 
         public void Show() {
             canvas.enabled = true;
-            StartCoroutine(Hide());
+            Invoke("Hide", duration);
             EventBus.Fire(Event.Show, new Evt(this));
         }
 
-        private IEnumerator Hide() {
-            yield return new WaitForSeconds(duration);
+        public void Hide() {
             canvas.enabled = false;
-            EventBus.Fire(Event.Hide, new Evt(this));
+
+            if (OnHide != null) {
+                OnHide();
+            }
         }
     }
 }

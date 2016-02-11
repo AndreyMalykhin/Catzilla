@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.PlayerModule.Model;
-using Catzilla.LeaderboardModule.Model;
 using Catzilla.GameOverMenuModule.View;
 
 namespace Catzilla.GameOverMenuModule.Controller {
@@ -38,7 +37,7 @@ namespace Catzilla.GameOverMenuModule.Controller {
 
         private PlayerView player;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             GameOverMenu.ResurrectTextTemplate =
                 Translator.Translate("GameOverMenu.Resurrect");
@@ -77,7 +76,6 @@ namespace Catzilla.GameOverMenuModule.Controller {
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Game.Restart");
             Game.LoadLevel();
-            // Game.Resume();
             GameOverScreen.Hide();
         }
 

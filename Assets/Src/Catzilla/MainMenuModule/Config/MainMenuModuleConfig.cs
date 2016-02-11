@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.injector.api;
-using strange.extensions.context.api;
-using strange.extensions.context.impl;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
@@ -13,29 +10,20 @@ using Catzilla.MainMenuModule.View;
 namespace Catzilla.MainMenuModule.Config {
     [CreateAssetMenuAttribute]
     public class MainMenuModuleConfig: ModuleConfig {
-        public override void InitBindings(IInjectionBinder injectionBinder) {
+        public override void InitBindings(DiContainer container) {
             var screen = GameObject.FindWithTag("MainScreen")
                 .GetComponent<MainScreenView>();
-            injectionBinder.Bind<MainScreenView>()
-                .ToValue(screen)
-                .ToInject(false)
-                .CrossContext();
+            container.Bind<MainScreenView>().ToInstance(screen);
             var menu = GameObject.FindWithTag("MainScreen.Menu")
                 .GetComponent<MainMenuView>();
-            injectionBinder.Bind<MainMenuView>()
-                .ToValue(menu)
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<MainMenuController>()
-                .To<MainMenuController>()
-                .ToSingleton()
-                .CrossContext();
+            container.Bind<MainMenuView>().ToInstance(menu);
+            container.Bind<MainMenuController>().ToSingle();
         }
 
-        public override void PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<EventBus>();
+        public override void PostBindings(DiContainer container) {
+            var eventBus = container.Resolve<EventBus>();
             var mainMenuController =
-                injectionBinder.GetInstance<MainMenuController>();
+                container.Resolve<MainMenuController>();
             eventBus.On(MainMenuView.Event.ExitBtnClick,
                 mainMenuController.OnExitBtnClick);
             eventBus.On(MainMenuView.Event.StartBtnClick,

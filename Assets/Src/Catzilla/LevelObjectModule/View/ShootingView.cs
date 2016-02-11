@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class ShootingView
-        : strange.extensions.mediation.impl.View, IPoolable {
+        : MonoBehaviour, IPoolable {
         public enum Event {TriggerEnter, Shot}
 
         [Inject]
@@ -67,7 +66,7 @@ namespace Catzilla.LevelObjectModule.View {
         private IEnumerator shootingCoroutine;
         private int projectilePoolId;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             body = GetComponent<Rigidbody>();
             projectilePoolId =

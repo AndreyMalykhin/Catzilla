@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Diagnostics;
 using System.Collections;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 
 namespace Catzilla.CommonModule.Util {
     public static class ViewUtils {

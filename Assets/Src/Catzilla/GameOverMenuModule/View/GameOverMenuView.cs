@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.GameOverMenuModule.View {
-    public class GameOverMenuView: strange.extensions.mediation.impl.View {
+    public class GameOverMenuView: MonoBehaviour {
         public enum Event {
             ExitBtnClick,
             RestartBtnClick,
@@ -48,7 +47,7 @@ namespace Catzilla.GameOverMenuModule.View {
         private int availableResurrectionsCount;
         private string resurrectTextTemplate = "Resurrect ({0})";
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             // DebugUtils.Log("GameOverMenuView.OnConstruct()");
             canvas = GetComponent<Canvas>();

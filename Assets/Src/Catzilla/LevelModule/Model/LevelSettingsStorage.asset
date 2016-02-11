@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff7d20bf6070b4fcfa7c45db0f9fd970, type: 3}
   m_Name: LevelSettingsStorage
   m_EditorClassIdentifier: 
-  baseCompletionScore: 1
+  baseCompletionScore: 2
   completionScoreFactor: 2

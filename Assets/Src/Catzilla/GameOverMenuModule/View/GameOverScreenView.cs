@@ -3,12 +3,11 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using DG.Tweening;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.GameOverMenuModule.View {
-    public class GameOverScreenView: strange.extensions.mediation.impl.View {
+    public class GameOverScreenView: MonoBehaviour {
         public enum Event {Show, Hide}
 
         [Inject]
@@ -22,7 +21,7 @@ namespace Catzilla.GameOverMenuModule.View {
         private Canvas canvas;
         private Image image;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             canvas = GetComponent<Canvas>();
             canvas.enabled = false;

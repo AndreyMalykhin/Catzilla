@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
-    public class ActivityIndicatorView: strange.extensions.mediation.impl.View {
+    public class ActivityIndicatorView: MonoBehaviour {
         private Canvas canvas;
         private Animator animator;
 
-        [PostConstruct]
+        [PostInject]
         public void OnConstruct() {
             canvas = GetComponent<Canvas>();
             animator = GetComponent<Animator>();

@@ -2,8 +2,7 @@
 using System;
 using System.Globalization;
 using System.Collections;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.context.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
 
@@ -30,6 +29,10 @@ namespace Catzilla.PlayerModule.Model {
                         SaveDate = DateTime.Parse(
                             PlayerPrefs.GetString("SaveDate"),
                             null,
+                            DateTimeStyles.RoundtripKind),
+                        LastSeenDate = DateTime.Parse(
+                            PlayerPrefs.GetString("LastSeenDate"),
+                            null,
                             DateTimeStyles.RoundtripKind)
                     };
                 }
@@ -39,7 +42,6 @@ namespace Catzilla.PlayerModule.Model {
         }
 
         public virtual void Save(PlayerState player) {
-            DebugUtils.Log("PlayerStateStorage.Save()");
             Player = player;
             Player.SaveDate = DateTime.UtcNow;
             PlayerPrefs.SetInt("Level", Player.Level);
@@ -47,7 +49,10 @@ namespace Catzilla.PlayerModule.Model {
             PlayerPrefs.SetInt("AvailableResurrectionsCount",
                 Player.AvailableResurrectionsCount);
             PlayerPrefs.SetString("SaveDate", Player.SaveDate.ToString("o"));
+            PlayerPrefs.SetString(
+                "LastSeenDate", Player.LastSeenDate.ToString("o"));
             PlayerPrefs.Save();
+            DebugUtils.Log("PlayerStateStorage.Save(); player={0}", player);
             EventBus.Fire(Event.Save, new Evt(this));
         }
 

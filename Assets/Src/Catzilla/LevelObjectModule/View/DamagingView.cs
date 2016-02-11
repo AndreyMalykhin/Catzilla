@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.Model;
 
 namespace Catzilla.LevelObjectModule.View {
-    public class DamagingView: strange.extensions.mediation.impl.View {
+    public class DamagingView: MonoBehaviour {
         public enum Event {TriggerEnter}
 
         [Inject]

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Text;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.LevelObjectModule.View;

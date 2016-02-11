@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.injector.api;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using Zenject;
 using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelAreaModule.View;
@@ -16,76 +14,40 @@ namespace Catzilla.LevelModule.Config {
         [SerializeField]
         private LevelSettingsStorage levelSettingsStorage;
 
-        public override void InitBindings(IInjectionBinder injectionBinder) {
+        public override void InitBindings(DiContainer container) {
             var levelStartScreen = GameObject.FindWithTag("LevelStartScreen")
                 .GetComponent<LevelStartScreenView>();
-            injectionBinder.Bind<LevelStartScreenView>()
-                .ToValue(levelStartScreen)
-                .ToInject(false)
-                .CrossContext();
+            container.Bind<LevelStartScreenView>().ToInstance(levelStartScreen);
             var levelCompleteScreen =
                 GameObject.FindWithTag("LevelCompleteScreen")
                 .GetComponent<LevelCompleteScreenView>();
-            injectionBinder.Bind<LevelCompleteScreenView>()
-                .ToValue(levelCompleteScreen)
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<LevelSettingsStorage>()
-                .ToValue(levelSettingsStorage)
-                .CrossContext();
-            injectionBinder.Bind<LevelController>()
-                .To<LevelController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<LevelCompleteScreenController>()
-                .To<LevelCompleteScreenController>()
-                .ToSingleton()
-                .CrossContext();
-            injectionBinder.Bind<LevelGenerator>()
-                .To<LevelGenerator>()
-                .ToSingleton()
-                .CrossContext();
+            container.Bind<LevelCompleteScreenView>()
+                .ToInstance(levelCompleteScreen);
+            container.Bind<LevelSettingsStorage>()
+                .ToInstance(levelSettingsStorage);
+            container.Bind<LevelController>().ToSingle();
+            container.Bind<LevelCompleteScreenController>().ToSingle();
+            container.Bind<LevelGenerator>().ToSingle();
             float areaWidth = 16f;
             float areaDepth = 24f;
-            injectionBinder.Bind<float>()
-                .ToValue(areaWidth)
-                .ToName("LevelAreaWidth")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<float>()
-                .ToValue(areaDepth)
-                .ToName("LevelAreaDepth")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<float>()
-                .ToValue(-areaWidth / 2f)
-                .ToName("LevelMinX")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<float>()
-                .ToValue(areaWidth / 2f)
-                .ToName("LevelMaxX")
-                .ToInject(false)
-                .CrossContext();
-            injectionBinder.Bind<string>()
-                .ToValue("Level")
-                .ToName("LevelScene")
-                .ToInject(false)
-                .CrossContext();
+            container.Bind<float>("LevelAreaWidth").ToInstance(areaWidth);
+            container.Bind<float>("LevelAreaDepth").ToInstance(areaDepth);
+            container.Bind<float>("LevelMinX").ToInstance(-areaWidth / 2f);
+            container.Bind<float>("LevelMaxX").ToInstance(areaWidth / 2f);
+            container.Bind<string>("LevelScene").ToInstance("Level");
         }
 
-        public override void PostBindings(IInjectionBinder injectionBinder) {
-            var eventBus = injectionBinder.GetInstance<EventBus>();
+        public override void PostBindings(DiContainer container) {
+            container.Inject(container.Resolve<LevelSettingsStorage>());
+            var eventBus = container.Resolve<EventBus>();
 
             var levelController =
-                injectionBinder.GetInstance<LevelController>();
+                container.Resolve<LevelController>();
             eventBus.On(
                 LevelView.Event.Construct, levelController.OnViewConstruct);
 
             var levelCompleteScreenController =
-                injectionBinder.GetInstance<LevelCompleteScreenController>();
-            eventBus.On(LevelCompleteScreenView.Event.Hide,
-                levelCompleteScreenController.OnHide);
+                container.Resolve<LevelCompleteScreenController>();
             eventBus.On(LevelCompleteScreenView.Event.Show,
                 levelCompleteScreenController.OnShow);
         }
