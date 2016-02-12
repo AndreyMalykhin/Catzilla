@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Zenject;
-using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Model;
@@ -10,18 +9,20 @@ using Catzilla.PlayerModule.Model;
 using Catzilla.GameOverMenuModule.Controller;
 using Catzilla.GameOverMenuModule.View;
 
-namespace Catzilla.GameOverMenuModule.Config {
-    [CreateAssetMenuAttribute]
-    public class GameOverMenuModuleConfig: ModuleConfig {
+namespace Catzilla.GameOverMenuModule.View {
+    public class GameOverMenuModuleView: ModuleView {
+        [SerializeField]
+        private GameOverScreenView screen;
+
+        [SerializeField]
+        private GameOverMenuView menu;
+
+        [SerializeField]
+        private DlgView rewardEarnDlg;
+
         public override void InitBindings(DiContainer container) {
-            var screen = GameObject.FindWithTag("GameOverScreen")
-                .GetComponent<GameOverScreenView>();
             container.Bind<GameOverScreenView>().ToInstance(screen);
-            var menu = GameObject.FindWithTag("GameOverScreen.Menu")
-                .GetComponent<GameOverMenuView>();
             container.Bind<GameOverMenuView>().ToInstance(menu);
-            var rewardEarnDlg = GameObject.FindWithTag(
-                "GameOverScreen.RewardEarnDlg").GetComponent<DlgView>();
             container.Bind<DlgView>("RewardEarnDlg").ToInstance(rewardEarnDlg);
             container.Bind<GameOverMenuController>().ToSingle();
         }

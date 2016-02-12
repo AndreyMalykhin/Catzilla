@@ -1,24 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Zenject;
-using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.Util;
-using Catzilla.AppModule.Config;
+using Catzilla.CommonModule.View;
 
 namespace Catzilla.AppModule.View {
     public class AppView: MonoInstaller {
         public enum Event {Start}
 
         [SerializeField]
-        private ModuleConfig[] moduleConfigs;
+        private ModuleView[] modules;
 
         public override void InstallBindings() {
-            for (int i = 0; i < moduleConfigs.Length; ++i) {
-                moduleConfigs[i].InitBindings(Container);
+            for (int i = 0; i < modules.Length; ++i) {
+                modules[i].InitBindings(Container);
             }
 
-            for (int i = 0; i < moduleConfigs.Length; ++i) {
-                moduleConfigs[i].PostBindings(Container);
+            for (int i = 0; i < modules.Length; ++i) {
+                modules[i].PostBindings(Container);
             }
         }
 

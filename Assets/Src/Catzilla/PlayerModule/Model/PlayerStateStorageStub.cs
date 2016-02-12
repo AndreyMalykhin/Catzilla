@@ -37,6 +37,7 @@ namespace Catzilla.PlayerModule.Model {
 
         public override void Save(PlayerState player) {
             Player = player;
+            Player.SaveDate = DateTime.UtcNow;
             EventBus.Fire(Event.Save, new Evt(this));
         }
 

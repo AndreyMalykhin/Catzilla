@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 using Catzilla.LevelObjectModule.View;
 
@@ -8,6 +9,7 @@ namespace Catzilla.LevelObjectModule.Model {
         [SerializeField]
         private ObjectTypeInfo[] items;
 
+        [NonSerialized]
         private readonly IDictionary<LevelObjectType, ObjectTypeInfo> itemsMap =
             new Dictionary<LevelObjectType, ObjectTypeInfo>();
 

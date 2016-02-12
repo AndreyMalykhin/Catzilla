@@ -4,22 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - MainScreen.Menu
   - Player.Mesh
-  - GameOverScreen.Menu
-  - GameOverScreen
-  - MainScreen
-  - LevelStartScreen
-  - LevelCompleteScreen
-  - UI
   - Projectile
-  - PoolStorage
   - Player.FieldOfView
   - Level
-  - CoroutineManager
-  - ActivityIndicator
-  - GameOverScreen.RewardEarnDlg
-  - LeaderboardsScreen
   layers:
   - Default
   - TransparentFX

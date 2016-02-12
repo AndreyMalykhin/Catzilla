@@ -2,7 +2,7 @@
 using System.Collections;
 using Zenject;
 using SmartLocalization;
-using Catzilla.CommonModule.Config;
+using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.View;
@@ -10,9 +10,8 @@ using Catzilla.PlayerModule.Model;
 using Catzilla.PlayerModule.View;
 using Catzilla.PlayerModule.Controller;
 
-namespace Catzilla.PlayerModule.Config {
-    [CreateAssetMenuAttribute]
-    public class PlayerModuleConfig: ModuleConfig {
+namespace Catzilla.PlayerModule.View {
+    public class PlayerModuleView: ModuleView {
         [SerializeField]
         private PlayerStateStorage playerStateStorage;
 

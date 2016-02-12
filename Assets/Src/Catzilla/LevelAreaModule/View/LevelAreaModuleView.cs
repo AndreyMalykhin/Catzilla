@@ -1,24 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Zenject;
-using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 using Catzilla.LevelModule.View;
 using Catzilla.LevelAreaModule.Model;
 using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelAreaModule.Controller;
 
-namespace Catzilla.LevelAreaModule.Config {
-    [CreateAssetMenuAttribute]
-    public class LevelAreaModuleConfig: ModuleConfig {
+namespace Catzilla.LevelAreaModule.View {
+    public class LevelAreaModuleView: ModuleView {
         [SerializeField]
         private EnvTypeInfoStorage envTypeInfoStorage;
+
+        [SerializeField]
+        private int envLayer;
 
         public override void InitBindings(DiContainer container) {
             container.Bind<LevelAreaGenerator>().ToSingle();
             container.Bind<LevelAreaController>().ToSingle();
             container.Bind<EnvTypeInfoStorage>().ToInstance(envTypeInfoStorage);
-            container.Bind<int>("EnvLayer").ToInstance(1 << 10);
+            container.Bind<int>("EnvLayer").ToInstance(1 << envLayer);
         }
 
         public override void PostBindings(DiContainer container) {

@@ -23,12 +23,25 @@ namespace Catzilla.CommonModule.Model {
         [Inject]
         public EventBus EventBus {get; set;}
 
-        public int PendingRequestsCount {get; protected set;}
-        public bool IsConnected {get; protected set;}
-        public bool IsDisposed {get; protected set;}
-        public bool IsLoggedIn {get; protected set;}
+        public int PendingRequestsCount {get {return pendingRequestsCount;}}
+        public bool IsConnected {get {return isConnected;}}
+        public bool IsDisposed {get {return isDisposed;}}
+        public bool IsLoggedIn {get {return isLoggedIn;}}
 
-        private const string savedGameFilename = "last";
+        [NonSerialized]
+        protected const string savedGameFilename = "last";
+
+        [NonSerialized]
+        protected int pendingRequestsCount;
+
+        [NonSerialized]
+        protected bool isConnected;
+
+        [NonSerialized]
+        protected bool isDisposed;
+
+        [NonSerialized]
+        protected bool isLoggedIn;
 
         public virtual void Connect(Action onSuccess, Action onFail = null) {
             // DebugUtils.Log("Server.Connect()");
@@ -39,14 +52,14 @@ namespace Catzilla.CommonModule.Model {
             PlayGamesPlatform.InitializeInstance(config);
             PlayGamesPlatform.DebugLogEnabled = Debug.isDebugBuild;
             PlayGamesPlatform.Activate();
-            IsConnected = true;
-            IsLoggedIn = Social.localUser.authenticated;
+            isConnected = true;
+            isLoggedIn = Social.localUser.authenticated;
             onSuccess();
         }
 
         public virtual void Login(Action onSuccess, Action onFail = null) {
             // DebugUtils.Log("Server.Login()");
-            if (IsLoggedIn) {
+            if (isLoggedIn) {
                 onSuccess();
                 return;
             }
@@ -60,14 +73,14 @@ namespace Catzilla.CommonModule.Model {
                     return;
                 }
 
-                IsLoggedIn = true;
+                isLoggedIn = true;
                 onSuccess();
             });
         }
 
         public virtual void SavePlayer(PlayerState player,
             Action onSuccess = null, Action onFail = null) {
-            DebugUtils.Assert(IsLoggedIn);
+            DebugUtils.Assert(isLoggedIn);
             OnRequest();
             OpenSavedGame((SavedGameRequestStatus requestStatus, ISavedGameMetadata game) => {
                 if (requestStatus != SavedGameRequestStatus.Success) {
@@ -111,7 +124,7 @@ namespace Catzilla.CommonModule.Model {
 
         public virtual void GetPlayer(
             Action<PlayerState> onSuccess, Action onFail = null) {
-            DebugUtils.Assert(IsLoggedIn);
+            DebugUtils.Assert(isLoggedIn);
             OnRequest();
             OpenSavedGame((SavedGameRequestStatus requestStatus, ISavedGameMetadata game) => {
                 if (requestStatus != SavedGameRequestStatus.Success) {
@@ -148,22 +161,22 @@ namespace Catzilla.CommonModule.Model {
 
         public virtual void Dispose() {
             // DebugUtils.Log("Server.Dispose()");
-            DebugUtils.Assert(!IsDisposed);
-            IsConnected = false;
-            IsLoggedIn = false;
-            IsDisposed = true;
+            DebugUtils.Assert(!isDisposed);
+            isConnected = false;
+            isLoggedIn = false;
+            isDisposed = true;
             EventBus.Fire(Event.Dispose, new Evt(this));
         }
 
         private void OnRequest() {
-            ++PendingRequestsCount;
+            ++pendingRequestsCount;
             // DebugUtils.Log("Server.OnRequest(); pendingRequestsCount={0}",
             //     PendingRequestsCount);
             EventBus.Fire(Event.Request, new Evt(this));
         }
 
         private void OnResponse() {
-            --PendingRequestsCount;
+            --pendingRequestsCount;
             // DebugUtils.Log("Server.OnResponse(); pendingRequestsCount={0}",
             //     PendingRequestsCount);
             EventBus.Fire(Event.Response, new Evt(this));

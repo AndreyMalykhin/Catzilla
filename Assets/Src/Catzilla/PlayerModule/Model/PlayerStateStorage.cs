@@ -14,6 +14,7 @@ namespace Catzilla.PlayerModule.Model {
         [Inject]
         public EventBus EventBus {get; set;}
 
+        [NonSerialized]
         protected PlayerState Player;
 
         public virtual PlayerState Get() {

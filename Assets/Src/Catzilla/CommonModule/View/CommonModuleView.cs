@@ -7,9 +7,8 @@ using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Controller;
 
-namespace Catzilla.CommonModule.Config {
-    [CreateAssetMenuAttribute]
-    public class CommonModuleConfig: ModuleConfig {
+namespace Catzilla.CommonModule.View {
+    public class CommonModuleView: ModuleView {
         [SerializeField]
         private Server server;
 
@@ -24,6 +23,21 @@ namespace Catzilla.CommonModule.Config {
 
         [SerializeField]
         private bool isServerStubbed = true;
+
+        [SerializeField]
+        private UIView ui;
+
+        [SerializeField]
+        private PoolStorageView poolStorage;
+
+        [SerializeField]
+        private CoroutineManagerView coroutineManager;
+
+        [SerializeField]
+        private ActivityIndicatorView activityIndicator;
+
+        [SerializeField]
+        private Camera mainCamera;
 
         public override void InitBindings(DiContainer container) {
             Server finalServer = server;
@@ -43,19 +57,12 @@ namespace Catzilla.CommonModule.Config {
             container.Bind<WorldSpacePopupController>().ToSingle();
             container.Bind<BtnController>().ToSingle();
             container.Bind<LeaderboardManager>().ToSingle();
-            var ui = GameObject.FindWithTag("UI").GetComponent<UIView>();
             container.Bind<UIView>().ToInstance(ui);
-            var poolStorage = GameObject.FindWithTag("PoolStorage")
-                .GetComponent<PoolStorageView>();
             container.Bind<PoolStorageView>().ToInstance(poolStorage);
-            var coroutineManager = GameObject.FindWithTag("CoroutineManager")
-                .GetComponent<CoroutineManagerView>();
             container.Bind<CoroutineManagerView>().ToInstance(coroutineManager);
-            var activityIndicator = GameObject.FindWithTag("ActivityIndicator")
-                .GetComponent<ActivityIndicatorView>();
             container.Bind<ActivityIndicatorView>()
                 .ToInstance(activityIndicator);
-            container.Bind<Camera>("MainCamera").ToInstance(Camera.main);
+            container.Bind<Camera>("MainCamera").ToInstance(mainCamera);
             container.Bind<AudioManager>().ToInstance(audioManager);
             container.Bind<PopupManager>().ToInstance(popupManager);
             container.Bind<int>("EffectsHighPrioAudioChannel").ToInstance(0);

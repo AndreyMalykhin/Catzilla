@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Zenject;
-using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.MainMenuModule.View;
@@ -11,9 +10,8 @@ using Catzilla.LevelModule.View;
 using Catzilla.AppModule.Controller;
 using Catzilla.AppModule.View;
 
-namespace Catzilla.AppModule.Config {
-    [CreateAssetMenuAttribute]
-    public class AppModuleConfig: ModuleConfig {
+namespace Catzilla.AppModule.View {
+    public class AppModuleView: ModuleView {
         public override void InitBindings(DiContainer container) {
             container.Bind<AppController>().ToSingle();
         }

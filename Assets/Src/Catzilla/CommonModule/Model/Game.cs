@@ -12,6 +12,9 @@ namespace Catzilla.CommonModule.Model {
         [Inject("LevelScene")]
         public string LevelScene {get; set;}
 
+        [Inject("LevelTag")]
+        public string LevelTag {get; set;}
+
         [Inject]
         public EventBus EventBus {get; set;}
 
@@ -48,7 +51,7 @@ namespace Catzilla.CommonModule.Model {
         private IEnumerator DoLoadLevel() {
             SceneManager.LoadScene(LevelScene);
             yield return null;
-            Container.InjectGameObject(GameObject.FindWithTag("Level"));
+            Container.InjectGameObject(GameObject.FindWithTag(LevelTag));
             EventBus.Fire(Event.LevelLoad, new Evt(this));
         }
     }

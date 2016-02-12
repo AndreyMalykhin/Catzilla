@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Zenject;
-using Catzilla.CommonModule.Config;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.LevelModule.View;
@@ -9,14 +8,22 @@ using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelObjectModule.Controller;
 
-namespace Catzilla.LevelObjectModule.Config {
-    [CreateAssetMenuAttribute]
-    public class LevelObjectModuleConfig: ModuleConfig {
+namespace Catzilla.LevelObjectModule.View {
+    public class LevelObjectModuleView: ModuleView {
         [SerializeField]
         private ObjectTypeInfoStorage objectTypeInfoStorage;
 
         [SerializeField]
         private WorldSpacePopupView scorePopupProto;
+
+        [SerializeField]
+        private string playerMeshTag;
+
+        [SerializeField]
+        private string playerFieldOfViewTag;
+
+        [SerializeField]
+        private string projectileTag;
 
         public override void InitBindings(DiContainer container) {
             container.Bind<ObjectTypeInfoStorage>()
@@ -32,10 +39,10 @@ namespace Catzilla.LevelObjectModule.Config {
                 .ToInstance(scorePopupProto);
             container.Bind<LevelObjectType>("PlayerObjectType")
                 .ToInstance(LevelObjectType.Player);
-            container.Bind<string>("PlayerMeshTag").ToInstance("Player.Mesh");
+            container.Bind<string>("PlayerMeshTag").ToInstance(playerMeshTag);
             container.Bind<string>("PlayerFieldOfViewTag")
-                .ToInstance("Player.FieldOfView");
-            container.Bind<string>("ProjectileTag").ToInstance("Projectile");
+                .ToInstance(playerFieldOfViewTag);
+            container.Bind<string>("ProjectileTag").ToInstance(projectileTag);
         }
 
         public override void PostBindings(DiContainer container) {

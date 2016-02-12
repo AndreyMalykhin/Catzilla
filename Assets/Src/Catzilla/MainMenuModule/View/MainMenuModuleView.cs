@@ -1,21 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Zenject;
-using Catzilla.CommonModule.Config;
+using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
 using Catzilla.MainMenuModule.Controller;
 using Catzilla.MainMenuModule.View;
 
-namespace Catzilla.MainMenuModule.Config {
-    [CreateAssetMenuAttribute]
-    public class MainMenuModuleConfig: ModuleConfig {
+namespace Catzilla.MainMenuModule.View {
+    public class MainMenuModuleView: ModuleView {
+        [SerializeField]
+        private MainScreenView screen;
+
+        [SerializeField]
+        private MainMenuView menu;
+
         public override void InitBindings(DiContainer container) {
-            var screen = GameObject.FindWithTag("MainScreen")
-                .GetComponent<MainScreenView>();
             container.Bind<MainScreenView>().ToInstance(screen);
-            var menu = GameObject.FindWithTag("MainScreen.Menu")
-                .GetComponent<MainMenuView>();
             container.Bind<MainMenuView>().ToInstance(menu);
             container.Bind<MainMenuController>().ToSingle();
         }

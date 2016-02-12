@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelAreaModule.View;
@@ -9,6 +10,7 @@ namespace Catzilla.LevelAreaModule.Model {
         [SerializeField]
         private EnvTypeInfo[] items;
 
+        [NonSerialized]
         private readonly IDictionary<EnvType, EnvTypeInfo> itemsMap =
             new Dictionary<EnvType, EnvTypeInfo>();
 
