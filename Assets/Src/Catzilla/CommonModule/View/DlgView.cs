@@ -4,6 +4,7 @@ using System.Collections;
 
 namespace Catzilla.CommonModule.View {
     public class DlgView: MonoBehaviour {
+        public Text Msg;
         public Button OkBtn;
 
         private Canvas canvas;

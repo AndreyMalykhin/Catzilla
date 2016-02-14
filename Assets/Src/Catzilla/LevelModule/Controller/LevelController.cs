@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using Zenject;
 using Catzilla.CommonModule.Util;
@@ -33,8 +34,8 @@ namespace Catzilla.LevelModule.Controller {
         public void OnViewConstruct(Evt evt) {
             level = (LevelView) evt.Source;
             PlayerState playerState = PlayerStateStorage.Get();
-            var msg = string.Format(Translator.Translate(
-                "LevelStartScreen.Level"), playerState.Level + 1);
+            var msg = Translator.Translate(
+                "LevelStartScreen.Level", playerState.Level + 1);
             LevelStartScreen.Msg.text = msg;
             LevelStartScreen.Show();
             Game.Pause();
@@ -48,6 +49,7 @@ namespace Catzilla.LevelModule.Controller {
 
         private void OnStartScreenHide() {
             Game.Resume();
+            DebugUtils.Log("start {0}", DateTime.Now);
         }
     }
 }

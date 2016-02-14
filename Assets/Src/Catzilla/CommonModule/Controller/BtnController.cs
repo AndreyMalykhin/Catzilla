@@ -9,15 +9,15 @@ namespace Catzilla.CommonModule.Controller {
         [Inject]
         public AudioManager AudioManager {get; set;}
 
-        [Inject("UIAudioChannel")]
-        public int UIAudioChannel {get; set;}
+        [Inject("UIHighPrioAudioChannel")]
+        public int UIHighPrioAudioChannel {get; set;}
 
         public void OnClick(Evt evt) {
             var btn = (BtnView) evt.Source;
 
             if (btn.ClickSound != null) {
                 AudioManager.Play(
-                    btn.ClickSound, btn.AudioSource, UIAudioChannel);
+                    btn.ClickSound, btn.AudioSource, UIHighPrioAudioChannel);
             }
         }
     }

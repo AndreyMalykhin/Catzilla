@@ -21,5 +21,9 @@ namespace Catzilla.CommonModule.Util {
         public string Translate(string key) {
             return languageManager.GetTextValue(key);
         }
+
+        public string Translate(string key, params object[] args) {
+            return string.Format(languageManager.GetTextValue(key), args);
+        }
     }
 }

@@ -5,8 +5,7 @@ using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
-    public class ShootingView
-        : MonoBehaviour, IPoolable {
+    public class ShootingView: MonoBehaviour, IPoolable {
         public enum Event {TriggerEnter, Shot}
 
         [Inject]
@@ -54,9 +53,11 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private Transform projectileSource;
 
+        [Tooltip("In seconds")]
         [SerializeField]
         private float period = 5f;
 
+        [Tooltip("In seconds")]
         [SerializeField]
         private float maxDelay = 2.5f;
 

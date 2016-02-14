@@ -6,6 +6,7 @@ using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.LevelObjectModule.View;
+using Catzilla.LevelModule.Model;
 using Catzilla.PlayerModule.Model;
 using Catzilla.GameOverMenuModule.View;
 
@@ -22,6 +23,9 @@ namespace Catzilla.GameOverMenuModule.Controller {
 
         [Inject]
         public PlayerStateStorage PlayerStateStorage {get; set;}
+
+        [Inject]
+        public LevelSettingsStorage LevelSettingsStorage {get; set;}
 
         [Inject]
         public Game Game {get; set;}
@@ -102,16 +106,19 @@ namespace Catzilla.GameOverMenuModule.Controller {
         }
 
         private void OnAdView() {
-            AnalyticsUtils.AddCategorizedEventParam(
-                "Level", PlayerStateStorage.Get().Level);
+            PlayerState playerState = PlayerStateStorage.Get();
+            AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
             AnalyticsUtils.LogEvent("Ad.View");
-            RewardPlayer();
+            RewardPlayer(playerState);
         }
 
-        private void RewardPlayer() {
-            PlayerState playerState = PlayerStateStorage.Get();
-            ++playerState.AvailableResurrectionsCount;
+        private void RewardPlayer(PlayerState playerState) {
+            int addResurrectionsCount =
+                LevelSettingsStorage.Get(playerState.Level).ResurrectionReward;
+            playerState.AvailableResurrectionsCount += addResurrectionsCount;
             PlayerStateStorage.Save(playerState);
+            RewardEarnDlg.Msg.text =
+                string.Format(RewardEarnDlg.Msg.text, addResurrectionsCount);
             RewardEarnDlg.Show();
         }
     }

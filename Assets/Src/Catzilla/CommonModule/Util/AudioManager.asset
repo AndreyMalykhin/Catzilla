@@ -16,7 +16,11 @@ MonoBehaviour:
     SimultaneousSoundsCount: 1
   - Name: EffectsLowPrio
     SimultaneousSoundsCount: 1
-  - Name: UI
+  - Name: UIHighPrio
     SimultaneousSoundsCount: 1
-  - Name: Player
+  - Name: UILowPrio
+    SimultaneousSoundsCount: 1
+  - Name: PlayerHighPrio
+    SimultaneousSoundsCount: 1
+  - Name: PlayerLowPrio
     SimultaneousSoundsCount: 1

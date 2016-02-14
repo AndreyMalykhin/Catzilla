@@ -67,8 +67,10 @@ namespace Catzilla.CommonModule.View {
             container.Bind<PopupManager>().ToInstance(popupManager);
             container.Bind<int>("EffectsHighPrioAudioChannel").ToInstance(0);
             container.Bind<int>("EffectsLowPrioAudioChannel").ToInstance(1);
-            container.Bind<int>("UIAudioChannel").ToInstance(2);
-            container.Bind<int>("PlayerAudioChannel").ToInstance(3);
+            container.Bind<int>("UIHighPrioAudioChannel").ToInstance(2);
+            container.Bind<int>("UILowPrioAudioChannel").ToInstance(3);
+            container.Bind<int>("PlayerHighPrioAudioChannel").ToInstance(4);
+            container.Bind<int>("PlayerLowPrioAudioChannel").ToInstance(5);
         }
 
         public override void PostBindings(DiContainer container) {

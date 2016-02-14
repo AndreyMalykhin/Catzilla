@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using Zenject;
 using Catzilla.CommonModule.Util;
@@ -39,8 +40,11 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("ProjectileTag")]
         public string ProjectileTag {get; set;}
 
-        [Inject("PlayerAudioChannel")]
-        public int PlayerAudioChannel {get; set;}
+        [Inject("PlayerHighPrioAudioChannel")]
+        public int PlayerHighPrioAudioChannel {get; set;}
+
+        [Inject("PlayerLowPrioAudioChannel")]
+        public int PlayerLowPrioAudioChannel {get; set;}
 
         public void OnDeath(Evt evt) {
             var player = (PlayerView) evt.Source;
@@ -58,8 +62,8 @@ namespace Catzilla.LevelObjectModule.Controller {
             GameOverScreen.Show(OnGameOverScreenShow);
 
             if (player.DeathSound != null) {
-                AudioManager.Play(
-                    player.DeathSound, player.AudioSource, PlayerAudioChannel);
+                AudioManager.Play(player.DeathSound, player.HighPrioAudioSource,
+                    PlayerHighPrioAudioChannel);
             }
         }
 
@@ -67,9 +71,11 @@ namespace Catzilla.LevelObjectModule.Controller {
             var player = (PlayerView) evt.Source;
 
             if (player.FootstepSound != null) {
-                var pitch = Random.Range(0.8f, 1.2f);
-                AudioManager.Play(player.FootstepSound, player.AudioSource,
-                    PlayerAudioChannel, pitch);
+                var pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+                AudioManager.Play(
+                    player.FootstepSound,
+                    player.LowPrioAudioSource,
+                    PlayerLowPrioAudioChannel, pitch);
             }
         }
 
@@ -106,6 +112,7 @@ namespace Catzilla.LevelObjectModule.Controller {
         }
 
         private void CompleteLevel(PlayerView player) {
+            DebugUtils.Log("end {0}", DateTime.Now);
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;
             PlayerState playerState = PlayerStateStorage.Get();

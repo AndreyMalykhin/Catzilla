@@ -10,15 +10,15 @@ namespace Catzilla.LevelModule.Controller {
         [Inject]
         public AudioManager AudioManager {get; set;}
 
-        [Inject("UIAudioChannel")]
-        public int UIAudioChannel {get; set;}
+        [Inject("UIHighPrioAudioChannel")]
+        public int UIHighPrioAudioChannel {get; set;}
 
         public void OnShow(Evt evt) {
             var screen = (LevelCompleteScreenView) evt.Source;
 
             if (screen.ShowSound != null) {
-                AudioManager.Play(
-                    screen.ShowSound, screen.AudioSource, UIAudioChannel);
+                AudioManager.Play(screen.ShowSound, screen.AudioSource,
+                    UIHighPrioAudioChannel);
             }
         }
     }

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using Catzilla.LevelObjectModule.View;
 
 namespace Catzilla.LevelObjectModule.Model {
-    [System.Serializable]
+    [Serializable]
     public class ObjectTypeInfo {
         public LevelObjectType Type;
         public int Width;

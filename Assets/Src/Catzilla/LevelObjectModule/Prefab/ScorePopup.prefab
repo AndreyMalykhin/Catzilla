@@ -146,7 +146,7 @@ MonoBehaviour:
   ShowSound: {fileID: 8300000, guid: b56a3d32c633c480fbfe6b1232b109b0, type: 3}
   Msg: {fileID: 11447828}
   Lifetime: 2
-  Speed: 10
+  Speed: 8
   Offset: 0
 --- !u!114 &11466482
 MonoBehaviour:
@@ -277,7 +277,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: Speed
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalScale.x

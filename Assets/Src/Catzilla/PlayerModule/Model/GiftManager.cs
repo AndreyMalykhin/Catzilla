@@ -8,6 +8,7 @@ namespace Catzilla.PlayerModule.Model {
         [SerializeField]
         private int addResurrectionsCount = 1;
 
+        [Tooltip("In hours")]
         [SerializeField]
         private int playerAbsencePeriod = 12;
 

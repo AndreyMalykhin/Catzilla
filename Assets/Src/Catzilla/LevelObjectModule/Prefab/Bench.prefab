@@ -400,7 +400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 1
+  Score: 30
   Collider: {fileID: 6547676}
 --- !u!1001 &100100000
 Prefab:
@@ -491,6 +491,10 @@ Prefab:
       propertyPath: Collider
       value: 
       objectReference: {fileID: 6547676}
+    - target: {fileID: 0}
+      propertyPath: Score
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152140}

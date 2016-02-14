@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelObjectModule.Model;
 
 namespace Catzilla.LevelAreaModule.Model {
-    [System.Serializable]
+    [Serializable]
     public class EnvTypeInfo {
         public EnvType Type {get {return type;}}
         public LevelAreaView ViewProto {get {return viewProto;}}

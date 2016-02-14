@@ -37,7 +37,8 @@ namespace Catzilla.LevelObjectModule.View {
         public Animator Animator;
         public AudioClip DeathSound;
         public AudioClip FootstepSound;
-        public AudioSource AudioSource;
+        public AudioSource LowPrioAudioSource;
+        public AudioSource HighPrioAudioSource;
         public bool IsHealthFreezed;
         public bool IsScoreFreezed;
         public float MinSmashForce = 75f;
@@ -105,7 +106,6 @@ namespace Catzilla.LevelObjectModule.View {
         public void OnConstruct() {
             // DebugUtils.Log("PlayerView.OnConstruct()");
             body = GetComponent<Rigidbody>();
-            targetX = body.position.x;
             float halfWidth = Collider.bounds.extents.x;
             minX = LevelMinX + halfWidth;
             maxX = LevelMaxX - halfWidth;
@@ -164,6 +164,10 @@ namespace Catzilla.LevelObjectModule.View {
             }
 
             Move();
+        }
+
+        private void Start() {
+            targetX = body.position.x;
         }
 
         private void SetTargetX(Vector3 mousePosition) {

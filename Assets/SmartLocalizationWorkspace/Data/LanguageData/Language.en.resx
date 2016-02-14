@@ -156,15 +156,6 @@
 		<value>Score: {0} / {1}</value>
 	</data>
 	<data name="RewardEarnDlg.Msg" xml:space="preserve">
-		<value>+1 resurrection</value>
-	</data>
-	<data name="ScoreLeaderboard.Name" xml:space="preserve">
-		<value>Name</value>
-	</data>
-	<data name="ScoreLeaderboard.Rank" xml:space="preserve">
-		<value>Rank</value>
-	</data>
-	<data name="ScoreLeaderboard.Score" xml:space="preserve">
-		<value>Score</value>
+		<value>+{0} resurrection</value>
 	</data>
 </root>

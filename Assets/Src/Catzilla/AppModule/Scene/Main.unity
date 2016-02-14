@@ -2023,6 +2023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9124399bbc9cf451c91418416362892e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Msg: {fileID: 364828805}
   OkBtn: {fileID: 1474596862}
 --- !u!114 &1060540865
 MonoBehaviour:

@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 1
+  Score: 30
   Collider: {fileID: 6559614}
 --- !u!1001 &100100000
 Prefab:
@@ -634,7 +634,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: Score
-      value: 1
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Layer

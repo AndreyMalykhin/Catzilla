@@ -156,15 +156,6 @@
 		<value>Очки: {0} / {1}</value>
 	</data>
 	<data name="RewardEarnDlg.Msg" xml:space="preserve">
-		<value>+1 воскрешение</value>
-	</data>
-	<data name="ScoreLeaderboard.Name" xml:space="preserve">
-		<value>Имя</value>
-	</data>
-	<data name="ScoreLeaderboard.Rank" xml:space="preserve">
-		<value>Ранг</value>
-	</data>
-	<data name="ScoreLeaderboard.Score" xml:space="preserve">
-		<value>Очки</value>
+		<value>+{0} воскрешение</value>
 	</data>
 </root>

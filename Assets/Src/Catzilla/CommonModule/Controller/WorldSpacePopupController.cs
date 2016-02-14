@@ -4,8 +4,8 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.CommonModule.Controller {
     public class WorldSpacePopupController {
-        [Inject("UIAudioChannel")]
-        public int UIAudioChannel {get; set;}
+        [Inject("UILowPrioAudioChannel")]
+        public int UILowPrioAudioChannel {get; set;}
 
         [Inject]
         public AudioManager AudioManager {get; set;}
@@ -15,7 +15,7 @@ namespace Catzilla.CommonModule.Controller {
 
             if (popup.ShowSound != null) {
                 AudioManager.Play(popup.ShowSound, popup.AudioSource,
-                    UIAudioChannel);
+                    UILowPrioAudioChannel);
             }
         }
     }
