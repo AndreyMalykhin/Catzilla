@@ -48,8 +48,9 @@ namespace Catzilla.LevelModule.Controller {
         }
 
         private void OnStartScreenHide() {
+            DebugUtils.Log(
+                "LevelController.OnStartScreenHide(); {0}", DateTime.Now);
             Game.Resume();
-            DebugUtils.Log("start {0}", DateTime.Now);
         }
     }
 }

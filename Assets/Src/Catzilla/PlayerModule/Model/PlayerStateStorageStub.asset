@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 0
   scoreRecord: 0
-  availableResurrectionsCount: 10
+  availableResurrectionsCount: 1

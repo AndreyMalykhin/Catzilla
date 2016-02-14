@@ -648,7 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 30
+  Score: 40
   Collider: {fileID: 6546074}
 --- !u!114 &11495818
 MonoBehaviour:
@@ -794,7 +794,7 @@ Prefab:
       objectReference: {fileID: 6546074}
     - target: {fileID: 0}
       propertyPath: Score
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxDelay

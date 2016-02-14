@@ -112,7 +112,8 @@ namespace Catzilla.LevelObjectModule.Controller {
         }
 
         private void CompleteLevel(PlayerView player) {
-            DebugUtils.Log("end {0}", DateTime.Now);
+            DebugUtils.Log(
+                "PlayerController.CompleteLevel(); {0}", DateTime.Now);
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;
             PlayerState playerState = PlayerStateStorage.Get();

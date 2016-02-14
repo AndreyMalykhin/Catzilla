@@ -13,7 +13,6 @@ namespace Catzilla.PlayerModule.View {
             bool isWorldPositionStays = false;
             var transform = (RectTransform) this.transform;
             transform.SetParent(UI.transform, isWorldPositionStays);
-            transform.SetAsFirstSibling();
             transform.anchorMax = new Vector2(1f, 1f);
             transform.offsetMax = new Vector2(0f, 0f);
         }

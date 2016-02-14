@@ -61,7 +61,12 @@ namespace Catzilla.LevelModule.Model {
         private ScoreableView[] scoreableProtos;
 
         [Inject("LevelAreaDepth")]
+        [NonSerialized]
         private float areaDepth;
+
+        [Inject("LevelAreaWidth")]
+        [NonSerialized]
+        private float areaWidth;
 
         [NonSerialized]
         private readonly IDictionary<int, LevelSettings> items =
@@ -99,8 +104,16 @@ namespace Catzilla.LevelModule.Model {
                 areaMinScoreableObjects + levelIndex *
                     areaScoreableObjectsLevelFactor,
                 areaMaxScoreableObjects);
+            float objectReachabilityPlayerFrontSpeedFactor =
+                1f - playerFrontSpeed / areaDepth;
+            float objectReachabilityPlayerSideSpeedFactor =
+                Mathf.Log(playerSideSpeed) / Mathf.Log(areaWidth);
+            float objectReachabilityDangerFactor = 1 - Mathf.Pow(
+                areaDangerousObjects / (areaMaxDangerousObjects + 1), 2f);
             float objectReachability =
-                1f / (Mathf.Log(areaDangerousObjects, 10) + 1f);
+                (objectReachabilityPlayerFrontSpeedFactor +
+                objectReachabilityPlayerSideSpeedFactor +
+                objectReachabilityDangerFactor) / 3f;
             float areaAvgScore = objectReachability *
                 areaScoreableObjects * objectAvgScore;
             float avgScorePerSec = areaAvgScore / areaPassTime;

@@ -11,7 +11,15 @@ using Catzilla.LevelModule.View;
 
 namespace Catzilla.LevelModule.Model {
     public class LevelGenerator {
-        private enum State {Start, TrackMiddle, HoodMiddle, ParkMiddle}
+        private enum State {
+            Start,
+            TrackMiddle,
+            TrackEnd,
+            HoodMiddle,
+            HoodEnd,
+            ParkMiddle,
+            ParkEnd
+        }
 
         private struct StateTransition {
             public readonly EnvType EnvType;
@@ -44,15 +52,27 @@ namespace Catzilla.LevelModule.Model {
             };
             states[State.TrackMiddle] = new StateTransition[] {
                 new StateTransition(EnvType.TrackMiddle, State.TrackMiddle),
-                new StateTransition(EnvType.TrackEnd, State.Start)
+                new StateTransition(EnvType.TrackEnd, State.TrackEnd)
+            };
+            states[State.TrackEnd] = new StateTransition[] {
+                new StateTransition(EnvType.HoodStart, State.HoodMiddle),
+                new StateTransition(EnvType.ParkStart, State.ParkMiddle)
             };
             states[State.HoodMiddle] = new StateTransition[] {
                 new StateTransition(EnvType.HoodMiddle, State.HoodMiddle),
-                new StateTransition(EnvType.HoodEnd, State.Start)
+                new StateTransition(EnvType.HoodEnd, State.HoodEnd)
+            };
+            states[State.HoodEnd] = new StateTransition[] {
+                new StateTransition(EnvType.TrackStart, State.TrackMiddle),
+                new StateTransition(EnvType.ParkStart, State.ParkMiddle)
             };
             states[State.ParkMiddle] = new StateTransition[] {
                 new StateTransition(EnvType.ParkMiddle, State.ParkMiddle),
-                new StateTransition(EnvType.ParkEnd, State.Start)
+                new StateTransition(EnvType.ParkEnd, State.ParkEnd)
+            };
+            states[State.ParkEnd] = new StateTransition[] {
+                new StateTransition(EnvType.TrackStart, State.TrackMiddle),
+                new StateTransition(EnvType.HoodStart, State.HoodMiddle)
             };
         }
 

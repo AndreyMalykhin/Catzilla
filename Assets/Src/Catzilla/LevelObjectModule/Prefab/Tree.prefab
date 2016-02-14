@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 30
+  Score: 20
   Collider: {fileID: 6550194}
 --- !u!114 &11497770
 MonoBehaviour:
@@ -363,7 +363,7 @@ Prefab:
       objectReference: {fileID: 6550194}
     - target: {fileID: 0}
       propertyPath: Score
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

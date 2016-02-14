@@ -15,16 +15,16 @@ MonoBehaviour:
   levelDurationFactor: 10
   areaMinScoreableObjects: 4
   areaMaxScoreableObjects: 16
-  areaScoreableObjectsLevelFactor: 1
-  areaMinDangerousObjects: 2
+  areaScoreableObjectsLevelFactor: 2
+  areaMinDangerousObjects: 4
   areaMaxDangerousObjects: 8
-  areaDangerousObjectsLevelFactor: 1
+  areaDangerousObjectsLevelFactor: 0.5
   playerMinFrontSpeed: 4
   playerMaxFrontSpeed: 8
-  playerFrontSpeedLevelFactor: 0.2
-  playerMinSideSpeed: 4
-  playerMaxSideSpeed: 8
-  playerSideSpeedLevelFactor: 0.2
+  playerFrontSpeedLevelFactor: 0.5
+  playerMinSideSpeed: 2
+  playerMaxSideSpeed: 2
+  playerSideSpeedLevelFactor: 0
   resurrectionMinReward: 1
   resurrectionRewardLevelFactor: 0.2
   scoreableProtos:
