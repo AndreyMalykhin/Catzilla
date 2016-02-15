@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Diagnostics;
 using Zenject;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
@@ -38,6 +39,9 @@ namespace Catzilla.GameOverMenuModule.Controller {
 
         [Inject]
         public LeaderboardManager LeaderboardManager {get; set;}
+
+        [Inject("PlayStopwatch")]
+        public Stopwatch PlayStopwatch {get; set;}
 
         private PlayerView player;
 
@@ -94,6 +98,8 @@ namespace Catzilla.GameOverMenuModule.Controller {
             PlayerState playerState = PlayerStateStorage.Get();
             --playerState.AvailableResurrectionsCount;
             PlayerStateStorage.Save(playerState);
+            PlayStopwatch.Reset();
+            PlayStopwatch.Start();
             Game.Resume();
             GameOverScreen.Hide();
         }

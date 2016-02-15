@@ -6,16 +6,15 @@ namespace Catzilla.CommonModule.Util {
         private readonly LanguageManager languageManager =
             LanguageManager.Instance;
 
-        // TODO
         public Translator() {
             GameObject.DontDestroyOnLoad(languageManager);
-            languageManager.ChangeLanguage("ru");
-            // SmartCultureInfo language =
-            //     languageManager.GetDeviceCultureIfSupported();
+            // languageManager.ChangeLanguage("ru");
+            SmartCultureInfo language =
+                languageManager.GetDeviceCultureIfSupported();
 
-            // if (language != null) {
-            //     languageManager.ChangeLanguage(language);
-            // }
+            if (language != null) {
+                languageManager.ChangeLanguage(language);
+            }
         }
 
         public string Translate(string key) {

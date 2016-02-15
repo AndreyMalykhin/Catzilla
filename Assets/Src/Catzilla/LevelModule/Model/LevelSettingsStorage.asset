@@ -13,20 +13,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minLevelDuration: 60
   levelDurationFactor: 10
-  areaMinScoreableObjects: 4
+  areaMinScoreableObjects: 8
   areaMaxScoreableObjects: 16
-  areaScoreableObjectsLevelFactor: 2
+  areaScoreableObjectsLevelFactor: 1
   areaMinDangerousObjects: 4
   areaMaxDangerousObjects: 8
   areaDangerousObjectsLevelFactor: 0.5
-  playerMinFrontSpeed: 4
-  playerMaxFrontSpeed: 8
-  playerFrontSpeedLevelFactor: 0.5
-  playerMinSideSpeed: 2
-  playerMaxSideSpeed: 2
+  playerMinFrontSpeed: 6
+  playerMaxFrontSpeed: 6
+  playerFrontSpeedLevelFactor: 0
+  playerMinSideSpeed: 6
+  playerMaxSideSpeed: 6
   playerSideSpeedLevelFactor: 0
   resurrectionMinReward: 1
-  resurrectionRewardLevelFactor: 0.2
+  resurrectionRewardLevelFactor: 0
   scoreableProtos:
   - {fileID: 11486824, guid: ebafc7a142f1b49239bb80c5acd77cff, type: 2}
   - {fileID: 11472518, guid: 2c5eb218dc3e146e0bdd4c67bcc3a0fc, type: 2}

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Diagnostics;
 using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
@@ -29,6 +30,9 @@ namespace Catzilla.LevelModule.Controller {
         [Inject]
         public Game Game {get; set;}
 
+        [Inject("PlayStopwatch")]
+        public Stopwatch PlayStopwatch {get; set;}
+
         private LevelView level;
 
         public void OnViewConstruct(Evt evt) {
@@ -50,6 +54,8 @@ namespace Catzilla.LevelModule.Controller {
         private void OnStartScreenHide() {
             DebugUtils.Log(
                 "LevelController.OnStartScreenHide(); {0}", DateTime.Now);
+            PlayStopwatch.Reset();
+            PlayStopwatch.Start();
             Game.Resume();
         }
     }

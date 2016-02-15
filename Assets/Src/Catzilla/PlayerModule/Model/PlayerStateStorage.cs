@@ -7,6 +7,7 @@ using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
 
 namespace Catzilla.PlayerModule.Model {
+    // TODO encryption
     [CreateAssetMenuAttribute]
     public class PlayerStateStorage: ScriptableObject {
         public enum Event {Save}
@@ -17,25 +18,24 @@ namespace Catzilla.PlayerModule.Model {
         [NonSerialized]
         protected PlayerState Player;
 
+        [NonSerialized]
+        private PlayerState cachedRemotePlayer;
+
+        [NonSerialized]
+        private bool isPlayerExists;
+
+        [PostInject]
+        public void OnConstruct() {
+            isPlayerExists = PlayerPrefs.HasKey("Player");
+        }
+
         public virtual PlayerState Get() {
             if (Player == null) {
-                bool isPlayerExists = PlayerPrefs.HasKey("SaveDate");
-
                 if (isPlayerExists) {
-                    Player = new PlayerState{
-                        Level = PlayerPrefs.GetInt("Level"),
-                        ScoreRecord = PlayerPrefs.GetInt("ScoreRecord"),
-                        AvailableResurrectionsCount =
-                            PlayerPrefs.GetInt("AvailableResurrectionsCount"),
-                        SaveDate = DateTime.Parse(
-                            PlayerPrefs.GetString("SaveDate"),
-                            null,
-                            DateTimeStyles.RoundtripKind),
-                        LastSeenDate = DateTime.Parse(
-                            PlayerPrefs.GetString("LastSeenDate"),
-                            null,
-                            DateTimeStyles.RoundtripKind)
-                    };
+                    Player = JsonUtility.FromJson<PlayerState>(
+                        PlayerPrefs.GetString("Player"));
+                    DebugUtils.Log(
+                        "PlayerStateStorage.Get(); playe={0}", Player);
                 }
             }
 
@@ -45,31 +45,30 @@ namespace Catzilla.PlayerModule.Model {
         public virtual void Save(PlayerState player) {
             Player = player;
             Player.SaveDate = DateTime.UtcNow;
-            PlayerPrefs.SetInt("Level", Player.Level);
-            PlayerPrefs.SetInt("ScoreRecord", Player.ScoreRecord);
-            PlayerPrefs.SetInt("AvailableResurrectionsCount",
-                Player.AvailableResurrectionsCount);
-            PlayerPrefs.SetString("SaveDate", Player.SaveDate.ToString("o"));
-            PlayerPrefs.SetString(
-                "LastSeenDate", Player.LastSeenDate.ToString("o"));
+            PlayerPrefs.SetString("Player", JsonUtility.ToJson(Player));
             PlayerPrefs.Save();
-            DebugUtils.Log("PlayerStateStorage.Save(); player={0}", player);
+            DebugUtils.Log("PlayerStateStorage.Save(); player={0}", Player);
             EventBus.Fire(Event.Save, new Evt(this));
         }
 
         public virtual void Sync(
             Server server, Action onSuccess = null, Action onFail = null) {
             DebugUtils.Log("PlayerStateStorage.Sync()");
+            PlayerState localPlayer = Get();
+            DebugUtils.Assert(localPlayer != null);
+
+            if (cachedRemotePlayer != null) {
+                server.SavePlayer(localPlayer, onSuccess, onFail);
+                return;
+            }
+
             server.GetPlayer(
-                (remotePlayer) => {
-                    PlayerState localPlayer = Get();
-                    DebugUtils.Assert(localPlayer != null);
+                (PlayerState remotePlayer) => {
+                    cachedRemotePlayer = remotePlayer;
 
                     if (remotePlayer != null
-                        && (PlayerPrefs.GetInt("WasEverSynced") == 0
-                            || remotePlayer.SaveDate > localPlayer.SaveDate)) {
-                        localPlayer = remotePlayer;
-                        PlayerPrefs.SetInt("WasEverSynced", 1);
+                        && remotePlayer.PlayTime > localPlayer.PlayTime) {
+                        Player = remotePlayer;
                         if (onSuccess != null) onSuccess();
                         return;
                     }

@@ -18,7 +18,7 @@ namespace Catzilla.PlayerModule.Model {
         private int availableResurrectionsCount = 1;
 
         [PostInject]
-        public void OnConstruct() {
+        new public void OnConstruct() {
             DebugUtils.Assert(Debug.isDebugBuild);
         }
 

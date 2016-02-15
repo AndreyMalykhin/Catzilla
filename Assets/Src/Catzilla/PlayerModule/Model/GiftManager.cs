@@ -10,17 +10,17 @@ namespace Catzilla.PlayerModule.Model {
 
         [Tooltip("In hours")]
         [SerializeField]
-        private int playerAbsencePeriod = 12;
+        private int playerAbsenceTime = 12;
 
         public void Give(PlayerState playerState) {
             DebugUtils.Log("GiftManager.Give()");
-            playerState.AvailableResurrectionsCount = addResurrectionsCount;
+            playerState.AvailableResurrectionsCount += addResurrectionsCount;
         }
 
         public bool IsDeserved(PlayerState playerState) {
-            return playerState.AvailableResurrectionsCount <= 0
+            return playerState.AvailableResurrectionsCount == 0
                 && DateTime.UtcNow >
-                    playerState.LastSeenDate.AddHours(playerAbsencePeriod);
+                    playerState.LastSeenDate.AddHours(playerAbsenceTime);
         }
     }
 }

@@ -91,9 +91,11 @@ namespace Catzilla.CommonModule.Model {
 
                 string jsonPlayer = JsonUtility.ToJson(player);
                 DebugUtils.Log("Server.SavePlayer(); player={0}", jsonPlayer);
-                byte[] binaryPlayer = Encoding.Unicode.GetBytes(jsonPlayer);
+                byte[] binaryPlayer = Encoding.UTF8.GetBytes(jsonPlayer);
                 SavedGameMetadataUpdate metadataUpdate =
-                    new SavedGameMetadataUpdate.Builder().Build();
+                    new SavedGameMetadataUpdate.Builder()
+                        .WithUpdatedPlayedTime(player.PlayTime)
+                        .Build();
                 PlayGamesPlatform.Instance.SavedGame.CommitUpdate(
                     game,
                     metadataUpdate,
@@ -105,18 +107,24 @@ namespace Catzilla.CommonModule.Model {
                             return;
                         }
 
+                        if (player.IsScoreSynced) {
+                            SavePlayerAchievements(player, onSuccess, onFail);
+                            return;
+                        }
+
                         Social.ReportScore(
                             player.ScoreRecord,
                             GooglePlayIds.leaderboard_scores,
                             (bool isSuccess) => {
-                                OnResponse();
-
                                 if (!isSuccess) {
+                                    OnResponse();
                                     if (onFail != null) onFail();
                                     return;
                                 }
 
-                                if (onSuccess != null) onSuccess();
+                                player.IsScoreSynced = true;
+                                SavePlayerAchievements(
+                                    player, onSuccess, onFail);
                             });
                     });
             });
@@ -147,7 +155,7 @@ namespace Catzilla.CommonModule.Model {
 
                         if (binaryPlayer.Length > 0) {
                             string jsonPlayer =
-                                Encoding.Unicode.GetString(binaryPlayer);
+                                Encoding.UTF8.GetString(binaryPlayer);
                             DebugUtils.Log(
                                 "Server.GetPlayer(); player={0}", jsonPlayer);
                             player =
@@ -192,5 +200,48 @@ namespace Catzilla.CommonModule.Model {
                     onDone);
         }
 
+        private void SavePlayerAchievements(
+            PlayerState player, Action onSuccess = null, Action onFail = null) {
+            List<Catzilla.PlayerModule.Model.Achievement> achievements =
+                player.Achievements;
+
+            if (achievements.Count == 0) {
+                OnResponse();
+                if (onSuccess != null) onSuccess();
+                return;
+            }
+
+            int doneRequestsCount = 0;
+
+            for (int i = 0; i < achievements.Count; ++i) {
+                var achievement = achievements[i];
+
+                if (achievement.IsSynced) {
+                    ++doneRequestsCount;
+                    continue;
+                }
+
+                Social.ReportProgress(
+                    achievement.Id,
+                    100f,
+                    (bool isSuccess) => {
+                        if (!isSuccess) {
+                            OnResponse();
+                            if (onFail != null) onFail();
+                            return;
+                        }
+
+                        achievement.IsSynced = true;
+                        ++doneRequestsCount;
+
+                        if (doneRequestsCount < achievements.Count) {
+                            return;
+                        }
+
+                        OnResponse();
+                        if (onSuccess != null) onSuccess();
+                    });
+            }
+        }
     }
 }

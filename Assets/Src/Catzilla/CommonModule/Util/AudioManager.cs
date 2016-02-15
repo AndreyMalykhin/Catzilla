@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
+using System;
 using System.Collections.Generic;
 
 namespace Catzilla.CommonModule.Util {
     [CreateAssetMenuAttribute]
     public class AudioManager: ScriptableObject {
-        [System.Serializable]
+        [Serializable]
         private struct Channel {
             public string Name;
             public int SimultaneousSoundsCount;
@@ -19,6 +20,7 @@ namespace Catzilla.CommonModule.Util {
         [SerializeField]
         private Channel[] channels;
 
+        [NonSerialized]
         private AudioSource[][] recentlyPlayedSources;
 
         public void Play(AudioClip sound, AudioSource audioSource,

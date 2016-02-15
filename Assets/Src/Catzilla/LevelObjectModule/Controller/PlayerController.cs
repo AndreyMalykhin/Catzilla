@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Diagnostics;
 using System.Collections;
 using Zenject;
 using Catzilla.CommonModule.Util;
@@ -46,13 +47,20 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("PlayerLowPrioAudioChannel")]
         public int PlayerLowPrioAudioChannel {get; set;}
 
+        [Inject("PlayStopwatch")]
+        public Stopwatch PlayStopwatch {get; set;}
+
+        [Inject]
+        public GiftManager GiftManager {get; set;}
+
         public void OnDeath(Evt evt) {
             var player = (PlayerView) evt.Source;
             PlayerState playerState = PlayerStateStorage.Get();
             AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
             AnalyticsUtils.LogEvent("Player.Death");
-            playerState.ScoreRecord =
-                Mathf.Max(playerState.ScoreRecord, player.Score);
+            playerState.ScoreRecord = player.Score;
+            PlayStopwatch.Stop();
+            playerState.PlayTime += PlayStopwatch.Elapsed;
             PlayerStateStorage.Save(playerState);
 
             if (Server.IsLoggedIn) {
@@ -119,10 +127,12 @@ namespace Catzilla.LevelObjectModule.Controller {
             PlayerState playerState = PlayerStateStorage.Get();
             AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
             AnalyticsUtils.LogEvent("Level.Completion");
+            GiveAchievementIfNeeded(playerState);
+            GiftManager.Give(playerState);
             ++playerState.Level;
-            ++playerState.AvailableResurrectionsCount;
-            playerState.ScoreRecord =
-                Mathf.Max(playerState.ScoreRecord, player.Score);
+            playerState.ScoreRecord = player.Score;
+            PlayStopwatch.Stop();
+            playerState.PlayTime += PlayStopwatch.Elapsed;
             PlayerStateStorage.Save(playerState);
 
             if (Server.IsLoggedIn) {
@@ -131,6 +141,32 @@ namespace Catzilla.LevelObjectModule.Controller {
 
             LevelCompleteScreen.OnHide = OnLevelCompleteScreenHide;
             LevelCompleteScreen.Show();
+        }
+
+        private void GiveAchievementIfNeeded(PlayerState playerState) {
+            string achievementId;
+
+            switch (playerState.Level) {
+                case 5:
+                    achievementId = GooglePlayIds.achievement_complete_level_5;
+                    break;
+                case 10:
+                    achievementId = GooglePlayIds.achievement_complete_level_10;
+                    break;
+                case 15:
+                    achievementId = GooglePlayIds.achievement_complete_level_15;
+                    break;
+                case 20:
+                    achievementId = GooglePlayIds.achievement_complete_level_20;
+                    break;
+                case 25:
+                    achievementId = GooglePlayIds.achievement_complete_level_25;
+                    break;
+                default:
+                    return;
+            }
+
+            playerState.AddAchievement(new Achievement(achievementId));
         }
 
         private void OnLevelCompleteScreenHide() {

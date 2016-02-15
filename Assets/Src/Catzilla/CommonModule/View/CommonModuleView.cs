@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Diagnostics;
 using SmartLocalization;
 using Zenject;
 using Catzilla.CommonModule.View;
@@ -42,7 +43,7 @@ namespace Catzilla.CommonModule.View {
         public override void InitBindings(DiContainer container) {
             Server finalServer = server;
 
-            if (Debug.isDebugBuild && isServerStubbed) {
+            if (UnityEngine.Debug.isDebugBuild && isServerStubbed) {
                 finalServer = serverStub;
             }
 
@@ -65,6 +66,8 @@ namespace Catzilla.CommonModule.View {
             container.Bind<Camera>("MainCamera").ToInstance(mainCamera);
             container.Bind<AudioManager>().ToInstance(audioManager);
             container.Bind<PopupManager>().ToInstance(popupManager);
+            container.Bind<Stopwatch>("PlayStopwatch")
+                .ToInstance(new Stopwatch());
             container.Bind<int>("EffectsHighPrioAudioChannel").ToInstance(0);
             container.Bind<int>("EffectsLowPrioAudioChannel").ToInstance(1);
             container.Bind<int>("UIHighPrioAudioChannel").ToInstance(2);
