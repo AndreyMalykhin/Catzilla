@@ -31,6 +31,8 @@ namespace Catzilla.MainMenuModule.View {
                 mainMenuController.OnStartBtnClick);
             eventBus.On(MainMenuView.Event.LeaderboardBtnClick,
                 mainMenuController.OnLeaderboardBtnClick);
+            eventBus.On(MainMenuView.Event.AchievementsBtnClick,
+                mainMenuController.OnAchievementsBtnClick);
             eventBus.On(Server.Event.Dispose,
                 mainMenuController.OnServerDispose);
         }

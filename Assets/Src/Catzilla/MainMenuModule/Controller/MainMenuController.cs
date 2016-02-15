@@ -20,10 +20,14 @@ namespace Catzilla.MainMenuModule.Controller {
         public LeaderboardManager LeaderboardManager {get; set;}
 
         [Inject]
+        public AchievementManager AchievementManager {get; set;}
+
+        [Inject]
         public PlayerStateStorage PlayerStateStorage {get; set;}
 
         public void OnServerDispose(Evt evt) {
             MainMenu.LeaderboardBtn.interactable = false;
+            MainMenu.AchievementsBtn.interactable = false;
         }
 
         public void OnExitBtnClick(Evt evt) {
@@ -43,6 +47,13 @@ namespace Catzilla.MainMenuModule.Controller {
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Leaderboard.View");
             LeaderboardManager.Show();
+        }
+
+        public void OnAchievementsBtnClick(Evt evt) {
+            AnalyticsUtils.AddCategorizedEventParam(
+                "Level", PlayerStateStorage.Get().Level);
+            AnalyticsUtils.LogEvent("Achievements.View");
+            AchievementManager.Show();
         }
     }
 }

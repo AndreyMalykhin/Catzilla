@@ -34,6 +34,8 @@ namespace Catzilla.PlayerModule.View {
             container.Bind<PlayerStateStorage>()
                 .ToInstance(finalPlayerStateStorage);
             container.Bind<GiftManager>().ToInstance(giftManager);
+            container.Bind<AchievementManager>().ToSingle();
+            container.Bind<LeaderboardManager>().ToSingle();
             container.Bind<PlayerScoreController>().ToSingle();
         }
 

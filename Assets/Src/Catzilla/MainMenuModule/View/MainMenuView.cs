@@ -6,7 +6,12 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.MainMenuModule.View {
     public class MainMenuView: MonoBehaviour {
-        public enum Event {ExitBtnClick, StartBtnClick, LeaderboardBtnClick}
+        public enum Event {
+            ExitBtnClick,
+            StartBtnClick,
+            LeaderboardBtnClick,
+            AchievementsBtnClick
+        }
 
         [Inject]
         public EventBus EventBus {get; set;}
@@ -14,6 +19,7 @@ namespace Catzilla.MainMenuModule.View {
         public Button StartBtn;
         public Button ExitBtn;
         public Button LeaderboardBtn;
+        public Button AchievementsBtn;
 
         private Canvas canvas;
 
@@ -30,6 +36,9 @@ namespace Catzilla.MainMenuModule.View {
             });
             LeaderboardBtn.onClick.AddListener(() => {
                 EventBus.Fire(Event.LeaderboardBtnClick, new Evt(this));
+            });
+            AchievementsBtn.onClick.AddListener(() => {
+                EventBus.Fire(Event.AchievementsBtnClick, new Evt(this));
             });
         }
 

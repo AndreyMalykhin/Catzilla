@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: LevelSettingsStorage
   m_EditorClassIdentifier: 
   minLevelDuration: 60
-  levelDurationFactor: 10
+  levelDurationFactor: 5
   areaMinScoreableObjects: 8
   areaMaxScoreableObjects: 16
   areaScoreableObjectsLevelFactor: 1

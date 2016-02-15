@@ -57,7 +57,6 @@ namespace Catzilla.CommonModule.View {
             container.Bind<DisposableController>().ToSingle();
             container.Bind<WorldSpacePopupController>().ToSingle();
             container.Bind<BtnController>().ToSingle();
-            container.Bind<LeaderboardManager>().ToSingle();
             container.Bind<UIView>().ToInstance(ui);
             container.Bind<PoolStorageView>().ToInstance(poolStorage);
             container.Bind<CoroutineManagerView>().ToInstance(coroutineManager);

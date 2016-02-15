@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Zenject;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
-using Catzilla.PlayerModule.Model;
 
-namespace Catzilla.CommonModule.Model {
+namespace Catzilla.PlayerModule.Model {
     public class LeaderboardManager {
         [Inject]
         public Server Server {get; set;}

@@ -143,6 +143,9 @@
 	<data name="LevelStartScreen.Level" xml:space="preserve">
 		<value>Level {0}</value>
 	</data>
+	<data name="MainMenu.Achievements" xml:space="preserve">
+		<value>Achievements</value>
+	</data>
 	<data name="MainMenu.Exit" xml:space="preserve">
 		<value>Quit</value>
 	</data>

@@ -158,4 +158,7 @@
 	<data name="RewardEarnDlg.Msg" xml:space="preserve">
 		<value>+{0} resurrection</value>
 	</data>
+	<data name="MainMenu.Achievements" xml:space="preserve">
+		<value>Achievements</value>
+	</data>
 </root>
