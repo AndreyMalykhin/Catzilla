@@ -1,0 +1,133 @@
+fileFormatVersion: 2
+guid: 87558fecaf7ac48d2ae9a86a057481f5
+timeCreated: 1455994720
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: BackRest
+    100004: LegBackLeft
+    100006: LegBackRight
+    100008: LegFrontLeft
+    100010: LegFrontRight
+    100012: Seat
+    100014: BackRestLeft
+    100016: BackRestRight
+    100018: SeatLeft
+    100020: SeatRight
+    100022: Cube
+    100024: Cube_001
+    400000: //RootNode
+    400002: BackRest
+    400004: LegBackLeft
+    400006: LegBackRight
+    400008: LegFrontLeft
+    400010: LegFrontRight
+    400012: Seat
+    400014: BackRestLeft
+    400016: BackRestRight
+    400018: SeatLeft
+    400020: SeatRight
+    400022: Cube
+    400024: Cube_001
+    2300000: BackRest
+    2300002: LegBackLeft
+    2300004: LegBackRight
+    2300006: LegFrontLeft
+    2300008: LegFrontRight
+    2300010: Seat
+    2300012: BackRestLeft
+    2300014: BackRestRight
+    2300016: SeatLeft
+    2300018: SeatRight
+    2300020: Cube
+    2300022: Cube_001
+    3300000: BackRest
+    3300002: LegBackLeft
+    3300004: LegBackRight
+    3300006: LegFrontLeft
+    3300008: LegFrontRight
+    3300010: Seat
+    3300012: BackRestLeft
+    3300014: BackRestRight
+    3300016: SeatLeft
+    3300018: SeatRight
+    3300020: Cube
+    3300022: Cube_001
+    4300000: LegFrontRight
+    4300002: LegBackLeft
+    4300004: LegFrontLeft
+    4300006: BackRest
+    4300008: LegBackRight
+    4300010: Seat
+    4300012: BackRestRight
+    4300014: SeatRight
+    4300016: BackRestLeft
+    4300018: SeatLeft
+    4300020: Cube_001
+    4300022: Cube
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.75
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

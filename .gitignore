@@ -16,3 +16,5 @@
 /*.sln
 /*.userprefs
 *.DS_Store
+*.blend?
+*.blend?.meta

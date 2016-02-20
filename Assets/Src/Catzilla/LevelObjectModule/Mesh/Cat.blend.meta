@@ -1,0 +1,157 @@
+fileFormatVersion: 2
+guid: b76d08367d76347cdb9bbb677e3a5300
+timeCreated: 1455732995
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Armature
+    100004: Cat
+    100006: PawBackLeft
+    100008: PawBackRight
+    100010: PawFrontLeft
+    100012: PawFrontRight
+    100014: Root
+    100016: Body
+    400000: //RootNode
+    400002: Armature
+    400004: Cat
+    400006: PawBackLeft
+    400008: PawBackRight
+    400010: PawFrontLeft
+    400012: PawFrontRight
+    400014: Root
+    400016: Body
+    2300000: //RootNode
+    2300002: Cat
+    2300004: Body
+    2300006: PawBackLeft
+    2300008: PawBackRight
+    2300010: PawFrontLeft
+    2300012: PawFrontRight
+    3300000: //RootNode
+    3300002: Cat
+    3300004: Body
+    3300006: PawBackLeft
+    3300008: PawBackRight
+    3300010: PawFrontLeft
+    3300012: PawFrontRight
+    4300000: Cat
+    4300002: PawBackRight
+    4300004: Body
+    4300006: PawFrontLeft
+    4300008: PawFrontRight
+    4300010: PawBackLeft
+    7400000: Default Take
+    7400002: Walking
+    9500000: //RootNode
+    13700000: Cat
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 1
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walking
+      takeName: Walking
+      firstFrame: 0
+      lastFrame: 59
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Cat
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/PawFrontLeft
+        weight: 1
+      - path: Armature/Root/PawBackLeft
+        weight: 1
+      - path: Armature/Root/PawFrontRight
+        weight: 1
+      - path: Armature/Root/PawBackRight
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.75
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: Root
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
