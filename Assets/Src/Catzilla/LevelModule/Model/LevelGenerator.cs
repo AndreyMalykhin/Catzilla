@@ -46,9 +46,7 @@ namespace Catzilla.LevelModule.Model {
         [PostInject]
         public void OnConstruct() {
             states[State.Start] = new StateTransition[] {
-                new StateTransition(EnvType.HoodStart, State.HoodMiddle),
-                new StateTransition(EnvType.ParkStart, State.ParkMiddle),
-                new StateTransition(EnvType.TrackStart, State.TrackMiddle)
+                new StateTransition(EnvType.HoodStart, State.HoodMiddle)
             };
             states[State.TrackMiddle] = new StateTransition[] {
                 new StateTransition(EnvType.TrackMiddle, State.TrackMiddle),
