@@ -1,12 +1,14 @@
 using UnityEngine;
 using Catzilla.LevelObjectModule.Model;
+using Catzilla.LevelAreaModule.Model;
 
 namespace Catzilla.LevelAreaModule.View {
     [ExecuteInEditMode]
     public class SpawnView: MonoBehaviour {
-        public Bounds Location {
+        public SpawnLocation Location {
             get {
-                return new Bounds(transform.position, GetSize());
+                return new SpawnLocation(
+                    new Bounds(transform.position, GetSize()), isXFlipped);
             }
         }
 
@@ -26,6 +28,9 @@ namespace Catzilla.LevelAreaModule.View {
 
         [SerializeField]
         private Color color = Color.green;
+
+        [SerializeField]
+        private bool isXFlipped;
 
         private void OnDrawGizmos() {
             Gizmos.color = color;

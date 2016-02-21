@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.Model;
+using Catzilla.LevelAreaModule.Model;
 
 namespace Catzilla.LevelAreaModule.View {
     [ExecuteInEditMode]
@@ -15,7 +16,7 @@ namespace Catzilla.LevelAreaModule.View {
         [SerializeField]
         private int depth = 24;
 
-        private IDictionary<LevelObjectType, List<Bounds>> spawnsMap;
+        private IDictionary<LevelObjectType, List<SpawnLocation>> spawnsMap;
         private LevelObjectType[] objectTypes;
 
         public LevelObjectType[] GetObjectTypes() {
@@ -23,12 +24,12 @@ namespace Catzilla.LevelAreaModule.View {
             return objectTypes;
         }
 
-        public List<Bounds> GetLocations(LevelObjectType objectType) {
+        public List<SpawnLocation> GetLocations(LevelObjectType objectType) {
             EnsureCache();
             return spawnsMap[objectType];
         }
 
-        public void OnDrawGizmos() {
+        private void OnDrawGizmos() {
             Gizmos.color = Color.grey;
 
             for (int x = -width / 2; x <= width / 2; ++x) {
@@ -49,14 +50,14 @@ namespace Catzilla.LevelAreaModule.View {
                 return;
             }
 
-            spawnsMap = new Dictionary<LevelObjectType, List<Bounds>>();
+            spawnsMap = new Dictionary<LevelObjectType, List<SpawnLocation>>();
 
             for (int i = 0; i < spawns.Length; ++i) {
-                List<Bounds> locations;
+                List<SpawnLocation> locations;
                 SpawnView spawn = spawns[i];
 
                 if (!spawnsMap.TryGetValue(spawn.ObjectType, out locations)) {
-                    locations = new List<Bounds>(64);
+                    locations = new List<SpawnLocation>(64);
                     spawnsMap[spawn.ObjectType] = locations;
                 }
 

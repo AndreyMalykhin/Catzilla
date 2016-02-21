@@ -82,17 +82,20 @@ namespace Catzilla.LevelAreaModule.Model {
             int areaIndex,
             LevelSettings levelSettings,
             LevelView outputLevel) {
-            List<Bounds> spawnLocations =
+            List<SpawnLocation> spawnLocations =
                 envTypeInfo.SpawnMap.GetLocations(objectType);
             ObjectTypeInfo objectTypeInfo =
                 ObjectTypeInfoStorage.Get(objectType);
             Vector3 spawnPoint;
+            SpawnLocation spawnLocation;
             int triesCount = countToSpawn * 2;
 
             for (int i = 0; i < countToSpawn; ++i) {
                 do {
-                    spawnPoint =
-                        GetRandomSpawnPoint(spawnLocations, objectTypeInfo);
+                    spawnLocation = spawnLocations[
+                        UnityEngine.Random.Range(0, spawnLocations.Count)];
+                    spawnPoint = GetRandomSpawnPoint(
+                        spawnLocation.Bounds, objectTypeInfo);
                     --triesCount;
                 } while (IsSpawnPointReserved(spawnPoint) && triesCount > 0);
 
@@ -102,15 +105,14 @@ namespace Catzilla.LevelAreaModule.Model {
 
                 LevelObjectView obj = outputLevel.NewObject(
                     objectTypeInfo, spawnPoint, areaIndex);
-                InitObject(obj, objectTypeInfo.Type, levelSettings);
+                InitObject(
+                    obj, objectTypeInfo.Type, spawnLocation, levelSettings);
                 ReserveSpawnPoint(spawnPoint);
             }
         }
 
         private Vector3 GetRandomSpawnPoint(
-            List<Bounds> spawnLocations, ObjectTypeInfo objectTypeInfo) {
-            var spawnLocation = spawnLocations[
-                UnityEngine.Random.Range(0, spawnLocations.Count)];
+            Bounds spawnLocation, ObjectTypeInfo objectTypeInfo) {
             Vector3 spawnLocationSize = spawnLocation.size;
             int objectWidth = objectTypeInfo.Width;
             int objectDepth = objectTypeInfo.Depth;
@@ -197,7 +199,11 @@ namespace Catzilla.LevelAreaModule.Model {
         private void InitObject(
             LevelObjectView obj,
             LevelObjectType objectType,
+            SpawnLocation spawnLocation,
             LevelSettings levelSettings) {
+            obj.transform.rotation =
+                Quaternion.Euler(0f, spawnLocation.IsXFlipped ? 180f : 0f, 0f);
+
             if (objectType == PlayerObjectType) {
                 var player = obj.GetComponent<PlayerView>();
                 player.FrontSpeed = levelSettings.PlayerFrontSpeed;

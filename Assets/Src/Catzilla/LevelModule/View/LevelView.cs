@@ -55,10 +55,6 @@ namespace Catzilla.LevelModule.View {
         public LevelObjectView NewObject(
             ObjectTypeInfo typeInfo, Vector3 spawnPoint, int areaIndex) {
             // DebugUtils.Log("LevelView.NewObject(); type={0}", typeInfo.Type);
-            var position = new Vector3(
-                spawnPoint.x,
-                spawnPoint.y,
-                spawnPoint.z + areaIndex * AreaDepth);
             var poolable = typeInfo.ViewProto.GetComponent<PoolableView>();
             LevelObjectView obj = null;
 
@@ -71,8 +67,11 @@ namespace Catzilla.LevelModule.View {
                     .GetComponent<LevelObjectView>();
             }
 
+            var position = new Vector3(
+                spawnPoint.x,
+                spawnPoint.y,
+                spawnPoint.z + areaIndex * AreaDepth);
             obj.transform.position = position;
-            obj.transform.rotation = Quaternion.identity;
             obj.transform.parent = transform;
             return obj;
         }

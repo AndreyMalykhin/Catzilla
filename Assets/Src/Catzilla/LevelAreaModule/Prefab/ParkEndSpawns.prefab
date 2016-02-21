@@ -683,6 +683,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.93103456, a: 1}
+  isXFlipped: 1
 --- !u!114 &11401404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -700,6 +701,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.95862055, a: 1}
+  isXFlipped: 0
 --- !u!114 &11404080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -717,6 +719,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 0, g: 0.08627451, b: 1, a: 1}
+  isXFlipped: 0
 --- !u!114 &11407462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -770,6 +773,7 @@ MonoBehaviour:
   itemsAcrossX: 3
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
+  isXFlipped: 0
 --- !u!114 &11416692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -787,6 +791,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.93103456, a: 1}
+  isXFlipped: 0
 --- !u!114 &11417152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -804,6 +809,7 @@ MonoBehaviour:
   itemsAcrossX: 16
   itemsAcrossZ: 3
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
+  isXFlipped: 0
 --- !u!114 &11421224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -821,6 +827,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 20
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11426800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -838,6 +845,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 6
   color: {r: 0, g: 0.08627451, b: 1, a: 1}
+  isXFlipped: 0
 --- !u!114 &11432464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -855,6 +863,7 @@ MonoBehaviour:
   itemsAcrossX: 2
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.95862055, a: 1}
+  isXFlipped: 0
 --- !u!114 &11436380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -872,6 +881,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 0, g: 0.08627451, b: 1, a: 1}
+  isXFlipped: 0
 --- !u!114 &11443602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -889,6 +899,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 20
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11448508
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -906,6 +917,7 @@ MonoBehaviour:
   itemsAcrossX: 3
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
+  isXFlipped: 0
 --- !u!114 &11452778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -923,6 +935,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.95862055, a: 1}
+  isXFlipped: 0
 --- !u!114 &11459212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -940,6 +953,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 9
   color: {r: 0, g: 0.08627451, b: 1, a: 1}
+  isXFlipped: 0
 --- !u!114 &11460666
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -957,6 +971,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 9
   color: {r: 0, g: 0.08627451, b: 1, a: 1}
+  isXFlipped: 0
 --- !u!114 &11464140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -974,6 +989,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 8
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11467004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -991,6 +1007,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 6
   color: {r: 0, g: 0.08627451, b: 1, a: 1}
+  isXFlipped: 0
 --- !u!114 &11469960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1008,6 +1025,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 20
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11473000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1025,6 +1043,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.93103456, a: 1}
+  isXFlipped: 1
 --- !u!114 &11484138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1042,6 +1061,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.93103456, a: 1}
+  isXFlipped: 0
 --- !u!114 &11490740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1059,6 +1079,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 8
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11492834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1076,6 +1097,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 20
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
