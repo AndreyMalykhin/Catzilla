@@ -106,7 +106,7 @@ namespace Catzilla.LevelAreaModule.Model {
                 LevelObjectView obj = outputLevel.NewObject(
                     objectTypeInfo, spawnPoint, areaIndex);
                 InitObject(
-                    obj, objectTypeInfo.Type, spawnLocation, levelSettings);
+                    obj, objectTypeInfo, spawnLocation, levelSettings);
                 ReserveSpawnPoint(spawnPoint);
             }
         }
@@ -198,13 +198,21 @@ namespace Catzilla.LevelAreaModule.Model {
 
         private void InitObject(
             LevelObjectView obj,
-            LevelObjectType objectType,
+            ObjectTypeInfo objectTypeInfo,
             SpawnLocation spawnLocation,
             LevelSettings levelSettings) {
             obj.transform.rotation =
                 Quaternion.Euler(0f, spawnLocation.IsXFlipped ? 180f : 0f, 0f);
+            var alternating = obj.GetComponent<AlternatingView>();
 
-            if (objectType == PlayerObjectType) {
+            if (alternating != null) {
+                int materialIndex = UnityEngine.Random.Range(
+                    0, objectTypeInfo.AvailableMaterials.Length);
+                alternating.Material =
+                    objectTypeInfo.AvailableMaterials[materialIndex];
+            }
+
+            if (objectTypeInfo.Type == PlayerObjectType) {
                 var player = obj.GetComponent<PlayerView>();
                 player.FrontSpeed = levelSettings.PlayerFrontSpeed;
                 player.SideSpeed = levelSettings.PlayerSideSpeed;

@@ -17,6 +17,7 @@ GameObject:
   - 114: {fileID: 11454844}
   - 114: {fileID: 11429288}
   - 114: {fileID: 11479234}
+  - 114: {fileID: 11494524}
   m_Layer: 11
   m_Name: Civilian
   m_TagString: Untagged
@@ -561,6 +562,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 0}
+--- !u!114 &11494524
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b715c6aafaed48d086eb8d8b2ec985f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 2362690}
+  - {fileID: 2333712}
+  - {fileID: 2375548}
+  - {fileID: 2354108}
+  - {fileID: 2325276}
+  - {fileID: 2362410}
 --- !u!114 &11499050
 MonoBehaviour:
   m_ObjectHideFlags: 1

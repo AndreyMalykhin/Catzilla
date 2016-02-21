@@ -19,12 +19,12 @@ MonoBehaviour:
   areaMinDangerousObjects: 4
   areaMaxDangerousObjects: 8
   areaDangerousObjectsLevelFactor: 0.5
-  playerMinFrontSpeed: 6
-  playerMaxFrontSpeed: 6
-  playerFrontSpeedLevelFactor: 0
-  playerMinSideSpeed: 6
-  playerMaxSideSpeed: 6
-  playerSideSpeedLevelFactor: 0
+  playerMinFrontSpeed: 4
+  playerMaxFrontSpeed: 8
+  playerFrontSpeedLevelFactor: 0.5
+  playerMinSideSpeed: 4
+  playerMaxSideSpeed: 8
+  playerSideSpeedLevelFactor: 0.5
   resurrectionMinReward: 1
   resurrectionRewardLevelFactor: 0
   scoreableProtos:

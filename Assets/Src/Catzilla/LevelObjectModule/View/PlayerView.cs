@@ -81,11 +81,9 @@ namespace Catzilla.LevelObjectModule.View {
                 EventBus.Fire(
                     Event.HealthChange, new Evt(this, oldValue));
 
-                if (health > 0) {
-                    return;
+                if (health <= 0) {
+                    Die();
                 }
-
-                Die();
             }
         }
 

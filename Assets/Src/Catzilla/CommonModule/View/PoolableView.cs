@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
-    public class PoolableView
-        : MonoBehaviour, IPoolable {
+    public class PoolableView: MonoBehaviour, IPoolable {
         public enum Event {Destroy}
 
         [Inject]
@@ -15,15 +15,24 @@ namespace Catzilla.CommonModule.View {
         public int PoolId;
         public bool IsUI;
 
-		public void Reset() {
+        private readonly List<IPoolable> poolables = new List<IPoolable>(4);
+
+        [PostInject]
+        public void OnConstruct() {
             var components = GetComponents<MonoBehaviour>();
 
             for (var i = 0; i < components.Length; ++i) {
                 var component = components[i];
 
-                if (component != this && component is IPoolable) {
-                    ((IPoolable) component).Reset();
+                if (component is IPoolable && component != this) {
+                    poolables.Add((IPoolable) component);
                 }
+            }
+        }
+
+		public void Reset() {
+            for (var i = 0; i < poolables.Count; ++i) {
+                poolables[i].Reset();
             }
         }
 

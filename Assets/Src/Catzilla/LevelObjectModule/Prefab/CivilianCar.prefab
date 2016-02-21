@@ -100,6 +100,7 @@ GameObject:
   - 114: {fileID: 11447518}
   - 114: {fileID: 11416118}
   - 114: {fileID: 11429934}
+  - 114: {fileID: 11401930}
   m_Layer: 11
   m_Name: CivilianCar
   m_TagString: Untagged
@@ -469,6 +470,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 0.9375, z: 3}
   m_Center: {x: 0, y: 0.46875, z: 0}
+--- !u!114 &11401930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b715c6aafaed48d086eb8d8b2ec985f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 2393370}
+  - {fileID: 2391512}
+  - {fileID: 2385862}
+  - {fileID: 2316184}
+  - {fileID: 2379006}
+  - {fileID: 2319734}
 --- !u!114 &11414792
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -29,13 +29,10 @@ namespace Catzilla.LevelObjectModule.View {
 
         public SmashedView Smash(
             float force, float upwardsModifier, Vector3 sourcePosition) {
-            Transform transform = this.transform;
-            PoolStorage.Return(poolable);
             var smashed =
                 PoolStorage.Take(smashedPoolId).GetComponent<SmashedView>();
-            smashed.transform.position = transform.position;
-            smashed.transform.rotation = transform.rotation;
-            smashed.Init(force, upwardsModifier, sourcePosition);
+            smashed.Init(this, force, upwardsModifier, sourcePosition);
+            PoolStorage.Return(poolable);
             return smashed;
         }
 

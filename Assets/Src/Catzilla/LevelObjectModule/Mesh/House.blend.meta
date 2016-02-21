@@ -12,6 +12,14 @@ ModelImporter:
     100008: WallFront
     100010: WallLeft
     100012: WallRight
+    100014: WallBackLeft
+    100016: WallBackRight
+    100018: WallFrontLeft
+    100020: WallFrontRight
+    100022: WallLeftBack
+    100024: WallLeftFront
+    100026: WallRightBack
+    100028: WallRightFront
     400000: //RootNode
     400002: RoofBack
     400004: RoofFront
@@ -19,24 +27,56 @@ ModelImporter:
     400008: WallFront
     400010: WallLeft
     400012: WallRight
+    400014: WallBackLeft
+    400016: WallBackRight
+    400018: WallFrontLeft
+    400020: WallFrontRight
+    400022: WallLeftBack
+    400024: WallLeftFront
+    400026: WallRightBack
+    400028: WallRightFront
     2300000: RoofBack
     2300002: RoofFront
     2300004: WallBack
     2300006: WallFront
     2300008: WallLeft
     2300010: WallRight
+    2300012: WallBackLeft
+    2300014: WallBackRight
+    2300016: WallFrontLeft
+    2300018: WallFrontRight
+    2300020: WallLeftBack
+    2300022: WallLeftFront
+    2300024: WallRightBack
+    2300026: WallRightFront
     3300000: RoofBack
     3300002: RoofFront
     3300004: WallBack
     3300006: WallFront
     3300008: WallLeft
     3300010: WallRight
+    3300012: WallBackLeft
+    3300014: WallBackRight
+    3300016: WallFrontLeft
+    3300018: WallFrontRight
+    3300020: WallLeftBack
+    3300022: WallLeftFront
+    3300024: WallRightBack
+    3300026: WallRightFront
     4300000: RoofBack
     4300002: WallRight
     4300004: WallLeft
     4300006: WallBack
     4300008: WallFront
     4300010: RoofFront
+    4300012: WallBackRight
+    4300014: WallRightFront
+    4300016: WallLeftFront
+    4300018: WallFrontRight
+    4300020: WallRightBack
+    4300022: WallLeftBack
+    4300024: WallBackLeft
+    4300026: WallFrontLeft
     7400000: Default Take
     9500000: //RootNode
   materials:

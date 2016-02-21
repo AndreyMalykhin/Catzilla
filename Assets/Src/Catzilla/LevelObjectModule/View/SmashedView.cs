@@ -6,17 +6,17 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class SmashedView: MonoBehaviour, IPoolable {
-        [Inject]
-        public PoolStorageView PoolStorage {get; set;}
-
-        public AudioClip SmashSound;
-        public AudioSource AudioSource;
-
         private struct Piece {
             public Rigidbody Body;
             public Vector3 InitialPosition;
             public Quaternion InitialRotation;
         }
+
+        [Inject]
+        public PoolStorageView PoolStorage {get; set;}
+
+        public AudioClip SmashSound;
+        public AudioSource AudioSource;
 
         [SerializeField]
         private float lifetime = 2f;
@@ -28,6 +28,7 @@ namespace Catzilla.LevelObjectModule.View {
         private float overrideSmashUpwardsModifier = 0f;
 
         private PoolableView poolable;
+        private AlternatingView alternating;
         private Piece[] pieces;
         private float smashForce;
         private float smashUpwardsModifier;
@@ -37,6 +38,7 @@ namespace Catzilla.LevelObjectModule.View {
         [PostInject]
         public void OnConstruct() {
             poolable = GetComponent<PoolableView>();
+            alternating = GetComponent<AlternatingView>();
             var pieceBodies = GetComponentsInChildren<Rigidbody>();
             pieces = new Piece[pieceBodies.Length];
 
@@ -51,11 +53,18 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
-        public void Init(float smashForce, float smashUpwardsModifier,
-            Vector3 smashSourcePosition) {
+        public void Init(SmashableView smashable, float smashForce,
+            float smashUpwardsModifier, Vector3 smashSourcePosition) {
             this.smashForce = smashForce;
             this.smashUpwardsModifier = smashUpwardsModifier;
             this.smashSourcePosition = smashSourcePosition;
+            transform.position = smashable.transform.position;
+            transform.rotation = smashable.transform.rotation;
+
+            if (alternating != null) {
+                alternating.Material =
+                    smashable.GetComponent<AlternatingView>().Material;
+            }
         }
 
         public void Reset() {

@@ -11,6 +11,7 @@ GameObject:
   - 82: {fileID: 8265290}
   - 114: {fileID: 11474964}
   - 114: {fileID: 11468128}
+  - 114: {fileID: 11475262}
   m_Layer: 9
   m_Name: CivilianSmashed
   m_TagString: Untagged
@@ -713,6 +714,24 @@ MonoBehaviour:
   lifetime: 2
   overrideSmashParams: 0
   overrideSmashUpwardsModifier: 0
+--- !u!114 &11475262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b715c6aafaed48d086eb8d8b2ec985f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 2381770}
+  - {fileID: 2394774}
+  - {fileID: 2391988}
+  - {fileID: 2399866}
+  - {fileID: 2365490}
+  - {fileID: 2300110}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
