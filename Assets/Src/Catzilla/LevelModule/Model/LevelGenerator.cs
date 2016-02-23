@@ -185,6 +185,7 @@ namespace Catzilla.LevelModule.Model {
             int dangerousObjectsLeft = levelSettings.AreaDangerousObjects;
             int scoreableObjectsLeft = levelSettings.AreaScoreableObjects;
             int objectsCount = dangerousObjectsLeft + scoreableObjectsLeft;
+            bool isBonusSpawned = false;
 
             for (int i = 0; i < objectsCount; ++i) {
                 int j = i % objectTypesCount;
@@ -202,12 +203,14 @@ namespace Catzilla.LevelModule.Model {
 
                     --dangerousObjectsLeft;
                 } else if (objectProto.GetComponent<BonusView>() != null) {
-                    if (player == null
+                    if (isBonusSpawned
+                        || player == null
                         || !IsPlayerNeedsHelp(player)
                         || !CanHelpPlayer(levelSettings)) {
                         continue;
                     }
 
+                    isBonusSpawned = true;
                     --BonusObjectsLeft;
                 } else if (objectProto.GetComponent<ScoreableView>() != null) {
                     if (scoreableObjectsLeft <= 0) {

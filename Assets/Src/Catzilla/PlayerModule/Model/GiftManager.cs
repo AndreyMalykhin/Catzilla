@@ -12,9 +12,13 @@ namespace Catzilla.PlayerModule.Model {
         [SerializeField]
         private int playerAbsenceTime = 12;
 
-        public void Give(PlayerState playerState) {
-            DebugUtils.Log("GiftManager.Give()");
+        /**
+         * @return Given resurrections count
+         */
+        public int Give(PlayerState playerState) {
+            // DebugUtils.Log("GiftManager.Give()");
             playerState.AvailableResurrectionsCount += addResurrectionsCount;
+            return addResurrectionsCount;
         }
 
         public bool IsDeserved(PlayerState playerState) {

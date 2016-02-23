@@ -155,10 +155,13 @@
 	<data name="MainMenu.Start" xml:space="preserve">
 		<value>Играть</value>
 	</data>
+	<data name="Player.GiftEarn" xml:space="preserve">
+		<value>+{0} воскрешение</value>
+	</data>
+	<data name="Player.RewardEarn" xml:space="preserve">
+		<value>+{0} воскрешение</value>
+	</data>
 	<data name="Player.Score" xml:space="preserve">
 		<value>Очки: {0} / {1}</value>
-	</data>
-	<data name="RewardEarnDlg.Msg" xml:space="preserve">
-		<value>+{0} воскрешение</value>
 	</data>
 </root>

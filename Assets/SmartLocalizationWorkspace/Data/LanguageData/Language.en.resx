@@ -155,10 +155,13 @@
 	<data name="MainMenu.Start" xml:space="preserve">
 		<value>Play</value>
 	</data>
+	<data name="Player.GiftEarn" xml:space="preserve">
+		<value>+{0} resurrection</value>
+	</data>
+	<data name="Player.RewardEarn" xml:space="preserve">
+		<value>+{0} resurrection</value>
+	</data>
 	<data name="Player.Score" xml:space="preserve">
 		<value>Score: {0} / {1}</value>
-	</data>
-	<data name="RewardEarnDlg.Msg" xml:space="preserve">
-		<value>+{0} resurrection</value>
 	</data>
 </root>

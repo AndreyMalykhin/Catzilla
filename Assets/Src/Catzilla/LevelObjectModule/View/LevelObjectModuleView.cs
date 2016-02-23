@@ -14,9 +14,6 @@ namespace Catzilla.LevelObjectModule.View {
         private ObjectTypeInfoStorage objectTypeInfoStorage;
 
         [SerializeField]
-        private WorldSpacePopupView scorePopupProto;
-
-        [SerializeField]
         private string playerMeshTag;
 
         [SerializeField]
@@ -40,8 +37,6 @@ namespace Catzilla.LevelObjectModule.View {
             container.Bind<ActivatableController>().ToSingle();
             container.Bind<BonusController>().ToSingle();
             container.Bind<TreatingController>().ToSingle();
-            container.Bind<WorldSpacePopupView>("ScorePopupProto")
-                .ToInstance(scorePopupProto);
             container.Bind<LevelObjectType>("PlayerObjectType")
                 .ToInstance(LevelObjectType.Player);
             container.Bind<string>("PlayerTag").ToInstance(playerTag);

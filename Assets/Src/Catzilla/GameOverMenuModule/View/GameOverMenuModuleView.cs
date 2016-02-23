@@ -17,13 +17,9 @@ namespace Catzilla.GameOverMenuModule.View {
         [SerializeField]
         private GameOverMenuView menu;
 
-        [SerializeField]
-        private DlgView rewardEarnDlg;
-
         public override void InitBindings(DiContainer container) {
             container.Bind<GameOverScreenView>().ToInstance(screen);
             container.Bind<GameOverMenuView>().ToInstance(menu);
-            container.Bind<DlgView>("RewardEarnDlg").ToInstance(rewardEarnDlg);
             container.Bind<GameOverMenuController>().ToSingle();
         }
 

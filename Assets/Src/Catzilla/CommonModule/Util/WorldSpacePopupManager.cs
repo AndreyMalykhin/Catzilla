@@ -1,10 +1,17 @@
 using UnityEngine;
 using System;
+using Zenject;
 using Catzilla.CommonModule.View;
 
 namespace Catzilla.CommonModule.Util {
     [CreateAssetMenuAttribute]
-    public class PopupManager: ScriptableObject {
+    public class WorldSpacePopupManager: ScriptableObject {
+        [Inject]
+        private PoolStorageView poolStorage;
+
+        [SerializeField]
+        private WorldSpacePopupView popupProto;
+
         [SerializeField]
         private int simultaneousPopupsCount = 4;
 
@@ -13,6 +20,16 @@ namespace Catzilla.CommonModule.Util {
 
         [NonSerialized]
         private int nextPopupIndex;
+
+        [PostInject]
+        public void OnConstruct() {
+            recentPopups = new WorldSpacePopupView[simultaneousPopupsCount];
+        }
+
+        public WorldSpacePopupView Get() {
+            int poolId = popupProto.GetComponent<PoolableView>().PoolId;
+            return poolStorage.Take(poolId).GetComponent<WorldSpacePopupView>();
+        }
 
         public void Show(WorldSpacePopupView popup) {
             WorldSpacePopupView recentPopup = recentPopups[nextPopupIndex];
@@ -28,11 +45,12 @@ namespace Catzilla.CommonModule.Util {
                 nextPopupIndex = 0;
             }
 
+            popup.OnHide = OnPopupHide;
             popup.Show();
         }
 
-        private void OnEnable() {
-            recentPopups = new WorldSpacePopupView[simultaneousPopupsCount];
+        private void OnPopupHide(WorldSpacePopupView popup) {
+            poolStorage.Return(popup.GetComponent<PoolableView>());
         }
     }
 }

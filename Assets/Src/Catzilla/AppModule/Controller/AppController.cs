@@ -6,6 +6,7 @@ using Catzilla.MainMenuModule.View;
 using Catzilla.PlayerModule.Model;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 using Catzilla.AppModule.Controller;
 
 namespace Catzilla.AppModule.Controller {
@@ -21,6 +22,12 @@ namespace Catzilla.AppModule.Controller {
 
         [Inject]
         public GiftManager GiftManager {get; set;}
+
+        [Inject]
+        public ScreenSpacePopupManagerView PopupManager {get; set;}
+
+        [Inject]
+        public Translator Translator {get; set;}
 
         public void OnStart(Evt evt) {
             // DebugUtils.Log("AppController.OnStart()");
@@ -58,8 +65,12 @@ namespace Catzilla.AppModule.Controller {
             PlayerState playerState = PlayerStateStorage.Get();
 
             if (GiftManager.IsDeserved(playerState)) {
-                GiftManager.Give(playerState);
+                int givenResurrectionsCount = GiftManager.Give(playerState);
                 PlayerStateStorage.Save(playerState);
+                ScreenSpacePopupView popup = PopupManager.Get();
+                popup.Msg.text = Translator.Translate(
+                    "Player.GiftEarn", givenResurrectionsCount);
+                PopupManager.Show(popup);
             }
         }
     }

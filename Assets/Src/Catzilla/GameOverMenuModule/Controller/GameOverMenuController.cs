@@ -19,9 +19,6 @@ namespace Catzilla.GameOverMenuModule.Controller {
         [Inject]
         public GameOverScreenView GameOverScreen {get; set;}
 
-        [Inject("RewardEarnDlg")]
-        public DlgView RewardEarnDlg {get; set;}
-
         [Inject]
         public PlayerStateStorage PlayerStateStorage {get; set;}
 
@@ -42,6 +39,9 @@ namespace Catzilla.GameOverMenuModule.Controller {
 
         [Inject("PlayStopwatch")]
         public Stopwatch PlayStopwatch {get; set;}
+
+        [Inject]
+        public ScreenSpacePopupManagerView PopupManager {get; set;}
 
         private PlayerView player;
 
@@ -123,9 +123,10 @@ namespace Catzilla.GameOverMenuModule.Controller {
                 LevelSettingsStorage.Get(playerState.Level).ResurrectionReward;
             playerState.AvailableResurrectionsCount += addResurrectionsCount;
             PlayerStateStorage.Save(playerState);
-            RewardEarnDlg.Msg.text =
-                string.Format(RewardEarnDlg.Msg.text, addResurrectionsCount);
-            RewardEarnDlg.Show();
+            ScreenSpacePopupView popup = PopupManager.Get();
+            popup.Msg.text = Translator.Translate(
+                "Player.RewardEarn", addResurrectionsCount);
+            PopupManager.Show(popup);
         }
     }
 }

@@ -10,7 +10,8 @@ namespace Catzilla.PlayerModule.Controller {
         public void OnPlayerConstruct(Evt evt) {
             player = (PlayerView) evt.Source;
             health = player.HUD.Health;
-            health.MaxValue = player.Health;
+            health.MaxValue = player.MaxHealth;
+            health.Value = player.Health;
         }
 
         public void OnChange(Evt evt) {

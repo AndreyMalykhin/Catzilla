@@ -13,13 +13,7 @@ namespace Catzilla.LevelObjectModule.Controller {
         public string PlayerTag {get; set;}
 
         [Inject]
-        public PoolStorageView PoolStorage {get; set;}
-
-        [Inject("ScorePopupProto")]
-        public WorldSpacePopupView ScorePopupProto {get; set;}
-
-        [Inject]
-        public PopupManager PopupManager {get; set;}
+        public WorldSpacePopupManager PopupManager {get; set;}
 
         private readonly StringBuilder strBuilder = new StringBuilder(8);
 
@@ -45,20 +39,13 @@ namespace Catzilla.LevelObjectModule.Controller {
                 return;
             }
 
-            int poolId = ScorePopupProto.GetComponent<PoolableView>().PoolId;
-            var popup =
-                PoolStorage.Take(poolId).GetComponent<WorldSpacePopupView>();
+            WorldSpacePopupView popup = PopupManager.Get();
             popup.PlaceAbove(scoreable.Collider.bounds);
             popup.LookAtTarget = player.Camera;
             popup.Msg.text =
                 strBuilder.Append('+').Append(scoreable.Score).ToString();
             strBuilder.Length = 0;
-            popup.OnHide = OnScorePopupHide;
             PopupManager.Show(popup);
-        }
-
-        private void OnScorePopupHide(WorldSpacePopupView popup) {
-            PoolStorage.Return(popup.GetComponent<PoolableView>());
         }
     }
 }

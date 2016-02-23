@@ -20,7 +20,7 @@ namespace Catzilla.CommonModule.View {
         private AudioManager audioManager;
 
         [SerializeField]
-        private PopupManager popupManager;
+        private WorldSpacePopupManager worldSpacePopupManager;
 
         [SerializeField]
         private bool isServerStubbed = true;
@@ -39,6 +39,9 @@ namespace Catzilla.CommonModule.View {
 
         [SerializeField]
         private Camera mainCamera;
+
+        [SerializeField]
+        private ScreenSpacePopupManagerView screenSpacePopupManager;
 
         public override void InitBindings(DiContainer container) {
             Server finalServer = server;
@@ -60,11 +63,14 @@ namespace Catzilla.CommonModule.View {
             container.Bind<UIView>().ToInstance(ui);
             container.Bind<PoolStorageView>().ToInstance(poolStorage);
             container.Bind<CoroutineManagerView>().ToInstance(coroutineManager);
+            container.Bind<ScreenSpacePopupManagerView>()
+                .ToInstance(screenSpacePopupManager);
             container.Bind<ActivityIndicatorView>()
                 .ToInstance(activityIndicator);
             container.Bind<Camera>("MainCamera").ToInstance(mainCamera);
             container.Bind<AudioManager>().ToInstance(audioManager);
-            container.Bind<PopupManager>().ToInstance(popupManager);
+            container.Bind<WorldSpacePopupManager>()
+                .ToInstance(worldSpacePopupManager);
             container.Bind<Stopwatch>("PlayStopwatch")
                 .ToInstance(new Stopwatch());
             container.Bind<int>("EffectsHighPrioAudioChannel").ToInstance(0);
@@ -78,7 +84,7 @@ namespace Catzilla.CommonModule.View {
         public override void PostBindings(DiContainer container) {
             container.Inject(container.Resolve<Server>());
             container.Inject(container.Resolve<AudioManager>());
-            container.Inject(container.Resolve<PopupManager>());
+            container.Inject(container.Resolve<WorldSpacePopupManager>());
             var eventBus = container.Resolve<EventBus>();
 
             var disposableController =

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: LevelSettingsStorage
   m_EditorClassIdentifier: 
   minLevelDuration: 60
-  levelDurationFactor: 5
+  levelDurationFactor: 4
   areaMinScoreableObjects: 8
   areaMaxScoreableObjects: 16
   areaScoreableObjectsLevelFactor: 1
@@ -23,12 +23,12 @@ MonoBehaviour:
   maxBonusObjects: 8
   bonusObjectsLevelFactor: 0.25
   bonusObjectSpawnChance: 0.5
-  playerMinFrontSpeed: 4
+  playerMinFrontSpeed: 6
   playerMaxFrontSpeed: 8
-  playerFrontSpeedLevelFactor: 0.5
-  playerMinSideSpeed: 4
-  playerMaxSideSpeed: 8
-  playerSideSpeedLevelFactor: 0.5
+  playerFrontSpeedLevelFactor: 0.25
+  playerMinSideSpeed: 3
+  playerMaxSideSpeed: 4
+  playerSideSpeedLevelFactor: 0.125
   resurrectionMinReward: 1
   resurrectionRewardLevelFactor: 0
   scoreableProtos:
