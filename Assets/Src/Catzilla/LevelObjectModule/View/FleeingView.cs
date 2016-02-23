@@ -18,11 +18,11 @@ namespace Catzilla.LevelObjectModule.View {
 
         [PostInject]
         public void OnConstruct() {
-            Reset();
+            SetSpeed();
         }
 
-        public void Reset() {
-            speed = Random.Range(minSpeed, maxSpeed);
+        void IPoolable.Reset() {
+            SetSpeed();
         }
 
         private void Awake() {
@@ -42,6 +42,10 @@ namespace Catzilla.LevelObjectModule.View {
         private void OnDisable() {
             // DebugUtils.Log("FleeingView.OnDisable()");
             body.velocity = Vector3.zero;
+        }
+
+        private void SetSpeed() {
+            speed = Random.Range(minSpeed, maxSpeed);
         }
     }
 }

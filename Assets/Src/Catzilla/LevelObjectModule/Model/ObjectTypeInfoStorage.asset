@@ -66,3 +66,9 @@ MonoBehaviour:
     SpawnPriority: 5
     ViewProto: {fileID: 11483314, guid: 75af68cf68f6840439e1bb9c4cd4418d, type: 2}
     AvailableMaterials: []
+  - Type: 8
+    Width: 1
+    Depth: 1
+    SpawnPriority: 6
+    ViewProto: {fileID: 11478868, guid: 6cb572157bc7247dba787f597cf5d699, type: 2}
+    AvailableMaterials: []

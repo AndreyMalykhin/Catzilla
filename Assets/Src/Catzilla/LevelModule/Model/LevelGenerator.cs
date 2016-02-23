@@ -37,7 +37,17 @@ namespace Catzilla.LevelModule.Model {
         [Inject]
         public EnvTypeInfoStorage EnvTypeInfoStorage {get; set;}
 
+        [Inject]
+        public ObjectTypeInfoStorage ObjectTypeInfoStorage {get; set;}
+
+        [Inject]
+        public LevelSettingsStorage LevelSettingsStorage {get; set;}
+
+        [Inject("PlayerObjectType")]
+        public LevelObjectType PlayerObjectType {get; set;}
+
         public int InitialAreasCount {get {return 2;}}
+        public int BonusObjectsLeft {get; set;}
 
         private State nextState;
         private readonly IDictionary<State, StateTransition[]> states =
@@ -79,28 +89,52 @@ namespace Catzilla.LevelModule.Model {
             // DebugUtils.Log("LevelGenerator.NewLevel()");
             outputLevel.Init(levelIndex);
             nextState = State.Start;
+            LevelSettings levelSettings =
+                LevelSettingsStorage.Get(outputLevel.Index);
+            BonusObjectsLeft = levelSettings.BonusObjects;
+            PlayerView player = null;
             bool spawnPlayer = true;
-            NewArea(spawnPlayer, outputLevel, (area1) => {
-                    NewArea(false, outputLevel, (area2) => {
-                    if (onDone != null) onDone();
+            NewArea(
+                levelSettings,
+                spawnPlayer,
+                outputLevel,
+                player,
+                (LevelAreaView area1) => {
+                    spawnPlayer = false;
+                    NewArea(
+                        levelSettings,
+                        spawnPlayer,
+                        outputLevel,
+                        player,
+                        (LevelAreaView area2) => {
+                            if (onDone != null) onDone();
+                        });
                 });
-            });
         }
 
-        public void NewArea(
-            LevelView outputLevel, Action<LevelAreaView> onDone = null) {
+        public void NewArea(PlayerView player, LevelView outputLevel,
+            Action<LevelAreaView> onDone = null) {
             // DebugUtils.Log("LevelGenerator.NewArea()");
+            LevelSettings levelSettings =
+                LevelSettingsStorage.Get(outputLevel.Index);
             bool spawnPlayer = false;
-            NewArea(spawnPlayer, outputLevel, onDone);
+            NewArea(levelSettings, spawnPlayer, outputLevel, player, onDone);
         }
 
         private void NewArea(
+            LevelSettings levelSettings,
             bool spawnPlayer,
             LevelView outputLevel,
+            PlayerView player = null,
             Action<LevelAreaView> onDone = null) {
+            EnvType envType = NextState();
+            EnvTypeInfo envTypeInfo = EnvTypeInfoStorage.Get(envType);
+            SpawnsInfo[] spawnsInfos =
+                GetSpawnsInfos(levelSettings, envTypeInfo, spawnPlayer, player);
             AreaGenerator.NewArea(
-                NextState(),
-                spawnPlayer,
+                envTypeInfo,
+                spawnsInfos,
+                levelSettings,
                 outputLevel,
                 onDone);
         }
@@ -131,6 +165,80 @@ namespace Catzilla.LevelModule.Model {
 
             DebugUtils.Assert(false);
             return 0;
+        }
+
+        private SpawnsInfo[] GetSpawnsInfos(
+            LevelSettings levelSettings,
+            EnvTypeInfo envTypeInfo,
+            bool spawnPlayer,
+            PlayerView player = null) {
+            LevelObjectType[] objectTypes =
+                envTypeInfo.SpawnMap.GetObjectTypes();
+            Array.Sort(objectTypes, ObjectTypeComparator);
+            int objectTypesCount = objectTypes.Length;
+            var spawnsInfos = new SpawnsInfo[objectTypesCount];
+
+            for (int i = 0; i < objectTypesCount; ++i) {
+                spawnsInfos[i] = new SpawnsInfo{ObjectType = objectTypes[i]};
+            }
+
+            int dangerousObjectsLeft = levelSettings.AreaDangerousObjects;
+            int scoreableObjectsLeft = levelSettings.AreaScoreableObjects;
+            int objectsCount = dangerousObjectsLeft + scoreableObjectsLeft;
+
+            for (int i = 0; i < objectsCount; ++i) {
+                int j = i % objectTypesCount;
+                SpawnsInfo spawnsInfo = spawnsInfos[j];
+                LevelObjectType objectType = spawnsInfo.ObjectType;
+                LevelObjectView objectProto =
+                    ObjectTypeInfoStorage.Get(objectType).ViewProto;
+
+                if (spawnPlayer && objectType == PlayerObjectType) {
+                    spawnPlayer = false;
+                } else if (objectProto.GetComponent<DangerousView>() != null) {
+                    if (dangerousObjectsLeft <= 0) {
+                        continue;
+                    }
+
+                    --dangerousObjectsLeft;
+                } else if (objectProto.GetComponent<BonusView>() != null) {
+                    if (player == null
+                        || !IsPlayerNeedsHelp(player)
+                        || !CanHelpPlayer(levelSettings)) {
+                        continue;
+                    }
+
+                    --BonusObjectsLeft;
+                } else if (objectProto.GetComponent<ScoreableView>() != null) {
+                    if (scoreableObjectsLeft <= 0) {
+                        continue;
+                    }
+
+                    --scoreableObjectsLeft;
+                } else {
+                    continue;
+                }
+
+                ++spawnsInfo.Count;
+                spawnsInfos[j] = spawnsInfo;
+            }
+
+            return spawnsInfos;
+        }
+
+        private bool IsPlayerNeedsHelp(PlayerView player) {
+            return player.Health < player.MaxHealth;
+        }
+
+        private bool CanHelpPlayer(LevelSettings levelSettings) {
+            return BonusObjectsLeft > 0 && UnityEngine.Random.value <=
+                levelSettings.BonusObjectSpawnChance;
+        }
+
+        private int ObjectTypeComparator(
+            LevelObjectType lhs, LevelObjectType rhs) {
+            return ObjectTypeInfoStorage.Get(lhs).SpawnPriority.CompareTo(
+                ObjectTypeInfoStorage.Get(rhs).SpawnPriority);
         }
     }
 }

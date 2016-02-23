@@ -19,6 +19,10 @@ MonoBehaviour:
   areaMinDangerousObjects: 4
   areaMaxDangerousObjects: 8
   areaDangerousObjectsLevelFactor: 0.5
+  minBonusObjects: 0
+  maxBonusObjects: 8
+  bonusObjectsLevelFactor: 0.25
+  bonusObjectSpawnChance: 0.5
   playerMinFrontSpeed: 4
   playerMaxFrontSpeed: 8
   playerFrontSpeedLevelFactor: 0.5

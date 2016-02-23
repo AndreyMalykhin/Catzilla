@@ -21,6 +21,6 @@ MonoBehaviour:
   - Name: UILowPrio
     SimultaneousSoundsCount: 1
   - Name: PlayerHighPrio
-    SimultaneousSoundsCount: 1
+    SimultaneousSoundsCount: 2
   - Name: PlayerLowPrio
     SimultaneousSoundsCount: 1

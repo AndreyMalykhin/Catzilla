@@ -34,6 +34,18 @@ namespace Catzilla.LevelModule.Model {
         private float areaDangerousObjectsLevelFactor = 1f;
 
         [SerializeField]
+        private int minBonusObjects = 1;
+
+        [SerializeField]
+        private int maxBonusObjects = 4;
+
+        [SerializeField]
+        private float bonusObjectsLevelFactor = 0.1f;
+
+        [SerializeField]
+        private float bonusObjectSpawnChance = 0.1f;
+
+        [SerializeField]
         private float playerMinFrontSpeed = 4f;
 
         [SerializeField]
@@ -104,6 +116,9 @@ namespace Catzilla.LevelModule.Model {
                 areaMinScoreableObjects + levelIndex *
                     areaScoreableObjectsLevelFactor,
                 areaMaxScoreableObjects);
+            float bonusObjects = Mathf.Min(
+                minBonusObjects + levelIndex * bonusObjectsLevelFactor,
+                maxBonusObjects);
             float objectReachabilityPlayerFrontSpeedFactor =
                 1f - playerFrontSpeed / areaDepth;
             float objectReachabilityPlayerSideSpeedFactor =
@@ -126,6 +141,8 @@ namespace Catzilla.LevelModule.Model {
                 (int) completionScore,
                 (int) areaDangerousObjects,
                 (int) areaScoreableObjects,
+                (int) bonusObjects,
+                bonusObjectSpawnChance,
                 playerFrontSpeed,
                 playerSideSpeed,
                 (int) resurrectionReward);

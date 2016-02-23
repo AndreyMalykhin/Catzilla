@@ -74,7 +74,7 @@ namespace Catzilla.LevelObjectModule.View {
                 projectileProto.GetComponent<PoolableView>().PoolId;
         }
 
-        public void Reset() {
+        void IPoolable.Reset() {
             Target = null;
         }
 

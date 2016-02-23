@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6d122aa3797470097c042c4c99801c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 100
+  Damage: 50
 --- !u!114 &11446948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -518,7 +518,7 @@ Prefab:
         type: 2}
     - target: {fileID: 0}
       propertyPath: Damage
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Materials.Array.data[0]

@@ -53,8 +53,13 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject]
         public GiftManager GiftManager {get; set;}
 
+        private PlayerView player;
+
+        public void OnViewConstruct(Evt evt) {
+            player = (PlayerView) evt.Source;
+        }
+
         public void OnDeath(Evt evt) {
-            var player = (PlayerView) evt.Source;
             PlayerState playerState = PlayerStateStorage.Get();
             AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
             AnalyticsUtils.LogEvent("Player.Death");
@@ -76,19 +81,19 @@ namespace Catzilla.LevelObjectModule.Controller {
         }
 
         public void OnFootstep(Evt evt) {
-            var player = (PlayerView) evt.Source;
-
-            if (player.FootstepSound != null) {
-                var pitch = UnityEngine.Random.Range(0.8f, 1.2f);
-                AudioManager.Play(
-                    player.FootstepSound,
-                    player.LowPrioAudioSource,
-                    PlayerLowPrioAudioChannel, pitch);
+            if (player.FootstepSound == null) {
+                return;
             }
+
+            var pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+            AudioManager.Play(
+                player.FootstepSound,
+                player.LowPrioAudioSource,
+                PlayerLowPrioAudioChannel,
+                pitch);
         }
 
         public void OnScoreChange(Evt evt) {
-            var player = (PlayerView) evt.Source;
             LevelSettings levelSettings =
                 LevelSettingsStorage.Get(PlayerStateStorage.Get().Level);
 
@@ -97,6 +102,31 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
 
             CompleteLevel(player);
+        }
+
+        public void OnHealthChange(Evt evt) {
+            int oldHealth = (int) evt.Data;
+
+            if (player.Health < oldHealth) {
+                if (player.Health <= 0 || player.HurtSound == null) {
+                    return;
+                }
+
+                var pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                AudioManager.Play(
+                    player.HurtSound,
+                    player.HighPrioAudioSource,
+                    PlayerHighPrioAudioChannel,
+                    pitch);
+            } else {
+                if (player.TreatSound == null) {
+                    return;
+                }
+
+                var pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                AudioManager.Play(player.TreatSound, player.HighPrioAudioSource,
+                    PlayerHighPrioAudioChannel, pitch);
+            }
         }
 
         public void OnResurrect(Evt evt) {

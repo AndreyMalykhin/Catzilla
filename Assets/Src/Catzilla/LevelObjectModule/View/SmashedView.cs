@@ -67,7 +67,7 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
-        public void Reset() {
+        void IPoolable.Reset() {
             isSmashed = false;
 
             for (int i = 0; i < pieces.Length; ++i) {

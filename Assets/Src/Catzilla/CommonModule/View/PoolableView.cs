@@ -7,11 +7,6 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class PoolableView: MonoBehaviour, IPoolable {
-        public enum Event {Destroy}
-
-        [Inject]
-        public EventBus EventBus {get; set;}
-
         public int PoolId;
         public bool IsUI;
 
@@ -30,17 +25,9 @@ namespace Catzilla.CommonModule.View {
             }
         }
 
-		public void Reset() {
+		void IPoolable.Reset() {
             for (var i = 0; i < poolables.Count; ++i) {
                 poolables[i].Reset();
-            }
-        }
-
-        private void OnDestroy() {
-            // DebugUtils.Log("PoolableView.OnDestroy()");
-            // can be null while app is destroying
-            if (EventBus != null) {
-                EventBus.Fire(Event.Destroy, new Evt(this));
             }
         }
     }

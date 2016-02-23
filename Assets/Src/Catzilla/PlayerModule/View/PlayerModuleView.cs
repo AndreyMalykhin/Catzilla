@@ -37,18 +37,27 @@ namespace Catzilla.PlayerModule.View {
             container.Bind<AchievementManager>().ToSingle();
             container.Bind<LeaderboardManager>().ToSingle();
             container.Bind<PlayerScoreController>().ToSingle();
+            container.Bind<PlayerHealthController>().ToSingle();
         }
 
         public override void PostBindings(DiContainer container) {
             container.Inject(container.Resolve<PlayerStateStorage>());
             container.Inject(container.Resolve<GiftManager>());
             var eventBus = container.Resolve<EventBus>();
+
             var playerScoreController =
                 container.Resolve<PlayerScoreController>();
             eventBus.On(
                 PlayerView.Event.ScoreChange, playerScoreController.OnChange);
             eventBus.On(PlayerScoreView.Event.Construct,
                 playerScoreController.OnViewConstruct);
+
+            var playerHealthController =
+                container.Resolve<PlayerHealthController>();
+            eventBus.On(PlayerView.Event.HealthChange,
+                playerHealthController.OnChange);
+            eventBus.On(PlayerView.Event.Construct,
+                playerHealthController.OnPlayerConstruct);
         }
     }
 }

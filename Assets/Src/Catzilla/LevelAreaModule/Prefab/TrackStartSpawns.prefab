@@ -48,6 +48,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &118128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 456866}
+  - 114: {fileID: 11466802}
+  m_Layer: 0
+  m_Name: FirstAid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &118350
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,6 +632,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 498358}
   m_RootOrder: 3
+--- !u!4 &456866
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118128}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 3.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 498358}
+  m_RootOrder: 27
 --- !u!4 &462346
 Transform:
   m_ObjectHideFlags: 1
@@ -797,6 +825,7 @@ Transform:
   - {fileID: 483324}
   - {fileID: 468478}
   - {fileID: 494894}
+  - {fileID: 456866}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &499256
@@ -828,6 +857,7 @@ MonoBehaviour:
   itemsAcrossX: 2
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.95862055, a: 1}
+  isXFlipped: 0
 --- !u!114 &11407462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -867,6 +897,7 @@ MonoBehaviour:
   - {fileID: 11492384}
   - {fileID: 11484852}
   - {fileID: 11442966}
+  - {fileID: 11466802}
   width: 16
   depth: 24
 --- !u!114 &11408790
@@ -886,6 +917,7 @@ MonoBehaviour:
   itemsAcrossX: 4
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11411876
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -903,6 +935,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
+  isXFlipped: 0
 --- !u!114 &11413568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -920,6 +953,7 @@ MonoBehaviour:
   itemsAcrossX: 16
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11413986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -937,6 +971,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 0.9862069, g: 1, b: 0, a: 1}
+  isXFlipped: 0
 --- !u!114 &11414626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -954,6 +989,7 @@ MonoBehaviour:
   itemsAcrossX: 4
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11416214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -971,6 +1007,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 5
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11418680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -988,6 +1025,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 7
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11423884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1005,6 +1043,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 0.9862069, g: 1, b: 0, a: 1}
+  isXFlipped: 0
 --- !u!114 &11424074
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1022,6 +1061,7 @@ MonoBehaviour:
   itemsAcrossX: 5
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11428530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1039,6 +1079,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 12
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11442966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1056,6 +1097,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
+  isXFlipped: 0
 --- !u!114 &11444950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1073,6 +1115,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 1, g: 0.6827586, b: 0, a: 1}
+  isXFlipped: 0
 --- !u!114 &11445516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1090,6 +1133,7 @@ MonoBehaviour:
   itemsAcrossX: 2
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.95862055, a: 1}
+  isXFlipped: 0
 --- !u!114 &11452764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1107,6 +1151,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 7
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11454132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1124,6 +1169,7 @@ MonoBehaviour:
   itemsAcrossX: 16
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11456522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1141,6 +1187,25 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 5
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
+--- !u!114 &11466802
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c94cfa2e4283046a7aee12a5f552f069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
+    type: 2}
+  objectType: 8
+  itemsAcrossX: 8
+  itemsAcrossZ: 9
+  color: {r: 1, g: 1, b: 1, a: 1}
+  isXFlipped: 0
 --- !u!114 &11467258
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1158,6 +1223,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
+  isXFlipped: 0
 --- !u!114 &11471586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1175,6 +1241,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 12
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11471680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1192,6 +1259,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 0.9862069, g: 1, b: 0, a: 1}
+  isXFlipped: 0
 --- !u!114 &11472304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1209,6 +1277,7 @@ MonoBehaviour:
   itemsAcrossX: 5
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11477000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1226,6 +1295,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
+  isXFlipped: 0
 --- !u!114 &11481692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1243,6 +1313,7 @@ MonoBehaviour:
   itemsAcrossX: 4
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11483798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1260,6 +1331,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 5
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!114 &11484852
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1277,6 +1349,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
+  isXFlipped: 0
 --- !u!114 &11492384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1294,6 +1367,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
+  isXFlipped: 0
 --- !u!114 &11492714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1311,6 +1385,7 @@ MonoBehaviour:
   itemsAcrossX: 1
   itemsAcrossZ: 5
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
+  isXFlipped: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

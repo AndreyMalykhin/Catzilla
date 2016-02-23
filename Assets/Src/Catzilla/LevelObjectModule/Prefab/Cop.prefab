@@ -631,7 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43715d89143b94592b01daf5f2f035f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShotSound: {fileID: 8300000, guid: 7628ab039bb07457986732e0994929de, type: 3}
+  ShotSound: {fileID: 8300000, guid: d7ddfbe745b4c42b58fb40f224a0045c, type: 3}
   AudioSource: {fileID: 8262606}
   projectileProto: {fileID: 11467526, guid: 362fec4312e394d09be04ce01ef081a4, type: 2}
   projectileSource: {fileID: 450834}
@@ -767,7 +767,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: ShotSound
       value: 
-      objectReference: {fileID: 8300000, guid: 7628ab039bb07457986732e0994929de, type: 3}
+      objectReference: {fileID: 8300000, guid: d7ddfbe745b4c42b58fb40f224a0045c, type: 3}
     - target: {fileID: 0}
       propertyPath: panLevelCustomCurve.m_RotationOrder
       value: 0

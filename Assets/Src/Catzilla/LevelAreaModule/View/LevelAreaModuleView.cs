@@ -4,6 +4,7 @@ using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.LevelModule.View;
+using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelAreaModule.Model;
 using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelAreaModule.Controller;
@@ -28,9 +29,10 @@ namespace Catzilla.LevelAreaModule.View {
             var eventBus = container.Resolve<EventBus>();
             var levelAreaController =
                 container.Resolve<LevelAreaController>();
-            eventBus.On(
-                LevelView.Event.Construct,
+            eventBus.On(LevelView.Event.Construct,
                 levelAreaController.OnLevelConstruct);
+            eventBus.On(PlayerView.Event.Construct,
+                levelAreaController.OnPlayerConstruct);
             eventBus.On(LevelAreaView.Event.TriggerEnter,
                 levelAreaController.OnTriggerEnter);
         }

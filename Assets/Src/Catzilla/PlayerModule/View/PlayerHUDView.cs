@@ -8,6 +8,9 @@ namespace Catzilla.PlayerModule.View {
         [Inject]
         public UIView UI {get; set;}
 
+        public PlayerHealthView Health;
+        public PlayerScoreView Score;
+
         [PostInject]
         public void OnConstruct() {
             bool isWorldPositionStays = false;

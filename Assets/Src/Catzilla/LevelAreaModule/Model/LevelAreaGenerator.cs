@@ -12,19 +12,8 @@ using Catzilla.LevelAreaModule.View;
 
 namespace Catzilla.LevelAreaModule.Model {
     public class LevelAreaGenerator {
-        private struct ObjectSpawnsInfo {
-            public LevelObjectType Type;
-            public int Count;
-        }
-
         [Inject]
         public ObjectTypeInfoStorage ObjectTypeInfoStorage {get; set;}
-
-        [Inject]
-        public EnvTypeInfoStorage EnvTypeInfoStorage {get; set;}
-
-        [Inject]
-        public LevelSettingsStorage LevelSettingsStorage {get; set;}
 
         [Inject("PlayerObjectType")]
         public LevelObjectType PlayerObjectType {get; set;}
@@ -33,36 +22,32 @@ namespace Catzilla.LevelAreaModule.Model {
             new Dictionary<Vector3, bool>();
 
         public void NewArea(
-            EnvType envType,
-            bool spawnPlayer,
+            EnvTypeInfo envTypeInfo,
+            SpawnsInfo[] spawnsInfos,
+            LevelSettings levelSettings,
             LevelView outputLevel,
             Action<LevelAreaView> onDone = null) {
             // DebugUtils.Log(
             //     "LevelAreaGenerator.NewArea(); envType={0}", envType);
             outputLevel.StartCoroutine(DoNewArea(
-                envType, spawnPlayer, outputLevel, onDone));
+                envTypeInfo, spawnsInfos, levelSettings, outputLevel, onDone));
         }
 
         private IEnumerator DoNewArea(
-            EnvType envType,
-            bool spawnPlayer,
+            EnvTypeInfo envTypeInfo,
+            SpawnsInfo[] spawnsInfos,
+            LevelSettings levelSettings,
             LevelView outputLevel,
             Action<LevelAreaView> onDone = null) {
             reservedSpawnPoints.Clear();
-            EnvTypeInfo envTypeInfo = EnvTypeInfoStorage.Get(envType);
-            LevelSettings levelSettings =
-                LevelSettingsStorage.Get(outputLevel.Index);
-            ObjectSpawnsInfo[] objectTypesToSpawn = GetObjectTypesToSpawn(
-                levelSettings, envTypeInfo, spawnPlayer);
             LevelAreaView area = outputLevel.NewArea(envTypeInfo);
 
-            for (int i = 0; i < objectTypesToSpawn.Length; ++i) {
-                ObjectSpawnsInfo objectTypeToSpawn = objectTypesToSpawn[i];
+            for (int i = 0; i < spawnsInfos.Length; ++i) {
+                SpawnsInfo spawnsInfo = spawnsInfos[i];
                 NewObjects(
-                    objectTypeToSpawn.Type,
-                    objectTypeToSpawn.Count,
+                    spawnsInfo.ObjectType,
+                    spawnsInfo.Count,
                     envTypeInfo,
-                    spawnPlayer,
                     area.Index,
                     levelSettings,
                     outputLevel);
@@ -78,7 +63,6 @@ namespace Catzilla.LevelAreaModule.Model {
             LevelObjectType objectType,
             int countToSpawn,
             EnvTypeInfo envTypeInfo,
-            bool spawnPlayer,
             int areaIndex,
             LevelSettings levelSettings,
             LevelView outputLevel) {
@@ -105,8 +89,7 @@ namespace Catzilla.LevelAreaModule.Model {
 
                 LevelObjectView obj = outputLevel.NewObject(
                     objectTypeInfo, spawnPoint, areaIndex);
-                InitObject(
-                    obj, objectTypeInfo, spawnLocation, levelSettings);
+                InitObject(obj, objectTypeInfo, spawnLocation, levelSettings);
                 ReserveSpawnPoint(spawnPoint);
             }
         }
@@ -137,63 +120,6 @@ namespace Catzilla.LevelAreaModule.Model {
 
         private void ReserveSpawnPoint(Vector3 point) {
             reservedSpawnPoints[point] = true;
-        }
-
-        private ObjectSpawnsInfo[] GetObjectTypesToSpawn(
-            LevelSettings levelSettings,
-            EnvTypeInfo envTypeInfo,
-            bool spawnPlayer) {
-            LevelObjectType[] objectTypes =
-                envTypeInfo.SpawnMap.GetObjectTypes();
-            Array.Sort(objectTypes, ObjectTypeComparator);
-            int objectTypesCount = objectTypes.Length;
-            var objectSpawnsInfos = new ObjectSpawnsInfo[objectTypesCount];
-
-            for (int i = 0; i < objectTypesCount; ++i) {
-                objectSpawnsInfos[i] =
-                    new ObjectSpawnsInfo{Type = objectTypes[i]};
-            }
-
-            int dangerousObjectsLeft = levelSettings.AreaDangerousObjects;
-            int scoreableObjectsLeft = levelSettings.AreaScoreableObjects;
-            int objectsCount = dangerousObjectsLeft + scoreableObjectsLeft;
-
-            for (int i = 0; i < objectsCount; ++i) {
-                int j = i % objectTypesCount;
-                ObjectSpawnsInfo objectSpawnsInfo = objectSpawnsInfos[j];
-                LevelObjectType objectType = objectSpawnsInfo.Type;
-                LevelObjectView objectProto =
-                    ObjectTypeInfoStorage.Get(objectType).ViewProto;
-
-                if (spawnPlayer && objectType == PlayerObjectType) {
-                    spawnPlayer = false;
-                } else if (objectProto.GetComponent<DangerousView>() != null) {
-                    if (dangerousObjectsLeft <= 0) {
-                        continue;
-                    }
-
-                    --dangerousObjectsLeft;
-                } else if (objectProto.GetComponent<ScoreableView>() != null) {
-                    if (scoreableObjectsLeft <= 0) {
-                        continue;
-                    }
-
-                    --scoreableObjectsLeft;
-                } else {
-                    continue;
-                }
-
-                ++objectSpawnsInfo.Count;
-                objectSpawnsInfos[j] = objectSpawnsInfo;
-            }
-
-            return objectSpawnsInfos;
-        }
-
-        private int ObjectTypeComparator(
-            LevelObjectType lhs, LevelObjectType rhs) {
-            return ObjectTypeInfoStorage.Get(lhs).SpawnPriority.CompareTo(
-                ObjectTypeInfoStorage.Get(rhs).SpawnPriority);
         }
 
         private void InitObject(

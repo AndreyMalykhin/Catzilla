@@ -2,6 +2,7 @@
 using System.Collections;
 using Zenject;
 using Catzilla.CommonModule.Util;
+using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.Model;
 using Catzilla.LevelModule.View;
 using Catzilla.LevelAreaModule.View;
@@ -15,9 +16,14 @@ namespace Catzilla.LevelAreaModule.Controller {
         public string PlayerFieldOfViewTag {get; set;}
 
         private LevelView level;
+        private PlayerView player;
 
         public void OnLevelConstruct(Evt evt) {
             level = (LevelView) evt.Source;
+        }
+
+        public void OnPlayerConstruct(Evt evt) {
+            player = (PlayerView) evt.Source;
         }
 
         public void OnTriggerEnter(Evt evt) {
@@ -34,7 +40,7 @@ namespace Catzilla.LevelAreaModule.Controller {
                 return;
             }
 
-            LevelGenerator.NewArea(level);
+            LevelGenerator.NewArea(player, level);
         }
     }
 }

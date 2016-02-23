@@ -764,9 +764,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collider: {fileID: 6510856}
   Camera: {fileID: 2010502}
-  HUDProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
+  HUD: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
   Animator: {fileID: 9551204}
   DeathSound: {fileID: 8300000, guid: 7b1a6f0e82bb648aa8d0338272804aed, type: 3}
+  HurtSound: {fileID: 8300000, guid: 087a55cb8829649678dba67b55c4b303, type: 3}
+  TreatSound: {fileID: 8300000, guid: c213560c407cb4b0ca287bb4e4afdff3, type: 3}
   FootstepSound: {fileID: 8300000, guid: f194de8b310994604b7fa1ac502fbc4e, type: 3}
   LowPrioAudioSource: {fileID: 8291638}
   HighPrioAudioSource: {fileID: 8275416}
@@ -780,6 +782,7 @@ MonoBehaviour:
   MaxHealth: 100
   CameraShakeDuration: 0.5
   CameraShakeMaxAmount: 1
+  HUDProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -895,7 +898,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: HurtSound
       value: 
-      objectReference: {fileID: 8300000, guid: 7b1a6f0e82bb648aa8d0338272804aed, type: 3}
+      objectReference: {fileID: 8300000, guid: 087a55cb8829649678dba67b55c4b303, type: 3}
     - target: {fileID: 0}
       propertyPath: m_audioClip
       value: 
@@ -1024,6 +1027,15 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: b76d08367d76347cdb9bbb677e3a5300, type: 3}
+    - target: {fileID: 0}
+      propertyPath: HUD
+      value: 
+      objectReference: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: TreatSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c213560c407cb4b0ca287bb4e4afdff3, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 103594}

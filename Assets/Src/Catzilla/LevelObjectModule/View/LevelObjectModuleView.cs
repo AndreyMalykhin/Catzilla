@@ -20,6 +20,9 @@ namespace Catzilla.LevelObjectModule.View {
         private string playerMeshTag;
 
         [SerializeField]
+        private string playerTag;
+
+        [SerializeField]
         private string playerFieldOfViewTag;
 
         [SerializeField]
@@ -35,10 +38,13 @@ namespace Catzilla.LevelObjectModule.View {
             container.Bind<ScoreableController>().ToSingle();
             container.Bind<ProjectileController>().ToSingle();
             container.Bind<ActivatableController>().ToSingle();
+            container.Bind<BonusController>().ToSingle();
+            container.Bind<TreatingController>().ToSingle();
             container.Bind<WorldSpacePopupView>("ScorePopupProto")
                 .ToInstance(scorePopupProto);
             container.Bind<LevelObjectType>("PlayerObjectType")
                 .ToInstance(LevelObjectType.Player);
+            container.Bind<string>("PlayerTag").ToInstance(playerTag);
             container.Bind<string>("PlayerMeshTag").ToInstance(playerMeshTag);
             container.Bind<string>("PlayerFieldOfViewTag")
                 .ToInstance(playerFieldOfViewTag);
@@ -76,17 +82,31 @@ namespace Catzilla.LevelObjectModule.View {
             eventBus.On(ShootingView.Event.Shot,
                 shootingContoller.OnShot);
 
+            var bonusController = container.Resolve<BonusController>();
+            eventBus.On(
+                BonusView.Event.Destroy, bonusController.OnViewDestroy);
+            eventBus.On(
+                BonusView.Event.TriggerEnter, bonusController.OnTriggerEnter);
+
             var activatableContoller =
                 container.Resolve<ActivatableController>();
             eventBus.On(ActivatableView.Event.TriggerEnter,
                 activatableContoller.OnTriggerEnter);
 
+            var treatingController = container.Resolve<TreatingController>();
+            eventBus.On(TreatingView.Event.TriggerEnter,
+                treatingController.OnTriggerEnter);
+
             var playerController =
                 container.Resolve<PlayerController>();
+            eventBus.On(PlayerView.Event.Construct,
+                playerController.OnViewConstruct);
             eventBus.On(PlayerView.Event.Death,
                 playerController.OnDeath);
             eventBus.On(PlayerView.Event.ScoreChange,
                 playerController.OnScoreChange);
+            eventBus.On(PlayerView.Event.HealthChange,
+                playerController.OnHealthChange);
             eventBus.On(PlayerView.Event.Resurrect,
                 playerController.OnResurrect);
             eventBus.On(PlayerView.Event.Footstep,

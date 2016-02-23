@@ -4,8 +4,7 @@ using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelObjectModule.View {
-    public class ActivatableView
-        : MonoBehaviour, IPoolable {
+    public class ActivatableView: MonoBehaviour, IPoolable {
         public enum Event {TriggerEnter}
 
         [Inject]
@@ -16,7 +15,7 @@ namespace Catzilla.LevelObjectModule.View {
 
         [PostInject]
         public void OnConstruct() {
-            Reset();
+            behaviour.enabled = false;
         }
 
         public void Activate() {
@@ -24,7 +23,7 @@ namespace Catzilla.LevelObjectModule.View {
             behaviour.enabled = true;
         }
 
-        public void Reset() {
+        void IPoolable.Reset() {
             behaviour.enabled = false;
         }
 

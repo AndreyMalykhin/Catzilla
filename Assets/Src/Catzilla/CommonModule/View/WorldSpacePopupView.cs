@@ -70,7 +70,7 @@ namespace Catzilla.CommonModule.View {
             FitIntoCamera();
         }
 
-        public void Reset() {
+        void IPoolable.Reset() {
             canvas.enabled = false;
             LookAtTarget = null;
             OnHide = null;

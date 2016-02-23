@@ -33,9 +33,11 @@ namespace Catzilla.LevelObjectModule.View {
 
         public Collider Collider;
         public Camera Camera;
-        public PlayerHUDView HUDProto;
+        public PlayerHUDView HUD;
         public Animator Animator;
         public AudioClip DeathSound;
+        public AudioClip HurtSound;
+        public AudioClip TreatSound;
         public AudioClip FootstepSound;
         public AudioSource LowPrioAudioSource;
         public AudioSource HighPrioAudioSource;
@@ -51,13 +53,11 @@ namespace Catzilla.LevelObjectModule.View {
         public float CameraShakeMaxAmount = 1f;
 
         public int Score {
-            get {
-                return score;
-            }
+            get {return score;}
             set {
                 // DebugUtils.Log("PlayerView.Score set");
 
-                if (IsScoreFreezed) {
+                if (IsScoreFreezed || score == value) {
                     return;
                 }
 
@@ -67,11 +67,9 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         public int Health {
-            get {
-                return health;
-            }
+            get {return health;}
             set {
-                if (IsHealthFreezed) {
+                if (IsHealthFreezed || health == value) {
                     return;
                 }
 
@@ -87,6 +85,9 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
+        [SerializeField]
+        private PlayerHUDView HUDProto;
+
         private Vector3 cameraShakeAmount;
         private IEnumerator cameraShakeCoroutine;
         private Vector3 cameraStartPosition;
@@ -98,7 +99,6 @@ namespace Catzilla.LevelObjectModule.View {
         private float targetX;
         private float nextFootstepTime;
         private Rigidbody body;
-        private PlayerHUDView HUD;
 
         [PostInject]
         public void OnConstruct() {
@@ -121,8 +121,8 @@ namespace Catzilla.LevelObjectModule.View {
 
             isDead = false;
             targetX = body.position.x;
-            Health = MaxHealth;
             Animator.enabled = true;
+            Health = MaxHealth;
             EventBus.Fire(Event.Resurrect, new Evt(this));
         }
 
