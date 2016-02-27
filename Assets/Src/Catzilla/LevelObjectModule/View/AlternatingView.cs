@@ -3,10 +3,10 @@ using UnityEngine;
 namespace Catzilla.LevelObjectModule.View {
     public class AlternatingView: MonoBehaviour {
         public Material Material {
-            get {return renderers[0].material;}
+            get {return renderers[0].sharedMaterial;}
             set {
                 for (int i = 0; i < renderers.Length; ++i) {
-                    renderers[i].material = value;
+                    renderers[i].sharedMaterial = value;
                 }
             }
         }

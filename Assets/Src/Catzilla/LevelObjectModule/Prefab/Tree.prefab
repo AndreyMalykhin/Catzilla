@@ -31,6 +31,7 @@ GameObject:
   - 114: {fileID: 11466756}
   - 114: {fileID: 11497770}
   - 114: {fileID: 11412472}
+  - 114: {fileID: 11420818}
   m_Layer: 11
   m_Name: Tree
   m_TagString: Untagged
@@ -64,6 +65,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 432486}
   - 65: {fileID: 6506634}
+  - 23: {fileID: 2374372}
+  - 33: {fileID: 3307822}
   m_Layer: 11
   m_Name: Mesh
   m_TagString: Untagged
@@ -174,6 +177,39 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!23 &2374372
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172048}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 42ff4d0a28952401a9ee82118a020745, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &3307822
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172048}
+  m_Mesh: {fileID: 0}
 --- !u!33 &3380442
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -238,6 +274,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cabe621d1034ff09371fab4a1430ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11420818
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9c1dba39117c47bd80ab8c3fc50ff88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parts:
+  - {fileID: 3397348}
+  - {fileID: 3380442}
+  output: {fileID: 3307822}
+  keepParts: 0
 --- !u!114 &11466756
 MonoBehaviour:
   m_ObjectHideFlags: 1

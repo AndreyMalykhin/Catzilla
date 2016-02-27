@@ -26,6 +26,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 459790}
   - 65: {fileID: 6578506}
+  - 23: {fileID: 2341692}
+  - 33: {fileID: 3370822}
   m_Layer: 11
   m_Name: Mesh
   m_TagString: Untagged
@@ -101,6 +103,7 @@ GameObject:
   - 114: {fileID: 11416118}
   - 114: {fileID: 11429934}
   - 114: {fileID: 11401930}
+  - 114: {fileID: 11407524}
   m_Layer: 11
   m_Name: CivilianCar
   m_TagString: Untagged
@@ -297,6 +300,32 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!23 &2341692
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126614}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 5ab46dcef740a4bcab76892ad3841a58, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!23 &2379006
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -422,6 +451,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105016}
   m_Mesh: {fileID: 4300012, guid: 073d7c6ce63e0407d8e49075ae64f6d0, type: 3}
+--- !u!33 &3370822
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126614}
+  m_Mesh: {fileID: 0}
 --- !u!33 &3375822
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -482,12 +518,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderers:
-  - {fileID: 2393370}
-  - {fileID: 2391512}
-  - {fileID: 2385862}
-  - {fileID: 2316184}
-  - {fileID: 2379006}
-  - {fileID: 2319734}
+  - {fileID: 2341692}
+--- !u!114 &11407524
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9c1dba39117c47bd80ab8c3fc50ff88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parts:
+  - {fileID: 3313670}
+  - {fileID: 3344988}
+  - {fileID: 3398840}
+  - {fileID: 3340136}
+  - {fileID: 3378940}
+  - {fileID: 3375822}
+  output: {fileID: 3370822}
+  keepParts: 0
 --- !u!114 &11414792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -582,6 +633,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: renderers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_IsTrigger
       value: 1
@@ -696,6 +751,30 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: renderers.Array.data[0]
+      value: 
+      objectReference: {fileID: 2393370}
+    - target: {fileID: 0}
+      propertyPath: renderers.Array.data[1]
+      value: 
+      objectReference: {fileID: 2391512}
+    - target: {fileID: 0}
+      propertyPath: renderers.Array.data[2]
+      value: 
+      objectReference: {fileID: 2385862}
+    - target: {fileID: 0}
+      propertyPath: renderers.Array.data[3]
+      value: 
+      objectReference: {fileID: 2316184}
+    - target: {fileID: 0}
+      propertyPath: renderers.Array.data[4]
+      value: 
+      objectReference: {fileID: 2379006}
+    - target: {fileID: 0}
+      propertyPath: renderers.Array.data[5]
+      value: 
+      objectReference: {fileID: 2319734}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 178306}

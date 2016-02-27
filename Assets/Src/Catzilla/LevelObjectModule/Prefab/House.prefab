@@ -15,6 +15,7 @@ GameObject:
   - 114: {fileID: 11461670}
   - 114: {fileID: 11488714}
   - 114: {fileID: 11446390}
+  - 114: {fileID: 11486688}
   m_Layer: 11
   m_Name: House
   m_TagString: Untagged
@@ -99,6 +100,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 466528}
   - 65: {fileID: 6514876}
+  - 33: {fileID: 3302116}
+  - 23: {fileID: 2315858}
   m_Layer: 11
   m_Name: Mesh
   m_TagString: Untagged
@@ -441,6 +444,32 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!23 &2315858
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138524}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 53563918035b744a78961f7d05734077, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!23 &2328134
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -623,6 +652,13 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!33 &3302116
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138524}
+  m_Mesh: {fileID: 0}
 --- !u!33 &3317098
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -744,16 +780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderers:
-  - {fileID: 2399250}
-  - {fileID: 2328134}
-  - {fileID: 2397902}
-  - {fileID: 2343700}
-  - {fileID: 2391896}
-  - {fileID: 2371720}
-  - {fileID: 2303378}
-  - {fileID: 2370942}
-  - {fileID: 2301322}
-  - {fileID: 2309430}
+  - {fileID: 2315858}
 --- !u!114 &11454048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -790,6 +817,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cabe621d1034ff09371fab4a1430ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11486688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9c1dba39117c47bd80ab8c3fc50ff88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parts:
+  - {fileID: 3334394}
+  - {fileID: 3317098}
+  - {fileID: 3359112}
+  - {fileID: 3367402}
+  - {fileID: 3396194}
+  - {fileID: 3318924}
+  - {fileID: 3349646}
+  - {fileID: 3317238}
+  - {fileID: 3335294}
+  - {fileID: 3334290}
+  output: {fileID: 3302116}
+  keepParts: 0
 --- !u!114 &11488714
 MonoBehaviour:
   m_ObjectHideFlags: 1

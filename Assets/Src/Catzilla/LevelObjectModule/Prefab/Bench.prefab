@@ -99,6 +99,7 @@ GameObject:
   - 114: {fileID: 11469974}
   - 114: {fileID: 11469876}
   - 114: {fileID: 11434098}
+  - 114: {fileID: 11435932}
   m_Layer: 11
   m_Name: Bench
   m_TagString: Untagged
@@ -115,6 +116,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 455520}
   - 65: {fileID: 6531034}
+  - 23: {fileID: 2320950}
+  - 33: {fileID: 3345612}
   m_Layer: 11
   m_Name: Mesh
   m_TagString: Untagged
@@ -354,6 +357,32 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!23 &2320950
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157522}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 8cd3c5ae6669b4715a69a564b955df73, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!23 &2324956
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -531,6 +560,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143042}
   m_Mesh: {fileID: 4300004, guid: 87558fecaf7ac48d2ae9a86a057481f5, type: 3}
+--- !u!33 &3345612
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157522}
+  m_Mesh: {fileID: 0}
 --- !u!33 &3348996
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -616,6 +652,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 0}
+--- !u!114 &11435932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9c1dba39117c47bd80ab8c3fc50ff88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parts:
+  - {fileID: 3316610}
+  - {fileID: 3389754}
+  - {fileID: 3351242}
+  - {fileID: 3354270}
+  - {fileID: 3318134}
+  - {fileID: 3348996}
+  - {fileID: 3317870}
+  - {fileID: 3383784}
+  output: {fileID: 3345612}
+  keepParts: 0
 --- !u!114 &11469876
 MonoBehaviour:
   m_ObjectHideFlags: 1
