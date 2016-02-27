@@ -12,29 +12,14 @@ MonoBehaviour:
   m_Name: LevelSettingsStorage
   m_EditorClassIdentifier: 
   minLevelDuration: 60
-  levelDurationFactor: 4
-  areaMinScoreableObjects: 8
-  areaMaxScoreableObjects: 16
-  areaScoreableObjectsLevelFactor: 1
-  areaMinDangerousObjects: 4
-  areaMaxDangerousObjects: 8
-  areaDangerousObjectsLevelFactor: 0.5
-  minBonusObjects: 0
-  maxBonusObjects: 8
-  bonusObjectsLevelFactor: 0.25
-  bonusObjectSpawnChance: 0.5
-  playerMinFrontSpeed: 6
+  levelDurationFactor: 8
+  areaAvgDangerousObjectTypes: 2
+  areaAvgScoreableObjectTypes: 3
+  playerMinFrontSpeed: 8
   playerMaxFrontSpeed: 8
-  playerFrontSpeedLevelFactor: 0.25
-  playerMinSideSpeed: 3
+  playerFrontSpeedLevelFactor: 0
+  playerMinSideSpeed: 4
   playerMaxSideSpeed: 4
-  playerSideSpeedLevelFactor: 0.125
+  playerSideSpeedLevelFactor: 0
   resurrectionMinReward: 1
   resurrectionRewardLevelFactor: 0
-  scoreableProtos:
-  - {fileID: 11486824, guid: ebafc7a142f1b49239bb80c5acd77cff, type: 2}
-  - {fileID: 11472518, guid: 2c5eb218dc3e146e0bdd4c67bcc3a0fc, type: 2}
-  - {fileID: 11487140, guid: 0324569a0fc1b453298859cca044e670, type: 2}
-  - {fileID: 11499050, guid: 3b9d536b6da514d61909a345aa7d0a7d, type: 2}
-  - {fileID: 11454048, guid: d7ff927bcea514b0aa2d4d2e91fc4834, type: 2}
-  - {fileID: 11463986, guid: 1561155c1eb1b4dd8b20c99800c081cd, type: 2}

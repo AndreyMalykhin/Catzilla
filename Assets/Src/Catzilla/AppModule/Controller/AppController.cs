@@ -35,10 +35,9 @@ namespace Catzilla.AppModule.Controller {
 
             if (playerState == null) {
                 playerState = new PlayerState();
+                PlayerStateStorage.Save(playerState);
             }
 
-            playerState.LastSeenDate = DateTime.UtcNow;
-            PlayerStateStorage.Save(playerState);
             Server.Connect(OnServerConnectSuccess, OnServerConnectFail);
         }
 
@@ -61,17 +60,19 @@ namespace Catzilla.AppModule.Controller {
         }
 
         private void ShowMainScreen() {
-            MainScreen.Show();
             PlayerState playerState = PlayerStateStorage.Get();
 
             if (GiftManager.IsDeserved(playerState)) {
                 int givenResurrectionsCount = GiftManager.Give(playerState);
-                PlayerStateStorage.Save(playerState);
                 ScreenSpacePopupView popup = PopupManager.Get();
                 popup.Msg.text = Translator.Translate(
                     "Player.GiftEarn", givenResurrectionsCount);
                 PopupManager.Show(popup);
             }
+
+            playerState.LastSeenDate = DateTime.UtcNow;
+            PlayerStateStorage.Save(playerState);
+            MainScreen.Show();
         }
     }
 }

@@ -53,6 +53,12 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject]
         public GiftManager GiftManager {get; set;}
 
+        [Inject]
+        public ScreenSpacePopupManagerView PopupManager {get; set;}
+
+        [Inject]
+        public Translator Translator {get; set;}
+
         private PlayerView player;
 
         public void OnViewConstruct(Evt evt) {
@@ -118,7 +124,7 @@ namespace Catzilla.LevelObjectModule.Controller {
                     player.HighPrioAudioSource,
                     PlayerHighPrioAudioChannel,
                     pitch);
-            } else {
+            } else if (player.Health > oldHealth) {
                 if (player.TreatSound == null) {
                     return;
                 }
@@ -158,7 +164,11 @@ namespace Catzilla.LevelObjectModule.Controller {
             AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
             AnalyticsUtils.LogEvent("Level.Completion");
             GiveAchievementIfNeeded(playerState);
-            GiftManager.Give(playerState);
+            int givenResurrectionsCount = GiftManager.Give(playerState);
+            ScreenSpacePopupView popup = PopupManager.Get();
+            popup.Msg.text = Translator.Translate(
+                "Player.GiftEarn", givenResurrectionsCount);
+            PopupManager.Show(popup);
             ++playerState.Level;
             playerState.ScoreRecord = player.Score;
             PlayStopwatch.Stop();

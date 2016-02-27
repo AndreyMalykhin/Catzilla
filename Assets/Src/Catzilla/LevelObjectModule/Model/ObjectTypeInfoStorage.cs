@@ -17,6 +17,10 @@ namespace Catzilla.LevelObjectModule.Model {
             return itemsMap[type];
         }
 
+        public ICollection<ObjectTypeInfo> GetAll() {
+            return itemsMap.Values;
+        }
+
         private void OnEnable() {
             for (int i = 0; i < items.Length; ++i) {
                 itemsMap.Add(items[i].Type, items[i]);

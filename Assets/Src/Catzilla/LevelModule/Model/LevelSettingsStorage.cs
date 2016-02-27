@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using Zenject;
+using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.View;
+using Catzilla.LevelObjectModule.Model;
 
 namespace Catzilla.LevelModule.Model {
     [CreateAssetMenuAttribute]
@@ -16,34 +18,10 @@ namespace Catzilla.LevelModule.Model {
         private int levelDurationFactor = 10;
 
         [SerializeField]
-        private int areaMinScoreableObjects = 4;
+        private int areaAvgDangerousObjectTypes = 2;
 
         [SerializeField]
-        private int areaMaxScoreableObjects = 16;
-
-        [SerializeField]
-        private float areaScoreableObjectsLevelFactor = 2f;
-
-        [SerializeField]
-        private int areaMinDangerousObjects = 2;
-
-        [SerializeField]
-        private int areaMaxDangerousObjects = 8;
-
-        [SerializeField]
-        private float areaDangerousObjectsLevelFactor = 1f;
-
-        [SerializeField]
-        private int minBonusObjects = 1;
-
-        [SerializeField]
-        private int maxBonusObjects = 4;
-
-        [SerializeField]
-        private float bonusObjectsLevelFactor = 0.1f;
-
-        [SerializeField]
-        private float bonusObjectSpawnChance = 0.1f;
+        private int areaAvgScoreableObjectTypes = 3;
 
         [SerializeField]
         private float playerMinFrontSpeed = 4f;
@@ -69,9 +47,6 @@ namespace Catzilla.LevelModule.Model {
         [SerializeField]
         private float resurrectionRewardLevelFactor = 0.2f;
 
-        [SerializeField]
-        private ScoreableView[] scoreableProtos;
-
         [Inject("LevelAreaDepth")]
         [NonSerialized]
         private float areaDepth;
@@ -79,6 +54,9 @@ namespace Catzilla.LevelModule.Model {
         [Inject("LevelAreaWidth")]
         [NonSerialized]
         private float areaWidth;
+
+        [Inject]
+        private ObjectTypeInfoStorage objectTypeInfoStorage;
 
         [NonSerialized]
         private readonly IDictionary<int, LevelSettings> items =
@@ -96,53 +74,60 @@ namespace Catzilla.LevelModule.Model {
         }
 
         private LevelSettings MakeItem(int levelIndex) {
-            float objectAvgScore = 0f;
+            float areaAvgDangerousObjects = 0;
+            float areaAvgScoreableObjects = 0;
+            var objectTypeInfos = objectTypeInfoStorage.GetAll();
+            var objectScores = new List<int>(objectTypeInfos.Count);
 
-            for (int i = 0; i < scoreableProtos.Length; ++i) {
-                objectAvgScore += scoreableProtos[i].Score;
+            foreach (ObjectTypeInfo objectTypeInfo in objectTypeInfos) {
+                LevelObjectView objectProto = objectTypeInfo.ViewProto;
+
+                if (objectProto.GetComponent<DangerousView>() != null) {
+                    areaAvgDangerousObjects +=
+                        objectTypeInfo.GetSpawnsPerArea(levelIndex);
+                }
+
+                if (objectProto.GetComponent<ScoreableView>() != null) {
+                    objectScores.Add(
+                        objectProto.GetComponent<ScoreableView>().Score);
+                    areaAvgScoreableObjects +=
+                        objectTypeInfo.GetSpawnsPerArea(levelIndex);
+                }
             }
 
-            objectAvgScore /= scoreableProtos.Length;
+            areaAvgDangerousObjects *=
+                (float) areaAvgDangerousObjectTypes / objectTypeInfos.Count;
+            areaAvgScoreableObjects *=
+                (float) areaAvgScoreableObjectTypes / objectTypeInfos.Count;
             float playerFrontSpeed = Mathf.Min(playerMinFrontSpeed +
                 levelIndex * playerFrontSpeedLevelFactor, playerMaxFrontSpeed);
             float playerSideSpeed = Mathf.Min(playerMinSideSpeed +
                 levelIndex * playerSideSpeedLevelFactor, playerMaxSideSpeed);
             float areaPassTime = areaDepth / playerFrontSpeed;
-            float areaDangerousObjects = Mathf.Min(
-                areaMinDangerousObjects + levelIndex *
-                    areaDangerousObjectsLevelFactor,
-                areaMaxDangerousObjects);
-            float areaScoreableObjects = Mathf.Min(
-                areaMinScoreableObjects + levelIndex *
-                    areaScoreableObjectsLevelFactor,
-                areaMaxScoreableObjects);
-            float bonusObjects = Mathf.Min(
-                minBonusObjects + levelIndex * bonusObjectsLevelFactor,
-                maxBonusObjects);
             float objectReachabilityPlayerFrontSpeedFactor =
-                1f - playerFrontSpeed / areaDepth;
+                1f - Mathf.Log(playerFrontSpeed) / Mathf.Log(areaDepth + 1);
             float objectReachabilityPlayerSideSpeedFactor =
-                Mathf.Log(playerSideSpeed) / Mathf.Log(areaWidth);
-            float objectReachabilityDangerFactor = 1 - Mathf.Pow(
-                areaDangerousObjects / (areaMaxDangerousObjects + 1), 2f);
+                playerSideSpeed / areaWidth;
+            float objectReachabilityDangerFactor =
+                1 - areaAvgDangerousObjects / (areaAvgScoreableObjects + 1);
             float objectReachability =
                 (objectReachabilityPlayerFrontSpeedFactor +
                 objectReachabilityPlayerSideSpeedFactor +
                 objectReachabilityDangerFactor) / 3f;
+            objectScores.Sort();
+            float objectAvgScore =
+                objectScores[Mathf.CeilToInt(0.75f * objectScores.Count) - 1];
             float areaAvgScore = objectReachability *
-                areaScoreableObjects * objectAvgScore;
+                areaAvgScoreableObjects * objectAvgScore;
             float avgScorePerSec = areaAvgScore / areaPassTime;
             float completionScore = (minLevelDuration + levelIndex *
                 levelDurationFactor) * avgScorePerSec;
             float resurrectionReward = resurrectionMinReward + levelIndex *
                 resurrectionRewardLevelFactor;
+            // DebugUtils.Log("LevelSettingsStorage.MakeItem(); objectReachabilityPlayerFrontSpeedFactor={0}; objectReachabilityPlayerSideSpeedFactor={1}; objectReachabilityDangerFactor={2}; objectReachability={3}; objectAvgScore={4}", objectReachabilityPlayerFrontSpeedFactor, objectReachabilityPlayerSideSpeedFactor, objectReachabilityDangerFactor, objectReachability, objectAvgScore);
             return new LevelSettings(
                 levelIndex,
                 (int) completionScore,
-                (int) areaDangerousObjects,
-                (int) areaScoreableObjects,
-                (int) bonusObjects,
-                bonusObjectSpawnChance,
                 playerFrontSpeed,
                 playerSideSpeed,
                 (int) resurrectionReward);

@@ -25,13 +25,7 @@ namespace Catzilla.LevelObjectModule.Controller {
 
         public void OnViewDestroy(Evt evt) {
             // DebugUtils.Log("BonusController.OnViewDestroy()");
-            var bonus = (BonusView) evt.Source;
-
-            if (bonus.IsTaken) {
-                return;
-            }
-
-            ++levelGenerator.BonusObjectsLeft;
+            --levelGenerator.ActiveBonusObjects;
         }
     }
 }

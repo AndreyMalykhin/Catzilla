@@ -9,7 +9,6 @@ namespace Catzilla.LevelAreaModule.Model {
     public class EnvTypeInfo {
         public EnvType Type {get {return type;}}
         public LevelAreaView ViewProto {get {return viewProto;}}
-        public int SpawnWeight {get {return spawnWeight;}}
         public SpawnMapView SpawnMap {get {return spawnMap;}}
 
         [SerializeField]
@@ -19,9 +18,16 @@ namespace Catzilla.LevelAreaModule.Model {
         private LevelAreaView viewProto;
 
         [SerializeField]
-        private int spawnWeight = 1;
+        private SpawnMapView spawnMap;
 
         [SerializeField]
-        private SpawnMapView spawnMap;
+        private int minSpawnWeight = 1;
+
+        [SerializeField]
+        private float spawnWeightLevelFactor;
+
+        public int GetSpawnWeight(int levelIndex) {
+            return minSpawnWeight + (int) (levelIndex * spawnWeightLevelFactor);
+        }
     }
 }

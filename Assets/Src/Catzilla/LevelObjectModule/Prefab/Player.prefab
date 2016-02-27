@@ -253,7 +253,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 190784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7, z: 12}
+  m_LocalPosition: {x: 0, y: 7, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 406494}
@@ -265,7 +265,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121812}
   m_LocalRotation: {x: 0.5299193, y: 0, z: 0, w: 0.8480481}
-  m_LocalPosition: {x: 0, y: 16, z: 4}
+  m_LocalPosition: {x: 0, y: 16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 432502}
@@ -808,7 +808,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.z
-      value: 12
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_IsTrigger
@@ -1036,6 +1036,10 @@ Prefab:
       propertyPath: TreatSound
       value: 
       objectReference: {fileID: 8300000, guid: c213560c407cb4b0ca287bb4e4afdff3, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 103594}

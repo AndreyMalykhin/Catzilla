@@ -47,7 +47,7 @@ namespace Catzilla.LevelModule.Model {
         public LevelObjectType PlayerObjectType {get; set;}
 
         public int InitialAreasCount {get {return 2;}}
-        public int BonusObjectsLeft {get; set;}
+        public int ActiveBonusObjects {get; set;}
 
         private State nextState;
         private readonly IDictionary<State, StateTransition[]> states =
@@ -91,7 +91,7 @@ namespace Catzilla.LevelModule.Model {
             nextState = State.Start;
             LevelSettings levelSettings =
                 LevelSettingsStorage.Get(outputLevel.Index);
-            BonusObjectsLeft = levelSettings.BonusObjects;
+            ActiveBonusObjects = 0;
             PlayerView player = null;
             bool spawnPlayer = true;
             NewArea(
@@ -127,7 +127,7 @@ namespace Catzilla.LevelModule.Model {
             LevelView outputLevel,
             PlayerView player = null,
             Action<LevelAreaView> onDone = null) {
-            EnvType envType = NextState();
+            EnvType envType = NextState(levelSettings);
             EnvTypeInfo envTypeInfo = EnvTypeInfoStorage.Get(envType);
             SpawnsInfo[] spawnsInfos =
                 GetSpawnsInfos(levelSettings, envTypeInfo, spawnPlayer, player);
@@ -139,25 +139,28 @@ namespace Catzilla.LevelModule.Model {
                 onDone);
         }
 
-        private EnvType NextState() {
+        private EnvType NextState(LevelSettings levelSettings) {
             StateTransition[] stateTransitions = states[nextState];
             int stateTransitionsCount = stateTransitions.Length;
             int weightsSum = 0;
+            int levelIndex = levelSettings.Index;
 
             for (int i = 0; i < stateTransitionsCount; ++i) {
-                weightsSum += EnvTypeInfoStorage.Get(
-                    stateTransitions[i].EnvType).SpawnWeight;
+                EnvTypeInfo envTypeInfo =
+                    EnvTypeInfoStorage.Get(stateTransitions[i].EnvType);
+                weightsSum += envTypeInfo.GetSpawnWeight(levelIndex);
             }
 
             int randomWeight = UnityEngine.Random.Range(1, weightsSum + 1);
-            int weightIntervalEnd = 0;
+            int currentWeight = 0;
 
             for (int i = 0; i < stateTransitionsCount; ++i) {
                 var stateTransition = stateTransitions[i];
-                weightIntervalEnd += EnvTypeInfoStorage.Get(
-                    stateTransition.EnvType).SpawnWeight;
+                EnvTypeInfo envTypeInfo =
+                    EnvTypeInfoStorage.Get(stateTransition.EnvType);
+                currentWeight += envTypeInfo.GetSpawnWeight(levelIndex);
 
-                if (weightIntervalEnd >= randomWeight) {
+                if (currentWeight >= randomWeight) {
                     nextState = stateTransition.NextState;
                     return stateTransition.EnvType;
                 }
@@ -179,51 +182,32 @@ namespace Catzilla.LevelModule.Model {
             var spawnsInfos = new SpawnsInfo[objectTypesCount];
 
             for (int i = 0; i < objectTypesCount; ++i) {
-                spawnsInfos[i] = new SpawnsInfo{ObjectType = objectTypes[i]};
-            }
+                LevelObjectType objectType = objectTypes[i];
+                ObjectTypeInfo objectTypeInfo =
+                    ObjectTypeInfoStorage.Get(objectType);
+                LevelObjectView objectProto = objectTypeInfo.ViewProto;
+                int spawnsCount =
+                    objectTypeInfo.GetSpawnsPerArea(levelSettings.Index);
 
-            int dangerousObjectsLeft = levelSettings.AreaDangerousObjects;
-            int scoreableObjectsLeft = levelSettings.AreaScoreableObjects;
-            int objectsCount = dangerousObjectsLeft + scoreableObjectsLeft;
-            bool isBonusSpawned = false;
-
-            for (int i = 0; i < objectsCount; ++i) {
-                int j = i % objectTypesCount;
-                SpawnsInfo spawnsInfo = spawnsInfos[j];
-                LevelObjectType objectType = spawnsInfo.ObjectType;
-                LevelObjectView objectProto =
-                    ObjectTypeInfoStorage.Get(objectType).ViewProto;
-
-                if (spawnPlayer && objectType == PlayerObjectType) {
-                    spawnPlayer = false;
-                } else if (objectProto.GetComponent<DangerousView>() != null) {
-                    if (dangerousObjectsLeft <= 0) {
-                        continue;
-                    }
-
-                    --dangerousObjectsLeft;
-                } else if (objectProto.GetComponent<BonusView>() != null) {
-                    if (isBonusSpawned
-                        || player == null
-                        || !IsPlayerNeedsHelp(player)
-                        || !CanHelpPlayer(levelSettings)) {
-                        continue;
-                    }
-
-                    isBonusSpawned = true;
-                    --BonusObjectsLeft;
-                } else if (objectProto.GetComponent<ScoreableView>() != null) {
-                    if (scoreableObjectsLeft <= 0) {
-                        continue;
-                    }
-
-                    --scoreableObjectsLeft;
-                } else {
-                    continue;
+                if (objectTypeInfo.IsSpawnsCountRandom) {
+                    spawnsCount = UnityEngine.Random.Range(
+                        objectTypeInfo.MinSpawnsPerArea, spawnsCount + 1);
                 }
 
-                ++spawnsInfo.Count;
-                spawnsInfos[j] = spawnsInfo;
+                if (objectType == PlayerObjectType) {
+                    spawnsCount = spawnPlayer ? 1 : 0;
+                    spawnPlayer = false;
+                } else if (objectProto.GetComponent<BonusView>() != null) {
+                    if (player == null
+                        || ActiveBonusObjects > 0
+                        || !IsPlayerNeedsHelp(player)) {
+                        spawnsCount = 0;
+                    } else {
+                        ActiveBonusObjects += spawnsCount;
+                    }
+                }
+
+                spawnsInfos[i] = new SpawnsInfo(objectType, spawnsCount);
             }
 
             return spawnsInfos;
@@ -231,11 +215,6 @@ namespace Catzilla.LevelModule.Model {
 
         private bool IsPlayerNeedsHelp(PlayerView player) {
             return player.Health < player.MaxHealth;
-        }
-
-        private bool CanHelpPlayer(LevelSettings levelSettings) {
-            return BonusObjectsLeft > 0 && UnityEngine.Random.value <=
-                levelSettings.BonusObjectSpawnChance;
         }
 
         private int ObjectTypeComparator(

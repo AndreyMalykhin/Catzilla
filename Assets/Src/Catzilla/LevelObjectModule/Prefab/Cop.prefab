@@ -648,7 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 40
+  Score: 80
   Collider: {fileID: 6559874}
 --- !u!114 &11495818
 MonoBehaviour:
@@ -794,10 +794,14 @@ Prefab:
       objectReference: {fileID: 6559874}
     - target: {fileID: 0}
       propertyPath: Score
-      value: 40
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxDelay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
