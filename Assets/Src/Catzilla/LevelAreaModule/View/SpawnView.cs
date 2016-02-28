@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelAreaModule.Model;
 
@@ -12,13 +14,23 @@ namespace Catzilla.LevelAreaModule.View {
             }
         }
 
-        public LevelObjectType ObjectType {get {return objectType;}}
+        public List<LevelObjectType> ObjectTypes {
+            get {
+                CheckExtraObjectTypes();
+                var result = new List<LevelObjectType>(extraObjectTypes);
+                result.Add(objectType);
+                return result;
+            }
+        }
 
         [SerializeField]
         private ObjectTypeInfoStorage objectTypeInfoStorage;
 
         [SerializeField]
         private LevelObjectType objectType;
+
+        [SerializeField]
+        private LevelObjectType[] extraObjectTypes;
 
         [SerializeField]
         private int itemsAcrossX = 1;
@@ -44,6 +56,20 @@ namespace Catzilla.LevelAreaModule.View {
                 itemsAcrossX * objectTypeInfo.Width,
                 0f,
                 itemsAcrossZ * objectTypeInfo.Depth);
+        }
+
+        private void CheckExtraObjectTypes() {
+            ObjectTypeInfo objectTypeInfo =
+                objectTypeInfoStorage.Get(objectType);
+
+            for (int i = 0; i < extraObjectTypes.Length; ++i) {
+                ObjectTypeInfo extraObjectTypeInfo =
+                    objectTypeInfoStorage.Get(extraObjectTypes[i]);
+                DebugUtils.Assert(
+                    objectTypeInfo.Width == extraObjectTypeInfo.Width);
+                DebugUtils.Assert(
+                    objectTypeInfo.Depth == extraObjectTypeInfo.Depth);
+            }
         }
     }
 }

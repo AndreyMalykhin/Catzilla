@@ -16,6 +16,7 @@ MonoBehaviour:
     width: 3
     depth: 6
     spawnPriority: 0
+    spawnChance: 1
     minSpawnsPerArea: 1
     maxSpawnsPerArea: 1
     spawnsCountLevelFactor: 0
@@ -25,7 +26,8 @@ MonoBehaviour:
   - type: 4
     width: 6
     depth: 8
-    spawnPriority: 1
+    spawnPriority: 0
+    spawnChance: 1
     minSpawnsPerArea: 2
     maxSpawnsPerArea: 4
     spawnsCountLevelFactor: 0.25
@@ -37,7 +39,8 @@ MonoBehaviour:
   - type: 3
     width: 2
     depth: 4
-    spawnPriority: 2
+    spawnPriority: 0
+    spawnChance: 1
     minSpawnsPerArea: 2
     maxSpawnsPerArea: 4
     spawnsCountLevelFactor: 0.25
@@ -49,7 +52,8 @@ MonoBehaviour:
   - type: 5
     width: 1
     depth: 2
-    spawnPriority: 3
+    spawnPriority: 0
+    spawnChance: 1
     minSpawnsPerArea: 2
     maxSpawnsPerArea: 4
     spawnsCountLevelFactor: 0.25
@@ -59,7 +63,8 @@ MonoBehaviour:
   - type: 6
     width: 1
     depth: 1
-    spawnPriority: 4
+    spawnPriority: 0
+    spawnChance: 1
     minSpawnsPerArea: 2
     maxSpawnsPerArea: 4
     spawnsCountLevelFactor: 0.25
@@ -69,7 +74,8 @@ MonoBehaviour:
   - type: 1
     width: 1
     depth: 1
-    spawnPriority: 4
+    spawnPriority: 0
+    spawnChance: 1
     minSpawnsPerArea: 2
     maxSpawnsPerArea: 4
     spawnsCountLevelFactor: 0.25
@@ -81,7 +87,8 @@ MonoBehaviour:
   - type: 2
     width: 1
     depth: 1
-    spawnPriority: 5
+    spawnPriority: 0
+    spawnChance: 1
     minSpawnsPerArea: 1
     maxSpawnsPerArea: 2
     spawnsCountLevelFactor: 1
@@ -91,20 +98,33 @@ MonoBehaviour:
   - type: 7
     width: 1
     depth: 1
-    spawnPriority: 4
+    spawnPriority: 0
+    spawnChance: 1
     minSpawnsPerArea: 1
     maxSpawnsPerArea: 4
-    spawnsCountLevelFactor: 1
+    spawnsCountLevelFactor: 0.5
     isSpawnsCountRandom: 1
     viewProto: {fileID: 11483314, guid: 75af68cf68f6840439e1bb9c4cd4418d, type: 2}
     availableMaterials: []
   - type: 8
     width: 1
     depth: 1
-    spawnPriority: 6
+    spawnPriority: 0
+    spawnChance: 1
     minSpawnsPerArea: 1
     maxSpawnsPerArea: 1
     spawnsCountLevelFactor: 0
     isSpawnsCountRandom: 0
     viewProto: {fileID: 11478868, guid: 6cb572157bc7247dba787f597cf5d699, type: 2}
+    availableMaterials: []
+  - type: 9
+    width: 1
+    depth: 1
+    spawnPriority: 1
+    spawnChance: 1
+    minSpawnsPerArea: 1
+    maxSpawnsPerArea: 1
+    spawnsCountLevelFactor: 0
+    isSpawnsCountRandom: 0
+    viewProto: {fileID: 11478868, guid: 54a36463487cd4f868a2d43d5efe1ebe, type: 2}
     availableMaterials: []

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff7d20bf6070b4fcfa7c45db0f9fd970, type: 3}
   m_Name: LevelSettingsStorage
   m_EditorClassIdentifier: 
-  minLevelDuration: 60
+  minLevelDuration: 90
   levelDurationFactor: 8
   areaAvgDangerousObjectTypes: 2
   areaAvgScoreableObjectTypes: 3

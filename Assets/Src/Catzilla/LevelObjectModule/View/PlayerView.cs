@@ -31,26 +31,7 @@ namespace Catzilla.LevelObjectModule.View {
         [Inject]
         public IInstantiator Instantiator {get; set;}
 
-        public Collider Collider;
-        public Camera Camera;
-        public PlayerHUDView HUD;
-        public Animator Animator;
-        public AudioClip DeathSound;
-        public AudioClip HurtSound;
-        public AudioClip TreatSound;
-        public AudioClip FootstepSound;
-        public AudioSource LowPrioAudioSource;
-        public AudioSource HighPrioAudioSource;
-        public bool IsHealthFreezed;
-        public bool IsScoreFreezed;
-        public float MinSmashForce = 75f;
-        public float MaxSmashForce = 125f;
-        public float SmashUpwardsModifier = -5f;
-        public float FrontSpeed = 5f;
-        public float SideSpeed = 5f;
-        public int MaxHealth = 100;
-        public float CameraShakeDuration = 0.5f;
-        public float CameraShakeMaxAmount = 1f;
+        public int ScoreBonusesTaken {get; set;}
 
         public int Score {
             get {return score;}
@@ -84,6 +65,27 @@ namespace Catzilla.LevelObjectModule.View {
                 }
             }
         }
+
+        public Collider Collider;
+        public Camera Camera;
+        public PlayerHUDView HUD;
+        public Animator Animator;
+        public AudioClip DeathSound;
+        public AudioClip HurtSound;
+        public AudioClip TreatSound;
+        public AudioClip FootstepSound;
+        public AudioSource LowPrioAudioSource;
+        public AudioSource HighPrioAudioSource;
+        public bool IsHealthFreezed;
+        public bool IsScoreFreezed;
+        public float MinSmashForce = 75f;
+        public float MaxSmashForce = 125f;
+        public float SmashUpwardsModifier = -5f;
+        public float FrontSpeed = 5f;
+        public float SideSpeed = 5f;
+        public int MaxHealth = 100;
+        public float CameraShakeDuration = 0.5f;
+        public float CameraShakeMaxAmount = 1f;
 
         [SerializeField]
         private PlayerHUDView HUDProto;

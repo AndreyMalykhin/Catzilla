@@ -185,25 +185,32 @@ namespace Catzilla.LevelModule.Model {
                 LevelObjectType objectType = objectTypes[i];
                 ObjectTypeInfo objectTypeInfo =
                     ObjectTypeInfoStorage.Get(objectType);
-                LevelObjectView objectProto = objectTypeInfo.ViewProto;
-                int spawnsCount =
-                    objectTypeInfo.GetSpawnsPerArea(levelSettings.Index);
+                int spawnsCount = 0;
 
-                if (objectTypeInfo.IsSpawnsCountRandom) {
-                    spawnsCount = UnityEngine.Random.Range(
-                        objectTypeInfo.MinSpawnsPerArea, spawnsCount + 1);
-                }
+                if (UnityEngine.Random.value <= objectTypeInfo.SpawnChance) {
+                    LevelObjectView objectProto = objectTypeInfo.ViewProto;
+                    spawnsCount = objectTypeInfo.GetSpawnsPerArea(
+                        levelSettings.Index);
 
-                if (objectType == PlayerObjectType) {
-                    spawnsCount = spawnPlayer ? 1 : 0;
-                    spawnPlayer = false;
-                } else if (objectProto.GetComponent<BonusView>() != null) {
-                    if (player == null
-                        || ActiveBonusObjects > 0
-                        || !IsPlayerNeedsHelp(player)) {
-                        spawnsCount = 0;
-                    } else {
-                        ActiveBonusObjects += spawnsCount;
+                    if (objectTypeInfo.IsSpawnsCountRandom) {
+                        spawnsCount = UnityEngine.Random.Range(
+                            objectTypeInfo.MinSpawnsPerArea, spawnsCount + 1);
+                    }
+
+                    var bonus = objectProto.GetComponent<BonusView>();
+
+                    if (objectType == PlayerObjectType) {
+                        spawnsCount = spawnPlayer ? 1 : 0;
+                        spawnPlayer = false;
+                    } else if (bonus != null) {
+                        if (player == null
+                            || ActiveBonusObjects > 0
+                            || !bonus.IsNeeded(player, levelSettings)
+                            || !bonus.CanGive(player, levelSettings)) {
+                            spawnsCount = 0;
+                        } else {
+                            ActiveBonusObjects += spawnsCount;
+                        }
                     }
                 }
 
@@ -211,10 +218,6 @@ namespace Catzilla.LevelModule.Model {
             }
 
             return spawnsInfos;
-        }
-
-        private bool IsPlayerNeedsHelp(PlayerView player) {
-            return player.Health < player.MaxHealth;
         }
 
         private int ObjectTypeComparator(

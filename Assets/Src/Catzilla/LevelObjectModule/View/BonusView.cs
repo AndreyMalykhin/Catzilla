@@ -1,37 +1,23 @@
 using UnityEngine;
 using Zenject;
 using Catzilla.CommonModule.Util;
-using Catzilla.CommonModule.View;
+using Catzilla.LevelModule.Model;
 
 namespace Catzilla.LevelObjectModule.View {
-    public class BonusView: MonoBehaviour, IPoolable {
-        public enum Event {Destroy, TriggerEnter}
-
-        public bool IsTaken {get {return isTaken;}}
+    public abstract class BonusView: MonoBehaviour, IPoolable {
+        public enum Event {Destroy}
 
         [Inject]
-        private EventBus eventBus;
+        protected EventBus EventBus;
 
-        [Inject]
-        private PoolStorageView poolStorage;
+        public abstract bool IsNeeded(
+            PlayerView player, LevelSettings levelSettings);
 
-        [SerializeField]
-        private PoolableView poolable;
-
-        private bool isTaken;
-
-        public void Take() {
-            isTaken = true;
-            poolStorage.Return(poolable);
-        }
+        public abstract bool CanGive(
+            PlayerView player, LevelSettings levelSettings);
 
         void IPoolable.Reset() {
-            eventBus.Fire(Event.Destroy, new Evt(this));
-            isTaken = false;
-        }
-
-        private void OnTriggerEnter(Collider collider) {
-            eventBus.Fire(Event.TriggerEnter, new Evt(this, collider));
+            EventBus.Fire(Event.Destroy, new Evt(this));
         }
     }
 }

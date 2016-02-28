@@ -87,9 +87,11 @@ namespace Catzilla.LevelModule.Model {
                         objectTypeInfo.GetSpawnsPerArea(levelIndex);
                 }
 
-                if (objectProto.GetComponent<ScoreableView>() != null) {
-                    objectScores.Add(
-                        objectProto.GetComponent<ScoreableView>().Score);
+                var scoreable = objectProto.GetComponent<ScoreableView>();
+
+                if (scoreable != null
+                    && objectProto.GetComponent<BonusView>() == null) {
+                    objectScores.Add(scoreable.Score);
                     areaAvgScoreableObjects +=
                         objectTypeInfo.GetSpawnsPerArea(levelIndex);
                 }
@@ -120,14 +122,17 @@ namespace Catzilla.LevelModule.Model {
             float areaAvgScore = objectReachability *
                 areaAvgScoreableObjects * objectAvgScore;
             float avgScorePerSec = areaAvgScore / areaPassTime;
-            float completionScore = (minLevelDuration + levelIndex *
-                levelDurationFactor) * avgScorePerSec;
+            float levelExtraScore = levelIndex * levelDurationFactor *
+                avgScorePerSec;
+            float completionScore =
+                minLevelDuration * avgScorePerSec + levelExtraScore;
             float resurrectionReward = resurrectionMinReward + levelIndex *
                 resurrectionRewardLevelFactor;
             // DebugUtils.Log("LevelSettingsStorage.MakeItem(); objectReachabilityPlayerFrontSpeedFactor={0}; objectReachabilityPlayerSideSpeedFactor={1}; objectReachabilityDangerFactor={2}; objectReachability={3}; objectAvgScore={4}", objectReachabilityPlayerFrontSpeedFactor, objectReachabilityPlayerSideSpeedFactor, objectReachabilityDangerFactor, objectReachability, objectAvgScore);
             return new LevelSettings(
                 levelIndex,
                 (int) completionScore,
+                (int) levelExtraScore,
                 playerFrontSpeed,
                 playerSideSpeed,
                 (int) resurrectionReward);

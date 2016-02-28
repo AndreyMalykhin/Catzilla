@@ -38,6 +38,7 @@ namespace Catzilla.PlayerModule.View {
             container.Bind<LeaderboardManager>().ToSingle();
             container.Bind<PlayerScoreController>().ToSingle();
             container.Bind<PlayerHealthController>().ToSingle();
+            container.Bind<PlayerManager>().ToSingle();
         }
 
         public override void PostBindings(DiContainer container) {

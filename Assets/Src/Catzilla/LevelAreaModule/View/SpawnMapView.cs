@@ -53,15 +53,20 @@ namespace Catzilla.LevelAreaModule.View {
             spawnsMap = new Dictionary<LevelObjectType, List<SpawnLocation>>();
 
             for (int i = 0; i < spawns.Length; ++i) {
-                List<SpawnLocation> locations;
                 SpawnView spawn = spawns[i];
+                List<LevelObjectType> spawnObjectTypes = spawn.ObjectTypes;
 
-                if (!spawnsMap.TryGetValue(spawn.ObjectType, out locations)) {
-                    locations = new List<SpawnLocation>(64);
-                    spawnsMap[spawn.ObjectType] = locations;
+                for (int j = 0; j < spawnObjectTypes.Count; ++j) {
+                    List<SpawnLocation> spawnLocations;
+
+                    if (!spawnsMap.TryGetValue(
+                            spawnObjectTypes[j], out spawnLocations)) {
+                        spawnLocations = new List<SpawnLocation>(64);
+                        spawnsMap[spawnObjectTypes[j]] = spawnLocations;
+                    }
+
+                    spawnLocations.Add(spawn.Location);
                 }
-
-                locations.Add(spawn.Location);
             }
 
             var objectTypesCollection = spawnsMap.Keys;

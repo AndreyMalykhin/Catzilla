@@ -2697,6 +2697,8 @@ MonoBehaviour:
     InitialSize: 32
   - ViewProto: {fileID: 11446678, guid: 7246a12029b18487496ad17de10123a8, type: 2}
     InitialSize: 4
+  - ViewProto: {fileID: 11484932, guid: 54a36463487cd4f868a2d43d5efe1ebe, type: 2}
+    InitialSize: 32
 --- !u!114 &1663602928 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11473588, guid: 0409548e6aa1949528a8f54d2de5d8e7,

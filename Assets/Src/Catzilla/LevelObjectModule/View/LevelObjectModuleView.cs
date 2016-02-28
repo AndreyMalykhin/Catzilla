@@ -32,11 +32,10 @@ namespace Catzilla.LevelObjectModule.View {
             container.Bind<SmashableController>().ToSingle();
             container.Bind<DamagingController>().ToSingle();
             container.Bind<ShootingController>().ToSingle();
-            container.Bind<ScoreableController>().ToSingle();
             container.Bind<ProjectileController>().ToSingle();
             container.Bind<ActivatableController>().ToSingle();
+            container.Bind<TakeableController>().ToSingle();
             container.Bind<BonusController>().ToSingle();
-            container.Bind<TreatingController>().ToSingle();
             container.Bind<LevelObjectType>("PlayerObjectType")
                 .ToInstance(LevelObjectType.Player);
             container.Bind<string>("PlayerTag").ToInstance(playerTag);
@@ -60,11 +59,6 @@ namespace Catzilla.LevelObjectModule.View {
             eventBus.On(DamagingView.Event.TriggerEnter,
                 damagingContoller.OnTriggerEnter);
 
-            var scoreableContoller =
-                container.Resolve<ScoreableController>();
-            eventBus.On(ScoreableView.Event.TriggerEnter,
-                scoreableContoller.OnTriggerEnter);
-
             var projectileContoller =
                 container.Resolve<ProjectileController>();
             eventBus.On(ProjectileView.Event.TriggerEnter,
@@ -77,20 +71,18 @@ namespace Catzilla.LevelObjectModule.View {
             eventBus.On(ShootingView.Event.Shot,
                 shootingContoller.OnShot);
 
+            var takeableController = container.Resolve<TakeableController>();
+            eventBus.On(TakeableView.Event.TriggerEnter,
+                takeableController.OnTriggerEnter);
+
             var bonusController = container.Resolve<BonusController>();
             eventBus.On(
                 BonusView.Event.Destroy, bonusController.OnViewDestroy);
-            eventBus.On(
-                BonusView.Event.TriggerEnter, bonusController.OnTriggerEnter);
 
             var activatableContoller =
                 container.Resolve<ActivatableController>();
             eventBus.On(ActivatableView.Event.TriggerEnter,
                 activatableContoller.OnTriggerEnter);
-
-            var treatingController = container.Resolve<TreatingController>();
-            eventBus.On(TreatingView.Event.TriggerEnter,
-                treatingController.OnTriggerEnter);
 
             var playerController =
                 container.Resolve<PlayerController>();

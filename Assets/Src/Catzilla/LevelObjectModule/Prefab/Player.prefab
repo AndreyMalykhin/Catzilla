@@ -264,7 +264,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121812}
-  m_LocalRotation: {x: 0.5299193, y: 0, z: 0, w: 0.8480481}
+  m_LocalRotation: {x: 0.52862847, y: -0.059156846, z: 0.036965307, w: 0.8459823}
   m_LocalPosition: {x: 0, y: 16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -317,7 +317,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 32
+  far clip plane: 64
   field of view: 60
   orthographic: 1
   orthographic size: 16
@@ -558,7 +558,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 32, y: 16, z: 36}
+  m_Size: {x: 32, y: 16, z: 38}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6510856
 BoxCollider:
@@ -768,7 +768,7 @@ MonoBehaviour:
   Animator: {fileID: 9551204}
   DeathSound: {fileID: 8300000, guid: 7b1a6f0e82bb648aa8d0338272804aed, type: 3}
   HurtSound: {fileID: 8300000, guid: 087a55cb8829649678dba67b55c4b303, type: 3}
-  TreatSound: {fileID: 8300000, guid: c213560c407cb4b0ca287bb4e4afdff3, type: 3}
+  TreatSound: {fileID: 0}
   FootstepSound: {fileID: 8300000, guid: f194de8b310994604b7fa1ac502fbc4e, type: 3}
   LowPrioAudioSource: {fileID: 8291638}
   HighPrioAudioSource: {fileID: 8275416}
@@ -820,11 +820,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.x
-      value: 0.5299193
+      value: 0.52862847
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.w
-      value: 0.8480481
+      value: 0.8459823
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Constraints
@@ -925,11 +925,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.059156846
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.036965307
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: orthographic
@@ -953,11 +953,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Size.z
-      value: 36
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: far clip plane
-      value: 32
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: UICamera
@@ -1035,7 +1035,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: TreatSound
       value: 
-      objectReference: {fileID: 8300000, guid: c213560c407cb4b0ca287bb4e4afdff3, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_StaticEditorFlags
       value: 0

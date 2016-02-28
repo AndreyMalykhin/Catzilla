@@ -106,7 +106,7 @@ GameObject:
   - 4: {fileID: 465502}
   - 114: {fileID: 11471018}
   m_Layer: 0
-  m_Name: FirstAid (2)
+  m_Name: Bonuses (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,7 +122,7 @@ GameObject:
   - 4: {fileID: 436466}
   - 114: {fileID: 11437338}
   m_Layer: 0
-  m_Name: FirstAid
+  m_Name: Bonuses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -186,7 +186,7 @@ GameObject:
   - 4: {fileID: 448228}
   - 114: {fileID: 11430836}
   m_Layer: 0
-  m_Name: FirstAid (3)
+  m_Name: Bonuses (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -266,7 +266,7 @@ GameObject:
   - 4: {fileID: 467202}
   - 114: {fileID: 11405524}
   m_Layer: 0
-  m_Name: FirstAid (4)
+  m_Name: Bonuses (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,7 +330,7 @@ GameObject:
   - 4: {fileID: 468126}
   - 114: {fileID: 11421832}
   m_Layer: 0
-  m_Name: FirstAid (1)
+  m_Name: Bonuses (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -651,6 +651,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 5
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.93103456, a: 1}
@@ -669,6 +670,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 1
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.95862055, a: 1}
@@ -687,6 +689,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 8
+  extraObjectTypes: 09000000
   itemsAcrossX: 2
   itemsAcrossZ: 8
   color: {r: 1, g: 1, b: 1, a: 1}
@@ -740,6 +743,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 6
+  extraObjectTypes: 
   itemsAcrossX: 2
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
@@ -758,6 +762,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 5
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.93103456, a: 1}
@@ -776,6 +781,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 6
+  extraObjectTypes: 
   itemsAcrossX: 16
   itemsAcrossZ: 3
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
@@ -794,6 +800,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 7
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 20
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
@@ -812,6 +819,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 8
+  extraObjectTypes: 09000000
   itemsAcrossX: 2
   itemsAcrossZ: 8
   color: {r: 1, g: 1, b: 1, a: 1}
@@ -830,6 +838,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 8
+  extraObjectTypes: 09000000
   itemsAcrossX: 2
   itemsAcrossZ: 8
   color: {r: 1, g: 1, b: 1, a: 1}
@@ -848,6 +857,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 1
+  extraObjectTypes: 
   itemsAcrossX: 2
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.95862055, a: 1}
@@ -866,6 +876,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 8
+  extraObjectTypes: 09000000
   itemsAcrossX: 2
   itemsAcrossZ: 8
   color: {r: 1, g: 1, b: 1, a: 1}
@@ -884,6 +895,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 7
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 20
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
@@ -902,6 +914,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 2
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 20
   color: {r: 0, g: 0.08627451, b: 1, a: 1}
@@ -920,6 +933,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 7
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 20
   color: {r: 1, g: 0, b: 0.06206894, a: 1}
@@ -938,6 +952,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 6
+  extraObjectTypes: 
   itemsAcrossX: 2
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.17241383, a: 1}
@@ -956,6 +971,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 1
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 12
   color: {r: 0, g: 1, b: 0.95862055, a: 1}
@@ -974,6 +990,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 2
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 20
   color: {r: 0, g: 0.08627451, b: 1, a: 1}
@@ -992,6 +1009,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 8
+  extraObjectTypes: 09000000
   itemsAcrossX: 2
   itemsAcrossZ: 8
   color: {r: 1, g: 1, b: 1, a: 1}
@@ -1010,6 +1028,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 5
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.93103456, a: 1}
@@ -1028,6 +1047,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 5
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 1
   color: {r: 1, g: 0, b: 0.93103456, a: 1}
@@ -1046,6 +1066,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 7
+  extraObjectTypes: 
   itemsAcrossX: 1
   itemsAcrossZ: 20
   color: {r: 1, g: 0, b: 0.06206894, a: 1}

@@ -11,6 +11,7 @@ namespace Catzilla.LevelObjectModule.Model {
         public int Width {get {return width;}}
         public int Depth {get {return depth;}}
         public int SpawnPriority {get {return spawnPriority;}}
+        public float SpawnChance {get {return spawnChance;}}
         public int MinSpawnsPerArea {get {return minSpawnsPerArea;}}
         public int MaxSpawnsPerArea {get {return maxSpawnsPerArea;}}
         public float SpawnsCountLevelFactor {
@@ -31,6 +32,9 @@ namespace Catzilla.LevelObjectModule.Model {
 
         [SerializeField]
         private int spawnPriority;
+
+        [SerializeField]
+        private float spawnChance = 1f;
 
         [SerializeField]
         private int minSpawnsPerArea;
