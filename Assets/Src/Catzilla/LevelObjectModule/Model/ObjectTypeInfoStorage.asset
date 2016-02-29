@@ -102,7 +102,7 @@ MonoBehaviour:
     spawnChance: 1
     minSpawnsPerArea: 1
     maxSpawnsPerArea: 4
-    spawnsCountLevelFactor: 0.5
+    spawnsCountLevelFactor: 1
     isSpawnsCountRandom: 1
     viewProto: {fileID: 11483314, guid: 75af68cf68f6840439e1bb9c4cd4418d, type: 2}
     availableMaterials: []

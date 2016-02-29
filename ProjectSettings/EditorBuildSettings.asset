@@ -9,3 +9,5 @@ EditorBuildSettings:
     path: Assets/Src/Catzilla/AppModule/Scene/Main.unity
   - enabled: 1
     path: Assets/Src/Catzilla/LevelModule/Scene/Level.unity
+  - enabled: 1
+    path: Assets/Src/Catzilla/CommonModule/Scene/Empty.unity

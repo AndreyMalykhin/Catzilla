@@ -35,10 +35,6 @@ namespace Catzilla.GameOverMenuModule.View {
                 gameOverMenuController.OnResurrectBtnClick);
             eventBus.On(GameOverMenuView.Event.RewardBtnClick,
                 gameOverMenuController.OnRewardBtnClick);
-            eventBus.On(GameOverMenuView.Event.LeaderboardBtnClick,
-                gameOverMenuController.OnLeaderboardBtnClick);
-            eventBus.On(Server.Event.Dispose,
-                gameOverMenuController.OnServerDispose);
             eventBus.On(PlayerView.Event.Construct,
                 gameOverMenuController.OnPlayerConstruct);
             eventBus.On(PlayerStateStorage.Event.Save,

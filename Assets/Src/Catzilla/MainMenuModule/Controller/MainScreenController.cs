@@ -6,10 +6,7 @@ using Catzilla.PlayerModule.Model;
 using Catzilla.MainMenuModule.View;
 
 namespace Catzilla.MainMenuModule.Controller {
-    public class MainMenuController {
-        [Inject]
-        public MainMenuView MainMenu {get; set;}
-
+    public class MainScreenController {
         [Inject]
         public MainScreenView MainScreen {get; set;}
 
@@ -17,17 +14,27 @@ namespace Catzilla.MainMenuModule.Controller {
         public Game Game {get; set;}
 
         [Inject]
-        public LeaderboardManager LeaderboardManager {get; set;}
-
-        [Inject]
-        public AchievementManager AchievementManager {get; set;}
-
-        [Inject]
         public PlayerStateStorage PlayerStateStorage {get; set;}
 
+        [Inject]
+        public AuthManager AuthManager {get; set;}
+
+        [Inject]
+        public Server Server {get; set;}
+
+        [PostInject]
+        public void OnConstruct() {
+            MainScreen.LoginBtn.gameObject.SetActive(!Server.IsLoggedIn);
+        }
+
+        public void OnLoginBtnClick() {
+            AuthManager.Login(OnLogin);
+        }
+
         public void OnServerDispose(Evt evt) {
-            MainMenu.LeaderboardBtn.interactable = false;
-            MainMenu.AchievementsBtn.interactable = false;
+            MainScreen.Menu.LeaderboardBtn.interactable = false;
+            MainScreen.Menu.AchievementsBtn.interactable = false;
+            MainScreen.LoginBtn.interactable = false;
         }
 
         public void OnExitBtnClick(Evt evt) {
@@ -42,18 +49,31 @@ namespace Catzilla.MainMenuModule.Controller {
         }
 
         public void OnLeaderboardBtnClick(Evt evt) {
-            AnalyticsUtils.AddEventParam("Origin", "MainMenu");
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Leaderboard.View");
-            LeaderboardManager.Show();
+            AuthManager.Login(OnLoginForLeaderboard);
         }
 
         public void OnAchievementsBtnClick(Evt evt) {
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Achievements.View");
-            AchievementManager.Show();
+            AuthManager.Login(OnLoginForAchievements);
+        }
+
+        private void OnLoginForLeaderboard() {
+            OnLogin();
+            Social.ShowLeaderboardUI();
+        }
+
+        private void OnLoginForAchievements() {
+            OnLogin();
+            Social.ShowAchievementsUI();
+        }
+
+        private void OnLogin() {
+            MainScreen.LoginBtn.gameObject.SetActive(false);
         }
     }
 }

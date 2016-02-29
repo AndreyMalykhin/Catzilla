@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using System.Collections;
 using SmartLocalization;
 using Zenject;
@@ -88,7 +89,8 @@ namespace Catzilla.LevelObjectModule.View {
         public float CameraShakeMaxAmount = 1f;
 
         [SerializeField]
-        private PlayerHUDView HUDProto;
+        [FormerlySerializedAs("HUDProto")]
+        private PlayerHUDView hudProto;
 
         private Vector3 cameraShakeAmount;
         private IEnumerator cameraShakeCoroutine;
@@ -111,7 +113,7 @@ namespace Catzilla.LevelObjectModule.View {
             maxX = LevelMaxX - halfWidth;
             health = MaxHealth;
             cameraStartPosition = Camera.transform.localPosition;
-            HUD = Instantiator.InstantiatePrefab(HUDProto.gameObject)
+            HUD = Instantiator.InstantiatePrefab(hudProto.gameObject)
                 .GetComponent<PlayerHUDView>();
             EventBus.Fire(Event.Construct, new Evt(this));
         }

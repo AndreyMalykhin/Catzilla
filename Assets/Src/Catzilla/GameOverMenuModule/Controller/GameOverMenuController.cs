@@ -9,6 +9,7 @@ using Catzilla.CommonModule.View;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.Model;
 using Catzilla.PlayerModule.Model;
+using Catzilla.MainMenuModule.View;
 using Catzilla.GameOverMenuModule.View;
 
 namespace Catzilla.GameOverMenuModule.Controller {
@@ -18,6 +19,9 @@ namespace Catzilla.GameOverMenuModule.Controller {
 
         [Inject]
         public GameOverScreenView GameOverScreen {get; set;}
+
+        [Inject]
+        public MainScreenView MainScreen {get; set;}
 
         [Inject]
         public PlayerStateStorage PlayerStateStorage {get; set;}
@@ -34,14 +38,14 @@ namespace Catzilla.GameOverMenuModule.Controller {
         [Inject]
         public Translator Translator {get; set;}
 
-        [Inject]
-        public LeaderboardManager LeaderboardManager {get; set;}
-
         [Inject("PlayStopwatch")]
         public Stopwatch PlayStopwatch {get; set;}
 
         [Inject]
         public ScreenSpacePopupManagerView PopupManager {get; set;}
+
+        [Inject("MainCamera")]
+        public Camera MainCamera {get; set;}
 
         private PlayerView player;
 
@@ -57,26 +61,16 @@ namespace Catzilla.GameOverMenuModule.Controller {
             }
         }
 
-        public void OnServerDispose(Evt evt) {
-            GameOverMenu.LeaderboardBtn.interactable = false;
-        }
-
-        public void OnLeaderboardBtnClick(Evt evt) {
-            AnalyticsUtils.AddEventParam("Origin", "GameOverMenu");
-            AnalyticsUtils.AddCategorizedEventParam(
-                "Level", PlayerStateStorage.Get().Level);
-            AnalyticsUtils.LogEvent("Leaderboard.View");
-            LeaderboardManager.Show();
-        }
-
         public void OnPlayerStateStorageSave(Evt evt) {
             GameOverMenu.AvailableResurrectionsCount =
                 PlayerStateStorage.Get().AvailableResurrectionsCount;
         }
 
         public void OnExitBtnClick(Evt evt) {
-            AnalyticsUtils.LogEvent("Game.Exit");
-            Game.Exit();
+            Game.UnloadLevel();
+            MainCamera.gameObject.SetActive(true);
+            GameOverScreen.Hide();
+            MainScreen.Show();
         }
 
         public void OnRestartBtnClick(Evt evt) {

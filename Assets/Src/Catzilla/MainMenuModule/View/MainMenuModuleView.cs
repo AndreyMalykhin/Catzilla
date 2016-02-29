@@ -12,29 +12,28 @@ namespace Catzilla.MainMenuModule.View {
         [SerializeField]
         private MainScreenView screen;
 
-        [SerializeField]
-        private MainMenuView menu;
-
         public override void InitBindings(DiContainer container) {
             container.Bind<MainScreenView>().ToInstance(screen);
-            container.Bind<MainMenuView>().ToInstance(menu);
-            container.Bind<MainMenuController>().ToSingle();
+            container.Bind<MainScreenController>().ToSingle();
         }
 
         public override void PostBindings(DiContainer container) {
             var eventBus = container.Resolve<EventBus>();
-            var mainMenuController =
-                container.Resolve<MainMenuController>();
+            var mainScreenController =
+                container.Resolve<MainScreenController>();
             eventBus.On(MainMenuView.Event.ExitBtnClick,
-                mainMenuController.OnExitBtnClick);
+                mainScreenController.OnExitBtnClick);
             eventBus.On(MainMenuView.Event.StartBtnClick,
-                mainMenuController.OnStartBtnClick);
+                mainScreenController.OnStartBtnClick);
             eventBus.On(MainMenuView.Event.LeaderboardBtnClick,
-                mainMenuController.OnLeaderboardBtnClick);
+                mainScreenController.OnLeaderboardBtnClick);
             eventBus.On(MainMenuView.Event.AchievementsBtnClick,
-                mainMenuController.OnAchievementsBtnClick);
+                mainScreenController.OnAchievementsBtnClick);
             eventBus.On(Server.Event.Dispose,
-                mainMenuController.OnServerDispose);
+                mainScreenController.OnServerDispose);
+            var mainScreen = container.Resolve<MainScreenView>();
+            mainScreen.LoginBtn.onClick.AddListener(
+                mainScreenController.OnLoginBtnClick);
         }
     }
 }

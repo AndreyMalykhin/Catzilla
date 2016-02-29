@@ -12,6 +12,9 @@ namespace Catzilla.CommonModule.Model {
         [Inject("LevelScene")]
         public string LevelScene {get; set;}
 
+        [Inject("EmptyScene")]
+        public string EmptyScene {get; set;}
+
         [Inject("LevelTag")]
         public string LevelTag {get; set;}
 
@@ -46,6 +49,10 @@ namespace Catzilla.CommonModule.Model {
         public void LoadLevel() {
             // DebugUtils.Log("Game.LoadLevel()");
             CoroutineManager.Run(DoLoadLevel());
+        }
+
+        public void UnloadLevel() {
+            SceneManager.LoadScene(EmptyScene);
         }
 
         private IEnumerator DoLoadLevel() {

@@ -152,6 +152,9 @@
 	<data name="MainMenu.Leaderboard" xml:space="preserve">
 		<value>Лидеры</value>
 	</data>
+	<data name="MainMenu.Login" xml:space="preserve">
+		<value>Войти</value>
+	</data>
 	<data name="MainMenu.Start" xml:space="preserve">
 		<value>Играть</value>
 	</data>

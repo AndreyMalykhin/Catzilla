@@ -43,6 +43,12 @@ namespace Catzilla.CommonModule.View {
         [SerializeField]
         private ScreenSpacePopupManagerView screenSpacePopupManager;
 
+        [SerializeField]
+        private UIBlockerView uiBlocker;
+
+        [SerializeField]
+        private string emptyScene;
+
         public override void InitBindings(DiContainer container) {
             Server finalServer = server;
 
@@ -51,6 +57,7 @@ namespace Catzilla.CommonModule.View {
             }
 
             container.Bind<Server>().ToInstance(finalServer);
+            container.Bind<AuthManager>().ToSingle();
             container.Bind<EventBus>().ToSingle();
             container.Bind<Translator>().ToSingle();
             container.Bind<Game>().ToSingle();
@@ -69,10 +76,12 @@ namespace Catzilla.CommonModule.View {
                 .ToInstance(activityIndicator);
             container.Bind<Camera>("MainCamera").ToInstance(mainCamera);
             container.Bind<AudioManager>().ToInstance(audioManager);
+            container.Bind<UIBlockerView>().ToInstance(uiBlocker);
             container.Bind<WorldSpacePopupManager>()
                 .ToInstance(worldSpacePopupManager);
             container.Bind<Stopwatch>("PlayStopwatch")
                 .ToInstance(new Stopwatch());
+            container.Bind<string>("EmptyScene").ToInstance(emptyScene);
             container.Bind<int>("EffectsHighPrioAudioChannel").ToInstance(0);
             container.Bind<int>("EffectsLowPrioAudioChannel").ToInstance(1);
             container.Bind<int>("UIHighPrioAudioChannel").ToInstance(2);
