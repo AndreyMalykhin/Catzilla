@@ -15,23 +15,20 @@ namespace Catzilla.MainMenuModule.View {
         [SerializeField]
         private Button loginBtn;
 
+        [SerializeField]
         private Canvas canvas;
-
-        [PostInject]
-        public void OnConstruct() {
-            // DebugUtils.Log("MainScreenView.OnConstruct()");
-            canvas = GetComponent<Canvas>();
-            canvas.enabled = false;
-        }
 
         public void Show() {
             canvas.enabled = true;
-            menu.Show();
         }
 
         public void Hide() {
             canvas.enabled = false;
-            menu.Hide();
+        }
+
+        private void Awake() {
+            // DebugUtils.Log("MainScreenView.Awake()");
+            canvas.enabled = false;
         }
     }
 }

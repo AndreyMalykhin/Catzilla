@@ -21,17 +21,17 @@ namespace Catzilla.MainMenuModule.View {
             var eventBus = container.Resolve<EventBus>();
             var mainScreenController =
                 container.Resolve<MainScreenController>();
-            eventBus.On(MainMenuView.Event.ExitBtnClick,
-                mainScreenController.OnExitBtnClick);
-            eventBus.On(MainMenuView.Event.StartBtnClick,
-                mainScreenController.OnStartBtnClick);
-            eventBus.On(MainMenuView.Event.LeaderboardBtnClick,
-                mainScreenController.OnLeaderboardBtnClick);
-            eventBus.On(MainMenuView.Event.AchievementsBtnClick,
-                mainScreenController.OnAchievementsBtnClick);
+            var mainScreen = container.Resolve<MainScreenView>();
             eventBus.On(Server.Event.Dispose,
                 mainScreenController.OnServerDispose);
-            var mainScreen = container.Resolve<MainScreenView>();
+            mainScreen.Menu.StartBtn.onClick.AddListener(
+                mainScreenController.OnStartBtnClick);
+            mainScreen.Menu.ExitBtn.onClick.AddListener(
+                mainScreenController.OnExitBtnClick);
+            mainScreen.Menu.LeaderboardBtn.onClick.AddListener(
+                mainScreenController.OnLeaderboardBtnClick);
+            mainScreen.Menu.AchievementsBtn.onClick.AddListener(
+                mainScreenController.OnAchievementsBtnClick);
             mainScreen.LoginBtn.onClick.AddListener(
                 mainScreenController.OnLoginBtnClick);
         }

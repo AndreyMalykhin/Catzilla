@@ -15,9 +15,6 @@ using Catzilla.GameOverMenuModule.View;
 namespace Catzilla.GameOverMenuModule.Controller {
     public class GameOverMenuController {
         [Inject]
-        public GameOverMenuView GameOverMenu {get; set;}
-
-        [Inject]
         public GameOverScreenView GameOverScreen {get; set;}
 
         [Inject]
@@ -51,41 +48,41 @@ namespace Catzilla.GameOverMenuModule.Controller {
 
         [PostInject]
         public void OnConstruct() {
-            GameOverMenu.ResurrectTextTemplate =
+            GameOverScreen.Menu.ResurrectTextTemplate =
                 Translator.Translate("GameOverMenu.Resurrect");
             PlayerState playerState = PlayerStateStorage.Get();
 
             if (playerState != null) {
-                GameOverMenu.AvailableResurrectionsCount =
+                GameOverScreen.Menu.AvailableResurrectionsCount =
                     playerState.AvailableResurrectionsCount;
             }
         }
 
         public void OnPlayerStateStorageSave(Evt evt) {
-            GameOverMenu.AvailableResurrectionsCount =
+            GameOverScreen.Menu.AvailableResurrectionsCount =
                 PlayerStateStorage.Get().AvailableResurrectionsCount;
         }
 
-        public void OnExitBtnClick(Evt evt) {
+        public void OnExitBtnClick() {
             Game.UnloadLevel();
             MainCamera.gameObject.SetActive(true);
-            GameOverScreen.Hide();
+            GameOverScreen.GetComponent<ShowableView>().Hide();
             MainScreen.Show();
         }
 
-        public void OnRestartBtnClick(Evt evt) {
+        public void OnRestartBtnClick() {
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Game.Restart");
             Game.LoadLevel();
-            GameOverScreen.Hide();
+            GameOverScreen.GetComponent<ShowableView>().Hide();
         }
 
         public void OnPlayerConstruct(Evt evt) {
             player = (PlayerView) evt.Source;
         }
 
-        public void OnResurrectBtnClick(Evt evt) {
+        public void OnResurrectBtnClick() {
             player.IsHealthFreezed = false;
             player.IsScoreFreezed = false;
             player.Resurrect();
@@ -95,10 +92,10 @@ namespace Catzilla.GameOverMenuModule.Controller {
             PlayStopwatch.Reset();
             PlayStopwatch.Start();
             Game.Resume();
-            GameOverScreen.Hide();
+            GameOverScreen.GetComponent<ShowableView>().Hide();
         }
 
-        public void OnRewardBtnClick(Evt evt) {
+        public void OnRewardBtnClick() {
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Ad.Show");

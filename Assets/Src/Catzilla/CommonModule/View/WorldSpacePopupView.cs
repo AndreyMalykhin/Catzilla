@@ -7,62 +7,20 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class WorldSpacePopupView: MonoBehaviour, IPoolable {
-        public enum Event {Show}
-
-        [Inject]
-        public EventBus EventBus {get; set;}
-
-        public AudioSource AudioSource;
-        public AudioClip ShowSound;
-        public Text Msg;
-        public float Lifetime = 5f;
-        public float Speed = 10f;
-        public float Offset = 0f;
-        public Action<WorldSpacePopupView> OnHide {get; set;}
-
         public Camera LookAtTarget {
-            get {
-                return lookAtTarget;
-            }
+            get {return lookAtTarget;}
             set {
                 lookAtTarget = value;
                 FitIntoCamera();
             }
         }
 
-        private Canvas canvas;
+        public Text Msg;
+        public float Speed = 16f;
+        public float Offset;
+
         private Camera lookAtTarget;
         private readonly Vector3[] corners = new Vector3[4];
-
-        [PostInject]
-        public void OnConstruct() {
-            // DebugUtils.Log("WorldSpacePopupView.OnConstruct()");
-            canvas = GetComponent<Canvas>();
-            canvas.enabled = false;
-        }
-
-        public void Show() {
-            if (canvas.enabled) {
-                return;
-            }
-
-            canvas.enabled = true;
-            Invoke("Hide", Lifetime);
-            EventBus.Fire(Event.Show, new Evt(this));
-        }
-
-        public void Hide() {
-            if (!canvas.enabled) {
-                return;
-            }
-
-            canvas.enabled = false;
-            CancelInvoke("Hide");
-
-            if (OnHide != null) {
-                OnHide(this);
-            }
-        }
 
         public void PlaceAbove(Bounds bounds) {
             transform.position = new Vector3(
@@ -71,9 +29,7 @@ namespace Catzilla.CommonModule.View {
         }
 
         void IPoolable.Reset() {
-            canvas.enabled = false;
             LookAtTarget = null;
-            OnHide = null;
         }
 
         private void FitIntoCamera() {
@@ -100,10 +56,6 @@ namespace Catzilla.CommonModule.View {
         }
 
         private void LateUpdate() {
-            if (!canvas.enabled) {
-                return;
-            }
-
             if (LookAtTarget != null) {
                 transform.rotation =
                     Quaternion.LookRotation(LookAtTarget.transform.forward);

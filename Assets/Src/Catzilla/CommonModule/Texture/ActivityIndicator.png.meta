@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 1ecf3539ec56a48a9aa14abfc19e88b1
-timeCreated: 1453929602
+guid: a21b4e13fd7ec4a9396569ea41e571c7
+timeCreated: 1456883359
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -43,10 +43,10 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 2048
+  maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -71,292 +71,307 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -9, y: 16}
-        - {x: -15, y: 11}
-        - {x: -16, y: 10}
-        - {x: -16, y: -2}
-        - {x: -14, y: -3}
-        - {x: -10, y: -3}
-        - {x: 2, y: 7}
-        - {x: 2, y: 16}
+      - - {x: -23, y: 32}
+        - {x: -32, y: 24}
+        - {x: -32, y: -3}
+        - {x: -11, y: -3}
+        - {x: 2, y: 17}
+        - {x: 2, y: 32}
     - name: ActivityIndicator_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -12, y: 16}
-        - {x: -16, y: 15}
-        - {x: -16, y: 1}
-        - {x: -4, y: 1}
-        - {x: 7, y: 5}
-        - {x: 7, y: 16}
-    - name: ActivityIndicator_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -12, y: 16}
-        - {x: -14, y: 12}
-        - {x: -14, y: 7}
-        - {x: -10, y: 4}
-        - {x: -6, y: 4}
-        - {x: 7, y: 7}
-        - {x: 10, y: 10}
-        - {x: 10, y: 16}
-    - name: ActivityIndicator_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -10, y: 16}
-        - {x: -11, y: 15}
-        - {x: -11, y: 8}
-        - {x: -1, y: 4}
-        - {x: 13, y: 4}
-        - {x: 14, y: 5}
-        - {x: 14, y: 11}
-        - {x: 12, y: 16}
-    - name: ActivityIndicator_4
+      - - {x: -24, y: 32}
+        - {x: -31, y: 17}
+        - {x: -31, y: 5}
+        - {x: -8, y: 5}
+        - {x: 8, y: 10}
+        - {x: 11, y: 18}
+        - {x: 11, y: 32}
+    - name: ActivityIndicator_2
       rect:
         serializedVersion: 2
         x: 128
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -3, y: 16}
-        - {x: -3, y: 10}
-        - {x: 7, y: -2}
-        - {x: 16, y: -2}
-        - {x: 16, y: 10}
-        - {x: 12, y: 16}
-    - name: ActivityIndicator_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 1, y: 16}
-        - {x: 1, y: 5}
-        - {x: 4, y: -4}
-        - {x: 9, y: -7}
-        - {x: 16, y: -7}
-        - {x: 16, y: 12}
-        - {x: 15, y: 16}
-    - name: ActivityIndicator_6
+      - - {x: -19, y: 32}
+        - {x: -26, y: 28}
+        - {x: -26, y: 11}
+        - {x: 8, y: 11}
+        - {x: 15, y: 12}
+        - {x: 19, y: 19}
+        - {x: 19, y: 26}
+        - {x: 16, y: 32}
+    - name: ActivityIndicator_3
       rect:
         serializedVersion: 2
         x: 192
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 5, y: 14}
-        - {x: 4, y: 13}
-        - {x: 4, y: -1}
-        - {x: 5, y: -9}
-        - {x: 8, y: -11}
-        - {x: 16, y: -11}
-        - {x: 16, y: 14}
-    - name: ActivityIndicator_7
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 9, y: 11}
-        - {x: 6, y: 9}
-        - {x: 4, y: -4}
-        - {x: 4, y: -11}
-        - {x: 6, y: -14}
-        - {x: 11, y: -14}
-        - {x: 16, y: -12}
-        - {x: 16, y: 10}
-        - {x: 13, y: 11}
-    - name: ActivityIndicator_8
+      - - {x: -18, y: 32}
+        - {x: -19, y: 31}
+        - {x: -19, y: 16}
+        - {x: -4, y: 11}
+        - {x: 23, y: 11}
+        - {x: 25, y: 15}
+        - {x: 25, y: 26}
+        - {x: 15, y: 32}
+    - name: ActivityIndicator_4
       rect:
         serializedVersion: 2
         x: 256
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 10, y: 3}
-        - {x: -2, y: -7}
-        - {x: -2, y: -16}
-        - {x: 11, y: -16}
-        - {x: 16, y: -14}
-        - {x: 16, y: 3}
-    - name: ActivityIndicator_9
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 4, y: -1}
-        - {x: -7, y: -5}
-        - {x: -7, y: -15}
-        - {x: -6, y: -16}
-        - {x: 12, y: -16}
-        - {x: 16, y: -10}
-        - {x: 16, y: -1}
-    - name: ActivityIndicator_10
+      - - {x: -3, y: 32}
+        - {x: -3, y: 20}
+        - {x: 19, y: -2}
+        - {x: 32, y: -2}
+        - {x: 32, y: 27}
+        - {x: 18, y: 32}
+    - name: ActivityIndicator_5
       rect:
         serializedVersion: 2
         x: 320
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -11, y: -16}
-        - {x: 14, y: -16}
-        - {x: 14, y: -5}
-        - {x: 13, y: -4}
-        - {x: -10, y: -4}
-        - {x: -11, y: -7}
-    - name: ActivityIndicator_11
-      rect:
-        serializedVersion: 2
-        x: 352
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -4, y: -4}
-        - {x: -10, y: -4}
-        - {x: -14, y: -8}
-        - {x: -14, y: -13}
-        - {x: -10, y: -16}
-        - {x: 10, y: -16}
-        - {x: 11, y: -13}
-        - {x: 11, y: -9}
-        - {x: 9, y: -6}
-    - name: ActivityIndicator_12
+      - - {x: 17, y: 31}
+        - {x: 5, y: 31}
+        - {x: 5, y: 13}
+        - {x: 11, y: -11}
+        - {x: 32, y: -11}
+        - {x: 32, y: 24}
+    - name: ActivityIndicator_6
       rect:
         serializedVersion: 2
         x: 384
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 2}
-        - {x: -16, y: -12}
-        - {x: -12, y: -16}
-        - {x: 2, y: -16}
-        - {x: 2, y: -8}
-        - {x: -9, y: 2}
-    - name: ActivityIndicator_13
-      rect:
-        serializedVersion: 2
-        x: 416
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16, y: 7}
-        - {x: -16, y: -13}
-        - {x: -12, y: -16}
-        - {x: -1, y: -16}
-        - {x: -1, y: -5}
-        - {x: -6, y: 7}
-    - name: ActivityIndicator_14
+      - - {x: 13, y: 26}
+        - {x: 11, y: 20}
+        - {x: 11, y: 5}
+        - {x: 15, y: -14}
+        - {x: 21, y: -19}
+        - {x: 26, y: -19}
+        - {x: 32, y: -16}
+        - {x: 32, y: 17}
+        - {x: 24, y: 26}
+    - name: ActivityIndicator_7
       rect:
         serializedVersion: 2
         x: 448
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 10}
-        - {x: -16, y: -14}
-        - {x: -5, y: -14}
-        - {x: -4, y: -13}
-        - {x: -4, y: -1}
-        - {x: -5, y: 9}
-        - {x: -11, y: 11}
-        - {x: -13, y: 11}
+      - - {x: 31, y: 19}
+        - {x: 15, y: 19}
+        - {x: 11, y: 11}
+        - {x: 11, y: -25}
+        - {x: 23, y: -25}
+        - {x: 28, y: -21}
+        - {x: 32, y: -12}
+        - {x: 32, y: 18}
+    - name: ActivityIndicator_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 22, y: 3}
+        - {x: -2, y: -17}
+        - {x: -2, y: -30}
+        - {x: -1, y: -32}
+        - {x: 19, y: -32}
+        - {x: 32, y: -20}
+        - {x: 32, y: 2}
+        - {x: 31, y: 3}
+    - name: ActivityIndicator_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 31, y: -11}
+        - {x: 30, y: -5}
+        - {x: 17, y: -5}
+        - {x: -11, y: -20}
+        - {x: -11, y: -28}
+        - {x: -8, y: -32}
+        - {x: 14, y: -32}
+        - {x: 21, y: -28}
+        - {x: 31, y: -19}
+    - name: ActivityIndicator_10
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5, y: -11}
+        - {x: -14, y: -14}
+        - {x: -19, y: -21}
+        - {x: -19, y: -31}
+        - {x: -18, y: -32}
+        - {x: 25, y: -32}
+        - {x: 26, y: -26}
+        - {x: 26, y: -14}
+        - {x: 25, y: -11}
+    - name: ActivityIndicator_11
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -6, y: -11}
+        - {x: -21, y: -11}
+        - {x: -25, y: -14}
+        - {x: -25, y: -25}
+        - {x: -14, y: -32}
+        - {x: 18, y: -32}
+        - {x: 19, y: -28}
+        - {x: 19, y: -18}
+        - {x: 17, y: -15}
+    - name: ActivityIndicator_12
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21, y: 2}
+        - {x: -32, y: 2}
+        - {x: -32, y: -15}
+        - {x: -31, y: -18}
+        - {x: -18, y: -31}
+        - {x: -15, y: -32}
+        - {x: 1, y: -32}
+        - {x: 3, y: -27}
+        - {x: 3, y: -22}
+        - {x: -14, y: 0}
+    - name: ActivityIndicator_13
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 11}
+        - {x: -32, y: 9}
+        - {x: -32, y: -15}
+        - {x: -29, y: -21}
+        - {x: -16, y: -31}
+        - {x: -11, y: -31}
+        - {x: -5, y: -28}
+        - {x: -5, y: -16}
+        - {x: -16, y: 11}
+    - name: ActivityIndicator_14
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: -15}
+        - {x: -25, y: -26}
+        - {x: -12, y: -26}
+        - {x: -11, y: -25}
+        - {x: -11, y: 5}
+        - {x: -12, y: 15}
+        - {x: -16, y: 19}
+        - {x: -29, y: 19}
+        - {x: -32, y: 16}
     - name: ActivityIndicator_15
       rect:
         serializedVersion: 2
-        x: 480
+        x: 960
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -8, y: 14}
-        - {x: -12, y: 14}
-        - {x: -16, y: 9}
-        - {x: -16, y: -10}
-        - {x: -13, y: -11}
-        - {x: -8, y: -11}
-        - {x: -5, y: -10}
-        - {x: -5, y: 13}
+      - - {x: -14, y: 25}
+        - {x: -26, y: 25}
+        - {x: -32, y: 12}
+        - {x: -32, y: -17}
+        - {x: -28, y: -19}
+        - {x: -17, y: -19}
+        - {x: -15, y: -17}
+        - {x: -11, y: 9}
+        - {x: -11, y: 24}
     outline: []
   spritePackingTag: 
   userData: 

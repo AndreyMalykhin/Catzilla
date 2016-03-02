@@ -37,25 +37,25 @@ namespace Catzilla.MainMenuModule.Controller {
             MainScreen.LoginBtn.interactable = false;
         }
 
-        public void OnExitBtnClick(Evt evt) {
+        public void OnExitBtnClick() {
             AnalyticsUtils.LogEvent("Game.Exit");
             Game.Exit();
         }
 
-        public void OnStartBtnClick(Evt evt) {
+        public void OnStartBtnClick() {
             AnalyticsUtils.LogEvent("Game.Start");
             MainScreen.Hide();
             Game.LoadLevel();
         }
 
-        public void OnLeaderboardBtnClick(Evt evt) {
+        public void OnLeaderboardBtnClick() {
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Leaderboard.View");
             AuthManager.Login(OnLoginForLeaderboard);
         }
 
-        public void OnAchievementsBtnClick(Evt evt) {
+        public void OnAchievementsBtnClick() {
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Achievements.View");

@@ -7,6 +7,7 @@ namespace Catzilla.CommonModule.Util {
     [CreateAssetMenuAttribute]
     public class WorldSpacePopupManager: ScriptableObject {
         [Inject]
+        [NonSerialized]
         private PoolStorageView poolStorage;
 
         [SerializeField]
@@ -35,7 +36,7 @@ namespace Catzilla.CommonModule.Util {
             WorldSpacePopupView recentPopup = recentPopups[nextPopupIndex];
 
             if (recentPopup != null) {
-                recentPopup.Hide();
+                recentPopup.GetComponent<ShowableView>().Hide();
             }
 
             recentPopups[nextPopupIndex] = popup;
@@ -45,12 +46,13 @@ namespace Catzilla.CommonModule.Util {
                 nextPopupIndex = 0;
             }
 
-            popup.OnHide = OnPopupHide;
-            popup.Show();
+            var showable = popup.GetComponent<ShowableView>();
+            showable.OnHide = OnPopupHide;
+            showable.Show();
         }
 
-        private void OnPopupHide(WorldSpacePopupView popup) {
-            poolStorage.Return(popup.GetComponent<PoolableView>());
+        private void OnPopupHide(ShowableView showable) {
+            poolStorage.Return(showable.GetComponent<PoolableView>());
         }
     }
 }

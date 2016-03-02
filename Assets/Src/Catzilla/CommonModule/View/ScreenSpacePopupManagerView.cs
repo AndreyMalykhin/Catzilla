@@ -18,14 +18,15 @@ namespace Catzilla.CommonModule.View {
         }
 
         public void Show(ScreenSpacePopupView popup) {
-            popup.OnHide = OnPopupHide;
             bool isWorldPositionStays = false;
             popup.transform.SetParent(transform, isWorldPositionStays);
-            popup.Show();
+            var showable = popup.GetComponent<ShowableView>();
+            showable.OnHide = OnPopupHide;
+            showable.Show();
         }
 
-        private void OnPopupHide(ScreenSpacePopupView popup) {
-            poolStorage.Return(popup.GetComponent<PoolableView>());
+        private void OnPopupHide(ShowableView showable) {
+            poolStorage.Return(showable.GetComponent<PoolableView>());
         }
     }
 }

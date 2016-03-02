@@ -14,12 +14,8 @@ namespace Catzilla.GameOverMenuModule.View {
         [SerializeField]
         private GameOverScreenView screen;
 
-        [SerializeField]
-        private GameOverMenuView menu;
-
         public override void InitBindings(DiContainer container) {
             container.Bind<GameOverScreenView>().ToInstance(screen);
-            container.Bind<GameOverMenuView>().ToInstance(menu);
             container.Bind<GameOverMenuController>().ToSingle();
         }
 
@@ -27,18 +23,19 @@ namespace Catzilla.GameOverMenuModule.View {
             var eventBus = container.Resolve<EventBus>();
             var gameOverMenuController =
                 container.Resolve<GameOverMenuController>();
-            eventBus.On(GameOverMenuView.Event.ExitBtnClick,
-                gameOverMenuController.OnExitBtnClick);
-            eventBus.On(GameOverMenuView.Event.RestartBtnClick,
-                gameOverMenuController.OnRestartBtnClick);
-            eventBus.On(GameOverMenuView.Event.ResurrectBtnClick,
-                gameOverMenuController.OnResurrectBtnClick);
-            eventBus.On(GameOverMenuView.Event.RewardBtnClick,
-                gameOverMenuController.OnRewardBtnClick);
             eventBus.On(PlayerView.Event.Construct,
                 gameOverMenuController.OnPlayerConstruct);
             eventBus.On(PlayerStateStorage.Event.Save,
                 gameOverMenuController.OnPlayerStateStorageSave);
+            var screen = container.Resolve<GameOverScreenView>();
+            screen.Menu.ExitBtn.onClick.AddListener(
+                gameOverMenuController.OnExitBtnClick);
+            screen.Menu.RestartBtn.onClick.AddListener(
+                gameOverMenuController.OnRestartBtnClick);
+            screen.Menu.ResurrectBtn.onClick.AddListener(
+                gameOverMenuController.OnResurrectBtnClick);
+            screen.Menu.RewardBtn.onClick.AddListener(
+                gameOverMenuController.OnRewardBtnClick);
         }
     }
 }

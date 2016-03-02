@@ -65,7 +65,6 @@ namespace Catzilla.CommonModule.View {
             container.Bind<ActivityIndicatorController>().ToSingle();
             container.Bind<Ad>().ToSingle();
             container.Bind<DisposableController>().ToSingle();
-            container.Bind<WorldSpacePopupController>().ToSingle();
             container.Bind<BtnController>().ToSingle();
             container.Bind<UIView>().ToInstance(ui);
             container.Bind<PoolStorageView>().ToInstance(poolStorage);
@@ -117,11 +116,6 @@ namespace Catzilla.CommonModule.View {
                 activityIndicatorController.OnServerRequest);
             eventBus.On(Server.Event.Response,
                 activityIndicatorController.OnServerResponse);
-
-            var worldSpacePopupController =
-                container.Resolve<WorldSpacePopupController>();
-            eventBus.On(WorldSpacePopupView.Event.Show,
-                worldSpacePopupController.OnShow);
         }
     }
 }

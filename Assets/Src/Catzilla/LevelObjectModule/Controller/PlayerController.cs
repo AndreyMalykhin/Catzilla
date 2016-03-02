@@ -78,7 +78,9 @@ namespace Catzilla.LevelObjectModule.Controller {
                 PlayerStateStorage.Sync(Server);
             }
 
-            GameOverScreen.Show(OnGameOverScreenShow);
+            var showable = GameOverScreen.GetComponent<ShowableView>();
+            showable.OnShow = OnGameOverScreenShow;
+            showable.Show();
 
             if (player.DeathSound != null) {
                 AudioManager.Play(player.DeathSound, player.HighPrioAudioSource,
@@ -142,7 +144,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             AnalyticsUtils.LogEvent("Player.Resurrection");
         }
 
-        private void OnGameOverScreenShow() {
+        private void OnGameOverScreenShow(ShowableView showable) {
             Game.Pause();
         }
 
