@@ -5,7 +5,7 @@ using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.PlayerModule.View {
-    public class PlayerScoreView: MonoBehaviour {
+    public class HUDScoreView: MonoBehaviour {
         public enum Event {Construct}
 
         [Inject]

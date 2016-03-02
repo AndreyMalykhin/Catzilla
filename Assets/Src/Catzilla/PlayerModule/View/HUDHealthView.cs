@@ -5,7 +5,7 @@ using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.PlayerModule.View {
-    public class PlayerHealthView: MonoBehaviour {
+    public class HUDHealthView: MonoBehaviour {
         public int Value {
             set {
                 if (slider.value == value) {
@@ -23,48 +23,46 @@ namespace Catzilla.PlayerModule.View {
 
         public int MaxValue {set {slider.maxValue = value;}}
 
+        private static readonly int increaseParam =
+            Animator.StringToHash("Increase");
+        private static readonly int decreaseParam =
+            Animator.StringToHash("Decrease");
+
         [SerializeField]
         private Slider slider;
 
         [SerializeField]
+        private Animator animator;
+
+        [SerializeField]
+        [Tooltip("In seconds")]
         private float animationDuration = 2f;
 
-        [SerializeField]
-        private Color increaseColor = Color.white;
-
-        [SerializeField]
-        private Color decreaseColor = Color.red;
-
-        [SerializeField]
-        private Image fillImg;
-
         private IEnumerator setValueCoroutine;
-        private Color normalColor;
-
-        [PostInject]
-        public void OnConstruct() {
-            normalColor = fillImg.color;
-        }
 
         private IEnumerator SetValue(int value) {
-            // DebugUtils.Log("PlayerHealthView.SetValue()");
+            // DebugUtils.Log("HUDHealthView.SetValue()");
             float elapsedTime = 0f;
             float startValue = slider.value;
-            Color startColor =
-                value >= slider.value ? increaseColor : decreaseColor;
+
+            if (animator != null) {
+                animator.SetTrigger(
+                    value >= slider.value ? increaseParam : decreaseParam);
+            }
 
             while (elapsedTime < animationDuration) {
                 float completionPercentage = elapsedTime / animationDuration;
                 slider.value = Mathf.Lerp(
                     startValue, value, completionPercentage);
-                fillImg.color = Color.Lerp(
-                    startColor, normalColor, completionPercentage);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
 
             slider.value = value;
-            fillImg.color = normalColor;
+        }
+
+        private void Awake() {
+            slider.value = 0f;
         }
     }
 }

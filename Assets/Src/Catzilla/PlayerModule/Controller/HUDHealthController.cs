@@ -3,9 +3,9 @@ using Catzilla.LevelObjectModule.View;
 using Catzilla.PlayerModule.View;
 
 namespace Catzilla.PlayerModule.Controller {
-    public class PlayerHealthController {
+    public class HUDHealthController {
         private PlayerView player;
-        private PlayerHealthView health;
+        private HUDHealthView health;
 
         public void OnPlayerConstruct(Evt evt) {
             player = (PlayerView) evt.Source;

@@ -774,15 +774,15 @@ MonoBehaviour:
   HighPrioAudioSource: {fileID: 8275416}
   IsHealthFreezed: 0
   IsScoreFreezed: 0
-  MinSmashForce: 100
-  MaxSmashForce: 125
-  SmashUpwardsModifier: -5
-  FrontSpeed: 5
-  SideSpeed: 5
+  MinSmashForce: 96
+  MaxSmashForce: 128
+  SmashUpwardsModifier: -4
+  FrontSpeed: 8
+  SideSpeed: 4
   MaxHealth: 100
   CameraShakeDuration: 0.5
   CameraShakeMaxAmount: 1
-  HUDProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
+  hudProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -949,7 +949,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SmashUpwardsModifier
-      value: -5
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Size.z
@@ -1005,7 +1005,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: MinSmashForce
-      value: 100
+      value: 96
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: MaxHealth
@@ -1039,6 +1039,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MaxSmashForce
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: FrontSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: SideSpeed
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

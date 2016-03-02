@@ -16,7 +16,6 @@ namespace Catzilla.CommonModule.View {
         }
 
         public Text Msg;
-        public float Speed = 16f;
         public float Offset;
 
         private Camera lookAtTarget;
@@ -56,12 +55,12 @@ namespace Catzilla.CommonModule.View {
         }
 
         private void LateUpdate() {
-            if (LookAtTarget != null) {
-                transform.rotation =
-                    Quaternion.LookRotation(LookAtTarget.transform.forward);
+            if (LookAtTarget == null) {
+                return;
             }
 
-            transform.Translate(0f, Speed * Time.deltaTime, 0f);
+            transform.rotation =
+                Quaternion.LookRotation(LookAtTarget.transform.forward);
         }
     }
 }

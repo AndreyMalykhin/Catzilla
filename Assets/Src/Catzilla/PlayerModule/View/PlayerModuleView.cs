@@ -34,8 +34,8 @@ namespace Catzilla.PlayerModule.View {
             container.Bind<PlayerStateStorage>()
                 .ToInstance(finalPlayerStateStorage);
             container.Bind<GiftManager>().ToInstance(giftManager);
-            container.Bind<PlayerScoreController>().ToSingle();
-            container.Bind<PlayerHealthController>().ToSingle();
+            container.Bind<HUDScoreController>().ToSingle();
+            container.Bind<HUDHealthController>().ToSingle();
             container.Bind<PlayerManager>().ToSingle();
         }
 
@@ -45,14 +45,14 @@ namespace Catzilla.PlayerModule.View {
             var eventBus = container.Resolve<EventBus>();
 
             var playerScoreController =
-                container.Resolve<PlayerScoreController>();
+                container.Resolve<HUDScoreController>();
             eventBus.On(
                 PlayerView.Event.ScoreChange, playerScoreController.OnChange);
-            eventBus.On(PlayerScoreView.Event.Construct,
+            eventBus.On(HUDScoreView.Event.Construct,
                 playerScoreController.OnViewConstruct);
 
             var playerHealthController =
-                container.Resolve<PlayerHealthController>();
+                container.Resolve<HUDHealthController>();
             eventBus.On(PlayerView.Event.HealthChange,
                 playerHealthController.OnChange);
             eventBus.On(PlayerView.Event.Construct,

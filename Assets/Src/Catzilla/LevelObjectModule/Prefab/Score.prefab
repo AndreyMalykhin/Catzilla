@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 320
+  Score: 640
   Collider: {fileID: 6506112}
 --- !u!114 &11438576
 MonoBehaviour:
@@ -266,7 +266,7 @@ Prefab:
       objectReference: {fileID: 8300000, guid: b56a3d32c633c480fbfe6b1232b109b0, type: 3}
     - target: {fileID: 0}
       propertyPath: Score
-      value: 320
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.x

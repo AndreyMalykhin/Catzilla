@@ -211,13 +211,13 @@ namespace Catzilla.CommonModule.Model {
                 return;
             }
 
-            int doneRequestsCount = 0;
+            int savedAchievementsCount = 0;
 
             for (int i = 0; i < achievements.Count; ++i) {
                 var achievement = achievements[i];
 
                 if (achievement.IsSynced) {
-                    ++doneRequestsCount;
+                    ++savedAchievementsCount;
                     continue;
                 }
 
@@ -232,9 +232,9 @@ namespace Catzilla.CommonModule.Model {
                         }
 
                         achievement.IsSynced = true;
-                        ++doneRequestsCount;
+                        ++savedAchievementsCount;
 
-                        if (doneRequestsCount < achievements.Count) {
+                        if (savedAchievementsCount < achievements.Count) {
                             return;
                         }
 
@@ -242,6 +242,13 @@ namespace Catzilla.CommonModule.Model {
                         if (onSuccess != null) onSuccess();
                     });
             }
+
+            if (savedAchievementsCount < achievements.Count) {
+                return;
+            }
+
+            OnResponse();
+            if (onSuccess != null) onSuccess();
         }
     }
 }

@@ -9,7 +9,7 @@ using Catzilla.PlayerModule.View;
 using Catzilla.PlayerModule.Model;
 
 namespace Catzilla.PlayerModule.Controller {
-    public class PlayerScoreController {
+    public class HUDScoreController {
         [Inject]
         public Translator Translator {get; set;}
 
@@ -19,10 +19,10 @@ namespace Catzilla.PlayerModule.Controller {
         [Inject]
         public PlayerStateStorage PlayerStateStorage {get; set;}
 
-        private PlayerScoreView score;
+        private HUDScoreView score;
 
         public void OnViewConstruct(Evt evt) {
-            score = (PlayerScoreView) evt.Source;
+            score = (HUDScoreView) evt.Source;
             score.Text = Translator.Translate("Player.Score");
             int level = PlayerStateStorage.Get().Level;
             score.MaxValue =

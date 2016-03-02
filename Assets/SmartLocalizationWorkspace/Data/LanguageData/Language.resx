@@ -146,8 +146,14 @@
 	<data name="MainMenu.Achievements" xml:space="preserve">
 		<value>Achievements</value>
 	</data>
+	<data name="MainMenu.Company" xml:space="preserve">
+		<value>by Mr. M</value>
+	</data>
 	<data name="MainMenu.Exit" xml:space="preserve">
 		<value>Quit</value>
+	</data>
+	<data name="MainMenu.Game" xml:space="preserve">
+		<value>CATZILLA</value>
 	</data>
 	<data name="MainMenu.Leaderboard" xml:space="preserve">
 		<value>Leaderboard</value>
@@ -165,12 +171,6 @@
 		<value>+{0} resurrection</value>
 	</data>
 	<data name="Player.Score" xml:space="preserve">
-		<value>Score: {0} / {1}</value>
-	</data>
-	<data name="MainMenu.Game" xml:space="preserve">
-		<value>CATZILLA</value>
-	</data>
-	<data name="MainMenu.Company" xml:space="preserve">
-		<value>by Mr. M</value>
+		<value>{0} / {1}</value>
 	</data>
 </root>

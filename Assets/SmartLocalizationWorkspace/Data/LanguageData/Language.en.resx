@@ -171,6 +171,6 @@
 		<value>+{0} resurrection</value>
 	</data>
 	<data name="Player.Score" xml:space="preserve">
-		<value>Score: {0} / {1}</value>
+		<value>{0} / {1}</value>
 	</data>
 </root>

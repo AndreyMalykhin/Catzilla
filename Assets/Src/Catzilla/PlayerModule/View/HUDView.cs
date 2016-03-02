@@ -4,18 +4,18 @@ using Zenject;
 using Catzilla.CommonModule.View;
 
 namespace Catzilla.PlayerModule.View {
-    public class PlayerHUDView: MonoBehaviour {
+    public class HUDView: MonoBehaviour {
         [Inject]
-        public UIView UI {get; set;}
+        private UIView ui;
 
-        public PlayerHealthView Health;
-        public PlayerScoreView Score;
+        public HUDHealthView Health;
+        public HUDScoreView Score;
 
         [PostInject]
         public void OnConstruct() {
             bool isWorldPositionStays = false;
             var transform = (RectTransform) this.transform;
-            transform.SetParent(UI.transform, isWorldPositionStays);
+            transform.SetParent(ui.transform, isWorldPositionStays);
             transform.anchorMax = new Vector2(1f, 1f);
             transform.offsetMax = new Vector2(0f, 0f);
         }

@@ -69,7 +69,7 @@ namespace Catzilla.LevelObjectModule.View {
 
         public Collider Collider;
         public Camera Camera;
-        public PlayerHUDView HUD;
+        public HUDView HUD;
         public Animator Animator;
         public AudioClip DeathSound;
         public AudioClip HurtSound;
@@ -89,8 +89,7 @@ namespace Catzilla.LevelObjectModule.View {
         public float CameraShakeMaxAmount = 1f;
 
         [SerializeField]
-        [FormerlySerializedAs("HUDProto")]
-        private PlayerHUDView hudProto;
+        private HUDView hudProto;
 
         private Vector3 cameraShakeAmount;
         private IEnumerator cameraShakeCoroutine;
@@ -114,7 +113,7 @@ namespace Catzilla.LevelObjectModule.View {
             health = MaxHealth;
             cameraStartPosition = Camera.transform.localPosition;
             HUD = Instantiator.InstantiatePrefab(hudProto.gameObject)
-                .GetComponent<PlayerHUDView>();
+                .GetComponent<HUDView>();
             EventBus.Fire(Event.Construct, new Evt(this));
         }
 
