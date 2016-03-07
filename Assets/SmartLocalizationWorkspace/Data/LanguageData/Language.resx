@@ -152,6 +152,9 @@
 	<data name="MainMenu.Exit" xml:space="preserve">
 		<value>Quit</value>
 	</data>
+	<data name="MainMenu.Feedback" xml:space="preserve">
+		<value>Leave feedback</value>
+	</data>
 	<data name="MainMenu.Game" xml:space="preserve">
 		<value>CATZILLA</value>
 	</data>
@@ -172,5 +175,8 @@
 	</data>
 	<data name="Player.Score" xml:space="preserve">
 		<value>{0} / {1}</value>
+	</data>
+	<data name="Common.Error" xml:space="preserve">
+		<value>An unexpected error occured</value>
 	</data>
 </root>

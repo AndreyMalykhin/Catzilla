@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Diagnostics;
+using System.Text;
 using SmartLocalization;
 using Zenject;
 using Catzilla.CommonModule.View;
@@ -26,9 +27,6 @@ namespace Catzilla.CommonModule.View {
         private bool isServerStubbed = true;
 
         [SerializeField]
-        private UIView ui;
-
-        [SerializeField]
         private PoolStorageView poolStorage;
 
         [SerializeField]
@@ -49,6 +47,39 @@ namespace Catzilla.CommonModule.View {
         [SerializeField]
         private string emptyScene;
 
+        [SerializeField]
+        private string feedbackEmail;
+
+        [SerializeField]
+        private string secretKey;
+
+        [SerializeField]
+        private string errorMsg;
+
+        [SerializeField]
+        private int errorPopupType;
+
+        [SerializeField]
+        private int commonPopupType;
+
+        [SerializeField]
+        private int effectsHighPrioAudioChannel;
+
+        [SerializeField]
+        private int effectsLowPrioAudioChannel;
+
+        [SerializeField]
+        private int uiHighPrioAudioChannel;
+
+        [SerializeField]
+        private int uiLowPrioAudioChannel;
+
+        [SerializeField]
+        private int playerHighPrioAudioChannel;
+
+        [SerializeField]
+        private int playerLowPrioAudioChannel;
+
         public override void InitBindings(DiContainer container) {
             Server finalServer = server;
 
@@ -66,7 +97,7 @@ namespace Catzilla.CommonModule.View {
             container.Bind<Ad>().ToSingle();
             container.Bind<DisposableController>().ToSingle();
             container.Bind<BtnController>().ToSingle();
-            container.Bind<UIView>().ToInstance(ui);
+            container.Bind<ErrorController>().ToSingle();
             container.Bind<PoolStorageView>().ToInstance(poolStorage);
             container.Bind<CoroutineManagerView>().ToInstance(coroutineManager);
             container.Bind<ScreenSpacePopupManagerView>()
@@ -81,12 +112,24 @@ namespace Catzilla.CommonModule.View {
             container.Bind<Stopwatch>("PlayStopwatch")
                 .ToInstance(new Stopwatch());
             container.Bind<string>("EmptyScene").ToInstance(emptyScene);
-            container.Bind<int>("EffectsHighPrioAudioChannel").ToInstance(0);
-            container.Bind<int>("EffectsLowPrioAudioChannel").ToInstance(1);
-            container.Bind<int>("UIHighPrioAudioChannel").ToInstance(2);
-            container.Bind<int>("UILowPrioAudioChannel").ToInstance(3);
-            container.Bind<int>("PlayerHighPrioAudioChannel").ToInstance(4);
-            container.Bind<int>("PlayerLowPrioAudioChannel").ToInstance(5);
+            container.Bind<string>("FeedbackEmail").ToInstance(feedbackEmail);
+            container.Bind<string>("ErrorMsg").ToInstance(errorMsg);
+            container.Bind<int>("ErrorPopupType").ToInstance(errorPopupType);
+            container.Bind<int>("CommonPopupType").ToInstance(commonPopupType);
+            container.Bind<byte[]>("SecretKey")
+                .ToInstance(Encoding.UTF8.GetBytes(secretKey));
+            container.Bind<int>("EffectsHighPrioAudioChannel")
+                .ToInstance(effectsHighPrioAudioChannel);
+            container.Bind<int>("EffectsLowPrioAudioChannel")
+                .ToInstance(effectsLowPrioAudioChannel);
+            container.Bind<int>("UIHighPrioAudioChannel")
+                .ToInstance(uiHighPrioAudioChannel);
+            container.Bind<int>("UILowPrioAudioChannel")
+                .ToInstance(uiLowPrioAudioChannel);
+            container.Bind<int>("PlayerHighPrioAudioChannel")
+                .ToInstance(playerHighPrioAudioChannel);
+            container.Bind<int>("PlayerLowPrioAudioChannel")
+                .ToInstance(playerLowPrioAudioChannel);
         }
 
         public override void PostBindings(DiContainer container) {
@@ -116,6 +159,11 @@ namespace Catzilla.CommonModule.View {
                 activityIndicatorController.OnServerRequest);
             eventBus.On(Server.Event.Response,
                 activityIndicatorController.OnServerResponse);
+
+            var errorController =
+                container.Resolve<ErrorController>();
+            eventBus.On(
+                Server.Event.Response, errorController.OnServerResponse);
         }
     }
 }

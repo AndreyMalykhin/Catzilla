@@ -66,7 +66,7 @@ namespace Catzilla.CommonModule.Model {
 
             OnRequest();
             Social.localUser.Authenticate((bool isSuccess) => {
-                OnResponse();
+                OnResponse(isSuccess);
 
                 if (!isSuccess) {
                     if (onFail != null) onFail();
@@ -84,7 +84,7 @@ namespace Catzilla.CommonModule.Model {
             OnRequest();
             OpenSavedGame((SavedGameRequestStatus requestStatus, ISavedGameMetadata game) => {
                 if (requestStatus != SavedGameRequestStatus.Success) {
-                    OnResponse();
+                    OnResponse(false);
                     if (onFail != null) onFail();
                     return;
                 }
@@ -102,7 +102,7 @@ namespace Catzilla.CommonModule.Model {
                     binaryPlayer,
                     (SavedGameRequestStatus requestStatus2, ISavedGameMetadata game2) => {
                         if (requestStatus2 != SavedGameRequestStatus.Success) {
-                            OnResponse();
+                            OnResponse(false);
                             if (onFail != null) onFail();
                             return;
                         }
@@ -117,7 +117,7 @@ namespace Catzilla.CommonModule.Model {
                             GooglePlayIds.leaderboard_scores,
                             (bool isSuccess) => {
                                 if (!isSuccess) {
-                                    OnResponse();
+                                    OnResponse(isSuccess);
                                     if (onFail != null) onFail();
                                     return;
                                 }
@@ -136,7 +136,7 @@ namespace Catzilla.CommonModule.Model {
             OnRequest();
             OpenSavedGame((SavedGameRequestStatus requestStatus, ISavedGameMetadata game) => {
                 if (requestStatus != SavedGameRequestStatus.Success) {
-                    OnResponse();
+                    OnResponse(false);
                     if (onFail != null) onFail();
                     return;
                 }
@@ -144,9 +144,11 @@ namespace Catzilla.CommonModule.Model {
                 PlayGamesPlatform.Instance.SavedGame.ReadBinaryData(
                     game,
                     (SavedGameRequestStatus requestStatus2, byte[] binaryPlayer) => {
-                        OnResponse();
+                        bool isSuccess =
+                            requestStatus2 == SavedGameRequestStatus.Success;
+                        OnResponse(isSuccess);
 
-                        if (requestStatus2 != SavedGameRequestStatus.Success) {
+                        if (!isSuccess) {
                             if (onFail != null) onFail();
                             return;
                         }
@@ -183,11 +185,11 @@ namespace Catzilla.CommonModule.Model {
             EventBus.Fire(Event.Request, new Evt(this));
         }
 
-        private void OnResponse() {
+        private void OnResponse(bool isSuccess) {
             --pendingRequestsCount;
             // DebugUtils.Log("Server.OnResponse(); pendingRequestsCount={0}",
             //     PendingRequestsCount);
-            EventBus.Fire(Event.Response, new Evt(this));
+            EventBus.Fire(Event.Response, new Evt(this, isSuccess));
         }
 
         private void OpenSavedGame(
@@ -204,9 +206,10 @@ namespace Catzilla.CommonModule.Model {
             PlayerState player, Action onSuccess = null, Action onFail = null) {
             List<Catzilla.PlayerModule.Model.Achievement> achievements =
                 player.Achievements;
+            bool isSuccess = true;
 
             if (achievements.Count == 0) {
-                OnResponse();
+                OnResponse(isSuccess);
                 if (onSuccess != null) onSuccess();
                 return;
             }
@@ -224,9 +227,9 @@ namespace Catzilla.CommonModule.Model {
                 Social.ReportProgress(
                     achievement.Id,
                     100f,
-                    (bool isSuccess) => {
-                        if (!isSuccess) {
-                            OnResponse();
+                    (bool isSuccess2) => {
+                        if (!isSuccess2) {
+                            OnResponse(isSuccess2);
                             if (onFail != null) onFail();
                             return;
                         }
@@ -238,7 +241,7 @@ namespace Catzilla.CommonModule.Model {
                             return;
                         }
 
-                        OnResponse();
+                        OnResponse(isSuccess2);
                         if (onSuccess != null) onSuccess();
                     });
             }
@@ -247,7 +250,7 @@ namespace Catzilla.CommonModule.Model {
                 return;
             }
 
-            OnResponse();
+            OnResponse(isSuccess);
             if (onSuccess != null) onSuccess();
         }
     }

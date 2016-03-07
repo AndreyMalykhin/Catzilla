@@ -20,20 +20,25 @@ namespace Catzilla.CommonModule.Model {
                 return;
             }
 
-            server.Login(() => {
-                uiBlocker.Show();
-                playerStateStorage.Sync(
-                    server,
-                    () => {
-                        uiBlocker.Hide();
-                        if (onSuccess != null) onSuccess();
-                    },
-                    () => {
-                        uiBlocker.Hide();
-                        if (onSuccess != null) onSuccess();
-                    }
-                );
-            });
+            uiBlocker.Show();
+            server.Login(
+                () => {
+                    playerStateStorage.Sync(
+                        server,
+                        () => {
+                            uiBlocker.Hide();
+                            if (onSuccess != null) onSuccess();
+                        },
+                        () => {
+                            uiBlocker.Hide();
+                            if (onSuccess != null) onSuccess();
+                        }
+                    );
+                },
+                () => {
+                    uiBlocker.Hide();
+                }
+            );
         }
     }
 }

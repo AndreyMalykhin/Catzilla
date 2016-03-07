@@ -44,6 +44,9 @@ namespace Catzilla.GameOverMenuModule.Controller {
         [Inject("MainCamera")]
         public Camera MainCamera {get; set;}
 
+        [Inject("CommonPopupType")]
+        public int CommonPopupType {get; set;}
+
         private PlayerView player;
 
         [PostInject]
@@ -64,10 +67,11 @@ namespace Catzilla.GameOverMenuModule.Controller {
         }
 
         public void OnExitBtnClick() {
+            AnalyticsUtils.LogEvent("Game.Exit");
             Game.UnloadLevel();
             MainCamera.gameObject.SetActive(true);
             GameOverScreen.GetComponent<ShowableView>().Hide();
-            MainScreen.Show();
+            MainScreen.GetComponent<ShowableView>().Show();
         }
 
         public void OnRestartBtnClick() {
@@ -114,7 +118,7 @@ namespace Catzilla.GameOverMenuModule.Controller {
                 LevelSettingsStorage.Get(playerState.Level).ResurrectionReward;
             playerState.AvailableResurrectionsCount += addResurrectionsCount;
             PlayerStateStorage.Save(playerState);
-            ScreenSpacePopupView popup = PopupManager.Get();
+            ScreenSpacePopupView popup = PopupManager.Get(CommonPopupType);
             popup.Msg.text = Translator.Translate(
                 "Player.RewardEarn", addResurrectionsCount);
             PopupManager.Show(popup);

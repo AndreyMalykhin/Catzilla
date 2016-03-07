@@ -9,6 +9,7 @@ namespace Catzilla.CommonModule.Util {
         [Serializable]
         private struct Channel {
             public string Name;
+            public int Id;
             public int SimultaneousSoundsCount;
         }
 
@@ -21,7 +22,8 @@ namespace Catzilla.CommonModule.Util {
         private Channel[] channels;
 
         [NonSerialized]
-        private AudioSource[][] recentlyPlayedSources;
+        private IDictionary<int, AudioSource[]> recentlyPlayedSources =
+            new Dictionary<int, AudioSource[]>(8);
 
         public void Play(AudioClip sound, AudioSource audioSource,
             int channelId, float pitch = 1f) {
@@ -57,11 +59,11 @@ namespace Catzilla.CommonModule.Util {
         private void OnEnable() {
             // because of unity's bug
             IsPaused = false;
-            recentlyPlayedSources = new AudioSource[channels.Length][];
 
             for (int i = 0; i < channels.Length; ++i) {
-                recentlyPlayedSources[i] =
-                    new AudioSource[channels[i].SimultaneousSoundsCount];
+                Channel channel = channels[i];
+                recentlyPlayedSources.Add(channel.Id,
+                    new AudioSource[channel.SimultaneousSoundsCount]);
             }
         }
     }

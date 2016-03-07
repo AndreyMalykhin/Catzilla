@@ -119,6 +119,9 @@
 	<data name="Common.Back" xml:space="preserve">
 		<value>Назад</value>
 	</data>
+	<data name="Common.Error" xml:space="preserve">
+		<value>Возникла неожиданная ошибка</value>
+	</data>
 	<data name="Common.Ok" xml:space="preserve">
 		<value>ОК</value>
 	</data>
@@ -151,6 +154,9 @@
 	</data>
 	<data name="MainMenu.Exit" xml:space="preserve">
 		<value>Выйти</value>
+	</data>
+	<data name="MainMenu.Feedback" xml:space="preserve">
+		<value>Оставить отзыв</value>
 	</data>
 	<data name="MainMenu.Game" xml:space="preserve">
 		<value>CATZILLA</value>

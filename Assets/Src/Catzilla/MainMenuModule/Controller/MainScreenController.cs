@@ -2,6 +2,7 @@
 using Zenject;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 using Catzilla.PlayerModule.Model;
 using Catzilla.MainMenuModule.View;
 
@@ -22,12 +23,24 @@ namespace Catzilla.MainMenuModule.Controller {
         [Inject]
         public Server Server {get; set;}
 
+        [Inject("FeedbackEmail")]
+        public string FeedbackEmail {get; set;}
+
         [PostInject]
         public void OnConstruct() {
             MainScreen.LoginBtn.gameObject.SetActive(!Server.IsLoggedIn);
         }
 
+        public void OnFeedbackBtnClick() {
+            AnalyticsUtils.LogEvent("Feedback.Leave");
+            string subject = WWW.EscapeURL("Feedback");
+            string url =
+                string.Format("mailto:{0}?subject={1}", FeedbackEmail, subject);
+            Application.OpenURL(url);
+        }
+
         public void OnLoginBtnClick() {
+            AnalyticsUtils.LogEvent("Player.Login");
             AuthManager.Login(OnLogin);
         }
 
@@ -38,13 +51,12 @@ namespace Catzilla.MainMenuModule.Controller {
         }
 
         public void OnExitBtnClick() {
-            AnalyticsUtils.LogEvent("Game.Exit");
             Game.Exit();
         }
 
         public void OnStartBtnClick() {
             AnalyticsUtils.LogEvent("Game.Start");
-            MainScreen.Hide();
+            MainScreen.GetComponent<ShowableView>().Hide();
             Game.LoadLevel();
         }
 

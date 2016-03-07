@@ -32,6 +32,8 @@ namespace Catzilla.MainMenuModule.View {
                 mainScreenController.OnLeaderboardBtnClick);
             mainScreen.Menu.AchievementsBtn.onClick.AddListener(
                 mainScreenController.OnAchievementsBtnClick);
+            mainScreen.Menu.FeedbackBtn.onClick.AddListener(
+                mainScreenController.OnFeedbackBtnClick);
             mainScreen.LoginBtn.onClick.AddListener(
                 mainScreenController.OnLoginBtnClick);
         }

@@ -24,6 +24,9 @@ namespace Catzilla.PlayerModule.View {
         [SerializeField]
         private GiftManager giftManager;
 
+        [SerializeField]
+        private GameObject hudWrapper;
+
         public override void InitBindings(DiContainer container) {
             PlayerStateStorage finalPlayerStateStorage = playerStateStorage;
 
@@ -34,6 +37,7 @@ namespace Catzilla.PlayerModule.View {
             container.Bind<PlayerStateStorage>()
                 .ToInstance(finalPlayerStateStorage);
             container.Bind<GiftManager>().ToInstance(giftManager);
+            container.Bind<GameObject>("HUDWrapper").ToInstance(hudWrapper);
             container.Bind<HUDScoreController>().ToSingle();
             container.Bind<HUDHealthController>().ToSingle();
             container.Bind<PlayerManager>().ToSingle();

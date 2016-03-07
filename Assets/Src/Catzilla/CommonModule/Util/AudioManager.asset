@@ -13,14 +13,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   channels:
   - Name: EffectsHighPrio
+    Id: 0
     SimultaneousSoundsCount: 4
   - Name: EffectsLowPrio
+    Id: 1
     SimultaneousSoundsCount: 1
   - Name: UIHighPrio
+    Id: 2
     SimultaneousSoundsCount: 1
   - Name: UILowPrio
+    Id: 3
     SimultaneousSoundsCount: 1
   - Name: PlayerHighPrio
+    Id: 4
     SimultaneousSoundsCount: 4
   - Name: PlayerLowPrio
+    Id: 5
     SimultaneousSoundsCount: 1

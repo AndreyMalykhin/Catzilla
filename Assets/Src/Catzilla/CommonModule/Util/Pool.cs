@@ -26,6 +26,7 @@ namespace Catzilla.CommonModule.Util {
 
         public T Take() {
             if (instances.Count == 0) {
+                DebugUtils.Log("Pool.Take(); empty");
                 Add(Capacity);
             }
 

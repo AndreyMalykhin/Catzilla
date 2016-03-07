@@ -59,6 +59,9 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject]
         public Translator Translator {get; set;}
 
+        [Inject("CommonPopupType")]
+        public int CommonPopupType {get; set;}
+
         private PlayerView player;
 
         public void OnViewConstruct(Evt evt) {
@@ -93,7 +96,7 @@ namespace Catzilla.LevelObjectModule.Controller {
                 return;
             }
 
-            var pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+            var pitch = UnityEngine.Random.Range(0.9f, 1.1f);
             AudioManager.Play(
                 player.FootstepSound,
                 player.LowPrioAudioSource,
@@ -167,7 +170,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             AnalyticsUtils.LogEvent("Level.Completion");
             GiveAchievementIfNeeded(playerState);
             int givenResurrectionsCount = GiftManager.Give(playerState);
-            ScreenSpacePopupView popup = PopupManager.Get();
+            ScreenSpacePopupView popup = PopupManager.Get(CommonPopupType);
             popup.Msg.text = Translator.Translate(
                 "Player.GiftEarn", givenResurrectionsCount);
             PopupManager.Show(popup);
@@ -188,7 +191,7 @@ namespace Catzilla.LevelObjectModule.Controller {
         private void GiveAchievementIfNeeded(PlayerState playerState) {
             string achievementId;
 
-            switch (playerState.Level) {
+            switch (playerState.Level + 1) {
                 case 5:
                     achievementId = GooglePlayIds.achievement_complete_level_5;
                     break;

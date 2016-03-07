@@ -2,21 +2,26 @@
 using System;
 using System.Globalization;
 using System.Collections;
+using System.Text;
 using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
 
 namespace Catzilla.PlayerModule.Model {
-    // TODO encryption
     [CreateAssetMenuAttribute]
     public class PlayerStateStorage: ScriptableObject {
         public enum Event {Save}
 
         [Inject]
-        public EventBus EventBus {get; set;}
+        [NonSerialized]
+        protected EventBus EventBus;
 
         [NonSerialized]
         protected PlayerState Player;
+
+        [Inject("SecretKey")]
+        [NonSerialized]
+        private byte[] secretKey;
 
         [NonSerialized]
         private PlayerState cachedRemotePlayer;
@@ -32,8 +37,10 @@ namespace Catzilla.PlayerModule.Model {
         public virtual PlayerState Get() {
             if (Player == null) {
                 if (isPlayerExists) {
-                    Player = JsonUtility.FromJson<PlayerState>(
-                        PlayerPrefs.GetString("Player"));
+                    string serializedPlayer = SecurityUtils.Decrypt(
+                        PlayerPrefs.GetString("Player"), secretKey);
+                    Player =
+                        JsonUtility.FromJson<PlayerState>(serializedPlayer);
                     DebugUtils.Log(
                         "PlayerStateStorage.Get(); playe={0}", Player);
                 }
@@ -45,7 +52,9 @@ namespace Catzilla.PlayerModule.Model {
         public virtual void Save(PlayerState player) {
             Player = player;
             Player.SaveDate = DateTime.UtcNow;
-            PlayerPrefs.SetString("Player", JsonUtility.ToJson(Player));
+            string serializedPlayer =
+                SecurityUtils.Encrypt(JsonUtility.ToJson(Player), secretKey);
+            PlayerPrefs.SetString("Player", serializedPlayer);
             PlayerPrefs.Save();
             DebugUtils.Log("PlayerStateStorage.Save(); player={0}", Player);
             EventBus.Fire(Event.Save, new Evt(this));

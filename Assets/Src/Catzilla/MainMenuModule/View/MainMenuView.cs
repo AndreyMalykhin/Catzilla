@@ -10,5 +10,6 @@ namespace Catzilla.MainMenuModule.View {
         public Button ExitBtn;
         public Button LeaderboardBtn;
         public Button AchievementsBtn;
+        public Button FeedbackBtn;
     }
 }

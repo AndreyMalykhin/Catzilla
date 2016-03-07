@@ -136,7 +136,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 414413f1faebb41c288ef0347d7d3809, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -262,6 +262,10 @@ Prefab:
       propertyPath: TakeSound
       value: 
       objectReference: {fileID: 8300000, guid: c213560c407cb4b0ca287bb4e4afdff3, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_CullingMode
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 173796}
