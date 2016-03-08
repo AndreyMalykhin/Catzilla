@@ -25,6 +25,9 @@ namespace Catzilla.PlayerModule.View {
         private GiftManager giftManager;
 
         [SerializeField]
+        private RewardManager rewardManager;
+
+        [SerializeField]
         private GameObject hudWrapper;
 
         public override void InitBindings(DiContainer container) {
@@ -37,6 +40,7 @@ namespace Catzilla.PlayerModule.View {
             container.Bind<PlayerStateStorage>()
                 .ToInstance(finalPlayerStateStorage);
             container.Bind<GiftManager>().ToInstance(giftManager);
+            container.Bind<RewardManager>().ToInstance(rewardManager);
             container.Bind<GameObject>("HUDWrapper").ToInstance(hudWrapper);
             container.Bind<HUDScoreController>().ToSingle();
             container.Bind<HUDHealthController>().ToSingle();
@@ -46,6 +50,7 @@ namespace Catzilla.PlayerModule.View {
         public override void PostBindings(DiContainer container) {
             container.Inject(container.Resolve<PlayerStateStorage>());
             container.Inject(container.Resolve<GiftManager>());
+            container.Inject(container.Resolve<RewardManager>());
             var eventBus = container.Resolve<EventBus>();
 
             var playerScoreController =

@@ -16,13 +16,13 @@ namespace Catzilla.GameOverMenuModule.View {
 
         public override void InitBindings(DiContainer container) {
             container.Bind<GameOverScreenView>().ToInstance(screen);
-            container.Bind<GameOverMenuController>().ToSingle();
+            container.Bind<GameOverScreenController>().ToSingle();
         }
 
         public override void PostBindings(DiContainer container) {
             var eventBus = container.Resolve<EventBus>();
             var gameOverMenuController =
-                container.Resolve<GameOverMenuController>();
+                container.Resolve<GameOverScreenController>();
             eventBus.On(PlayerView.Event.Construct,
                 gameOverMenuController.OnPlayerConstruct);
             eventBus.On(PlayerStateStorage.Event.Save,

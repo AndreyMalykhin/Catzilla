@@ -119,6 +119,9 @@
 	<data name="Common.Back" xml:space="preserve">
 		<value>Back</value>
 	</data>
+	<data name="Common.Error" xml:space="preserve">
+		<value>An unexpected error occured</value>
+	</data>
 	<data name="Common.Ok" xml:space="preserve">
 		<value>OK</value>
 	</data>
@@ -135,7 +138,7 @@
 		<value>Resurrect ({0})</value>
 	</data>
 	<data name="GameOverMenu.Reward" xml:space="preserve">
-		<value>Earn reward</value>
+		<value>Earn reward ({0})</value>
 	</data>
 	<data name="LevelCompleteScreen.Msg" xml:space="preserve">
 		<value>Level complete!</value>
@@ -176,7 +179,7 @@
 	<data name="Player.Score" xml:space="preserve">
 		<value>{0} / {1}</value>
 	</data>
-	<data name="Common.Error" xml:space="preserve">
-		<value>An unexpected error occured</value>
+	<data name="Player.RewardUnlock" xml:space="preserve">
+		<value>+{0} reward</value>
 	</data>
 </root>

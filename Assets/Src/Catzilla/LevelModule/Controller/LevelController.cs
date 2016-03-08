@@ -4,6 +4,7 @@ using System.Collections;
 using System.Diagnostics;
 using Zenject;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Model;
 using Catzilla.PlayerModule.Model;
 using Catzilla.LevelAreaModule.View;
@@ -41,19 +42,27 @@ namespace Catzilla.LevelModule.Controller {
             var msg = Translator.Translate(
                 "LevelStartScreen.Level", playerState.Level + 1);
             LevelStartScreen.Msg.text = msg;
-            LevelStartScreen.Show();
-            Game.Pause();
-            LevelGenerator.NewLevel(playerState.Level, level, OnLevelGenerate);
+            var showable = LevelStartScreen.GetComponent<ShowableView>();
+            showable.OnShow = OnStartScreenShow;
+            showable.Show();
         }
 
         private void OnLevelGenerate() {
             MainCamera.gameObject.SetActive(false);
-            LevelStartScreen.Hide(OnStartScreenHide);
+            var showable = LevelStartScreen.GetComponent<ShowableView>();
+            showable.OnHide = OnStartScreenHide;
+            showable.Hide();
         }
 
-        private void OnStartScreenHide() {
-            DebugUtils.Log(
-                "LevelController.OnStartScreenHide(); {0}", DateTime.Now);
+        private void OnStartScreenShow(ShowableView showable) {
+            Game.Pause();
+            PlayerState playerState = PlayerStateStorage.Get();
+            LevelGenerator.NewLevel(playerState.Level, level, OnLevelGenerate);
+        }
+
+        private void OnStartScreenHide(ShowableView showable) {
+            // DebugUtils.Log(
+            //     "LevelController.OnStartScreenHide(); {0}", DateTime.Now);
             PlayStopwatch.Reset();
             PlayStopwatch.Start();
             Game.Resume();

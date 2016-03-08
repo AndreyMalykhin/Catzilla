@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: GiftManager
   m_EditorClassIdentifier: 
   addResurrectionsCount: 1
-  playerAbsenceTime: 4
+  playerAbsenceTime: 1

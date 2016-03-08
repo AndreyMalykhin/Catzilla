@@ -32,6 +32,9 @@ namespace Catzilla.AppModule.Controller {
         [Inject("CommonPopupType")]
         public int CommonPopupType {get; set;}
 
+        [Inject]
+        public RewardManager RewardManager {get; set;}
+
         public void OnStart(Evt evt) {
             // DebugUtils.Log("AppController.OnStart()");
             PlayerState playerState = PlayerStateStorage.Get();
@@ -70,6 +73,14 @@ namespace Catzilla.AppModule.Controller {
                 ScreenSpacePopupView popup = PopupManager.Get(CommonPopupType);
                 popup.Msg.text = Translator.Translate(
                     "Player.GiftEarn", givenResurrectionsCount);
+                PopupManager.Show(popup);
+            }
+
+            if (RewardManager.IsTimeToUnlock(playerState)) {
+                int unlockedRewardsCount = RewardManager.Unlock(playerState);
+                ScreenSpacePopupView popup = PopupManager.Get(CommonPopupType);
+                popup.Msg.text = Translator.Translate(
+                    "Player.RewardUnlock", unlockedRewardsCount);
                 PopupManager.Show(popup);
             }
 

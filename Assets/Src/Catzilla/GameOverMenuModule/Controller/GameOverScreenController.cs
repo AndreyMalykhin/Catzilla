@@ -13,7 +13,7 @@ using Catzilla.MainMenuModule.View;
 using Catzilla.GameOverMenuModule.View;
 
 namespace Catzilla.GameOverMenuModule.Controller {
-    public class GameOverMenuController {
+    public class GameOverScreenController {
         [Inject]
         public GameOverScreenView GameOverScreen {get; set;}
 
@@ -47,23 +47,33 @@ namespace Catzilla.GameOverMenuModule.Controller {
         [Inject("CommonPopupType")]
         public int CommonPopupType {get; set;}
 
+        [Inject]
+        public RewardManager RewardManager {get; set;}
+
         private PlayerView player;
 
         [PostInject]
         public void OnConstruct() {
             GameOverScreen.Menu.ResurrectTextTemplate =
                 Translator.Translate("GameOverMenu.Resurrect");
+            GameOverScreen.Menu.RewardTextTemplate =
+                Translator.Translate("GameOverMenu.Reward");
             PlayerState playerState = PlayerStateStorage.Get();
 
             if (playerState != null) {
                 GameOverScreen.Menu.AvailableResurrectionsCount =
                     playerState.AvailableResurrectionsCount;
+                GameOverScreen.Menu.AvailableRewardsCount =
+                    playerState.AvailableRewardsCount;
             }
         }
 
         public void OnPlayerStateStorageSave(Evt evt) {
+            PlayerState playerState = PlayerStateStorage.Get();
             GameOverScreen.Menu.AvailableResurrectionsCount =
-                PlayerStateStorage.Get().AvailableResurrectionsCount;
+                playerState.AvailableResurrectionsCount;
+            GameOverScreen.Menu.AvailableRewardsCount =
+                playerState.AvailableRewardsCount;
         }
 
         public void OnExitBtnClick() {
@@ -114,9 +124,7 @@ namespace Catzilla.GameOverMenuModule.Controller {
         }
 
         private void RewardPlayer(PlayerState playerState) {
-            int addResurrectionsCount =
-                LevelSettingsStorage.Get(playerState.Level).ResurrectionReward;
-            playerState.AvailableResurrectionsCount += addResurrectionsCount;
+            int addResurrectionsCount = RewardManager.Give(playerState);
             PlayerStateStorage.Save(playerState);
             ScreenSpacePopupView popup = PopupManager.Get(CommonPopupType);
             popup.Msg.text = Translator.Translate(

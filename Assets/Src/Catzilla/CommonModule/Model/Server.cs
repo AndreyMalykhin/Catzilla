@@ -158,8 +158,8 @@ namespace Catzilla.CommonModule.Model {
                         if (binaryPlayer.Length > 0) {
                             string jsonPlayer =
                                 Encoding.UTF8.GetString(binaryPlayer);
-                            DebugUtils.Log(
-                                "Server.GetPlayer(); player={0}", jsonPlayer);
+                            // DebugUtils.Log(
+                            //     "Server.GetPlayer(); player={0}", jsonPlayer);
                             player =
                                 JsonUtility.FromJson<PlayerState>(jsonPlayer);
                         }

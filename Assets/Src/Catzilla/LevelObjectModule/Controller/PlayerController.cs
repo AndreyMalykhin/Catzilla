@@ -62,6 +62,9 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("CommonPopupType")]
         public int CommonPopupType {get; set;}
 
+        [Inject]
+        public RewardManager RewardManager {get; set;}
+
         private PlayerView player;
 
         public void OnViewConstruct(Evt evt) {
@@ -161,8 +164,8 @@ namespace Catzilla.LevelObjectModule.Controller {
         }
 
         private void CompleteLevel(PlayerView player) {
-            DebugUtils.Log(
-                "PlayerController.CompleteLevel(); {0}", DateTime.Now);
+            // DebugUtils.Log(
+            //     "PlayerController.CompleteLevel(); {0}", DateTime.Now);
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;
             PlayerState playerState = PlayerStateStorage.Get();
@@ -173,6 +176,11 @@ namespace Catzilla.LevelObjectModule.Controller {
             ScreenSpacePopupView popup = PopupManager.Get(CommonPopupType);
             popup.Msg.text = Translator.Translate(
                 "Player.GiftEarn", givenResurrectionsCount);
+            PopupManager.Show(popup);
+            int unlockedRewardsCount = RewardManager.Unlock(playerState);
+            popup = PopupManager.Get(CommonPopupType);
+            popup.Msg.text = Translator.Translate(
+                "Player.RewardUnlock", unlockedRewardsCount);
             PopupManager.Show(popup);
             ++playerState.Level;
             playerState.ScoreRecord = player.Score;

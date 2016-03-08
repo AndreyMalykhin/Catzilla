@@ -24,6 +24,16 @@ namespace Catzilla.PlayerModule.Model {
             set {availableResurrectionsCount = value;}
         }
 
+        public int AvailableRewardsCount {
+            get {return availableRewardsCount;}
+            set {availableRewardsCount = value;}
+        }
+
+        public DateTime RewardUnlockDate {
+            get {return rewardUnlockDate;}
+            set {rewardUnlockDate = value;}
+        }
+
         public DateTime SaveDate {
             get {return saveDate;}
             set {saveDate = value;}
@@ -61,6 +71,9 @@ namespace Catzilla.PlayerModule.Model {
         private int availableResurrectionsCount = 1;
 
         [SerializeField]
+        private int availableRewardsCount = 1;
+
+        [SerializeField]
         private int level;
 
         [SerializeField]
@@ -71,6 +84,9 @@ namespace Catzilla.PlayerModule.Model {
 
         [SerializeField]
         private long serializedLastSeenDate;
+
+        [SerializeField]
+        private long serializedRewardUnlockDate;
 
         [SerializeField]
         private long serializedPlayTime;
@@ -84,6 +100,9 @@ namespace Catzilla.PlayerModule.Model {
         [NonSerialized]
         private DateTime saveDate;
 
+        [NonSerialized]
+        private DateTime rewardUnlockDate;
+
         public void AddAchievement(Achievement achievement) {
             achievements.Add(achievement);
         }
@@ -93,27 +112,29 @@ namespace Catzilla.PlayerModule.Model {
             //     "PlayerState.OnBeforeSerialize(); saveDate={0}", SaveDate);
             serializedSaveDate = saveDate.ToBinary();
             serializedLastSeenDate = lastSeenDate.ToBinary();
+            serializedRewardUnlockDate = rewardUnlockDate.ToBinary();
             serializedPlayTime = playTime.Ticks;
         }
 
         public void OnAfterDeserialize() {
             saveDate = DateTime.FromBinary(serializedSaveDate);
             lastSeenDate = DateTime.FromBinary(serializedLastSeenDate);
+            rewardUnlockDate = DateTime.FromBinary(serializedRewardUnlockDate);
             playTime = new TimeSpan(serializedPlayTime);
             // DebugUtils.Log(
             //     "PlayerState.OnAfterDeserialize(); saveDate={0}", SaveDate);
         }
 
         public override string ToString() {
-            StringBuilder strBuilder = new StringBuilder(64);
+            StringBuilder achievementsStr = new StringBuilder(64);
 
             for (int i = 0; i < achievements.Count; ++i) {
-                strBuilder.Append(achievements[i]).Append(", ");
+                achievementsStr.Append(achievements[i]).Append(", ");
             }
 
             return string.Format(
-                "level={0}; scoreRecord={1}; availableResurrectionsCount={2}; saveDate={3}; lastSeenDate={4}; playTime={5}; isScoreSynced={6}, achievements={7}",
-                level, scoreRecord, availableResurrectionsCount, saveDate, lastSeenDate, playTime, isScoreSynced, strBuilder.ToString());
+                "level={0}; scoreRecord={1}; availableResurrectionsCount={2}; saveDate={3}; lastSeenDate={4}; playTime={5}; isScoreSynced={6}; achievements={7}; rewardUnlockDate={8}; availableRewardsCount={9}",
+                level, scoreRecord, availableResurrectionsCount, saveDate, lastSeenDate, playTime, isScoreSynced, achievementsStr.ToString(), rewardUnlockDate, availableRewardsCount);
         }
     }
 }

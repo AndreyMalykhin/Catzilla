@@ -41,8 +41,8 @@ namespace Catzilla.PlayerModule.Model {
                         PlayerPrefs.GetString("Player"), secretKey);
                     Player =
                         JsonUtility.FromJson<PlayerState>(serializedPlayer);
-                    DebugUtils.Log(
-                        "PlayerStateStorage.Get(); playe={0}", Player);
+                    // DebugUtils.Log(
+                    //     "PlayerStateStorage.Get(); playe={0}", Player);
                 }
             }
 
@@ -56,13 +56,13 @@ namespace Catzilla.PlayerModule.Model {
                 SecurityUtils.Encrypt(JsonUtility.ToJson(Player), secretKey);
             PlayerPrefs.SetString("Player", serializedPlayer);
             PlayerPrefs.Save();
-            DebugUtils.Log("PlayerStateStorage.Save(); player={0}", Player);
+            // DebugUtils.Log("PlayerStateStorage.Save(); player={0}", Player);
             EventBus.Fire(Event.Save, new Evt(this));
         }
 
         public virtual void Sync(
             Server server, Action onSuccess = null, Action onFail = null) {
-            DebugUtils.Log("PlayerStateStorage.Sync()");
+            // DebugUtils.Log("PlayerStateStorage.Sync()");
             PlayerState localPlayer = Get();
             DebugUtils.Assert(localPlayer != null);
 
