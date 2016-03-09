@@ -130,6 +130,7 @@ MonoBehaviour:
   playerTag: Player
   playerFieldOfViewTag: Player.FieldOfView
   projectileTag: Projectile
+  objectComfortZoneTag: Object.ComfortZone
 --- !u!114 &69188010 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11455074, guid: 0409548e6aa1949528a8f54d2de5d8e7,

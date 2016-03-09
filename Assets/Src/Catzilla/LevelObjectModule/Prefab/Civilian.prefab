@@ -126,6 +126,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &189150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 470048}
+  - 65: {fileID: 6538440}
+  m_Layer: 11
+  m_Name: ComfortZone
+  m_TagString: Object.ComfortZone
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &191150
 GameObject:
   m_ObjectHideFlags: 1
@@ -154,6 +170,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 485922}
+  - {fileID: 470048}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &429072
@@ -216,6 +233,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 485922}
   m_RootOrder: 2
+--- !u!4 &470048
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189150}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 424354}
+  m_RootOrder: 1
 --- !u!4 &485922
 Transform:
   m_ObjectHideFlags: 1
@@ -459,6 +488,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 118
   m_CollisionDetection: 0
+--- !u!65 &6538440
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189150}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.75, y: 1.3125, z: 0.75}
+  m_Center: {x: 0, y: 0.65625, z: 0}
 --- !u!65 &6584306
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -534,9 +575,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fbbba9b8c05642b886201d14576d116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minSpeed: 1
+  maxSpeed: 2
   speed: 0
-  minSpeed: 0.75
-  maxSpeed: 1.25
 --- !u!114 &11454844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -640,11 +681,11 @@ Prefab:
         type: 2}
     - target: {fileID: 0}
       propertyPath: maxSpeed
-      value: 1.25
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: minSpeed
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Materials.Array.data[0]
