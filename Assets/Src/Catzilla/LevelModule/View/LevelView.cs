@@ -53,14 +53,13 @@ namespace Catzilla.LevelModule.View {
         }
 
         public LevelObjectView NewObject(
-            ObjectTypeInfo typeInfo, Vector3 spawnPoint, int areaIndex) {
-            // DebugUtils.Log("LevelView.NewObject(); type={0}", typeInfo.Type);
-            var poolable = typeInfo.ViewProto.GetComponent<PoolableView>();
+            LevelObjectView objectProto, Vector3 spawnPoint, int areaIndex) {
+            // DebugUtils.Log("LevelView.NewObject()");
+            var poolable = objectProto.GetComponent<PoolableView>();
             LevelObjectView obj = null;
 
             if (poolable == null) {
-                obj = Instantiator.InstantiatePrefab(
-                    typeInfo.ViewProto.gameObject)
+                obj = Instantiator.InstantiatePrefab(objectProto.gameObject)
                     .GetComponent<LevelObjectView>();
             } else {
                 obj = PoolStorage.Take(poolable.PoolId)

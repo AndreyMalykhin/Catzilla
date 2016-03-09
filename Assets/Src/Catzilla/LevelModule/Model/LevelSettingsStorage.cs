@@ -80,7 +80,7 @@ namespace Catzilla.LevelModule.Model {
             var objectScores = new List<int>(objectTypeInfos.Count);
 
             foreach (ObjectTypeInfo objectTypeInfo in objectTypeInfos) {
-                LevelObjectView objectProto = objectTypeInfo.ViewProto;
+                LevelObjectView objectProto = objectTypeInfo.ProtoInfo.View;
 
                 if (objectProto.GetComponent<DangerousView>() != null) {
                     areaAvgDangerousObjects +=

@@ -188,7 +188,7 @@ namespace Catzilla.LevelModule.Model {
                 int spawnsCount = 0;
 
                 if (UnityEngine.Random.value <= objectTypeInfo.SpawnChance) {
-                    LevelObjectView objectProto = objectTypeInfo.ViewProto;
+                    LevelObjectView objectProto = objectTypeInfo.ProtoInfo.View;
                     spawnsCount = objectTypeInfo.GetSpawnsPerArea(
                         levelSettings.Index);
 

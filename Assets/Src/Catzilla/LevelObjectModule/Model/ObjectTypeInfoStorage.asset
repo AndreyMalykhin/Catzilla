@@ -21,8 +21,9 @@ MonoBehaviour:
     maxSpawnsPerArea: 1
     spawnsCountLevelFactor: 0
     isSpawnsCountRandom: 0
-    viewProto: {fileID: 11467780, guid: 31e76151d9d1149f782dccfc751db133, type: 2}
-    availableMaterials: []
+    protoInfos:
+    - view: {fileID: 11467780, guid: 31e76151d9d1149f782dccfc751db133, type: 2}
+      availableMaterials: []
   - type: 4
     width: 6
     depth: 8
@@ -32,10 +33,11 @@ MonoBehaviour:
     maxSpawnsPerArea: 4
     spawnsCountLevelFactor: 0.25
     isSpawnsCountRandom: 0
-    viewProto: {fileID: 11466110, guid: d7ff927bcea514b0aa2d4d2e91fc4834, type: 2}
-    availableMaterials:
-    - {fileID: 2100000, guid: 53563918035b744a78961f7d05734077, type: 2}
-    - {fileID: 2100000, guid: fa56edde3c29a4be99928ea14cf80e66, type: 2}
+    protoInfos:
+    - view: {fileID: 11466110, guid: d7ff927bcea514b0aa2d4d2e91fc4834, type: 2}
+      availableMaterials:
+      - {fileID: 2100000, guid: 53563918035b744a78961f7d05734077, type: 2}
+      - {fileID: 2100000, guid: fa56edde3c29a4be99928ea14cf80e66, type: 2}
   - type: 3
     width: 2
     depth: 4
@@ -45,10 +47,11 @@ MonoBehaviour:
     maxSpawnsPerArea: 4
     spawnsCountLevelFactor: 0.25
     isSpawnsCountRandom: 0
-    viewProto: {fileID: 11414792, guid: 1561155c1eb1b4dd8b20c99800c081cd, type: 2}
-    availableMaterials:
-    - {fileID: 2100000, guid: 5ab46dcef740a4bcab76892ad3841a58, type: 2}
-    - {fileID: 2100000, guid: 482066449afd646c28b703d276e73fd4, type: 2}
+    protoInfos:
+    - view: {fileID: 11414792, guid: 1561155c1eb1b4dd8b20c99800c081cd, type: 2}
+      availableMaterials:
+      - {fileID: 2100000, guid: 5ab46dcef740a4bcab76892ad3841a58, type: 2}
+      - {fileID: 2100000, guid: 482066449afd646c28b703d276e73fd4, type: 2}
   - type: 5
     width: 1
     depth: 2
@@ -58,8 +61,9 @@ MonoBehaviour:
     maxSpawnsPerArea: 4
     spawnsCountLevelFactor: 0.25
     isSpawnsCountRandom: 0
-    viewProto: {fileID: 11415620, guid: 2c5eb218dc3e146e0bdd4c67bcc3a0fc, type: 2}
-    availableMaterials: []
+    protoInfos:
+    - view: {fileID: 11415620, guid: 2c5eb218dc3e146e0bdd4c67bcc3a0fc, type: 2}
+      availableMaterials: []
   - type: 6
     width: 1
     depth: 1
@@ -69,8 +73,9 @@ MonoBehaviour:
     maxSpawnsPerArea: 4
     spawnsCountLevelFactor: 0.25
     isSpawnsCountRandom: 0
-    viewProto: {fileID: 11418764, guid: ebafc7a142f1b49239bb80c5acd77cff, type: 2}
-    availableMaterials: []
+    protoInfos:
+    - view: {fileID: 11418764, guid: ebafc7a142f1b49239bb80c5acd77cff, type: 2}
+      availableMaterials: []
   - type: 1
     width: 1
     depth: 1
@@ -80,10 +85,11 @@ MonoBehaviour:
     maxSpawnsPerArea: 4
     spawnsCountLevelFactor: 0.25
     isSpawnsCountRandom: 0
-    viewProto: {fileID: 11407112, guid: 3b9d536b6da514d61909a345aa7d0a7d, type: 2}
-    availableMaterials:
-    - {fileID: 2100000, guid: 046df8d32fac14fba8fdedc7774ecf86, type: 2}
-    - {fileID: 2100000, guid: 3b5d8d30b52e241be87e5367ed026745, type: 2}
+    protoInfos:
+    - view: {fileID: 11407112, guid: 3b9d536b6da514d61909a345aa7d0a7d, type: 2}
+      availableMaterials:
+      - {fileID: 2100000, guid: 046df8d32fac14fba8fdedc7774ecf86, type: 2}
+      - {fileID: 2100000, guid: 3b5d8d30b52e241be87e5367ed026745, type: 2}
   - type: 2
     width: 1
     depth: 1
@@ -93,8 +99,9 @@ MonoBehaviour:
     maxSpawnsPerArea: 2
     spawnsCountLevelFactor: 1
     isSpawnsCountRandom: 1
-    viewProto: {fileID: 11429200, guid: 0324569a0fc1b453298859cca044e670, type: 2}
-    availableMaterials: []
+    protoInfos:
+    - view: {fileID: 11429200, guid: 0324569a0fc1b453298859cca044e670, type: 2}
+      availableMaterials: []
   - type: 7
     width: 1
     depth: 1
@@ -104,8 +111,9 @@ MonoBehaviour:
     maxSpawnsPerArea: 4
     spawnsCountLevelFactor: 1
     isSpawnsCountRandom: 1
-    viewProto: {fileID: 11483314, guid: 75af68cf68f6840439e1bb9c4cd4418d, type: 2}
-    availableMaterials: []
+    protoInfos:
+    - view: {fileID: 11483314, guid: 75af68cf68f6840439e1bb9c4cd4418d, type: 2}
+      availableMaterials: []
   - type: 8
     width: 1
     depth: 1
@@ -115,8 +123,9 @@ MonoBehaviour:
     maxSpawnsPerArea: 1
     spawnsCountLevelFactor: 0
     isSpawnsCountRandom: 0
-    viewProto: {fileID: 11478868, guid: 6cb572157bc7247dba787f597cf5d699, type: 2}
-    availableMaterials: []
+    protoInfos:
+    - view: {fileID: 11478868, guid: 6cb572157bc7247dba787f597cf5d699, type: 2}
+      availableMaterials: []
   - type: 9
     width: 1
     depth: 1
@@ -126,5 +135,6 @@ MonoBehaviour:
     maxSpawnsPerArea: 1
     spawnsCountLevelFactor: 0
     isSpawnsCountRandom: 0
-    viewProto: {fileID: 11478868, guid: 54a36463487cd4f868a2d43d5efe1ebe, type: 2}
-    availableMaterials: []
+    protoInfos:
+    - view: {fileID: 11478868, guid: 54a36463487cd4f868a2d43d5efe1ebe, type: 2}
+      availableMaterials: []

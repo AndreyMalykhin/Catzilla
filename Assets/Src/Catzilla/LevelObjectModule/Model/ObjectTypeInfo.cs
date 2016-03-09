@@ -18,8 +18,8 @@ namespace Catzilla.LevelObjectModule.Model {
             get {return spawnsCountLevelFactor;}
         }
         public bool IsSpawnsCountRandom {get {return isSpawnsCountRandom;}}
-        public LevelObjectView ViewProto {get {return viewProto;}}
-        public Material[] AvailableMaterials {get {return availableMaterials;}}
+        public ObjectProtoInfo ProtoInfo {get {return protoInfos[0];}}
+        public ObjectProtoInfo[] ProtoInfos {get {return protoInfos;}}
 
         [SerializeField]
         private LevelObjectType type;
@@ -49,10 +49,7 @@ namespace Catzilla.LevelObjectModule.Model {
         private bool isSpawnsCountRandom;
 
         [SerializeField]
-        private LevelObjectView viewProto;
-
-        [SerializeField]
-        private Material[] availableMaterials;
+        private ObjectProtoInfo[] protoInfos;
 
         public int GetSpawnsPerArea(int levelIndex) {
             return Mathf.Min(
