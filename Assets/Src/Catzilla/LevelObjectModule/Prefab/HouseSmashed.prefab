@@ -1082,6 +1082,20 @@ MonoBehaviour:
   lifetime: 2
   overrideSmashParams: 1
   overrideSmashUpwardsModifier: 0
+  parts:
+  - {fileID: 463522}
+  - {fileID: 486190}
+  - {fileID: 456432}
+  - {fileID: 480818}
+  - {fileID: 495206}
+  - {fileID: 487446}
+  - {fileID: 444976}
+  - {fileID: 442452}
+  - {fileID: 478682}
+  - {fileID: 499756}
+  - {fileID: 425980}
+  alternating: {fileID: 11480566}
+  poolable: {fileID: 11469642}
 --- !u!114 &11480566
 MonoBehaviour:
   m_ObjectHideFlags: 1

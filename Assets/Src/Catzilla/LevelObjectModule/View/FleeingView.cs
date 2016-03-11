@@ -52,9 +52,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void FixedUpdate() {
-            Vector3 newPosition = transform.position + transform.forward *
-                (speed * Time.deltaTime);
-            body.MovePosition(newPosition);
+            Flee();
         }
 
         private void OnTriggerEnter(Collider collider) {
@@ -67,6 +65,12 @@ namespace Catzilla.LevelObjectModule.View {
 
         private void SetRandomSpeed() {
             Speed = Random.Range(minSpeed, maxSpeed);
+        }
+
+        private void Flee() {
+            Vector3 newPosition = transform.position + transform.forward *
+                (speed * Time.deltaTime);
+            body.MovePosition(newPosition);
         }
     }
 }

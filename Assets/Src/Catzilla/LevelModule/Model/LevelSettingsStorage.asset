@@ -11,10 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff7d20bf6070b4fcfa7c45db0f9fd970, type: 3}
   m_Name: LevelSettingsStorage
   m_EditorClassIdentifier: 
-  minLevelDuration: 90
-  levelDurationFactor: 8
-  areaAvgDangerousObjectTypes: 2
-  areaAvgScoreableObjectTypes: 3
+  completionScoreLevelFactor: 512
+  minCompletionScore: 2048
   playerMinFrontSpeed: 8
   playerMaxFrontSpeed: 8
   playerFrontSpeedLevelFactor: 0
@@ -23,3 +21,44 @@ MonoBehaviour:
   playerSideSpeedLevelFactor: 0
   resurrectionMinReward: 1
   resurrectionRewardLevelFactor: 0
+  itemsParams:
+  - ObjectSettings: []
+  - ObjectSettings: []
+  - ObjectSettings: []
+  - ObjectSettings: []
+  - ObjectSettings: []
+  - ObjectSettings: []
+  - ObjectSettings:
+    - objectType: 1
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+    - objectType: 3
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+    - objectType: 4
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+    - objectType: 5
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+    - objectType: 6
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+    - objectType: 8
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+    - objectType: 9
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+    - objectType: 2
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+    - objectType: 10
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+    - objectType: 7
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+    - objectType: 11
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1

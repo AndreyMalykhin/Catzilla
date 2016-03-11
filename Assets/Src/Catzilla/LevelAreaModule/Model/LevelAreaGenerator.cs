@@ -73,6 +73,7 @@ namespace Catzilla.LevelAreaModule.Model {
             Vector3 spawnPoint;
             SpawnLocation spawnLocation;
             int triesCount = countToSpawn * 2;
+            bool isFreeSpaceExists = true;
 
             for (int i = 0; i < countToSpawn; ++i) {
                 do {
@@ -80,10 +81,16 @@ namespace Catzilla.LevelAreaModule.Model {
                         UnityEngine.Random.Range(0, spawnLocations.Count)];
                     spawnPoint = GetRandomSpawnPoint(
                         spawnLocation.Bounds, objectTypeInfo);
-                    --triesCount;
-                } while (IsSpawnPointReserved(spawnPoint) && triesCount > 0);
 
-                if (triesCount == 0) {
+                    if (triesCount == 0) {
+                        isFreeSpaceExists = false;
+                        break;
+                    }
+
+                    --triesCount;
+                } while (IsSpawnPointReserved(spawnPoint));
+
+                if (!isFreeSpaceExists) {
                     break;
                 }
 

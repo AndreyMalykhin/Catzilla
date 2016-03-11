@@ -11,7 +11,7 @@ namespace Catzilla.LevelObjectModule.Model {
 
         [NonSerialized]
         private readonly IDictionary<LevelObjectType, ObjectTypeInfo> itemsMap =
-            new Dictionary<LevelObjectType, ObjectTypeInfo>();
+            new Dictionary<LevelObjectType, ObjectTypeInfo>(16);
 
         public ObjectTypeInfo Get(LevelObjectType type) {
             return itemsMap[type];

@@ -564,6 +564,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smashedProto: {fileID: 11474964, guid: 84a7cbd956c9d4dc3b8e06942f864551, type: 2}
+  parts:
+  - {fileID: 485922}
+  - {fileID: 438160}
+  - {fileID: 429072}
+  - {fileID: 462460}
+  - {fileID: 433568}
+  - {fileID: 493676}
+  - {fileID: 452370}
+  poolable: {fileID: 11454844}
 --- !u!114 &11442074
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -713,6 +713,16 @@ MonoBehaviour:
   lifetime: 2
   overrideSmashParams: 0
   overrideSmashUpwardsModifier: 0
+  parts:
+  - {fileID: 439278}
+  - {fileID: 413496}
+  - {fileID: 484242}
+  - {fileID: 446970}
+  - {fileID: 418088}
+  - {fileID: 432130}
+  - {fileID: 492782}
+  alternating: {fileID: 0}
+  poolable: {fileID: 11419130}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

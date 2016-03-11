@@ -8,26 +8,22 @@ namespace Catzilla.LevelObjectModule.View {
     public class ProjectileView: MonoBehaviour {
         public enum Event {TriggerEnter}
 
-        [Inject]
-        public PoolStorageView PoolStorage {get; set;}
+        public float Speed;
 
         [Inject]
-        public EventBus EventBus {get; set;}
+        private PoolStorageView poolStorage;
+
+        [Inject]
+        private EventBus eventBus;
 
         [SerializeField]
-        private float speed = 5f;
-
         private Rigidbody body;
+
+        [SerializeField]
         private PoolableView poolable;
 
-        [PostInject]
-        public void OnConstruct() {
-            body = GetComponent<Rigidbody>();
-            poolable = GetComponent<PoolableView>();
-        }
-
         public void Hit() {
-            PoolStorage.Return(poolable);
+            poolStorage.Return(poolable);
         }
 
         private void FixedUpdate() {
@@ -40,12 +36,12 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private EventBus GetEventBus() {
-            return EventBus;
+            return eventBus;
         }
 
         private void Fly() {
             body.MovePosition(transform.position + transform.forward *
-                (speed * Time.deltaTime));
+                (Speed * Time.deltaTime));
         }
     }
 }

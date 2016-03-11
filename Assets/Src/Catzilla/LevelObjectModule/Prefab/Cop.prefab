@@ -17,7 +17,7 @@ GameObject:
   - 114: {fileID: 11496890}
   - 114: {fileID: 11495818}
   - 114: {fileID: 11401604}
-  - 114: {fileID: 11437886}
+  - 114: {fileID: 11470220}
   m_Layer: 11
   m_Name: Cop
   m_TagString: Untagged
@@ -83,6 +83,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 440910}
   - 65: {fileID: 6559874}
+  - 33: {fileID: 3358226}
+  - 23: {fileID: 2341958}
   m_Layer: 11
   m_Name: Mesh
   m_TagString: Untagged
@@ -326,6 +328,32 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!23 &2341958
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127672}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 8c82bdf41cfbb4cd39e450d324b669dd, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!23 &2357232
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -465,6 +493,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191364}
   m_Mesh: {fileID: 4300006, guid: b6e3909837e9f44bbbde2f17756d6aff, type: 3}
+--- !u!33 &3358226
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127672}
+  m_Mesh: {fileID: 0}
 --- !u!33 &3385856
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -597,17 +632,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cabe621d1034ff09371fab4a1430ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11437886
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e55533825b4174477a905666d6667f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11444682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -620,6 +644,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behaviour: {fileID: 11483028}
+--- !u!114 &11470220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9c1dba39117c47bd80ab8c3fc50ff88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parts:
+  - {fileID: 3330682}
+  - {fileID: 3354714}
+  - {fileID: 3385856}
+  - {fileID: 3323110}
+  - {fileID: 3349860}
+  - {fileID: 3330004}
+  output: {fileID: 3358226}
+  keepParts: 0
 --- !u!114 &11483028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -635,8 +679,13 @@ MonoBehaviour:
   AudioSource: {fileID: 8262606}
   projectileProto: {fileID: 11467526, guid: 362fec4312e394d09be04ce01ef081a4, type: 2}
   projectileSource: {fileID: 450834}
-  period: 8
+  aimee: {fileID: 424354}
+  shotPeriod: 0
+  burstPeriod: 8
+  shotsInBurst: 1
   maxDelay: 0
+  projectileMinSpeed: 8
+  projectileMaxSpeed: 8
 --- !u!114 &11487140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -674,6 +723,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smashedProto: {fileID: 11474964, guid: 679d75287457f49d3b8ba0f45c33017b, type: 2}
+  parts:
+  - {fileID: 440910}
+  poolable: {fileID: 11401604}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -804,6 +856,26 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shotPeriod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shotsInBurst
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: burstPeriod
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: projectileMaxSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: aimee
+      value: 
+      objectReference: {fileID: 424354}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 102404}

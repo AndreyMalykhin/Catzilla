@@ -8,31 +8,37 @@ namespace Catzilla.LevelObjectModule.View {
     public class SmashableView: MonoBehaviour {
         public enum Event {TriggerEnter}
 
-        [Inject]
-        public EventBus EventBus {get; set;}
+        public Transform[] Parts {get {return parts;}}
 
         [Inject]
-        public PoolStorageView PoolStorage {get; set;}
+        private EventBus eventBus;
+
+        [Inject]
+        private PoolStorageView poolStorage;
 
         [SerializeField]
         private SmashedView smashedProto;
 
+        [SerializeField]
+        private Transform[] parts;
+
+        [SerializeField]
         private PoolableView poolable;
+
         private int smashedPoolId;
 
         [PostInject]
         public void OnConstruct() {
             // DebugUtils.Log("SmashableView.OnConstruct()");
-            poolable = GetComponent<PoolableView>();
             smashedPoolId = smashedProto.GetComponent<PoolableView>().PoolId;
         }
 
         public SmashedView Smash(
             float force, float upwardsModifier, Vector3 sourcePosition) {
             var smashed =
-                PoolStorage.Take(smashedPoolId).GetComponent<SmashedView>();
+                poolStorage.Take(smashedPoolId).GetComponent<SmashedView>();
             smashed.Init(this, force, upwardsModifier, sourcePosition);
-            PoolStorage.Return(poolable);
+            poolStorage.Return(poolable);
             return smashed;
         }
 
@@ -42,7 +48,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private EventBus GetEventBus() {
-            return EventBus;
+            return eventBus;
         }
     }
 }

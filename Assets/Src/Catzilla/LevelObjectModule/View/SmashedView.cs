@@ -6,17 +6,16 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class SmashedView: MonoBehaviour, IPoolable {
-        private struct Piece {
-            public Rigidbody Body;
-            public Vector3 InitialPosition;
-            public Quaternion InitialRotation;
+        private struct PartState {
+            public Vector3 LocalPosition;
+            public Quaternion LocalRotation;
         }
-
-        [Inject]
-        public PoolStorageView PoolStorage {get; set;}
 
         public AudioClip SmashSound;
         public AudioSource AudioSource;
+
+        [Inject]
+        private PoolStorageView poolStorage;
 
         [SerializeField]
         private float lifetime = 2f;
@@ -27,9 +26,16 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private float overrideSmashUpwardsModifier = 0f;
 
-        private PoolableView poolable;
+        [SerializeField]
+        private Transform[] parts;
+
+        [SerializeField]
         private AlternatingView alternating;
-        private Piece[] pieces;
+
+        [SerializeField]
+        private PoolableView poolable;
+
+        private PartState[] initialPartStates;
         private float smashForce;
         private float smashUpwardsModifier;
         private Vector3 smashSourcePosition;
@@ -37,19 +43,15 @@ namespace Catzilla.LevelObjectModule.View {
 
         [PostInject]
         public void OnConstruct() {
-            poolable = GetComponent<PoolableView>();
-            alternating = GetComponent<AlternatingView>();
-            var pieceBodies = GetComponentsInChildren<Rigidbody>();
-            pieces = new Piece[pieceBodies.Length];
+            int partsCount = parts.Length;
+            initialPartStates = new PartState[partsCount];
 
-            for (int i = 0; i < pieceBodies.Length; ++i) {
-                var pieceBody = pieceBodies[i];
-                Piece piece = new Piece{
-                    Body = pieceBody,
-                    InitialPosition = pieceBody.transform.localPosition,
-                    InitialRotation = pieceBody.transform.localRotation
+            for (int i = 0; i < partsCount; ++i) {
+                Transform part = parts[i];
+                initialPartStates[i] = new PartState{
+                    LocalPosition = part.localPosition,
+                    LocalRotation = part.localRotation
                 };
-                pieces[i] = piece;
             }
         }
 
@@ -60,6 +62,14 @@ namespace Catzilla.LevelObjectModule.View {
             this.smashSourcePosition = smashSourcePosition;
             transform.position = smashable.transform.position;
             transform.rotation = smashable.transform.rotation;
+            Transform[] smashableParts = smashable.Parts;
+
+            for (int i = 0; i < smashableParts.Length; ++i) {
+                Transform smashablePart = smashableParts[i];
+                Transform smashedPart = parts[i];
+                smashedPart.localPosition = smashablePart.localPosition;
+                smashedPart.localRotation = smashablePart.localRotation;
+            }
 
             if (alternating != null) {
                 alternating.Material =
@@ -70,12 +80,18 @@ namespace Catzilla.LevelObjectModule.View {
         void IPoolable.Reset() {
             isSmashed = false;
 
-            for (int i = 0; i < pieces.Length; ++i) {
-                Piece piece = pieces[i];
-                Rigidbody pieceBody = piece.Body;
-                pieceBody.transform.localPosition = piece.InitialPosition;
-                pieceBody.transform.localRotation = piece.InitialRotation;
-                pieceBody.Sleep();
+            for (int i = 0; i < parts.Length; ++i) {
+                Transform part = parts[i];
+                PartState initialPartState = initialPartStates[i];
+                part.localPosition = initialPartState.LocalPosition;
+                part.localRotation = initialPartState.LocalRotation;
+                var partBody = part.GetComponent<Rigidbody>();
+
+                if (partBody == null) {
+                    continue;
+                }
+
+                partBody.Sleep();
             }
         }
 
@@ -94,9 +110,14 @@ namespace Catzilla.LevelObjectModule.View {
                 smashUpwardsModifier = overrideSmashUpwardsModifier;
             }
 
-            for (int i = 0; i < pieces.Length; ++i) {
-                Rigidbody pieceBody = pieces[i].Body;
-                pieceBody.AddExplosionForce(smashForce, smashSourcePosition,
+            for (int i = 0; i < parts.Length; ++i) {
+                var partBody = parts[i].GetComponent<Rigidbody>();
+
+                if (partBody == null) {
+                    continue;
+                }
+
+                partBody.AddExplosionForce(smashForce, smashSourcePosition,
                     explosionRadius, smashUpwardsModifier);
             }
 
@@ -105,7 +126,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void Dispose() {
-            PoolStorage.Return(poolable);
+            poolStorage.Return(poolable);
         }
     }
 }

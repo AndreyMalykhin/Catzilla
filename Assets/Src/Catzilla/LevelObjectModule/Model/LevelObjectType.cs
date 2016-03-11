@@ -12,6 +12,8 @@ namespace Catzilla.LevelObjectModule.Model {
         Tree,
         Mine,
         FirstAid,
-        Score
+        Score,
+        Soldier,
+        Tank
     }
 }

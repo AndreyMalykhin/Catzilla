@@ -48,7 +48,6 @@ GameObject:
   - 114: {fileID: 11425908}
   - 114: {fileID: 11484814}
   - 114: {fileID: 11466988}
-  - 114: {fileID: 11446948}
   - 114: {fileID: 11437886}
   m_Layer: 11
   m_Name: Mine
@@ -453,6 +452,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smashedProto: {fileID: 11452102, guid: 5a9252e89022e40edafbc212d33fadb3, type: 2}
+  parts:
+  - {fileID: 495526}
+  poolable: {fileID: 11466988}
 --- !u!114 &11437886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -484,17 +486,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 50
---- !u!114 &11446948
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 134932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e55533825b4174477a905666d6667f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11466988
 MonoBehaviour:
   m_ObjectHideFlags: 1

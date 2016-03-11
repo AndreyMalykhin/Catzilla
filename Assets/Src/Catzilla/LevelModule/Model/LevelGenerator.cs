@@ -185,24 +185,23 @@ namespace Catzilla.LevelModule.Model {
                 LevelObjectType objectType = objectTypes[i];
                 ObjectTypeInfo objectTypeInfo =
                     ObjectTypeInfoStorage.Get(objectType);
+                ObjectLevelSettings objectLevelSettings =
+                    levelSettings.GetObjectSettings(objectType);
                 int spawnsCount = 0;
 
-                if (UnityEngine.Random.value <= objectTypeInfo.SpawnChance) {
+                if (objectType == PlayerObjectType) {
+                    spawnsCount = spawnPlayer ? 1 : 0;
+                    spawnPlayer = false;
+                } else if (objectLevelSettings != null
+                           && UnityEngine.Random.value <=
+                               objectTypeInfo.SpawnChance) {
                     LevelObjectView objectProto = objectTypeInfo.ProtoInfo.View;
-                    spawnsCount = objectTypeInfo.GetSpawnsPerArea(
-                        levelSettings.Index);
-
-                    if (objectTypeInfo.IsSpawnsCountRandom) {
-                        spawnsCount = UnityEngine.Random.Range(
-                            objectTypeInfo.MinSpawnsPerArea, spawnsCount + 1);
-                    }
-
+                    spawnsCount = UnityEngine.Random.Range(
+                        objectLevelSettings.MinSpawnsPerArea,
+                        objectLevelSettings.MaxSpawnsPerArea + 1);
                     var bonus = objectProto.GetComponent<BonusView>();
 
-                    if (objectType == PlayerObjectType) {
-                        spawnsCount = spawnPlayer ? 1 : 0;
-                        spawnPlayer = false;
-                    } else if (bonus != null) {
+                    if (bonus != null) {
                         if (player == null
                             || ActiveBonusObjects > 0
                             || !bonus.IsNeeded(player, levelSettings)

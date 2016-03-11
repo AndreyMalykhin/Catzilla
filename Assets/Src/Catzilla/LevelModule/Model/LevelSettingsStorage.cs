@@ -9,19 +9,16 @@ using Catzilla.LevelObjectModule.Model;
 namespace Catzilla.LevelModule.Model {
     [CreateAssetMenuAttribute]
     public class LevelSettingsStorage: ScriptableObject {
-        [Tooltip("In seconds")]
-        [SerializeField]
-        private int minLevelDuration = 60;
-
-        [Tooltip("In seconds")]
-        [SerializeField]
-        private int levelDurationFactor = 10;
+        [Serializable]
+        private struct LevelSettingsParams {
+            public ObjectLevelSettings[] ObjectSettings;
+        }
 
         [SerializeField]
-        private int areaAvgDangerousObjectTypes = 2;
+        private int completionScoreLevelFactor = 512;
 
         [SerializeField]
-        private int areaAvgScoreableObjectTypes = 3;
+        private int minCompletionScore = 2048;
 
         [SerializeField]
         private float playerMinFrontSpeed = 4f;
@@ -47,95 +44,62 @@ namespace Catzilla.LevelModule.Model {
         [SerializeField]
         private float resurrectionRewardLevelFactor = 0.2f;
 
-        [Inject("LevelAreaDepth")]
-        [NonSerialized]
-        private float areaDepth;
-
-        [Inject("LevelAreaWidth")]
-        [NonSerialized]
-        private float areaWidth;
-
-        [Inject]
-        private ObjectTypeInfoStorage objectTypeInfoStorage;
+        [SerializeField]
+        private LevelSettingsParams[] itemsParams;
 
         [NonSerialized]
         private readonly IDictionary<int, LevelSettings> items =
-            new Dictionary<int, LevelSettings>();
+            new Dictionary<int, LevelSettings>(16);
 
         public LevelSettings Get(int levelIndex) {
-            LevelSettings item;
+            LevelSettings levelSettings = null;
 
-            if (!items.TryGetValue(levelIndex, out item)) {
-                item = MakeItem(levelIndex);
-                items[levelIndex] = item;
+            if (!items.TryGetValue(levelIndex, out levelSettings)) {
+                levelSettings = MakeItem(levelIndex);
+                items.Add(levelIndex, levelSettings);
             }
 
-            return item;
+            return levelSettings;
         }
 
         private LevelSettings MakeItem(int levelIndex) {
-            float areaAvgDangerousObjects = 0;
-            float areaAvgScoreableObjects = 0;
-            var objectTypeInfos = objectTypeInfoStorage.GetAll();
-            var objectScores = new List<int>(objectTypeInfos.Count);
-
-            foreach (ObjectTypeInfo objectTypeInfo in objectTypeInfos) {
-                LevelObjectView objectProto = objectTypeInfo.ProtoInfo.View;
-
-                if (objectProto.GetComponent<DangerousView>() != null) {
-                    areaAvgDangerousObjects +=
-                        objectTypeInfo.GetSpawnsPerArea(levelIndex);
-                }
-
-                var scoreable = objectProto.GetComponent<ScoreableView>();
-
-                if (scoreable != null
-                    && objectProto.GetComponent<BonusView>() == null) {
-                    objectScores.Add(scoreable.Score);
-                    areaAvgScoreableObjects +=
-                        objectTypeInfo.GetSpawnsPerArea(levelIndex);
-                }
-            }
-
-            areaAvgDangerousObjects *=
-                (float) areaAvgDangerousObjectTypes / objectTypeInfos.Count;
-            areaAvgScoreableObjects *=
-                (float) areaAvgScoreableObjectTypes / objectTypeInfos.Count;
+            float extraScore = levelIndex * completionScoreLevelFactor;
+            float completionScore = minCompletionScore + extraScore;
+            float resurrectionReward = resurrectionMinReward + levelIndex *
+                resurrectionRewardLevelFactor;
             float playerFrontSpeed = Mathf.Min(playerMinFrontSpeed +
                 levelIndex * playerFrontSpeedLevelFactor, playerMaxFrontSpeed);
             float playerSideSpeed = Mathf.Min(playerMinSideSpeed +
                 levelIndex * playerSideSpeedLevelFactor, playerMaxSideSpeed);
-            float areaPassTime = areaDepth / playerFrontSpeed;
-            float objectReachabilityPlayerFrontSpeedFactor =
-                1f - Mathf.Log(playerFrontSpeed) / Mathf.Log(areaDepth + 1);
-            float objectReachabilityPlayerSideSpeedFactor =
-                playerSideSpeed / areaWidth;
-            float objectReachabilityDangerFactor =
-                1 - areaAvgDangerousObjects / (areaAvgScoreableObjects + 1);
-            float objectReachability =
-                (objectReachabilityPlayerFrontSpeedFactor +
-                objectReachabilityPlayerSideSpeedFactor +
-                objectReachabilityDangerFactor) / 3f;
-            objectScores.Sort();
-            float objectAvgScore =
-                objectScores[Mathf.CeilToInt(0.75f * objectScores.Count) - 1];
-            float areaAvgScore = objectReachability *
-                areaAvgScoreableObjects * objectAvgScore;
-            float avgScorePerSec = areaAvgScore / areaPassTime;
-            float levelExtraScore = levelIndex * levelDurationFactor *
-                avgScorePerSec;
-            float completionScore =
-                minLevelDuration * avgScorePerSec + levelExtraScore;
-            float resurrectionReward = resurrectionMinReward + levelIndex *
-                resurrectionRewardLevelFactor;
-            // DebugUtils.Log("LevelSettingsStorage.MakeItem(); objectReachabilityPlayerFrontSpeedFactor={0}; objectReachabilityPlayerSideSpeedFactor={1}; objectReachabilityDangerFactor={2}; objectReachability={3}; objectAvgScore={4}", objectReachabilityPlayerFrontSpeedFactor, objectReachabilityPlayerSideSpeedFactor, objectReachabilityDangerFactor, objectReachability, objectAvgScore);
+
+            if (levelIndex >= itemsParams.Length) {
+                levelIndex = itemsParams.Length - 1;
+            }
+
+            ObjectLevelSettings[] objectSettings =
+                itemsParams[levelIndex].ObjectSettings;
+            var objectSettingsMap =
+                new Dictionary<LevelObjectType, ObjectLevelSettings>(16);
+
+            for (int i = 0; i < objectSettings.Length; ++i) {
+                objectSettingsMap.Add(
+                    objectSettings[i].ObjectType, objectSettings[i]);
+            }
+
             return new LevelSettings(
                 levelIndex,
                 (int) completionScore,
-                (int) levelExtraScore,
+                (int) extraScore,
                 playerFrontSpeed,
                 playerSideSpeed,
-                (int) resurrectionReward);
+                (int) resurrectionReward,
+                objectSettingsMap);
+        }
+
+        private void OnEnable() {
+            for (int i = 0; i < itemsParams.Length; ++i) {
+                items.Add(i, MakeItem(i));
+            }
         }
     }
 }

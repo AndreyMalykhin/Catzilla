@@ -24,10 +24,6 @@ namespace Catzilla.LevelObjectModule.View {
                 }
 
                 if (target != null) {
-                    if (aimingCoroutine != null) {
-                        StopCoroutine(aimingCoroutine);
-                    }
-
                     if (shootingCoroutine != null) {
                         StopCoroutine(shootingCoroutine);
                     }
@@ -36,9 +32,7 @@ namespace Catzilla.LevelObjectModule.View {
                 target = value;
 
                 if (value != null) {
-                    aimingCoroutine = StartAiming();
                     shootingCoroutine = StartShooting();
-                    StartCoroutine(aimingCoroutine);
                     StartCoroutine(shootingCoroutine);
                 }
             }
@@ -53,29 +47,50 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private Transform projectileSource;
 
-        [Tooltip("In seconds")]
         [SerializeField]
-        private float period = 5f;
+        private Transform aimee;
 
         [Tooltip("In seconds")]
         [SerializeField]
-        private float maxDelay = 2.5f;
+        private float shotPeriod;
 
-        private Rigidbody body;
+        [Tooltip("In seconds")]
+        [SerializeField]
+        private float burstPeriod = 8f;
+
+        [SerializeField]
+        private int shotsInBurst = 1;
+
+        [Tooltip("In seconds")]
+        [SerializeField]
+        private float maxDelay;
+
+        [SerializeField]
+        private float projectileMinSpeed = 8f;
+
+        [SerializeField]
+        private float projectileMaxSpeed = 16f;
+
         private Collider target;
-        private IEnumerator aimingCoroutine;
         private IEnumerator shootingCoroutine;
         private int projectilePoolId;
+        private float projectileSpeed;
 
         [PostInject]
         public void OnConstruct() {
-            body = GetComponent<Rigidbody>();
             projectilePoolId =
                 projectileProto.GetComponent<PoolableView>().PoolId;
+            SetRandomProjectileSpeed();
         }
 
         void IPoolable.Reset() {
             Target = null;
+            SetRandomProjectileSpeed();
+        }
+
+        private void SetRandomProjectileSpeed() {
+            projectileSpeed =
+                Random.Range(projectileMinSpeed, projectileMaxSpeed);
         }
 
         private void OnTriggerEnter(Collider collider) {
@@ -87,46 +102,52 @@ namespace Catzilla.LevelObjectModule.View {
             return EventBus;
         }
 
-        private IEnumerator StartAiming() {
-            while (true) {
-                yield return new WaitForFixedUpdate();
-
-                if (target == null) {
-                    yield break;
-                }
-
-                Aim();
+        private void FixedUpdate() {
+            if (target == null) {
+                return;
             }
+
+            Aim();
         }
 
         private void Aim() {
             Bounds targetBounds = target.bounds;
-            Vector3 shooterPosition = transform.position;
-            var direction = new Vector3(
-                targetBounds.center.x - shooterPosition.x,
-                shooterPosition.y,
-                targetBounds.center.z + targetBounds.extents.z - shooterPosition.z);
-            body.MoveRotation(Quaternion.LookRotation(direction));
+            var targetPoint = new Vector3(
+                targetBounds.center.x,
+                aimee.position.y,
+                targetBounds.max.z);
+            aimee.LookAt(targetPoint);
         }
 
         private IEnumerator StartShooting() {
             yield return new WaitForSeconds(0.5f + Random.Range(0f, maxDelay));
 
-            while (true) {
-                if (target == null) {
-                    yield break;
-                }
+            while (target != null) {
+                yield return StartCoroutine(StartBurst());
 
+                if (burstPeriod != 0f) {
+                    yield return new WaitForSeconds(burstPeriod);
+                }
+            }
+        }
+
+        private IEnumerator StartBurst() {
+            for (int i = 0; i < shotsInBurst && target != null; ++i) {
                 Shoot();
-                yield return new WaitForSeconds(period);
+
+                if (shotPeriod != 0f) {
+                    yield return new WaitForSeconds(shotPeriod);
+                }
             }
         }
 
         private void Shoot() {
             // DebugUtils.Log("ShootingView.Shoot()");
-            var projectile = PoolStorage.Take(projectilePoolId);
+            var projectile = PoolStorage.Take(projectilePoolId)
+                .GetComponent<ProjectileView>();
             projectile.transform.position = projectileSource.position;
             projectile.transform.rotation = projectileSource.rotation;
+            projectile.Speed = projectileSpeed;
             EventBus.Fire(Event.Shot, new Evt(this));
         }
     }
