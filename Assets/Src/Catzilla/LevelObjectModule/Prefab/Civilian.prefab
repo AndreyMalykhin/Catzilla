@@ -587,6 +587,9 @@ MonoBehaviour:
   minSpeed: 1
   maxSpeed: 2
   speed: 0
+  collider: {fileID: 6584306}
+  body: {fileID: 5427854}
+  animator: {fileID: 9567050}
 --- !u!114 &11454844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -760,6 +763,18 @@ Prefab:
       propertyPath: m_CullingMode
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: collider
+      value: 
+      objectReference: {fileID: 6584306}
+    - target: {fileID: 0}
+      propertyPath: body
+      value: 
+      objectReference: {fileID: 5427854}
+    - target: {fileID: 0}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 9567050}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 102404}

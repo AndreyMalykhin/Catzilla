@@ -28,6 +28,12 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private string objectComfortZoneTag;
 
+        [SerializeField]
+        private int levelObjectLayer;
+
+        [SerializeField]
+        private int levelObjectSmashedLayer;
+
         public override void InitBindings(DiContainer container) {
             container.Bind<ObjectTypeInfoStorage>()
                 .ToInstance(objectTypeInfoStorage);
@@ -39,7 +45,6 @@ namespace Catzilla.LevelObjectModule.View {
             container.Bind<ActivatableController>().ToSingle();
             container.Bind<TakeableController>().ToSingle();
             container.Bind<BonusController>().ToSingle();
-            container.Bind<FleeingController>().ToSingle();
             container.Bind<LevelObjectType>("PlayerObjectType")
                 .ToInstance(LevelObjectType.Player);
             container.Bind<string>("PlayerTag").ToInstance(playerTag);
@@ -49,6 +54,10 @@ namespace Catzilla.LevelObjectModule.View {
             container.Bind<string>("ProjectileTag").ToInstance(projectileTag);
             container.Bind<string>("ObjectComfortZoneTag")
                 .ToInstance(objectComfortZoneTag);
+            container.Bind<int>("LevelObjectLayer")
+                .ToInstance(1 << levelObjectLayer);
+            container.Bind<int>("LevelObjectSmashedLayer")
+                .ToInstance(1 << levelObjectSmashedLayer);
         }
 
         public override void PostBindings(DiContainer container) {
@@ -89,12 +98,6 @@ namespace Catzilla.LevelObjectModule.View {
                 container.Resolve<ActivatableController>();
             eventBus.On(ActivatableView.Event.TriggerEnter,
                 activatableContoller.OnTriggerEnter);
-
-            var fleeingController = container.Resolve<FleeingController>();
-            eventBus.On(FleeingView.Event.TriggerEnter,
-                fleeingController.OnTriggerEnter);
-            eventBus.On(FleeingView.Event.TriggerExit,
-                fleeingController.OnTriggerExit);
 
             var playerController =
                 container.Resolve<PlayerController>();

@@ -772,8 +772,8 @@ MonoBehaviour:
   FootstepSound: {fileID: 8300000, guid: 8d85354b4a2ce4b1f9ec0ebd20bdaee1, type: 3}
   LowPrioAudioSource: {fileID: 8291638}
   HighPrioAudioSource: {fileID: 8275416}
-  IsHealthFreezed: 0
-  IsScoreFreezed: 0
+  IsHealthFreezed: 1
+  IsScoreFreezed: 1
   MinSmashForce: 96
   MaxSmashForce: 128
   SmashUpwardsModifier: -4
@@ -977,11 +977,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: IsHealthFreezed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: IsScoreFreezed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ScoreSound

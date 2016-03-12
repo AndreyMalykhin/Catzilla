@@ -670,6 +670,9 @@ MonoBehaviour:
   minSpeed: 2
   maxSpeed: 4
   speed: 0
+  collider: {fileID: 6578506}
+  body: {fileID: 5406932}
+  animator: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -819,6 +822,14 @@ Prefab:
       propertyPath: renderers.Array.data[5]
       value: 
       objectReference: {fileID: 2319734}
+    - target: {fileID: 0}
+      propertyPath: collider
+      value: 
+      objectReference: {fileID: 6578506}
+    - target: {fileID: 0}
+      propertyPath: body
+      value: 
+      objectReference: {fileID: 5406932}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 178306}

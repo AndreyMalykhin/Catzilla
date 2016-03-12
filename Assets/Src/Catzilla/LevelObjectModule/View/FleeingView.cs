@@ -5,18 +5,18 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelObjectModule.View {
     public class FleeingView: MonoBehaviour, IPoolable {
-        public enum Event {TriggerEnter, TriggerExit}
-
         public float Speed {
-            get {return speed;}
-            set {
-                speed = value;
-
-                if (animator != null) {
-                    animator.SetFloat(speedParam, speed);
-                }
-            }
+            get {return desiredSpeed;}
+            set {desiredSpeed = value;}
         }
+
+        private static readonly int speedParam = Animator.StringToHash("Speed");
+
+        [Inject("LevelObjectLayer")]
+        private int levelObjectLayer;
+
+        [Inject("LevelObjectSmashedLayer")]
+        private int levelObjectSmashedLayer;
 
         [SerializeField]
         private float minSpeed = 1f;
@@ -27,22 +27,32 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private float speed;
 
-        private static readonly int speedParam = Animator.StringToHash("Speed");
+        [SerializeField]
+        private float desiredSpeed;
 
-        [Inject]
-        private EventBus eventBus;
+        [SerializeField]
+        private float stopDistance = 0.5f;
 
+        [SerializeField]
+        new private Collider collider;
+
+        [SerializeField]
         private Rigidbody body;
+
+        [SerializeField]
         private Animator animator;
 
+        private float halfDepth;
+        private float slowDownDistance;
+
         void IPoolable.Reset() {
-            SetRandomSpeed();
+            InitSpeed();
         }
 
         private void Awake() {
-            body = GetComponent<Rigidbody>();
-            animator = GetComponent<Animator>();
-            SetRandomSpeed();
+            halfDepth = collider.bounds.extents.z;
+            slowDownDistance = halfDepth + stopDistance * 2f;
+            InitSpeed();
         }
 
         private void OnEnable() {
@@ -55,19 +65,29 @@ namespace Catzilla.LevelObjectModule.View {
             Flee();
         }
 
-        private void OnTriggerEnter(Collider collider) {
-            eventBus.Fire(Event.TriggerEnter, new Evt(this, collider));
-        }
-
-        private void OnTriggerExit(Collider collider) {
-            eventBus.Fire(Event.TriggerExit, new Evt(this, collider));
-        }
-
-        private void SetRandomSpeed() {
+        private void InitSpeed() {
             Speed = Random.Range(minSpeed, maxSpeed);
         }
 
+        private void SetSpeed(float value) {
+            speed = value;
+
+            if (animator != null) {
+                animator.SetFloat(speedParam, speed);
+            }
+        }
+
         private void Flee() {
+            RaycastHit raycastHit;
+            bool isObstacleInFront = Physics.Raycast(
+                transform.position,
+                transform.forward,
+                out raycastHit,
+                slowDownDistance,
+                levelObjectLayer | levelObjectSmashedLayer);
+            float speedFactor = isObstacleInFront ?
+                ((raycastHit.distance - halfDepth - stopDistance) / stopDistance) : 1f;
+            SetSpeed(Mathf.Lerp(0f, desiredSpeed, speedFactor));
             Vector3 newPosition = transform.position + transform.forward *
                 (speed * Time.deltaTime);
             body.MovePosition(newPosition);
