@@ -7,12 +7,12 @@ using Catzilla.LevelObjectModule.View;
 namespace Catzilla.LevelObjectModule.Controller {
     public class DamagingController {
         [Inject("PlayerMeshTag")]
-        public string PlayerTag {get; set;}
+        private string playerMeshTag;
 
         public void OnTriggerEnter(Evt evt) {
             var collider = (Collider) evt.Data;
 
-            if (collider == null || !collider.CompareTag(PlayerTag)) {
+            if (collider == null || !collider.CompareTag(playerMeshTag)) {
                 return;
             }
 

@@ -12,7 +12,9 @@ namespace Catzilla.PlayerModule.Model {
         private readonly StringBuilder strBuilder = new StringBuilder(8);
 
         public void AddScore(PlayerView player, ScoreableView scoreable) {
-            player.Score += scoreable.Score;
+            int score = UnityEngine.Random.Range(
+                scoreable.MinScore, scoreable.MaxScore + 1);
+            player.Score += score;
 
             if (player.IsScoreFreezed) {
                 return;
@@ -22,7 +24,7 @@ namespace Catzilla.PlayerModule.Model {
             popup.PlaceAbove(scoreable.Collider.bounds);
             popup.LookAtTarget = player.Camera;
             popup.Msg.text =
-                strBuilder.Append('+').Append(scoreable.Score).ToString();
+                strBuilder.Append('+').Append(score).ToString();
             strBuilder.Length = 0;
             popupManager.Show(popup);
         }

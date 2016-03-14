@@ -8,16 +8,8 @@ namespace Catzilla.LevelObjectModule.View {
     public class ShootingView: MonoBehaviour, IPoolable {
         public enum Event {TriggerEnter, Shot}
 
-        [Inject]
-        public PoolStorageView PoolStorage {get; set;}
-
-        [Inject]
-        public EventBus EventBus {get; set;}
-
         public Collider Target {
-            get {
-                return target;
-            }
+            get {return target;}
             set {
                 if (target == value) {
                     return;
@@ -34,12 +26,19 @@ namespace Catzilla.LevelObjectModule.View {
                 if (value != null) {
                     shootingCoroutine = StartShooting();
                     StartCoroutine(shootingCoroutine);
+                    aimee.LookAt(GetAimPoint());
                 }
             }
         }
 
         public AudioClip ShotSound;
         public AudioSource AudioSource;
+
+        [Inject]
+        private PoolStorageView poolStorage;
+
+        [Inject]
+        private EventBus eventBus;
 
         [SerializeField]
         private ProjectileView projectileProto;
@@ -49,6 +48,10 @@ namespace Catzilla.LevelObjectModule.View {
 
         [SerializeField]
         private Transform aimee;
+
+        [Tooltip("In degrees")]
+        [SerializeField]
+        private float aimSpeed = 360f;
 
         [Tooltip("In seconds")]
         [SerializeField]
@@ -63,7 +66,11 @@ namespace Catzilla.LevelObjectModule.View {
 
         [Tooltip("In seconds")]
         [SerializeField]
-        private float maxDelay;
+        private float minDelay = 0.5f;
+
+        [Tooltip("In seconds")]
+        [SerializeField]
+        private float maxDelay = 0.5f;
 
         [SerializeField]
         private float projectileMinSpeed = 8f;
@@ -99,7 +106,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private EventBus GetEventBus() {
-            return EventBus;
+            return eventBus;
         }
 
         private void FixedUpdate() {
@@ -111,16 +118,23 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void Aim() {
+            Quaternion rotationToTarget =
+                Quaternion.LookRotation(GetAimPoint() - aimee.position);
+            aimee.rotation = Quaternion.RotateTowards(
+                aimee.rotation, rotationToTarget, aimSpeed * Time.deltaTime);
+        }
+
+        private Vector3 GetAimPoint() {
             Bounds targetBounds = target.bounds;
-            var targetPoint = new Vector3(
+            return new Vector3(
                 targetBounds.center.x,
                 aimee.position.y,
                 targetBounds.max.z);
-            aimee.LookAt(targetPoint);
         }
 
         private IEnumerator StartShooting() {
-            yield return new WaitForSeconds(0.5f + Random.Range(0f, maxDelay));
+            yield return new WaitForSeconds(
+                UnityEngine.Random.Range(minDelay, maxDelay));
 
             while (target != null) {
                 yield return StartCoroutine(StartBurst());
@@ -143,12 +157,12 @@ namespace Catzilla.LevelObjectModule.View {
 
         private void Shoot() {
             // DebugUtils.Log("ShootingView.Shoot()");
-            var projectile = PoolStorage.Take(projectilePoolId)
+            var projectile = poolStorage.Take(projectilePoolId)
                 .GetComponent<ProjectileView>();
             projectile.transform.position = projectileSource.position;
             projectile.transform.rotation = projectileSource.rotation;
             projectile.Speed = projectileSpeed;
-            EventBus.Fire(Event.Shot, new Evt(this));
+            eventBus.Fire(Event.Shot, new Evt(this));
         }
     }
 }

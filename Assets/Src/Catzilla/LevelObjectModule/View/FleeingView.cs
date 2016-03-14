@@ -12,11 +12,8 @@ namespace Catzilla.LevelObjectModule.View {
 
         private static readonly int speedParam = Animator.StringToHash("Speed");
 
-        [Inject("LevelObjectLayer")]
-        private int levelObjectLayer;
-
-        [Inject("LevelObjectSmashedLayer")]
-        private int levelObjectSmashedLayer;
+        [SerializeField]
+        private LayerMask obstacleLayer;
 
         [SerializeField]
         private float minSpeed = 1f;
@@ -44,6 +41,7 @@ namespace Catzilla.LevelObjectModule.View {
 
         private float halfDepth;
         private float slowDownDistance;
+        private float nextAdjustSpeedTime;
 
         void IPoolable.Reset() {
             InitSpeed();
@@ -78,19 +76,34 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void Flee() {
-            RaycastHit raycastHit;
-            bool isObstacleInFront = Physics.Raycast(
-                transform.position,
-                transform.forward,
-                out raycastHit,
-                slowDownDistance,
-                levelObjectLayer | levelObjectSmashedLayer);
-            float speedFactor = isObstacleInFront ?
-                ((raycastHit.distance - halfDepth - stopDistance) / stopDistance) : 1f;
-            SetSpeed(Mathf.Lerp(0f, desiredSpeed, speedFactor));
+            if (Time.time >= nextAdjustSpeedTime) {
+                AdjustSpeed();
+                nextAdjustSpeedTime = Time.time + 0.125f;
+            }
+
             Vector3 newPosition = transform.position + transform.forward *
                 (speed * Time.deltaTime);
             body.MovePosition(newPosition);
+        }
+
+        private void AdjustSpeed() {
+            RaycastHit raycastHit;
+            bool isObstacleInFront = Physics.BoxCast(
+                collider.bounds.center,
+                new Vector3(0f, 0f, 0.0625f),
+                transform.forward,
+                out raycastHit,
+                Quaternion.identity,
+                slowDownDistance,
+                obstacleLayer.value);
+            float speedFactor = isObstacleInFront ?
+                ((raycastHit.distance - halfDepth - stopDistance) / stopDistance) : 1f;
+            SetSpeed(Mathf.Lerp(0f, desiredSpeed, speedFactor));
+        }
+
+        private void OnDrawGizmos() {
+            Gizmos.DrawLine(transform.position,
+                transform.position + transform.forward * slowDownDistance);
         }
     }
 }

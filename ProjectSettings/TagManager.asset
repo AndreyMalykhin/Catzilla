@@ -5,10 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Player.Mesh
-  - Projectile
   - Player.FieldOfView
   - Level
-  - Object.ComfortZone
   layers:
   - Default
   - TransparentFX
@@ -18,13 +16,13 @@ TagManager:
   - UI
   - 
   - 
-  - Player
-  - LevelObjectSmashed
-  - Env
+  - LevelObject.Player
+  - LevelObject.Smashed
+  - LevelArea.Env
   - LevelObject
-  - Projectile
+  - LevelObject.Projectile
   - LevelArea
-  - 
+  - LevelObject.Bonus
   - 
   - 
   - 

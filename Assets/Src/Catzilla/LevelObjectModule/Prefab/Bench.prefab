@@ -613,7 +613,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -713,7 +713,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 20
+  MinScore: 16
+  MaxScore: 32
   Collider: {fileID: 6531034}
 --- !u!1001 &100100000
 Prefab:
@@ -733,7 +734,7 @@ Prefab:
         type: 2}
     - target: {fileID: 0}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_UseGravity
@@ -812,6 +813,14 @@ Prefab:
       propertyPath: poolable
       value: 
       objectReference: {fileID: 11469974}
+    - target: {fileID: 0}
+      propertyPath: MinScore
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MaxScore
+      value: 32
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152140}

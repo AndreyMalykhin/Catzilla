@@ -7,7 +7,7 @@ using Catzilla.CommonModule.View;
 namespace Catzilla.CommonModule.Controller {
     public class DisposableController {
         [Inject("PlayerFieldOfViewTag")]
-        public string PlayerFieldOfViewTag {get; set;}
+        private string playerFieldOfViewTag;
 
         public void OnTriggerExit(Evt evt) {
             var collider = (Collider) evt.Data;
@@ -15,7 +15,7 @@ namespace Catzilla.CommonModule.Controller {
             //     "DisposableController.OnTriggerExit(); collider={0}", collider);
 
             if (collider == null
-                || !collider.CompareTag(PlayerFieldOfViewTag)) {
+                || !collider.CompareTag(playerFieldOfViewTag)) {
                 return;
             }
 

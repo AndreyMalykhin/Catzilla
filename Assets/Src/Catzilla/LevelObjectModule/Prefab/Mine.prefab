@@ -49,6 +49,7 @@ GameObject:
   - 114: {fileID: 11484814}
   - 114: {fileID: 11466988}
   - 114: {fileID: 11437886}
+  - 114: {fileID: 11444536}
   m_Layer: 11
   m_Name: Mine
   m_TagString: Untagged
@@ -486,6 +487,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 50
+--- !u!114 &11444536
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a21ae46380c44568fba0130f020764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smashable: {fileID: 11425908}
+  explosionUpwardsModifier: 0
+  explosionRadius: 0
+  minForce: 768
+  maxForce: 1024
+  maxHitObjects: 0
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &11466988
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -600,6 +621,26 @@ Prefab:
       objectReference: {fileID: 8300000, guid: 589bb341a98e14ded8a84427d07f6728, type: 3}
     - target: {fileID: 0}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: smashable
+      value: 
+      objectReference: {fileID: 11425908}
+    - target: {fileID: 0}
+      propertyPath: explosionUpwardsModifier
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: minForce
+      value: 768
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxForce
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxHitObjects
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

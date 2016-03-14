@@ -51,14 +51,17 @@ MonoBehaviour:
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
     - objectType: 2
-      minSpawnsPerArea: 1
+      minSpawnsPerArea: 0
       maxSpawnsPerArea: 1
     - objectType: 10
-      minSpawnsPerArea: 1
+      minSpawnsPerArea: 0
       maxSpawnsPerArea: 1
     - objectType: 7
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
     - objectType: 11
-      minSpawnsPerArea: 1
+      minSpawnsPerArea: 0
+      maxSpawnsPerArea: 1
+    - objectType: 12
+      minSpawnsPerArea: 0
       maxSpawnsPerArea: 1

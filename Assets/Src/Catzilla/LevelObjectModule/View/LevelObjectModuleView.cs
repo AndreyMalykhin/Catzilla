@@ -22,42 +22,25 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private string playerFieldOfViewTag;
 
-        [SerializeField]
-        private string projectileTag;
-
-        [SerializeField]
-        private string objectComfortZoneTag;
-
-        [SerializeField]
-        private int levelObjectLayer;
-
-        [SerializeField]
-        private int levelObjectSmashedLayer;
-
         public override void InitBindings(DiContainer container) {
             container.Bind<ObjectTypeInfoStorage>()
                 .ToInstance(objectTypeInfoStorage);
             container.Bind<PlayerController>().ToSingle();
             container.Bind<SmashableController>().ToSingle();
+            container.Bind<SmashingController>().ToSingle();
             container.Bind<DamagingController>().ToSingle();
             container.Bind<ShootingController>().ToSingle();
             container.Bind<ProjectileController>().ToSingle();
             container.Bind<ActivatableController>().ToSingle();
             container.Bind<TakeableController>().ToSingle();
             container.Bind<BonusController>().ToSingle();
+            container.Bind<ExplosiveController>().ToSingle();
             container.Bind<LevelObjectType>("PlayerObjectType")
                 .ToInstance(LevelObjectType.Player);
             container.Bind<string>("PlayerTag").ToInstance(playerTag);
             container.Bind<string>("PlayerMeshTag").ToInstance(playerMeshTag);
             container.Bind<string>("PlayerFieldOfViewTag")
                 .ToInstance(playerFieldOfViewTag);
-            container.Bind<string>("ProjectileTag").ToInstance(projectileTag);
-            container.Bind<string>("ObjectComfortZoneTag")
-                .ToInstance(objectComfortZoneTag);
-            container.Bind<int>("LevelObjectLayer")
-                .ToInstance(1 << levelObjectLayer);
-            container.Bind<int>("LevelObjectSmashedLayer")
-                .ToInstance(1 << levelObjectSmashedLayer);
         }
 
         public override void PostBindings(DiContainer container) {
@@ -66,8 +49,13 @@ namespace Catzilla.LevelObjectModule.View {
 
             var smashableContoller =
                 container.Resolve<SmashableController>();
-            eventBus.On(SmashableView.Event.TriggerEnter,
-                smashableContoller.OnTriggerEnter);
+            eventBus.On(SmashableView.Event.Smash,
+                smashableContoller.OnSmash);
+
+            var smashingContoller =
+                container.Resolve<SmashingController>();
+            eventBus.On(SmashingView.Event.TriggerEnter,
+                smashingContoller.OnTriggerEnter);
 
             var damagingContoller =
                 container.Resolve<DamagingController>();
@@ -90,6 +78,10 @@ namespace Catzilla.LevelObjectModule.View {
             eventBus.On(TakeableView.Event.TriggerEnter,
                 takeableController.OnTriggerEnter);
 
+            var explosiveController = container.Resolve<ExplosiveController>();
+            eventBus.On(ExplosiveView.Event.Explode,
+                explosiveController.OnExplode);
+
             var bonusController = container.Resolve<BonusController>();
             eventBus.On(
                 BonusView.Event.Destroy, bonusController.OnViewDestroy);
@@ -103,6 +95,8 @@ namespace Catzilla.LevelObjectModule.View {
                 container.Resolve<PlayerController>();
             eventBus.On(PlayerView.Event.Construct,
                 playerController.OnViewConstruct);
+            eventBus.On(PlayerView.Event.Destroy,
+                playerController.OnViewDestroy);
             eventBus.On(PlayerView.Event.Death,
                 playerController.OnDeath);
             eventBus.On(PlayerView.Event.ScoreChange,

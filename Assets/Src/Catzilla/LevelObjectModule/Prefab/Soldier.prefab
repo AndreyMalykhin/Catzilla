@@ -518,7 +518,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 94
   m_CollisionDetection: 0
@@ -660,10 +660,12 @@ MonoBehaviour:
   projectileProto: {fileID: 11467526, guid: 362fec4312e394d09be04ce01ef081a4, type: 2}
   projectileSource: {fileID: 450834}
   aimee: {fileID: 424354}
+  aimSpeed: 360
   shotPeriod: 0.125
   burstPeriod: 8
   shotsInBurst: 2
-  maxDelay: 0
+  minDelay: 0.5
+  maxDelay: 0.5
   projectileMinSpeed: 8
   projectileMaxSpeed: 8
 --- !u!114 &11485288
@@ -697,7 +699,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 80
+  MinScore: 64
+  MaxScore: 128
   Collider: {fileID: 6555376}
 --- !u!114 &11495818
 MonoBehaviour:
@@ -739,7 +742,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Constraints
@@ -850,7 +853,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxDelay
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_StaticEditorFlags
@@ -880,6 +883,18 @@ Prefab:
       propertyPath: aimee
       value: 
       objectReference: {fileID: 424354}
+    - target: {fileID: 0}
+      propertyPath: aimSpeed
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MinScore
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MaxScore
+      value: 128
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 102404}

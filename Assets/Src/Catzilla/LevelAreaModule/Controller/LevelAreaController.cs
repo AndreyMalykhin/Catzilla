@@ -10,10 +10,10 @@ using Catzilla.LevelAreaModule.View;
 namespace Catzilla.LevelAreaModule.Controller {
     public class LevelAreaController {
         [Inject]
-        public LevelGenerator LevelGenerator {get; set;}
+        private LevelGenerator levelGenerator;
 
         [Inject("PlayerFieldOfViewTag")]
-        public string PlayerFieldOfViewTag {get; set;}
+        private string playerFieldOfViewTag;
 
         private LevelView level;
         private PlayerView player;
@@ -30,17 +30,17 @@ namespace Catzilla.LevelAreaModule.Controller {
             var collider = (Collider) evt.Data;
 
             if (collider == null
-                || !collider.CompareTag(PlayerFieldOfViewTag)) {
+                || !collider.CompareTag(playerFieldOfViewTag)) {
                 return;
             }
 
             var area = (LevelAreaView) evt.Source;
 
-            if (area.Index < LevelGenerator.InitialAreasCount - 1) {
+            if (area.Index < levelGenerator.InitialAreasCount - 1) {
                 return;
             }
 
-            LevelGenerator.NewArea(player, level);
+            levelGenerator.NewArea(player, level);
         }
     }
 }

@@ -25,9 +25,6 @@ namespace Catzilla.LevelModule.Controller {
         [Inject]
         public Translator Translator {get; set;}
 
-        [Inject("MainCamera")]
-        public Camera MainCamera {get; set;}
-
         [Inject]
         public Game Game {get; set;}
 
@@ -48,7 +45,6 @@ namespace Catzilla.LevelModule.Controller {
         }
 
         private void OnLevelGenerate() {
-            MainCamera.gameObject.SetActive(false);
             var showable = LevelStartScreen.GetComponent<ShowableView>();
             showable.OnHide = OnStartScreenHide;
             showable.Hide();

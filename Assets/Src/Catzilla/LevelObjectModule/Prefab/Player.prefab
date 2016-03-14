@@ -30,6 +30,8 @@ GameObject:
   - 82: {fileID: 8275416}
   - 95: {fileID: 9551204}
   - 114: {fileID: 11467780}
+  - 114: {fileID: 11477530}
+  - 114: {fileID: 11495188}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -147,6 +149,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 457836}
   - 65: {fileID: 6506046}
+  - 54: {fileID: 5436052}
+  - 114: {fileID: 11416770}
   m_Layer: 8
   m_Name: FieldOfView
   m_TagString: Player.FieldOfView
@@ -253,7 +257,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 190784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7, z: 8}
+  m_LocalPosition: {x: 0, y: 16, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 406494}
@@ -265,7 +269,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121812}
   m_LocalRotation: {x: 0.52862847, y: -0.059156846, z: 0.036965307, w: 0.8459823}
-  m_LocalPosition: {x: 0, y: 16, z: 0}
+  m_LocalPosition: {x: 0, y: 32, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 432502}
@@ -351,7 +355,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 32
+  far clip plane: 64
   field of view: 60
   orthographic: 1
   orthographic size: 16
@@ -533,6 +537,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162156}
   m_Mesh: {fileID: 4300008, guid: b76d08367d76347cdb9bbb677e3a5300, type: 3}
+--- !u!54 &5436052
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190784}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!54 &5462906
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -558,7 +577,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 32, y: 16, z: 38}
+  m_Size: {x: 32, y: 32, z: 48}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6510856
 BoxCollider:
@@ -751,6 +770,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11416770
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1c37da11d7834b549f7de4d4bf5e472, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11467780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -772,17 +802,44 @@ MonoBehaviour:
   FootstepSound: {fileID: 8300000, guid: 8d85354b4a2ce4b1f9ec0ebd20bdaee1, type: 3}
   LowPrioAudioSource: {fileID: 8291638}
   HighPrioAudioSource: {fileID: 8275416}
-  IsHealthFreezed: 1
-  IsScoreFreezed: 1
-  MinSmashForce: 96
-  MaxSmashForce: 128
-  SmashUpwardsModifier: -4
+  IsHealthFreezed: 0
+  IsScoreFreezed: 0
   FrontSpeed: 8
   SideSpeed: 4
   MaxHealth: 100
-  CameraShakeDuration: 0.5
-  CameraShakeMaxAmount: 1
+  CameraShakeDuration: 0.25
+  CameraShakeMaxAmount: {x: 0, y: -4, z: 0}
   hudProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
+  envLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+--- !u!114 &11477530
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80ab5b100b454f91b6c74ffea0a4881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSmashForce: 96
+  maxSmashForce: 128
+  smashUpwardsModifier: -4
+--- !u!114 &11495188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54890293935c84668910fc43096f05c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers:
+  - {fileID: 11416770}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -790,6 +847,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: triggers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalScale.x
       value: 2.25
@@ -953,7 +1014,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Size.z
-      value: 38
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: far clip plane
@@ -977,11 +1038,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: IsHealthFreezed
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: IsScoreFreezed
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ScoreSound
@@ -1001,7 +1062,7 @@ Prefab:
       objectReference: {fileID: 2010502}
     - target: {fileID: 0}
       propertyPath: CameraShakeDuration
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: MinSmashForce
@@ -1051,6 +1112,38 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: SideSpeed
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Size.y
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: CameraShakeMaxAmount.y
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: CameraShakeMaxAmount.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: smashUpwardsModifier
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: triggers.Array.data[0]
+      value: 
+      objectReference: {fileID: 11416770}
+    - target: {fileID: 0}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 11495188}
+    - target: {fileID: 0}
+      propertyPath: envLayer.m_Bits
+      value: 1024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

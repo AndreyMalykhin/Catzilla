@@ -2,39 +2,40 @@
 using System.Collections.Generic;
 using Zenject;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 using Catzilla.LevelObjectModule.View;
 
 namespace Catzilla.LevelObjectModule.Controller {
     public class ShootingController {
         [Inject("PlayerFieldOfViewTag")]
-        public string PlayerFieldOfViewTag {get; set;}
+        private string playerFieldOfViewTag;
 
         [Inject("EffectsLowPrioAudioChannel")]
-        public int EffectsAudioChannel {get; set;}
+        private int effectsAudioChannel;
 
         [Inject]
-        public AudioManager AudioManager {get; set;}
+        private AudioManager audioManager;
 
         public void OnTriggerEnter(Evt evt) {
             var collider = (Collider) evt.Data;
 
             if (collider == null
-                || !collider.CompareTag(PlayerFieldOfViewTag)) {
+                || !collider.CompareTag(playerFieldOfViewTag)) {
                 return;
             }
 
             var shooter = (ShootingView) evt.Source;
-            shooter.Target =
-                collider.attachedRigidbody.GetComponent<PlayerView>().Collider;
+            shooter.Target = collider.GetComponent<TriggerView>().Owner
+                .GetComponent<PlayerView>().Collider;
         }
 
         public void OnShot(Evt evt) {
             var shooter = (ShootingView) evt.Source;
 
             if (shooter.ShotSound != null) {
-                var pitch = Random.Range(0.9f, 1.1f);
-                AudioManager.Play(shooter.ShotSound, shooter.AudioSource,
-                    EffectsAudioChannel, pitch);
+                var pitch = Random.Range(0.95f, 1.05f);
+                audioManager.Play(shooter.ShotSound, shooter.AudioSource,
+                    effectsAudioChannel, pitch);
             }
         }
     }

@@ -14,14 +14,10 @@ namespace Catzilla.LevelAreaModule.View {
         [SerializeField]
         private EnvTypeInfoStorage envTypeInfoStorage;
 
-        [SerializeField]
-        private int envLayer;
-
         public override void InitBindings(DiContainer container) {
             container.Bind<LevelAreaGenerator>().ToSingle();
             container.Bind<LevelAreaController>().ToSingle();
             container.Bind<EnvTypeInfoStorage>().ToInstance(envTypeInfoStorage);
-            container.Bind<int>("EnvLayer").ToInstance(1 << envLayer);
         }
 
         public override void PostBindings(DiContainer container) {

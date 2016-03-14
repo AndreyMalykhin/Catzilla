@@ -5,7 +5,8 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelObjectModule.View {
     public class ScoreableView: MonoBehaviour {
-        public int Score = 1;
+        public int MinScore = 1;
+        public int MaxScore = 2;
         public Collider Collider;
     }
 }

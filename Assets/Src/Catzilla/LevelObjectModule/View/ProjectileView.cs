@@ -8,10 +8,9 @@ namespace Catzilla.LevelObjectModule.View {
     public class ProjectileView: MonoBehaviour {
         public enum Event {TriggerEnter}
 
-        public float Speed;
+        public PoolableView Poolable {get {return poolable;}}
 
-        [Inject]
-        private PoolStorageView poolStorage;
+        public float Speed;
 
         [Inject]
         private EventBus eventBus;
@@ -21,10 +20,6 @@ namespace Catzilla.LevelObjectModule.View {
 
         [SerializeField]
         private PoolableView poolable;
-
-        public void Hit() {
-            poolStorage.Return(poolable);
-        }
 
         private void FixedUpdate() {
             Fly();

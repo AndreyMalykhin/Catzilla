@@ -11,6 +11,7 @@ GameObject:
   - 33: {fileID: 3369612}
   - 23: {fileID: 2314912}
   - 65: {fileID: 6576284}
+  - 114: {fileID: 11441226}
   m_Layer: 10
   m_Name: Mesh
   m_TagString: Untagged
@@ -132,6 +133,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PoolId: 23
   IsUI: 0
+--- !u!114 &11441226
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 153374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daad64b9769cc4ab0a01b1e42a8182b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11459958
 MonoBehaviour:
   m_ObjectHideFlags: 1

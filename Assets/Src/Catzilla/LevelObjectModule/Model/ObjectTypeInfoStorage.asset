@@ -116,3 +116,11 @@ MonoBehaviour:
       availableMaterials:
       - {fileID: 2100000, guid: 797a26f90eff744b8a6134b0ce7d0bc0, type: 2}
       - {fileID: 2100000, guid: 4e0ed81d49fd04c938c69ccf55211103, type: 2}
+  - type: 12
+    width: 5
+    depth: 5
+    spawnPriority: 0
+    spawnChance: 1
+    protoInfos:
+    - view: {fileID: 11429200, guid: 35a12f52e74a84c5f91a03296442aaae, type: 2}
+      availableMaterials: []

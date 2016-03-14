@@ -11,7 +11,7 @@ GameObject:
   - 33: {fileID: 3300948}
   - 23: {fileID: 2343796}
   - 65: {fileID: 6547486}
-  m_Layer: 11
+  m_Layer: 14
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +34,7 @@ GameObject:
   - 114: {fileID: 11484932}
   - 114: {fileID: 11494732}
   - 114: {fileID: 11470724}
-  m_Layer: 11
+  m_Layer: 14
   m_Name: FirstAid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,6 +265,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_CullingMode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

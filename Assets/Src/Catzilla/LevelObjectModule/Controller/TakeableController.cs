@@ -48,7 +48,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
 
             if (takeable.TakeSound != null) {
-                var pitch = Random.Range(0.9f, 1.1f);
+                var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
                 audioManager.Play(
                     takeable.TakeSound,
                     player.HighPrioAudioSource,

@@ -28,6 +28,7 @@ namespace Catzilla.CommonModule.View {
         }
 
         public void Return(PoolableView instance) {
+            DebugUtils.Assert(instance.transform.parent != transform);
             poolsMap[instance.PoolId].Return(instance);
             instance.transform.SetParent(transform, !instance.IsUI);
             instance.gameObject.SetActive(false);

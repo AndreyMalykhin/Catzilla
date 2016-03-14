@@ -7,13 +7,13 @@ using Catzilla.LevelObjectModule.View;
 namespace Catzilla.LevelObjectModule.Controller {
     public class ActivatableController {
         [Inject("PlayerFieldOfViewTag")]
-        public string PlayerFieldOfViewTag {get; set;}
+        private string playerFieldOfViewTag;
 
         public void OnTriggerEnter(Evt evt) {
             var collider = (Collider) evt.Data;
 
             if (collider == null
-                || !collider.CompareTag(PlayerFieldOfViewTag)) {
+                || !collider.CompareTag(playerFieldOfViewTag)) {
                 return;
             }
 

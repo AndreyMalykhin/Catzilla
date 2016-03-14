@@ -41,9 +41,6 @@ namespace Catzilla.GameOverMenuModule.Controller {
         [Inject]
         public ScreenSpacePopupManagerView PopupManager {get; set;}
 
-        [Inject("MainCamera")]
-        public Camera MainCamera {get; set;}
-
         [Inject("CommonPopupType")]
         public int CommonPopupType {get; set;}
 
@@ -79,7 +76,6 @@ namespace Catzilla.GameOverMenuModule.Controller {
         public void OnExitBtnClick() {
             AnalyticsUtils.LogEvent("Game.Exit");
             Game.UnloadLevel();
-            MainCamera.gameObject.SetActive(true);
             GameOverScreen.GetComponent<ShowableView>().Hide();
             MainScreen.GetComponent<ShowableView>().Show();
         }

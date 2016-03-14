@@ -9,42 +9,19 @@ using Catzilla.LevelObjectModule.View;
 
 namespace Catzilla.LevelObjectModule.Controller {
     public class SmashableController {
-        [Inject("PlayerMeshTag")]
-        public string PlayerTag {get; set;}
-
         [Inject("EffectsHighPrioAudioChannel")]
-        public int EffectsAudioChannel {get; set;}
+        private int effectsAudioChannel;
 
         [Inject]
-        public AudioManager AudioManager {get; set;}
+        private AudioManager audioManager;
 
-        [Inject]
-        public PlayerManager PlayerManager {get; set;}
-
-        public void OnTriggerEnter(Evt evt) {
-            var collider = (Collider) evt.Data;
-
-            if (collider == null || !collider.CompareTag(PlayerTag)) {
-                return;
-            }
-
-            var smashable = (SmashableView) evt.Source;
-            var player = collider.attachedRigidbody.GetComponent<PlayerView>();
-            var scoreable = smashable.GetComponent<ScoreableView>();
-
-            if (scoreable != null) {
-                PlayerManager.AddScore(player, scoreable);
-            }
-
-            SmashedView smashed = smashable.Smash(
-                Random.Range(player.MinSmashForce, player.MaxSmashForce),
-                player.SmashUpwardsModifier,
-                collider.attachedRigidbody.position);
+        public void OnSmash(Evt evt) {
+            var smashed = (SmashedView) evt.Data;
 
             if (smashed.SmashSound != null) {
-                var pitch = Random.Range(0.9f, 1.1f);
-                AudioManager.Play(smashed.SmashSound, smashed.AudioSource,
-                    EffectsAudioChannel, pitch);
+                var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
+                audioManager.Play(smashed.SmashSound, smashed.AudioSource,
+                    effectsAudioChannel, pitch);
             }
         }
     }

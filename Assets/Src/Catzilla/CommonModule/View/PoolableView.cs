@@ -10,10 +10,15 @@ namespace Catzilla.CommonModule.View {
         public int PoolId;
         public bool IsUI;
 
-        private readonly List<IPoolable> poolables = new List<IPoolable>(4);
+        private readonly List<IPoolable> poolables = new List<IPoolable>(8);
 
-        [PostInject]
-        public void OnConstruct() {
+		void IPoolable.Reset() {
+            for (var i = 0; i < poolables.Count; ++i) {
+                poolables[i].Reset();
+            }
+        }
+
+        private void Awake() {
             var components = GetComponents<MonoBehaviour>();
 
             for (var i = 0; i < components.Length; ++i) {
@@ -22,12 +27,6 @@ namespace Catzilla.CommonModule.View {
                 if (component is IPoolable && component != this) {
                     poolables.Add((IPoolable) component);
                 }
-            }
-        }
-
-		void IPoolable.Reset() {
-            for (var i = 0; i < poolables.Count; ++i) {
-                poolables[i].Reset();
             }
         }
     }

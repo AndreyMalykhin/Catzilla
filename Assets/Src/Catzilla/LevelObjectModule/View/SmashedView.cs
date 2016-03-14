@@ -21,12 +21,6 @@ namespace Catzilla.LevelObjectModule.View {
         private float lifetime = 2f;
 
         [SerializeField]
-        private bool overrideSmashParams = false;
-
-        [SerializeField]
-        private float overrideSmashUpwardsModifier = 0f;
-
-        [SerializeField]
         private Transform[] parts;
 
         [SerializeField]
@@ -105,10 +99,6 @@ namespace Catzilla.LevelObjectModule.View {
 
         private void Smash() {
             float explosionRadius = 0f;
-
-            if (overrideSmashParams) {
-                smashUpwardsModifier = overrideSmashUpwardsModifier;
-            }
 
             for (int i = 0; i < parts.Length; ++i) {
                 var partBody = parts[i].GetComponent<Rigidbody>();

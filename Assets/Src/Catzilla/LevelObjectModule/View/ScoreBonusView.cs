@@ -16,7 +16,8 @@ namespace Catzilla.LevelObjectModule.View {
             PlayerView player, LevelSettings levelSettings) {
             // DebugUtils.Log("ScoreBonusView.CanGive(); taken={0}; extra={1}",
             //     player.ScoreBonusesTaken, levelSettings.ExtraScore);
-            int availableBonuses = levelSettings.ExtraScore / scoreable.Score;
+            int availableBonuses = levelSettings.ExtraScore /
+                ((scoreable.MinScore + scoreable.MaxScore) / 2);
             return player.ScoreBonusesTaken < availableBonuses;
         }
     }

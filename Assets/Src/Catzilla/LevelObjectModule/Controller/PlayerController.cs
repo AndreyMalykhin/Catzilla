@@ -38,9 +38,6 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject]
         public Game Game {get; set;}
 
-        [Inject("ProjectileTag")]
-        public string ProjectileTag {get; set;}
-
         [Inject("PlayerHighPrioAudioChannel")]
         public int PlayerHighPrioAudioChannel {get; set;}
 
@@ -65,10 +62,18 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject]
         public RewardManager RewardManager {get; set;}
 
+        [Inject("MainCamera")]
+        public Camera MainCamera {get; set;}
+
         private PlayerView player;
 
         public void OnViewConstruct(Evt evt) {
             player = (PlayerView) evt.Source;
+            MainCamera.gameObject.SetActive(false);
+        }
+
+        public void OnViewDestroy(Evt evt) {
+            MainCamera.gameObject.SetActive(true);
         }
 
         public void OnDeath(Evt evt) {
@@ -99,7 +104,7 @@ namespace Catzilla.LevelObjectModule.Controller {
                 return;
             }
 
-            var pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+            var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
             AudioManager.Play(
                 player.FootstepSound,
                 player.LowPrioAudioSource,
@@ -126,7 +131,7 @@ namespace Catzilla.LevelObjectModule.Controller {
                     return;
                 }
 
-                var pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
                 AudioManager.Play(
                     player.HurtSound,
                     player.HighPrioAudioSource,
@@ -137,7 +142,7 @@ namespace Catzilla.LevelObjectModule.Controller {
                     return;
                 }
 
-                var pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
                 AudioManager.Play(player.TreatSound, player.HighPrioAudioSource,
                     PlayerHighPrioAudioChannel, pitch);
             }
@@ -155,8 +160,8 @@ namespace Catzilla.LevelObjectModule.Controller {
         }
 
         private void CleanProjectiles() {
-            GameObject[] projectiles =
-                GameObject.FindGameObjectsWithTag(ProjectileTag);
+            var projectiles = (ProjectileView[]) GameObject.FindObjectsOfType(
+                typeof(ProjectileView));
 
             for (int i = 0; i < projectiles.Length; ++i) {
                 PoolStorage.Return(projectiles[i].GetComponent<PoolableView>());

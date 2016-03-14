@@ -35,22 +35,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &130696
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 494066}
-  - 65: {fileID: 6556286}
-  m_Layer: 11
-  m_Name: ComfortZone
-  m_TagString: Object.ComfortZone
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &139816
 GameObject:
   m_ObjectHideFlags: 1
@@ -208,7 +192,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 459790}
-  - {fileID: 494066}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &459790
@@ -253,18 +236,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 459790}
   m_RootOrder: 4
---- !u!4 &494066
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130696}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 449098}
-  m_RootOrder: 1
 --- !u!4 &499116
 Transform:
   m_ObjectHideFlags: 1
@@ -523,18 +494,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 118
   m_CollisionDetection: 0
---- !u!65 &6556286
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130696}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 0.9375, z: 3.25}
-  m_Center: {x: 0, y: 0.46875, z: 0}
 --- !u!65 &6578506
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -642,7 +601,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 20
+  MinScore: 16
+  MaxScore: 32
   Collider: {fileID: 6578506}
 --- !u!114 &11487704
 MonoBehaviour:
@@ -667,9 +627,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fbbba9b8c05642b886201d14576d116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 2560
   minSpeed: 2
   maxSpeed: 4
   speed: 0
+  desiredSpeed: 0
+  stopDistance: 0.5
   collider: {fileID: 6578506}
   body: {fileID: 5406932}
   animator: {fileID: 0}
@@ -830,6 +795,18 @@ Prefab:
       propertyPath: body
       value: 
       objectReference: {fileID: 5406932}
+    - target: {fileID: 0}
+      propertyPath: obstacleLayer.m_Bits
+      value: 2560
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MinScore
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MaxScore
+      value: 32
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 178306}
