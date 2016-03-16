@@ -148,6 +148,7 @@ GameObject:
   - 114: {fileID: 165079789}
   - 114: {fileID: 165079788}
   - 114: {fileID: 165079787}
+  - 114: {fileID: 165079792}
   m_Layer: 5
   m_Name: UIBlocker
   m_TagString: Untagged
@@ -183,7 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5171b22816cce419bb0989d4b390f74f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 165079791}
 --- !u!114 &165079788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +251,23 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &165079792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 165079785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f494f5c66184f8d97344cf9c511a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AutoHideDelay: 0
+  animator: {fileID: 0}
+  isShowAnimated: 0
+  isHideAnimated: 0
+  showSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!1 &185038201
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,9 +750,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AutoHideDelay: 0
   animator: {fileID: 558445963}
-  canvas: {fileID: 558445958}
   isShowAnimated: 1
   isHideAnimated: 1
+  showSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!95 &558445963
 Animator:
   serializedVersion: 3
@@ -1017,6 +1035,7 @@ GameObject:
   - 222: {fileID: 651865963}
   - 114: {fileID: 651865962}
   - 114: {fileID: 651865961}
+  - 114: {fileID: 651865965}
   m_Layer: 5
   m_Name: LevelCompleteScreen
   m_TagString: Untagged
@@ -1049,13 +1068,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 651865959}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20f69ba3004f741ca84a53de9d88f665, type: 3}
+  m_Script: {fileID: 11500000, guid: 92f494f5c66184f8d97344cf9c511a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Msg: {fileID: 651865962}
-  ShowSound: {fileID: 8300000, guid: 9e4780800801d49f989e31d57c8e3759, type: 3}
-  AudioSource: {fileID: 1825311392}
-  duration: 2
+  AutoHideDelay: 2
+  animator: {fileID: 0}
+  isShowAnimated: 0
+  isHideAnimated: 0
+  showSound: {fileID: 8300000, guid: 9e4780800801d49f989e31d57c8e3759, type: 3}
+  audioSource: {fileID: 1825311392}
 --- !u!114 &651865962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1113,6 +1134,17 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &651865965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 651865959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20f69ba3004f741ca84a53de9d88f665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &660943501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,7 +1477,7 @@ MonoBehaviour:
   levelSettingsStorage: {fileID: 11400000, guid: ec2283af4794e45f1952805f9cec6384,
     type: 2}
   startScreen: {fileID: 558445961}
-  completeScreen: {fileID: 651865961}
+  completeScreen: {fileID: 651865965}
   areaWidth: 16
   areaDepth: 24
   levelScene: Level
@@ -2154,9 +2186,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AutoHideDelay: 0
   animator: {fileID: 0}
-  canvas: {fileID: 965146263}
   isShowAnimated: 0
   isHideAnimated: 0
+  showSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!1 &975208018
 GameObject:
   m_ObjectHideFlags: 0
@@ -2790,8 +2823,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 1405272463}
-  - 222: {fileID: 1405272469}
-  - 114: {fileID: 1405272468}
   - 114: {fileID: 1405272467}
   - 114: {fileID: 1405272470}
   - 114: {fileID: 1405272464}
@@ -2860,39 +2891,6 @@ MonoBehaviour:
   m_Spacing: 32
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
---- !u!114 &1405272468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1405272462}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.53333336, g: 0.8, b: 0.53333336, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &1405272469
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1405272462}
 --- !u!114 &1405272470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2914,8 +2912,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 1408680215}
-  - 222: {fileID: 1408680221}
-  - 114: {fileID: 1408680220}
   - 114: {fileID: 1408680219}
   - 114: {fileID: 1408680222}
   - 114: {fileID: 1408680217}
@@ -2986,39 +2982,6 @@ MonoBehaviour:
   m_Spacing: 32
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
---- !u!114 &1408680220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1408680214}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &1408680221
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1408680214}
 --- !u!114 &1408680222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3045,6 +3008,7 @@ GameObject:
   - 95: {fileID: 1454291256}
   - 114: {fileID: 1454291254}
   - 114: {fileID: 1454291257}
+  - 114: {fileID: 1454291259}
   m_Layer: 5
   m_Name: ActivityIndicator
   m_TagString: Untagged
@@ -3148,6 +3112,23 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1454291259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1454291252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f494f5c66184f8d97344cf9c511a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AutoHideDelay: 0
+  animator: {fileID: 0}
+  isShowAnimated: 0
+  isHideAnimated: 0
+  showSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!1 &1572147011
 GameObject:
   m_ObjectHideFlags: 0
@@ -3237,7 +3218,7 @@ MonoBehaviour:
   - ViewProto: {fileID: 11407360, guid: 881190ac123ff4fc3a8b41372ceceb81, type: 2}
     InitialSize: 4
   - ViewProto: {fileID: 11482260, guid: f055717bd0d0c40bfbf78926508e3dbc, type: 2}
-    InitialSize: 4
+    InitialSize: 8
   - ViewProto: {fileID: 11484932, guid: 6cb572157bc7247dba787f597cf5d699, type: 2}
     InitialSize: 4
   - ViewProto: {fileID: 11446678, guid: 7246a12029b18487496ad17de10123a8, type: 2}
@@ -3401,9 +3382,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AutoHideDelay: 0
   animator: {fileID: 1709485327}
-  canvas: {fileID: 1709485325}
   isShowAnimated: 1
   isHideAnimated: 1
+  showSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!114 &1709485329
 MonoBehaviour:
   m_ObjectHideFlags: 0

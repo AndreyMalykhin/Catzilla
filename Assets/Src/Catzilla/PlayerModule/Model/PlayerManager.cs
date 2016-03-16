@@ -12,14 +12,13 @@ namespace Catzilla.PlayerModule.Model {
         private readonly StringBuilder strBuilder = new StringBuilder(8);
 
         public void AddScore(PlayerView player, ScoreableView scoreable) {
-            int score = UnityEngine.Random.Range(
-                scoreable.MinScore, scoreable.MaxScore + 1);
-            player.Score += score;
-
             if (player.IsScoreFreezed) {
                 return;
             }
 
+            int score = UnityEngine.Random.Range(
+                scoreable.MinScore, scoreable.MaxScore + 1);
+            player.Score += score;
             WorldSpacePopupView popup = popupManager.Get();
             popup.PlaceAbove(scoreable.Collider.bounds);
             popup.LookAtTarget = player.Camera;

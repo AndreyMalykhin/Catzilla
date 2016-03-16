@@ -73,7 +73,9 @@ namespace Catzilla.LevelObjectModule.Controller {
         }
 
         public void OnViewDestroy(Evt evt) {
-            MainCamera.gameObject.SetActive(true);
+            if (MainCamera != null) {
+                MainCamera.gameObject.SetActive(true);
+            }
         }
 
         public void OnDeath(Evt evt) {
@@ -197,8 +199,9 @@ namespace Catzilla.LevelObjectModule.Controller {
                 PlayerStateStorage.Sync(Server);
             }
 
-            LevelCompleteScreen.OnHide = OnLevelCompleteScreenHide;
-            LevelCompleteScreen.Show();
+            var showable = LevelCompleteScreen.GetComponent<ShowableView>();
+            showable.OnHide = OnLevelCompleteScreenHide;
+            showable.Show();
         }
 
         private void GiveAchievementIfNeeded(PlayerState playerState) {
@@ -227,7 +230,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             playerState.AddAchievement(new Achievement(achievementId));
         }
 
-        private void OnLevelCompleteScreenHide() {
+        private void OnLevelCompleteScreenHide(ShowableView showable) {
             Game.LoadLevel();
         }
     }

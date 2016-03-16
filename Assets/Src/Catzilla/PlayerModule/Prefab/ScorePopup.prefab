@@ -20,7 +20,7 @@ GameObject:
   - 114: {fileID: 11482260}
   - 114: {fileID: 11412484}
   m_Layer: 5
-  m_Name: WorldSpacePopup
+  m_Name: ScorePopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -296,7 +296,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: AutoHideDelay
-      value: 4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: canvas
@@ -311,6 +311,14 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: 04cdd9e1be4cd424b919d74105162622,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 9592296}
+    - target: {fileID: 0}
+      propertyPath: isShowAnimated
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 120974}

@@ -20,23 +20,24 @@ namespace Catzilla.CommonModule.Model {
                 return;
             }
 
-            uiBlocker.Show();
+            var showable = uiBlocker.GetComponent<ShowableView>();
+            showable.Show();
             server.Login(
                 () => {
                     playerStateStorage.Sync(
                         server,
                         () => {
-                            uiBlocker.Hide();
+                            showable.Hide();
                             if (onSuccess != null) onSuccess();
                         },
                         () => {
-                            uiBlocker.Hide();
+                            showable.Hide();
                             if (onSuccess != null) onSuccess();
                         }
                     );
                 },
                 () => {
-                    uiBlocker.Hide();
+                    showable.Hide();
                 }
             );
         }

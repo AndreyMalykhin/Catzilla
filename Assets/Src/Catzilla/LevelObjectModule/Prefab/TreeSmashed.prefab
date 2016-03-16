@@ -8,6 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 464986}
+  - 54: {fileID: 5447912}
   m_Layer: 9
   m_Name: Mesh
   m_TagString: Untagged
@@ -25,7 +26,6 @@ GameObject:
   - 4: {fileID: 466722}
   - 33: {fileID: 3396276}
   - 23: {fileID: 2381720}
-  - 54: {fileID: 5460572}
   - 65: {fileID: 6592840}
   m_Layer: 9
   m_Name: Bottom
@@ -44,7 +44,6 @@ GameObject:
   - 4: {fileID: 443628}
   - 33: {fileID: 3335050}
   - 23: {fileID: 2389696}
-  - 54: {fileID: 5467734}
   - 65: {fileID: 6562690}
   m_Layer: 9
   m_Name: Top
@@ -188,29 +187,14 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148164}
   m_Mesh: {fileID: 4300000, guid: 70c79930a8ce248b195451b6236124fd, type: 3}
---- !u!54 &5460572
+--- !u!54 &5447912
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148164}
+  m_GameObject: {fileID: 125572}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!54 &5467734
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 159444}
-  serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 4
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -224,7 +208,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159444}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 36184602dc55c45fdb41a3ae2e6f4518, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -236,7 +220,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148164}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 36184602dc55c45fdb41a3ae2e6f4518, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -330,12 +314,8 @@ MonoBehaviour:
   SmashSound: {fileID: 8300000, guid: b56a3d32c633c480fbfe6b1232b109b0, type: 3}
   AudioSource: {fileID: 8289492}
   lifetime: 2
-  overrideSmashParams: 0
-  overrideSmashUpwardsModifier: 0
   parts:
   - {fileID: 464986}
-  - {fileID: 466722}
-  - {fileID: 443628}
   alternating: {fileID: 0}
   poolable: {fileID: 11453682}
 --- !u!114 &11453682

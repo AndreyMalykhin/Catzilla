@@ -97,6 +97,7 @@ namespace Catzilla.CommonModule.View {
             container.Bind<Ad>().ToSingle();
             container.Bind<DisposableController>().ToSingle();
             container.Bind<BtnController>().ToSingle();
+            container.Bind<ShowableController>().ToSingle();
             container.Bind<ErrorController>().ToSingle();
             container.Bind<PoolStorageView>().ToInstance(poolStorage);
             container.Bind<CoroutineManagerView>().ToInstance(coroutineManager);
@@ -152,6 +153,11 @@ namespace Catzilla.CommonModule.View {
                 container.Resolve<BtnController>();
             eventBus.On(
                 BtnView.Event.Click, btnController.OnClick);
+
+            var showableController =
+                container.Resolve<ShowableController>();
+            eventBus.On(
+                ShowableView.Event.Show, showableController.OnShow);
 
             var activityIndicatorController =
                 container.Resolve<ActivityIndicatorController>();

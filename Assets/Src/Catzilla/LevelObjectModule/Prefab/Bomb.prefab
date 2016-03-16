@@ -444,8 +444,8 @@ MonoBehaviour:
   smashable: {fileID: 11423178}
   explosionUpwardsModifier: 1
   explosionRadius: 2
-  minForce: 192
-  maxForce: 256
+  minForce: 384
+  maxForce: 512
   maxHitObjects: 4
   hitLayer:
     serializedVersion: 2
@@ -592,11 +592,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: minForce
-      value: 192
+      value: 384
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxForce
-      value: 256
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: explosionUpwardsModifier

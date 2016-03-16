@@ -257,7 +257,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 190784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 16, z: 8}
+  m_LocalPosition: {x: 0, y: 16, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 406494}
@@ -269,7 +269,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121812}
   m_LocalRotation: {x: 0.52862847, y: -0.059156846, z: 0.036965307, w: 0.8459823}
-  m_LocalPosition: {x: 0, y: 32, z: -8}
+  m_LocalPosition: {x: 0, y: 32, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 432502}
@@ -808,11 +808,12 @@ MonoBehaviour:
   SideSpeed: 4
   MaxHealth: 100
   CameraShakeDuration: 0.25
-  CameraShakeMaxAmount: {x: 0, y: -4, z: 0}
+  CameraShakeMaxAmount: {x: -0.25, y: 1, z: 0}
   hudProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
   envLayer:
     serializedVersion: 2
     m_Bits: 1024
+  shakeCameraInOneDirection: 1
 --- !u!114 &11477530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -824,8 +825,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80ab5b100b454f91b6c74ffea0a4881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSmashForce: 96
-  maxSmashForce: 128
+  minSmashForce: 192
+  maxSmashForce: 256
   smashUpwardsModifier: -4
 --- !u!114 &11495188
 MonoBehaviour:
@@ -869,7 +870,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.z
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_IsTrigger
@@ -1119,11 +1120,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: CameraShakeMaxAmount.y
-      value: -4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: CameraShakeMaxAmount.x
-      value: 0
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: smashUpwardsModifier
@@ -1144,6 +1145,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: envLayer.m_Bits
       value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxSmashForce
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: minSmashForce
+      value: 192
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: CameraShakeMaxAmount.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shakeCameraInOneDirection
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

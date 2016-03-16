@@ -33,6 +33,14 @@ namespace Catzilla.CommonModule.Util {
         }
 
         public void Show(WorldSpacePopupView popup) {
+            // DebugUtils.Log("WorldSpacePopupManager.Show()");
+            for (int i = 0; i < recentPopups.Length; ++i) {
+                if (recentPopups[i] == popup) {
+                    recentPopups[i] = null;
+                    break;
+                }
+            }
+
             WorldSpacePopupView recentPopup = recentPopups[nextPopupIndex];
 
             if (recentPopup != null) {
@@ -47,6 +55,7 @@ namespace Catzilla.CommonModule.Util {
             }
 
             var showable = popup.GetComponent<ShowableView>();
+            DebugUtils.Assert(!showable.IsShown);
             showable.OnHide = OnPopupHide;
             showable.Show();
         }

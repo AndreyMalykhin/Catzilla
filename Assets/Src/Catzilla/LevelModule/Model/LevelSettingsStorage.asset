@@ -22,7 +22,10 @@ MonoBehaviour:
   resurrectionMinReward: 1
   resurrectionRewardLevelFactor: 0
   itemsParams:
-  - ObjectSettings: []
+  - ObjectSettings:
+    - objectType: 1
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
   - ObjectSettings: []
   - ObjectSettings: []
   - ObjectSettings: []

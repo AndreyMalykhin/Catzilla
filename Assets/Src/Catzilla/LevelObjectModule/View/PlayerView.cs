@@ -80,7 +80,7 @@ namespace Catzilla.LevelObjectModule.View {
         public float FrontSpeed = 5f;
         public float SideSpeed = 5f;
         public int MaxHealth = 100;
-        public float CameraShakeDuration = 0.5f;
+        public float CameraShakeDuration = 0.25f;
         public Vector3 CameraShakeMaxAmount = Vector3.up;
 
         [SerializeField]
@@ -88,6 +88,9 @@ namespace Catzilla.LevelObjectModule.View {
 
         [SerializeField]
         private LayerMask envLayer;
+
+        [SerializeField]
+        private bool shakeCameraInOneDirection;
 
         private Vector3 cameraShakeAmount;
         private IEnumerator cameraShakeCoroutine;
@@ -211,13 +214,19 @@ namespace Catzilla.LevelObjectModule.View {
 
         private IEnumerator ShakeCamera() {
             float remainingTime = CameraShakeDuration;
+            float amplitudeSign = 1f;
 
             while (remainingTime > 0f) {
-                Vector3 amplitude = CameraShakeMaxAmount *
+                Vector3 amplitude = amplitudeSign * CameraShakeMaxAmount *
                     (remainingTime / CameraShakeDuration);
                 cameraShakeAmount =
-                    (Mathf.PerlinNoise(Time.time, 0f) - 0.5f) * amplitude;
+                    (Mathf.PerlinNoise(Time.time, 0f)) * amplitude;
                 remainingTime -= Time.deltaTime;
+
+                if (!shakeCameraInOneDirection) {
+                    amplitudeSign *= -1f;
+                }
+
                 yield return null;
             }
 

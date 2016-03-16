@@ -686,8 +686,8 @@ MonoBehaviour:
   shotsInBurst: 1
   minDelay: 0.5
   maxDelay: 0.5
-  projectileMinSpeed: 8
-  projectileMaxSpeed: 8
+  projectileMinSpeed: 6
+  projectileMaxSpeed: 6
 --- !u!114 &11487140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -873,7 +873,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: projectileMaxSpeed
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: aimee
@@ -890,6 +890,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: MaxScore
       value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: projectileMinSpeed
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

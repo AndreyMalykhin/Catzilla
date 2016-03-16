@@ -7,6 +7,11 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class ShowableView: MonoBehaviour, IPoolable {
+        public enum Event {Show}
+
+        public bool IsShown {get {return isShown;}}
+        public AudioClip ShowSound {get {return showSound;}}
+        public AudioSource AudioSource {get {return audioSource;}}
         public Action<ShowableView> OnShow {get; set;}
         public Action<ShowableView> OnHide {get; set;}
 
@@ -16,11 +21,11 @@ namespace Catzilla.CommonModule.View {
         private static readonly int isShownParam =
             Animator.StringToHash("IsShown");
 
-        [SerializeField]
-        private Animator animator;
+        [Inject]
+        private EventBus eventBus;
 
         [SerializeField]
-        private Canvas canvas;
+        private Animator animator;
 
         [SerializeField]
         private bool isShowAnimated;
@@ -28,14 +33,28 @@ namespace Catzilla.CommonModule.View {
         [SerializeField]
         private bool isHideAnimated;
 
+        [SerializeField]
+        private AudioClip showSound;
+
+        [SerializeField]
+        private AudioSource audioSource;
+
+        private bool isShown;
         private IEnumerator autoHideCoroutine;
 
+        [PostInject]
+        public void OnConstruct() {
+            gameObject.SetActive(isShown);
+        }
+
         public void Show() {
-            if (canvas.enabled) {
+            // DebugUtils.Log("ShowableView.Show()");
+            if (isShown) {
                 return;
             }
 
-            canvas.enabled = true;
+            isShown = true;
+            gameObject.SetActive(isShown);
 
             if (AutoHideDelay > 0f) {
                 autoHideCoroutine = AutoHide();
@@ -43,16 +62,17 @@ namespace Catzilla.CommonModule.View {
             }
 
             if (animator != null) {
-                animator.SetBool(isShownParam, true);
+                animator.SetBool(isShownParam, isShown);
             }
 
             if (!isShowAnimated) {
-                DoShow();
+                FireShowEvent();
             }
         }
 
         public void Hide() {
-            if (!canvas.enabled) {
+            // DebugUtils.Log("ShowableView.Hide()");
+            if (!isShown) {
                 return;
             }
 
@@ -70,16 +90,17 @@ namespace Catzilla.CommonModule.View {
         }
 
         void IPoolable.Reset() {
-            canvas.enabled = false;
+            isShown = false;
             OnHide = null;
             OnShow = null;
 
-            if (animator != null) {
-                animator.SetBool(isShownParam, false);
+            if (animator != null && isShown) {
+                animator.SetBool(isShownParam, isShown);
             }
 
             if (autoHideCoroutine != null) {
                 StopCoroutine(autoHideCoroutine);
+                autoHideCoroutine = null;
             }
         }
 
@@ -88,7 +109,7 @@ namespace Catzilla.CommonModule.View {
                 return;
             }
 
-            DoShow();
+            FireShowEvent();
         }
 
         private void OnHideAnimationEnd() {
@@ -99,17 +120,15 @@ namespace Catzilla.CommonModule.View {
             DoHide();
         }
 
-        private void DoShow() {
-            if (OnShow != null) OnShow(this);
-        }
-
         private void DoHide() {
-            canvas.enabled = false;
+            isShown = false;
+            gameObject.SetActive(isShown);
             if (OnHide != null) OnHide(this);
         }
 
-        private void Awake() {
-            canvas.enabled = false;
+        private void FireShowEvent() {
+            if (OnShow != null) OnShow(this);
+            eventBus.Fire(Event.Show, new Evt(this));
         }
 
         private IEnumerator AutoHide() {

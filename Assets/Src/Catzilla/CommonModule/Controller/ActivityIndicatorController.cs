@@ -8,10 +8,10 @@ using Catzilla.CommonModule.View;
 namespace Catzilla.CommonModule.Controller {
     public class ActivityIndicatorController {
         [Inject]
-        public ActivityIndicatorView ActivityIndicator {get; set;}
+        private ActivityIndicatorView activityIndicator;
 
         public void OnServerRequest(Evt evt) {
-            ActivityIndicator.Show();
+            activityIndicator.GetComponent<ShowableView>().Show();
         }
 
         public void OnServerResponse(Evt evt) {
@@ -21,7 +21,7 @@ namespace Catzilla.CommonModule.Controller {
                 return;
             }
 
-            ActivityIndicator.Hide();
+            activityIndicator.GetComponent<ShowableView>().Hide();
         }
     }
 }
