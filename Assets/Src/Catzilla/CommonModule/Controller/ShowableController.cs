@@ -21,5 +21,14 @@ namespace Catzilla.CommonModule.Controller {
                     uiHighPrioAudioChannel);
             }
         }
+
+        public void OnPreShow(Evt evt) {
+            var showable = (ShowableView) evt.Source;
+
+            if (showable.PreShowSound != null) {
+                audioManager.Play(showable.PreShowSound, showable.AudioSource,
+                    uiHighPrioAudioChannel);
+            }
+        }
     }
 }

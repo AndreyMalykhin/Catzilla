@@ -8,7 +8,7 @@ namespace Catzilla.CommonModule.Util {
         private static readonly StringBuilder stringBuilder =
             new StringBuilder(64);
         private static readonly IDictionary<string, object> nextEventParams =
-            new Dictionary<string, object>();
+            new Dictionary<string, object>(8);
 
         public static void AddEventParam(string name, object value) {
             if (Debug.isDebugBuild) {

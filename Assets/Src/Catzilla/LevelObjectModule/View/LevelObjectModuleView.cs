@@ -35,6 +35,7 @@ namespace Catzilla.LevelObjectModule.View {
             container.Bind<TakeableController>().ToSingle();
             container.Bind<BonusController>().ToSingle();
             container.Bind<ExplosiveController>().ToSingle();
+            container.Bind<DisposableController>().ToSingle();
             container.Bind<LevelObjectType>("PlayerObjectType")
                 .ToInstance(LevelObjectType.Player);
             container.Bind<string>("PlayerTag").ToInstance(playerTag);
@@ -46,6 +47,11 @@ namespace Catzilla.LevelObjectModule.View {
         public override void PostBindings(DiContainer container) {
             container.Inject(container.Resolve<ObjectTypeInfoStorage>());
             var eventBus = container.Resolve<EventBus>();
+
+            var disposableController =
+                container.Resolve<DisposableController>();
+            eventBus.On(DisposableView.Event.TriggerExit,
+                disposableController.OnTriggerExit);
 
             var smashableContoller =
                 container.Resolve<SmashableController>();

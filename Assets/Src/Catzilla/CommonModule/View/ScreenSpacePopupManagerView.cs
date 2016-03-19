@@ -33,7 +33,7 @@ namespace Catzilla.CommonModule.View {
             bool isWorldPositionStays = false;
             popup.transform.SetParent(transform, isWorldPositionStays);
             var showable = popup.GetComponent<ShowableView>();
-            showable.OnHide = OnPopupHide;
+            showable.OnHide += OnPopupHide;
             showable.Show();
         }
 

@@ -28,9 +28,6 @@ namespace Catzilla.LevelModule.Controller {
         [Inject]
         public Game Game {get; set;}
 
-        [Inject("PlayStopwatch")]
-        public Stopwatch PlayStopwatch {get; set;}
-
         private LevelView level;
 
         public void OnViewConstruct(Evt evt) {
@@ -40,28 +37,18 @@ namespace Catzilla.LevelModule.Controller {
                 "LevelStartScreen.Level", playerState.Level + 1);
             LevelStartScreen.Msg.text = msg;
             var showable = LevelStartScreen.GetComponent<ShowableView>();
-            showable.OnShow = OnStartScreenShow;
+            showable.OnShow += OnStartScreenShow;
             showable.Show();
         }
 
-        private void OnLevelGenerate() {
-            var showable = LevelStartScreen.GetComponent<ShowableView>();
-            showable.OnHide = OnStartScreenHide;
-            showable.Hide();
-        }
-
         private void OnStartScreenShow(ShowableView showable) {
-            Game.Pause();
+            showable.OnShow -= OnStartScreenShow;
             PlayerState playerState = PlayerStateStorage.Get();
             LevelGenerator.NewLevel(playerState.Level, level, OnLevelGenerate);
         }
 
-        private void OnStartScreenHide(ShowableView showable) {
-            // DebugUtils.Log(
-            //     "LevelController.OnStartScreenHide(); {0}", DateTime.Now);
-            PlayStopwatch.Reset();
-            PlayStopwatch.Start();
-            Game.Resume();
+        private void OnLevelGenerate() {
+            LevelStartScreen.GetComponent<ShowableView>().Hide();
         }
     }
 }

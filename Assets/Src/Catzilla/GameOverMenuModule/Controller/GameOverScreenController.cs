@@ -35,9 +35,6 @@ namespace Catzilla.GameOverMenuModule.Controller {
         [Inject]
         public Translator Translator {get; set;}
 
-        [Inject("PlayStopwatch")]
-        public Stopwatch PlayStopwatch {get; set;}
-
         [Inject]
         public ScreenSpacePopupManagerView PopupManager {get; set;}
 
@@ -93,15 +90,12 @@ namespace Catzilla.GameOverMenuModule.Controller {
         }
 
         public void OnResurrectBtnClick() {
-            player.IsHealthFreezed = false;
-            player.IsScoreFreezed = false;
-            player.Resurrect();
             PlayerState playerState = PlayerStateStorage.Get();
             --playerState.AvailableResurrectionsCount;
             PlayerStateStorage.Save(playerState);
-            PlayStopwatch.Reset();
-            PlayStopwatch.Start();
-            Game.Resume();
+            player.IsHealthFreezed = false;
+            player.IsScoreFreezed = false;
+            player.Resurrect();
             GameOverScreen.GetComponent<ShowableView>().Hide();
         }
 

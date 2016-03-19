@@ -74,6 +74,10 @@ namespace Catzilla.MainMenuModule.Controller {
             AuthManager.Login(OnLoginForAchievements);
         }
 
+        public void OnReplaysBtnClick() {
+            Everyplay.ShowWithPath("/feed/game");
+        }
+
         private void OnLoginForLeaderboard() {
             OnLogin();
             Social.ShowLeaderboardUI();

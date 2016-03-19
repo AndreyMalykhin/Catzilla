@@ -65,10 +65,15 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("MainCamera")]
         public Camera MainCamera {get; set;}
 
+        [Inject]
+        public PlayerManager PlayerManager {get; set;}
+
         private PlayerView player;
 
         public void OnViewConstruct(Evt evt) {
             player = (PlayerView) evt.Source;
+            PlayStopwatch.Reset();
+            PlayStopwatch.Start();
             MainCamera.gameObject.SetActive(false);
         }
 
@@ -82,8 +87,8 @@ namespace Catzilla.LevelObjectModule.Controller {
             PlayerState playerState = PlayerStateStorage.Get();
             AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
             AnalyticsUtils.LogEvent("Player.Death");
-            playerState.ScoreRecord = player.Score;
             PlayStopwatch.Stop();
+            playerState.ScoreRecord = player.Score;
             playerState.PlayTime += PlayStopwatch.Elapsed;
             PlayerStateStorage.Save(playerState);
 
@@ -91,9 +96,7 @@ namespace Catzilla.LevelObjectModule.Controller {
                 PlayerStateStorage.Sync(Server);
             }
 
-            var showable = GameOverScreen.GetComponent<ShowableView>();
-            showable.OnShow = OnGameOverScreenShow;
-            showable.Show();
+            GameOverScreen.GetComponent<ShowableView>().Show();
 
             if (player.DeathSound != null) {
                 AudioManager.Play(player.DeathSound, player.HighPrioAudioSource,
@@ -122,7 +125,8 @@ namespace Catzilla.LevelObjectModule.Controller {
                 return;
             }
 
-            CompleteLevel(player);
+            PlayStopwatch.Stop();
+            PlayerManager.CompleteLevel(player);
         }
 
         public void OnHealthChange(Evt evt) {
@@ -151,14 +155,12 @@ namespace Catzilla.LevelObjectModule.Controller {
         }
 
         public void OnResurrect(Evt evt) {
-            CleanProjectiles();
+            PlayStopwatch.Reset();
+            PlayStopwatch.Start();
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Player.Resurrection");
-        }
-
-        private void OnGameOverScreenShow(ShowableView showable) {
-            Game.Pause();
+            CleanProjectiles();
         }
 
         private void CleanProjectiles() {
@@ -168,70 +170,6 @@ namespace Catzilla.LevelObjectModule.Controller {
             for (int i = 0; i < projectiles.Length; ++i) {
                 PoolStorage.Return(projectiles[i].GetComponent<PoolableView>());
             }
-        }
-
-        private void CompleteLevel(PlayerView player) {
-            // DebugUtils.Log(
-            //     "PlayerController.CompleteLevel(); {0}", DateTime.Now);
-            player.IsHealthFreezed = true;
-            player.IsScoreFreezed = true;
-            PlayerState playerState = PlayerStateStorage.Get();
-            AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
-            AnalyticsUtils.LogEvent("Level.Completion");
-            GiveAchievementIfNeeded(playerState);
-            int givenResurrectionsCount = GiftManager.Give(playerState);
-            ScreenSpacePopupView popup = PopupManager.Get(CommonPopupType);
-            popup.Msg.text = Translator.Translate(
-                "Player.GiftEarn", givenResurrectionsCount);
-            PopupManager.Show(popup);
-            int unlockedRewardsCount = RewardManager.Unlock(playerState);
-            popup = PopupManager.Get(CommonPopupType);
-            popup.Msg.text = Translator.Translate(
-                "Player.RewardUnlock", unlockedRewardsCount);
-            PopupManager.Show(popup);
-            ++playerState.Level;
-            playerState.ScoreRecord = player.Score;
-            PlayStopwatch.Stop();
-            playerState.PlayTime += PlayStopwatch.Elapsed;
-            PlayerStateStorage.Save(playerState);
-
-            if (Server.IsLoggedIn) {
-                PlayerStateStorage.Sync(Server);
-            }
-
-            var showable = LevelCompleteScreen.GetComponent<ShowableView>();
-            showable.OnHide = OnLevelCompleteScreenHide;
-            showable.Show();
-        }
-
-        private void GiveAchievementIfNeeded(PlayerState playerState) {
-            string achievementId;
-
-            switch (playerState.Level + 1) {
-                case 5:
-                    achievementId = GooglePlayIds.achievement_complete_level_5;
-                    break;
-                case 10:
-                    achievementId = GooglePlayIds.achievement_complete_level_10;
-                    break;
-                case 15:
-                    achievementId = GooglePlayIds.achievement_complete_level_15;
-                    break;
-                case 20:
-                    achievementId = GooglePlayIds.achievement_complete_level_20;
-                    break;
-                case 25:
-                    achievementId = GooglePlayIds.achievement_complete_level_25;
-                    break;
-                default:
-                    return;
-            }
-
-            playerState.AddAchievement(new Achievement(achievementId));
-        }
-
-        private void OnLevelCompleteScreenHide(ShowableView showable) {
-            Game.LoadLevel();
         }
     }
 }

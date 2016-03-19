@@ -44,14 +44,17 @@ namespace Catzilla.LevelAreaModule.Model {
 
             for (int i = 0; i < spawnsInfos.Length; ++i) {
                 SpawnsInfo spawnsInfo = spawnsInfos[i];
-                NewObjects(
+                IEnumerator objects = NewObjects(
                     spawnsInfo.ObjectType,
                     spawnsInfo.Count,
                     envTypeInfo,
                     area.Index,
                     levelSettings,
                     outputLevel);
-                yield return null;
+
+                while (objects.MoveNext()) {
+                    yield return null;
+                }
             }
 
             if (onDone != null) {
@@ -59,7 +62,7 @@ namespace Catzilla.LevelAreaModule.Model {
             }
         }
 
-        private void NewObjects(
+        private IEnumerator NewObjects(
             LevelObjectType objectType,
             int countToSpawn,
             EnvTypeInfo envTypeInfo,
@@ -103,6 +106,7 @@ namespace Catzilla.LevelAreaModule.Model {
                 InitObject(obj, objectTypeInfo, objectProtoInfo, spawnLocation,
                     levelSettings);
                 ReserveSpawnPoint(spawnPoint);
+                yield return null;
             }
         }
 

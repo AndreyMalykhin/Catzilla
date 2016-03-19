@@ -3,6 +3,7 @@ using System.Collections;
 using Zenject;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Util;
+using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelModule.Controller;
 using Catzilla.LevelModule.Model;
@@ -38,6 +39,7 @@ namespace Catzilla.LevelModule.View {
             container.Bind<LevelSettingsStorage>()
                 .ToInstance(levelSettingsStorage);
             container.Bind<LevelController>().ToSingle();
+            container.Bind<LevelCompleteScreenController>().ToSingle();
             container.Bind<LevelGenerator>().ToSingle();
             container.Bind<float>("LevelAreaWidth").ToInstance(areaWidth);
             container.Bind<float>("LevelAreaDepth").ToInstance(areaDepth);
@@ -55,6 +57,21 @@ namespace Catzilla.LevelModule.View {
                 container.Resolve<LevelController>();
             eventBus.On(
                 LevelView.Event.Construct, levelController.OnViewConstruct);
+
+            var levelCompleteScreen =
+                container.Resolve<LevelCompleteScreenView>();
+            var levelCompleteScreenController =
+                container.Resolve<LevelCompleteScreenController>();
+            levelCompleteScreen.ContinueBtn.onClick.AddListener(
+                levelCompleteScreenController.OnContinueBtnClick);
+            levelCompleteScreen.ShareBtn.onClick.AddListener(
+                levelCompleteScreenController.OnShareBtnClick);
+            levelCompleteScreen.WatchReplayBtn.onClick.AddListener(
+                levelCompleteScreenController.OnWatchReplayBtnClick);
+            Everyplay.ThumbnailTextureReady +=
+                levelCompleteScreenController.OnVideoThumbReady;
+            Everyplay.ReadyForRecording +=
+                levelCompleteScreenController.OnReadyForVideoRecording;
         }
     }
 }

@@ -203,12 +203,15 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void OnFootstep() {
-            if (cameraShakeCoroutine != null) {
-                StopCoroutine(cameraShakeCoroutine);
+            if (CameraShakeDuration != 0f) {
+                if (cameraShakeCoroutine != null) {
+                    StopCoroutine(cameraShakeCoroutine);
+                }
+
+                cameraShakeCoroutine = ShakeCamera();
+                StartCoroutine(cameraShakeCoroutine);
             }
 
-            cameraShakeCoroutine = ShakeCamera();
-            StartCoroutine(cameraShakeCoroutine);
             EventBus.Fire(Event.Footstep, new Evt(this));
         }
 

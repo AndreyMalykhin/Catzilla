@@ -7,13 +7,15 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class ShowableView: MonoBehaviour, IPoolable {
-        public enum Event {Show}
+        public enum Event {PreShow, Show}
 
         public bool IsShown {get {return isShown;}}
         public AudioClip ShowSound {get {return showSound;}}
+        public AudioClip PreShowSound {get {return preShowSound;}}
         public AudioSource AudioSource {get {return audioSource;}}
-        public Action<ShowableView> OnShow {get; set;}
-        public Action<ShowableView> OnHide {get; set;}
+        public event Action<ShowableView> OnShow;
+        public event Action<ShowableView> OnPreShow;
+        public event Action<ShowableView> OnHide;
 
         [Tooltip("In seconds")]
         public float AutoHideDelay;
@@ -37,6 +39,9 @@ namespace Catzilla.CommonModule.View {
         private AudioClip showSound;
 
         [SerializeField]
+        private AudioClip preShowSound;
+
+        [SerializeField]
         private AudioSource audioSource;
 
         private bool isShown;
@@ -53,6 +58,8 @@ namespace Catzilla.CommonModule.View {
                 return;
             }
 
+            if (OnPreShow != null) OnPreShow(this);
+            eventBus.Fire(Event.PreShow, new Evt(this));
             isShown = true;
             gameObject.SetActive(isShown);
 

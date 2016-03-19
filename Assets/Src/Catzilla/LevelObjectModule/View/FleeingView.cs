@@ -78,7 +78,7 @@ namespace Catzilla.LevelObjectModule.View {
         private void Flee() {
             if (Time.time >= nextAdjustSpeedTime) {
                 AdjustSpeed();
-                nextAdjustSpeedTime = Time.time + 0.125f;
+                nextAdjustSpeedTime = Time.time + 0.25f;
             }
 
             Vector3 newPosition = transform.position + transform.forward *

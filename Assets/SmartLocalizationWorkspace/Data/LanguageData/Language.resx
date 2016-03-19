@@ -140,8 +140,18 @@
 	<data name="GameOverMenu.Reward" xml:space="preserve">
 		<value>Earn reward ({0})</value>
 	</data>
+	<data name="LevelCompleteScreen.Continue" xml:space="preserve">
+		<value>Continue</value>
+	</data>
 	<data name="LevelCompleteScreen.Msg" xml:space="preserve">
 		<value>Level complete!</value>
+	</data>
+	<data name="LevelCompleteScreen.Score" xml:space="preserve">
+		<value>Score
+{0}</value>
+	</data>
+	<data name="LevelCompleteScreen.Share" xml:space="preserve">
+		<value>Share replay</value>
 	</data>
 	<data name="LevelStartScreen.Level" xml:space="preserve">
 		<value>Level {0}</value>
@@ -176,10 +186,13 @@
 	<data name="Player.RewardEarn" xml:space="preserve">
 		<value>+{0} resurrection</value>
 	</data>
+	<data name="Player.RewardUnlock" xml:space="preserve">
+		<value>+{0} reward</value>
+	</data>
 	<data name="Player.Score" xml:space="preserve">
 		<value>{0} / {1}</value>
 	</data>
-	<data name="Player.RewardUnlock" xml:space="preserve">
-		<value>+{0} reward</value>
+	<data name="MainMenu.Replays" xml:space="preserve">
+		<value>Watch replays</value>
 	</data>
 </root>

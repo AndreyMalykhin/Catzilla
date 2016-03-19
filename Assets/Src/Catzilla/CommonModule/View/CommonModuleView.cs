@@ -4,6 +4,10 @@ using System.Diagnostics;
 using System.Text;
 using SmartLocalization;
 using Zenject;
+using Catzilla.LevelModule.View;
+using Catzilla.LevelObjectModule.View;
+using Catzilla.GameOverMenuModule.View;
+using Catzilla.PlayerModule.Model;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
@@ -95,10 +99,11 @@ namespace Catzilla.CommonModule.View {
             container.Bind<PoolStorageController>().ToSingle();
             container.Bind<ActivityIndicatorController>().ToSingle();
             container.Bind<Ad>().ToSingle();
-            container.Bind<DisposableController>().ToSingle();
             container.Bind<BtnController>().ToSingle();
             container.Bind<ShowableController>().ToSingle();
             container.Bind<ErrorController>().ToSingle();
+            container.Bind<GameController>().ToSingle();
+            container.Bind<EveryplayController>().ToSingle();
             container.Bind<PoolStorageView>().ToInstance(poolStorage);
             container.Bind<CoroutineManagerView>().ToInstance(coroutineManager);
             container.Bind<ScreenSpacePopupManagerView>()
@@ -139,11 +144,6 @@ namespace Catzilla.CommonModule.View {
             container.Inject(container.Resolve<WorldSpacePopupManager>());
             var eventBus = container.Resolve<EventBus>();
 
-            var disposableController =
-                container.Resolve<DisposableController>();
-            eventBus.On(DisposableView.Event.TriggerExit,
-                disposableController.OnTriggerExit);
-
             var poolStorageController =
                 container.Resolve<PoolStorageController>();
             eventBus.On(
@@ -158,6 +158,8 @@ namespace Catzilla.CommonModule.View {
                 container.Resolve<ShowableController>();
             eventBus.On(
                 ShowableView.Event.Show, showableController.OnShow);
+            eventBus.On(
+                ShowableView.Event.PreShow, showableController.OnPreShow);
 
             var activityIndicatorController =
                 container.Resolve<ActivityIndicatorController>();
@@ -170,6 +172,33 @@ namespace Catzilla.CommonModule.View {
                 container.Resolve<ErrorController>();
             eventBus.On(
                 Server.Event.Response, errorController.OnServerResponse);
+
+            var gameController = container.Resolve<GameController>();
+            var levelStartScreen = container.Resolve<LevelStartScreenView>()
+                .GetComponent<ShowableView>();
+            levelStartScreen.OnShow += gameController.OnLevelStartScreenShow;
+            levelStartScreen.OnHide += gameController.OnLevelStartScreenHide;
+            var gameOverScreen = container.Resolve<GameOverScreenView>()
+                .GetComponent<ShowableView>();
+            gameOverScreen.OnShow += gameController.OnGameOverScreenShow;
+            gameOverScreen.OnHide += gameController.OnGameOverScreenHide;
+
+            var everyplayController = container.Resolve<EveryplayController>();
+            eventBus.On(
+                Game.Event.LevelUnload, everyplayController.OnLevelUnload);
+            eventBus.On(
+                Game.Event.PreLevelLoad, everyplayController.OnPreLevelLoad);
+            eventBus.On(PlayerView.Event.Resurrect,
+                everyplayController.OnPlayerResurrect);
+            eventBus.On(PlayerManager.Event.PreLevelComplete,
+                everyplayController.OnPreLevelComplete);
+            gameOverScreen.OnShow += everyplayController.OnGameOverScreenShow;
+            levelStartScreen.OnShow +=
+                everyplayController.OnLevelStartScreenShow;
+            var levelCompleteScreen =
+                container.Resolve<LevelCompleteScreenView>();
+            levelCompleteScreen.GetComponent<ShowableView>().OnShow +=
+                everyplayController.OnLevelCompleteScreenShow;
         }
     }
 }

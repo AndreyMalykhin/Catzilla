@@ -14,21 +14,5 @@ namespace Catzilla.MainMenuModule.View {
 
         [SerializeField]
         private Button loginBtn;
-
-        // [SerializeField]
-        // private Canvas canvas;
-
-        // public void Show() {
-        //     canvas.enabled = true;
-        // }
-
-        // public void Hide() {
-        //     canvas.enabled = false;
-        // }
-
-        // private void Awake() {
-        //     // DebugUtils.Log("MainScreenView.Awake()");
-        //     canvas.enabled = false;
-        // }
     }
 }

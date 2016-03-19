@@ -140,8 +140,18 @@
 	<data name="GameOverMenu.Reward" xml:space="preserve">
 		<value>Получить приз ({0})</value>
 	</data>
+	<data name="LevelCompleteScreen.Continue" xml:space="preserve">
+		<value>Продолжить</value>
+	</data>
 	<data name="LevelCompleteScreen.Msg" xml:space="preserve">
 		<value>Уровень пройден!</value>
+	</data>
+	<data name="LevelCompleteScreen.Score" xml:space="preserve">
+		<value>Очки
+{0}</value>
+	</data>
+	<data name="LevelCompleteScreen.Share" xml:space="preserve">
+		<value>Поделиться повтором</value>
 	</data>
 	<data name="LevelStartScreen.Level" xml:space="preserve">
 		<value>Уровень {0}</value>
@@ -166,6 +176,9 @@
 	</data>
 	<data name="MainMenu.Login" xml:space="preserve">
 		<value>Войти</value>
+	</data>
+	<data name="MainMenu.Replays" xml:space="preserve">
+		<value>Смотреть повторы</value>
 	</data>
 	<data name="MainMenu.Start" xml:space="preserve">
 		<value>Играть</value>

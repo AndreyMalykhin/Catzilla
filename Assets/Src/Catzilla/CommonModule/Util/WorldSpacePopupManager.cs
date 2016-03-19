@@ -56,7 +56,7 @@ namespace Catzilla.CommonModule.Util {
 
             var showable = popup.GetComponent<ShowableView>();
             DebugUtils.Assert(!showable.IsShown);
-            showable.OnHide = OnPopupHide;
+            showable.OnHide += OnPopupHide;
             showable.Show();
         }
 

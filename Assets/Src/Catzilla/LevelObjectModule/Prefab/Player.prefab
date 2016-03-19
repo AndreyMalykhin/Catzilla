@@ -382,7 +382,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 72fb43ec5e38c4717b618f9d82db81b8, type: 2}
+  - {fileID: 2100000, guid: 70bc69ea336904cd0940d40800e5bffc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -408,7 +408,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 72fb43ec5e38c4717b618f9d82db81b8, type: 2}
+  - {fileID: 2100000, guid: 70bc69ea336904cd0940d40800e5bffc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -434,7 +434,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 72fb43ec5e38c4717b618f9d82db81b8, type: 2}
+  - {fileID: 2100000, guid: 70bc69ea336904cd0940d40800e5bffc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -460,7 +460,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 72fb43ec5e38c4717b618f9d82db81b8, type: 2}
+  - {fileID: 2100000, guid: 70bc69ea336904cd0940d40800e5bffc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -486,7 +486,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 72fb43ec5e38c4717b618f9d82db81b8, type: 2}
+  - {fileID: 2100000, guid: 70bc69ea336904cd0940d40800e5bffc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -808,7 +808,7 @@ MonoBehaviour:
   SideSpeed: 4
   MaxHealth: 100
   CameraShakeDuration: 0.25
-  CameraShakeMaxAmount: {x: -0.25, y: 1, z: 0}
+  CameraShakeMaxAmount: {x: -0.25, y: 0.5, z: 0}
   hudProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
   envLayer:
     serializedVersion: 2
@@ -1120,7 +1120,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: CameraShakeMaxAmount.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: CameraShakeMaxAmount.x

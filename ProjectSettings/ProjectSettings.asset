@@ -98,7 +98,7 @@ PlayerSettings:
   virtualRealitySupported: 0
   productGUID: ac526be6b35dc4ef38c10169f16a7474
   AndroidBundleVersionCode: 4
-  AndroidMinSdkVersion: 14
+  AndroidMinSdkVersion: 16
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   apiCompatibilityLevel: 2
@@ -360,12 +360,13 @@ PlayerSettings:
     1: Camera;CROSS_PLATFORM_INPUT
     2: CROSS_PLATFORM_INPUT
     4: CROSS_PLATFORM_INPUT
-    7: CROSS_PLATFORM_INPUT
+    7: EVERYPLAY_ANDROID;CROSS_PLATFORM_INPUT
     14: 
     15: CROSS_PLATFORM_INPUT
     16: CROSS_PLATFORM_INPUT
     17: 
     20: 
+    25: 
   metroPackageName: catzilla
   metroPackageVersion: 
   metroCertificatePath: 

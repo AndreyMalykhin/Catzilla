@@ -21,21 +21,21 @@ namespace Catzilla.GameOverMenuModule.View {
 
         public override void PostBindings(DiContainer container) {
             var eventBus = container.Resolve<EventBus>();
-            var gameOverMenuController =
+            var gameOverScreenController =
                 container.Resolve<GameOverScreenController>();
             eventBus.On(PlayerView.Event.Construct,
-                gameOverMenuController.OnPlayerConstruct);
+                gameOverScreenController.OnPlayerConstruct);
             eventBus.On(PlayerStateStorage.Event.Save,
-                gameOverMenuController.OnPlayerStateStorageSave);
-            var screen = container.Resolve<GameOverScreenView>();
-            screen.Menu.ExitBtn.onClick.AddListener(
-                gameOverMenuController.OnExitBtnClick);
-            screen.Menu.RestartBtn.onClick.AddListener(
-                gameOverMenuController.OnRestartBtnClick);
-            screen.Menu.ResurrectBtn.onClick.AddListener(
-                gameOverMenuController.OnResurrectBtnClick);
-            screen.Menu.RewardBtn.onClick.AddListener(
-                gameOverMenuController.OnRewardBtnClick);
+                gameOverScreenController.OnPlayerStateStorageSave);
+            var gameOverScreen = container.Resolve<GameOverScreenView>();
+            gameOverScreen.Menu.ExitBtn.onClick.AddListener(
+                gameOverScreenController.OnExitBtnClick);
+            gameOverScreen.Menu.RestartBtn.onClick.AddListener(
+                gameOverScreenController.OnRestartBtnClick);
+            gameOverScreen.Menu.ResurrectBtn.onClick.AddListener(
+                gameOverScreenController.OnResurrectBtnClick);
+            gameOverScreen.Menu.RewardBtn.onClick.AddListener(
+                gameOverScreenController.OnRewardBtnClick);
         }
     }
 }
