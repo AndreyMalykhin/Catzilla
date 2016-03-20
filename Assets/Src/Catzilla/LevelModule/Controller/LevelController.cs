@@ -14,41 +14,67 @@ using Catzilla.LevelModule.View;
 namespace Catzilla.LevelModule.Controller {
     public class LevelController {
         [Inject]
-        public LevelGenerator LevelGenerator {get; set;}
+        private LevelGenerator levelGenerator;
 
         [Inject]
-        public PlayerStateStorage PlayerStateStorage {get; set;}
+        private PlayerStateStorage playerStateStorage;
 
         [Inject]
-        public LevelStartScreenView LevelStartScreen {get; set;}
+        private LevelStartScreenView levelStartScreen;
 
         [Inject]
-        public Translator Translator {get; set;}
+        private Translator translator;
 
         [Inject]
-        public Game Game {get; set;}
+        private TutorialScreenView tutorialScreen;
 
         private LevelView level;
 
         public void OnViewConstruct(Evt evt) {
             level = (LevelView) evt.Source;
-            PlayerState playerState = PlayerStateStorage.Get();
-            var msg = Translator.Translate(
+            PlayerState playerState = playerStateStorage.Get();
+            var msg = translator.Translate(
                 "LevelStartScreen.Level", playerState.Level + 1);
-            LevelStartScreen.Msg.text = msg;
-            var showable = LevelStartScreen.GetComponent<ShowableView>();
+            levelStartScreen.Msg.text = msg;
+            var showable = levelStartScreen.GetComponent<ShowableView>();
             showable.OnShow += OnStartScreenShow;
             showable.Show();
         }
 
         private void OnStartScreenShow(ShowableView showable) {
             showable.OnShow -= OnStartScreenShow;
-            PlayerState playerState = PlayerStateStorage.Get();
-            LevelGenerator.NewLevel(playerState.Level, level, OnLevelGenerate);
+            PlayerState playerState = playerStateStorage.Get();
+            levelGenerator.NewLevel(playerState.Level, level, OnLevelGenerate);
         }
 
         private void OnLevelGenerate() {
-            LevelStartScreen.GetComponent<ShowableView>().Hide();
+            var showable = levelStartScreen.GetComponent<ShowableView>();
+            showable.OnHide += OnStartScreenHide;
+            showable.Hide();
+        }
+
+        private void OnStartScreenHide(ShowableView showable) {
+            showable.OnHide -= OnStartScreenHide;
+            PlayerState playerState = playerStateStorage.Get();
+
+            if (playerState.Level == 0 && !playerState.WasTutorialShown) {
+                var tutorialShowable = tutorialScreen.GetComponent<ShowableView>();
+                tutorialShowable.OnShow += OnTutorialShow;
+                tutorialShowable.Show();
+                playerState.WasTutorialShown = true;
+            }
+        }
+
+        private void OnTutorialShow(ShowableView showable) {
+            showable.OnShow -= OnTutorialShow;
+            var tutorialScreen = showable.GetComponent<TutorialScreenView>();
+            tutorialScreen.OnClose += OnTutorialClose;
+            tutorialScreen.Open();
+        }
+
+        private void OnTutorialClose(TutorialScreenView tutorialScreen) {
+            tutorialScreen.OnClose -= OnTutorialClose;
+            tutorialScreen.GetComponent<ShowableView>().Hide();
         }
     }
 }

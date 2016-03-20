@@ -368,7 +368,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
@@ -807,8 +807,8 @@ MonoBehaviour:
   FrontSpeed: 8
   SideSpeed: 4
   MaxHealth: 100
-  CameraShakeDuration: 0.25
-  CameraShakeMaxAmount: {x: -0.25, y: 0.5, z: 0}
+  CameraShakeDuration: 0.5
+  CameraShakeMaxAmount: {x: -0.125, y: 1, z: 0}
   hudProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
   envLayer:
     serializedVersion: 2
@@ -1063,7 +1063,7 @@ Prefab:
       objectReference: {fileID: 2010502}
     - target: {fileID: 0}
       propertyPath: CameraShakeDuration
-      value: 0.25
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: MinSmashForce
@@ -1120,11 +1120,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: CameraShakeMaxAmount.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: CameraShakeMaxAmount.x
-      value: -0.25
+      value: -0.125
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: smashUpwardsModifier

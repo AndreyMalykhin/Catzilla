@@ -49,6 +49,9 @@ namespace Catzilla.CommonModule.View {
         private UIBlockerView uiBlocker;
 
         [SerializeField]
+        private TutorialScreenView tutorialScreen;
+
+        [SerializeField]
         private string emptyScene;
 
         [SerializeField]
@@ -117,6 +120,7 @@ namespace Catzilla.CommonModule.View {
                 .ToInstance(worldSpacePopupManager);
             container.Bind<Stopwatch>("PlayStopwatch")
                 .ToInstance(new Stopwatch());
+            container.Bind<TutorialScreenView>().ToInstance(tutorialScreen);
             container.Bind<string>("EmptyScene").ToInstance(emptyScene);
             container.Bind<string>("FeedbackEmail").ToInstance(feedbackEmail);
             container.Bind<string>("ErrorMsg").ToInstance(errorMsg);
@@ -182,6 +186,10 @@ namespace Catzilla.CommonModule.View {
                 .GetComponent<ShowableView>();
             gameOverScreen.OnShow += gameController.OnGameOverScreenShow;
             gameOverScreen.OnHide += gameController.OnGameOverScreenHide;
+            var tutorialScreen = container.Resolve<TutorialScreenView>()
+                .GetComponent<ShowableView>();
+            tutorialScreen.OnPreShow += gameController.OnTutorialPreShow;
+            tutorialScreen.OnHide += gameController.OnTutorialHide;
 
             var everyplayController = container.Resolve<EveryplayController>();
             eventBus.On(

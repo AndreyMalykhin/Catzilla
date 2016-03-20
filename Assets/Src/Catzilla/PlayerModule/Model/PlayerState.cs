@@ -9,6 +9,11 @@ namespace Catzilla.PlayerModule.Model {
     public class PlayerState: ISerializationCallbackReceiver {
         public List<Achievement> Achievements {get {return achievements;}}
 
+        public bool WasTutorialShown {
+            get {return wasTutorialShown;}
+            set {wasTutorialShown = value;}
+        }
+
         public bool IsScoreSynced {
             get {return isScoreSynced;}
             set {isScoreSynced = value;}
@@ -63,6 +68,9 @@ namespace Catzilla.PlayerModule.Model {
 
         [SerializeField]
         private List<Achievement> achievements = new List<Achievement>(8);
+
+        [SerializeField]
+        private bool wasTutorialShown;
 
         [SerializeField]
         private bool isScoreSynced;
@@ -133,8 +141,8 @@ namespace Catzilla.PlayerModule.Model {
             }
 
             return string.Format(
-                "level={0}; scoreRecord={1}; availableResurrectionsCount={2}; saveDate={3}; lastSeenDate={4}; playTime={5}; isScoreSynced={6}; achievements={7}; rewardUnlockDate={8}; availableRewardsCount={9}",
-                level, scoreRecord, availableResurrectionsCount, saveDate, lastSeenDate, playTime, isScoreSynced, achievementsStr.ToString(), rewardUnlockDate, availableRewardsCount);
+                "level={0}; scoreRecord={1}; availableResurrectionsCount={2}; saveDate={3}; lastSeenDate={4}; playTime={5}; isScoreSynced={6}; achievements={7}; rewardUnlockDate={8}; availableRewardsCount={9}; wasTutorialShown={10}",
+                level, scoreRecord, availableResurrectionsCount, saveDate, lastSeenDate, playTime, isScoreSynced, achievementsStr.ToString(), rewardUnlockDate, availableRewardsCount, wasTutorialShown);
         }
     }
 }

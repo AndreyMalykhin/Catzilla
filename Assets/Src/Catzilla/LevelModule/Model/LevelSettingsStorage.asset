@@ -26,6 +26,9 @@ MonoBehaviour:
     - objectType: 1
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
+    - objectType: 7
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 8
   - ObjectSettings: []
   - ObjectSettings: []
   - ObjectSettings: []

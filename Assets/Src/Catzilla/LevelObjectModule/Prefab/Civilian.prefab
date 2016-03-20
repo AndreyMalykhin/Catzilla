@@ -550,7 +550,7 @@ MonoBehaviour:
   maxSpeed: 2
   speed: 0
   desiredSpeed: 0
-  stopDistance: 0.5
+  stopDistance: 1
   collider: {fileID: 6584306}
   body: {fileID: 5427854}
   animator: {fileID: 9567050}
@@ -751,6 +751,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: MaxScore
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: stopDistance
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

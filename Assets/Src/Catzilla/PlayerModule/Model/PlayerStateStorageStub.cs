@@ -20,6 +20,9 @@ namespace Catzilla.PlayerModule.Model {
         [SerializeField]
         private int availableRewardsCount = 1;
 
+        [SerializeField]
+        private bool wasTutorialShown;
+
         [PostInject]
         new public void OnConstruct() {
             DebugUtils.Assert(Debug.isDebugBuild);
@@ -32,7 +35,8 @@ namespace Catzilla.PlayerModule.Model {
                     ScoreRecord = scoreRecord,
                     AvailableResurrectionsCount =
                         availableResurrectionsCount,
-                    AvailableRewardsCount = availableRewardsCount
+                    AvailableRewardsCount = availableRewardsCount,
+                    WasTutorialShown = wasTutorialShown
                 };
             }
 

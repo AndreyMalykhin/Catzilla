@@ -195,4 +195,25 @@
 	<data name="Player.Score" xml:space="preserve">
 		<value>{0} / {1}</value>
 	</data>
+	<data name="TutorialScreen.End" xml:space="preserve">
+		<value>Ясно!</value>
+	</data>
+	<data name="TutorialScreen.Next" xml:space="preserve">
+		<value>Далее</value>
+	</data>
+	<data name="TutorialScreen.Step1" xml:space="preserve">
+		<value>Привет, дружище. Это короткое руководство объяснит, как перестать водить пальцами по экрану и начать побеждать... или умереть пытаясь</value>
+	</data>
+	<data name="TutorialScreen.Step2" xml:space="preserve">
+		<value>Нажатие в этой области перемещает тебя в соответствующую сторону</value>
+	</data>
+	<data name="TutorialScreen.Step3" xml:space="preserve">
+		<value>Это твое здоровье, не позволяй копам отнимать его</value>
+	</data>
+	<data name="TutorialScreen.Step4" xml:space="preserve">
+		<value>Это твои очки и макс. очки для уровня, разрушь что-то, чтобы заработать немного</value>
+	</data>
+	<data name="TutorialScreen.Step5" xml:space="preserve">
+		<value>Вот и все, приятель, главное не используй жесты и все будет хорошо... наверное</value>
+	</data>
 </root>

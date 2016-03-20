@@ -78,7 +78,7 @@ namespace Catzilla.LevelObjectModule.View {
         private void Flee() {
             if (Time.time >= nextAdjustSpeedTime) {
                 AdjustSpeed();
-                nextAdjustSpeedTime = Time.time + 0.25f;
+                nextAdjustSpeedTime = Time.time + 0.5f;
             }
 
             Vector3 newPosition = transform.position + transform.forward *
@@ -98,6 +98,7 @@ namespace Catzilla.LevelObjectModule.View {
                 obstacleLayer.value);
             float speedFactor = isObstacleInFront ?
                 ((raycastHit.distance - halfDepth - stopDistance) / stopDistance) : 1f;
+            speedFactor = Mathf.Max(speedFactor, 0f);
             SetSpeed(Mathf.Lerp(0f, desiredSpeed, speedFactor));
         }
 

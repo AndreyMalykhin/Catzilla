@@ -42,6 +42,7 @@ namespace Catzilla.PlayerModule.View {
 
         private IEnumerator SetValue(int value) {
             // DebugUtils.Log("HUDHealthView.SetValue()");
+            float startTime = Time.realtimeSinceStartup;
             float elapsedTime = 0f;
             float startValue = slider.value;
 
@@ -54,8 +55,8 @@ namespace Catzilla.PlayerModule.View {
                 float completionPercentage = elapsedTime / animationDuration;
                 slider.value = Mathf.Lerp(
                     startValue, value, completionPercentage);
-                elapsedTime += Time.deltaTime;
                 yield return null;
+                elapsedTime = Time.realtimeSinceStartup - startTime;
             }
 
             slider.value = value;

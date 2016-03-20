@@ -23,7 +23,7 @@ namespace Catzilla.LevelAreaModule.Model {
 
         public void NewArea(
             EnvTypeInfo envTypeInfo,
-            SpawnsInfo[] spawnsInfos,
+            List<SpawnsInfo> spawnsInfos,
             LevelSettings levelSettings,
             LevelView outputLevel,
             Action<LevelAreaView> onDone = null) {
@@ -35,14 +35,14 @@ namespace Catzilla.LevelAreaModule.Model {
 
         private IEnumerator DoNewArea(
             EnvTypeInfo envTypeInfo,
-            SpawnsInfo[] spawnsInfos,
+            List<SpawnsInfo> spawnsInfos,
             LevelSettings levelSettings,
             LevelView outputLevel,
             Action<LevelAreaView> onDone = null) {
             reservedSpawnPoints.Clear();
             LevelAreaView area = outputLevel.NewArea(envTypeInfo);
 
-            for (int i = 0; i < spawnsInfos.Length; ++i) {
+            for (int i = 0; i < spawnsInfos.Count; ++i) {
                 SpawnsInfo spawnsInfo = spawnsInfos[i];
                 IEnumerator objects = NewObjects(
                     spawnsInfo.ObjectType,

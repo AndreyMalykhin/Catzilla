@@ -12,7 +12,9 @@ using Catzilla.LevelModule.View;
 namespace Catzilla.LevelModule.Model {
     public class LevelGenerator {
         private enum State {
-            Start,
+            First,
+            Second,
+            Third,
             TrackMiddle,
             TrackEnd,
             HoodMiddle,
@@ -46,17 +48,25 @@ namespace Catzilla.LevelModule.Model {
         [Inject("PlayerObjectType")]
         public LevelObjectType PlayerObjectType {get; set;}
 
-        public int InitialAreasCount {get {return 2;}}
+        public int InitialAreasCount {get {return 3;}}
         public int ActiveBonusObjects {get; set;}
 
         private State nextState;
         private readonly IDictionary<State, StateTransition[]> states =
             new Dictionary<State, StateTransition[]>();
+        private readonly List<SpawnsInfo> spawnsInfosBuffer =
+            new List<SpawnsInfo>(16);
 
         [PostInject]
         public void OnConstruct() {
-            states[State.Start] = new StateTransition[] {
-                new StateTransition(EnvType.HoodStart, State.HoodMiddle)
+            states[State.First] = new StateTransition[] {
+                new StateTransition(EnvType.HoodEnd, State.Second)
+            };
+            states[State.Second] = new StateTransition[] {
+                new StateTransition(EnvType.HoodStart, State.Third)
+            };
+            states[State.Third] = new StateTransition[] {
+                new StateTransition(EnvType.HoodMiddle, State.HoodMiddle)
             };
             states[State.TrackMiddle] = new StateTransition[] {
                 new StateTransition(EnvType.TrackMiddle, State.TrackMiddle),
@@ -88,26 +98,50 @@ namespace Catzilla.LevelModule.Model {
             int levelIndex, LevelView outputLevel, Action onDone = null) {
             // DebugUtils.Log("LevelGenerator.NewLevel()");
             outputLevel.Init(levelIndex);
-            nextState = State.Start;
+            nextState = State.First;
+            ActiveBonusObjects = 0;
+            spawnsInfosBuffer.Clear();
             LevelSettings levelSettings =
                 LevelSettingsStorage.Get(outputLevel.Index);
-            ActiveBonusObjects = 0;
-            PlayerView player = null;
-            bool spawnPlayer = true;
-            NewArea(
+            EnvType envType = NextState(levelSettings);
+            EnvTypeInfo envTypeInfo = EnvTypeInfoStorage.Get(envType);
+            AreaGenerator.NewArea(
+                envTypeInfo,
+                spawnsInfosBuffer,
                 levelSettings,
-                spawnPlayer,
                 outputLevel,
-                player,
                 (LevelAreaView area1) => {
-                    spawnPlayer = false;
-                    NewArea(
+                    envType = NextState(levelSettings);
+                    envTypeInfo = EnvTypeInfoStorage.Get(envType);
+                    PlayerView player = null;
+                    bool spawnPlayer = true;
+                    List<SpawnsInfo> spawnsInfos = GetSpawnsInfos(
                         levelSettings,
+                        envTypeInfo,
                         spawnPlayer,
+                        player);
+                    AreaGenerator.NewArea(
+                        envTypeInfo,
+                        spawnsInfos,
+                        levelSettings,
                         outputLevel,
-                        player,
                         (LevelAreaView area2) => {
-                            if (onDone != null) onDone();
+                            envType = NextState(levelSettings);
+                            envTypeInfo = EnvTypeInfoStorage.Get(envType);
+                            spawnPlayer = false;
+                            spawnsInfos = GetSpawnsInfos(
+                                levelSettings,
+                                envTypeInfo,
+                                spawnPlayer,
+                                player);
+                            AreaGenerator.NewArea(
+                                envTypeInfo,
+                                spawnsInfos,
+                                levelSettings,
+                                outputLevel,
+                                (LevelAreaView area3) => {
+                                    if (onDone != null) onDone();
+                                });
                         });
                 });
         }
@@ -118,18 +152,9 @@ namespace Catzilla.LevelModule.Model {
             LevelSettings levelSettings =
                 LevelSettingsStorage.Get(outputLevel.Index);
             bool spawnPlayer = false;
-            NewArea(levelSettings, spawnPlayer, outputLevel, player, onDone);
-        }
-
-        private void NewArea(
-            LevelSettings levelSettings,
-            bool spawnPlayer,
-            LevelView outputLevel,
-            PlayerView player = null,
-            Action<LevelAreaView> onDone = null) {
             EnvType envType = NextState(levelSettings);
             EnvTypeInfo envTypeInfo = EnvTypeInfoStorage.Get(envType);
-            SpawnsInfo[] spawnsInfos =
+            List<SpawnsInfo> spawnsInfos =
                 GetSpawnsInfos(levelSettings, envTypeInfo, spawnPlayer, player);
             AreaGenerator.NewArea(
                 envTypeInfo,
@@ -170,7 +195,7 @@ namespace Catzilla.LevelModule.Model {
             return 0;
         }
 
-        private SpawnsInfo[] GetSpawnsInfos(
+        private List<SpawnsInfo> GetSpawnsInfos(
             LevelSettings levelSettings,
             EnvTypeInfo envTypeInfo,
             bool spawnPlayer,
@@ -178,8 +203,8 @@ namespace Catzilla.LevelModule.Model {
             LevelObjectType[] objectTypes =
                 envTypeInfo.SpawnMap.GetObjectTypes();
             Array.Sort(objectTypes, ObjectTypeComparator);
+            spawnsInfosBuffer.Clear();
             int objectTypesCount = objectTypes.Length;
-            var spawnsInfos = new SpawnsInfo[objectTypesCount];
 
             for (int i = 0; i < objectTypesCount; ++i) {
                 LevelObjectType objectType = objectTypes[i];
@@ -213,10 +238,10 @@ namespace Catzilla.LevelModule.Model {
                     }
                 }
 
-                spawnsInfos[i] = new SpawnsInfo(objectType, spawnsCount);
+                spawnsInfosBuffer.Add(new SpawnsInfo(objectType, spawnsCount));
             }
 
-            return spawnsInfos;
+            return spawnsInfosBuffer;
         }
 
         private int ObjectTypeComparator(
