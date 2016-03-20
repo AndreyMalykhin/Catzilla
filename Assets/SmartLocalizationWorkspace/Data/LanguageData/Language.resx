@@ -216,4 +216,7 @@
 	<data name="TutorialScreen.Step5" xml:space="preserve">
 		<value>That's it buddy, just don't use swipe and everything will be fine... probably</value>
 	</data>
+	<data name="GameOverMenu.Ad" xml:space="preserve">
+		<value>by watching ad</value>
+	</data>
 </root>

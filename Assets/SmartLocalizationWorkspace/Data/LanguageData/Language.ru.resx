@@ -125,6 +125,9 @@
 	<data name="Common.Ok" xml:space="preserve">
 		<value>ОК</value>
 	</data>
+	<data name="GameOverMenu.Ad" xml:space="preserve">
+		<value>просмотрев рекламу</value>
+	</data>
 	<data name="GameOverMenu.Exit" xml:space="preserve">
 		<value>Выйти</value>
 	</data>
