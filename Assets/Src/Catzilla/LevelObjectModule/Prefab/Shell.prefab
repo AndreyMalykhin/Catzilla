@@ -31,6 +31,7 @@ GameObject:
   - 114: {fileID: 11467526}
   - 114: {fileID: 11425424}
   - 114: {fileID: 11433468}
+  - 114: {fileID: 11445460}
   m_Layer: 12
   m_Name: Shell
   m_TagString: Untagged
@@ -148,6 +149,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PoolId: 37
   IsUI: 0
+--- !u!114 &11445460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1103fdfaeec5e48b8b54acd9916fa7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraShakeAmount: {x: 1, y: 0, z: 1}
+  ShakeCameraInOneDirection: 1
+  CameraShakeDuration: 0.5
 --- !u!114 &11451822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -257,6 +272,26 @@ Prefab:
       propertyPath: poolable
       value: 
       objectReference: {fileID: 11433468}
+    - target: {fileID: 0}
+      propertyPath: CameraShakeAmount.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: CameraShakeAmount.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: CameraShakeDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: CameraShakeAmount.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShakeCameraInOneDirection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 138414}

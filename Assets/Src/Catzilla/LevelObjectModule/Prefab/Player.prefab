@@ -31,6 +31,7 @@ GameObject:
   - 95: {fileID: 9551204}
   - 114: {fileID: 11467780}
   - 114: {fileID: 11477530}
+  - 114: {fileID: 11475986}
   - 114: {fileID: 11495188}
   m_Layer: 8
   m_Name: Player
@@ -807,13 +808,25 @@ MonoBehaviour:
   FrontSpeed: 8
   SideSpeed: 4
   MaxHealth: 100
-  CameraShakeDuration: 0.5
-  CameraShakeMaxAmount: {x: -0.125, y: 1, z: 0}
+  CameraShakeNoiseFactor: 0.25
   hudProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
   envLayer:
     serializedVersion: 2
     m_Bits: 1024
-  shakeCameraInOneDirection: 1
+--- !u!114 &11475986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1103fdfaeec5e48b8b54acd9916fa7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraShakeAmount: {x: -0.0625, y: 1, z: 0}
+  ShakeCameraInOneDirection: 1
+  CameraShakeDuration: 0
 --- !u!114 &11477530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1039,11 +1052,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: IsHealthFreezed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: IsScoreFreezed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ScoreSound
@@ -1160,6 +1173,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: shakeCameraInOneDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: CameraShakeAmount.x
+      value: -0.0625
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShakeCameraInOneDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: CameraShakeAmount.y
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

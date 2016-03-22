@@ -16,6 +16,7 @@ GameObject:
   - 114: {fileID: 11488714}
   - 114: {fileID: 11446390}
   - 114: {fileID: 11486688}
+  - 114: {fileID: 11462388}
   m_Layer: 11
   m_Name: House
   m_TagString: Untagged
@@ -810,6 +811,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 0}
+--- !u!114 &11462388
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1103fdfaeec5e48b8b54acd9916fa7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraShakeAmount: {x: 0, y: -1, z: 0}
+  ShakeCameraInOneDirection: 1
+  CameraShakeDuration: 0.5
 --- !u!114 &11466110
 MonoBehaviour:
   m_ObjectHideFlags: 1

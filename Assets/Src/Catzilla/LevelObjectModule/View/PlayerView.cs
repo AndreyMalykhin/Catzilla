@@ -80,8 +80,7 @@ namespace Catzilla.LevelObjectModule.View {
         public float FrontSpeed = 5f;
         public float SideSpeed = 5f;
         public int MaxHealth = 100;
-        public float CameraShakeDuration = 0.25f;
-        public Vector3 CameraShakeMaxAmount = Vector3.up;
+        public float CameraShakeNoiseFactor = 0.25f;
 
         [SerializeField]
         private HUDView hudProto;
@@ -89,11 +88,7 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private LayerMask envLayer;
 
-        [SerializeField]
-        private bool shakeCameraInOneDirection;
-
-        private Vector3 cameraShakeAmount;
-        private IEnumerator cameraShakeCoroutine;
+        private Vector3[] cameraShakeAmounts = new Vector3[4];
         private Vector3 cameraStartPosition;
         private int score;
         private int health;
@@ -130,6 +125,25 @@ namespace Catzilla.LevelObjectModule.View {
             EventBus.Fire(Event.Resurrect, new Evt(this));
         }
 
+        public void ShakeCamera(
+            Vector3 amount, float duration, bool inOneDirection) {
+            // DebugUtils.Log("PlayerView.ShakeCamera()");
+            if (duration == 0f) {
+                return;
+            }
+
+            for (int i = 0; i < cameraShakeAmounts.Length; ++i) {
+                if (cameraShakeAmounts[i] != Vector3.zero) {
+                    continue;
+                }
+
+                var shakerIndex = i;
+                StartCoroutine(DoShakeCamera(
+                    amount, duration, inOneDirection, shakerIndex));
+                break;
+            }
+        }
+
         private void OnDestroy() {
             if (HUD != null) {
                 Destroy(HUD.gameObject);
@@ -158,22 +172,6 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
-        private void LateUpdate() {
-            MoveCamera();
-        }
-
-        private void FixedUpdate() {
-            if (isDead) {
-                return;
-            }
-
-            Move();
-        }
-
-        private void Start() {
-            targetX = body.position.x;
-        }
-
         private void SetTargetX(Vector3 mousePosition) {
             Ray ray = Camera.ScreenPointToRay(mousePosition);
             RaycastHit hit;
@@ -186,6 +184,32 @@ namespace Catzilla.LevelObjectModule.View {
             targetX = Mathf.Clamp(hit.point.x, minX, maxX);
         }
 
+        private void LateUpdate() {
+            MoveCamera();
+        }
+
+        private void MoveCamera() {
+            // DebugUtils.Log("PlayerView.MoveCamera()");
+            var newPosition = new Vector3(
+                cameraStartPosition.x - transform.position.x,
+                cameraStartPosition.y,
+                cameraStartPosition.z);
+
+            for (int i = 0; i < cameraShakeAmounts.Length; ++i) {
+                newPosition += cameraShakeAmounts[i];
+            }
+
+            Camera.transform.localPosition = newPosition;
+        }
+
+        private void FixedUpdate() {
+            if (isDead) {
+                return;
+            }
+
+            Move();
+        }
+
         private void Move() {
             Vector3 currentPosition = body.position;
             float newX = Mathf.MoveTowards(
@@ -194,46 +218,38 @@ namespace Catzilla.LevelObjectModule.View {
             body.MovePosition(new Vector3(newX, currentPosition.y, newZ));
         }
 
-        private void MoveCamera() {
-            var newPosition = new Vector3(
-                cameraStartPosition.x - transform.position.x,
-                cameraStartPosition.y,
-                cameraStartPosition.z) + cameraShakeAmount;
-            Camera.transform.localPosition = newPosition;
+        private void Start() {
+            targetX = body.position.x;
         }
 
         private void OnFootstep() {
-            if (CameraShakeDuration != 0f) {
-                if (cameraShakeCoroutine != null) {
-                    StopCoroutine(cameraShakeCoroutine);
-                }
-
-                cameraShakeCoroutine = ShakeCamera();
-                StartCoroutine(cameraShakeCoroutine);
-            }
-
             EventBus.Fire(Event.Footstep, new Evt(this));
         }
 
-        private IEnumerator ShakeCamera() {
-            float remainingTime = CameraShakeDuration;
+        private IEnumerator DoShakeCamera(
+            Vector3 amount,
+            float duration,
+            bool inOneDirection,
+            int shakerIndex) {
+            float remainingTime = duration;
             float amplitudeSign = 1f;
+            Vector3 maxNoise = amount * CameraShakeNoiseFactor;
 
             while (remainingTime > 0f) {
-                Vector3 amplitude = amplitudeSign * CameraShakeMaxAmount *
-                    (remainingTime / CameraShakeDuration);
-                cameraShakeAmount =
-                    (Mathf.PerlinNoise(Time.time, 0f)) * amplitude;
+                Vector3 noise = maxNoise *
+                    (Mathf.PerlinNoise(Time.time, 0f) - 0.5f);
+                cameraShakeAmounts[shakerIndex] = (amount * (amplitudeSign *
+                    (remainingTime / duration))) + noise;
                 remainingTime -= Time.deltaTime;
 
-                if (!shakeCameraInOneDirection) {
+                if (!inOneDirection) {
                     amplitudeSign *= -1f;
                 }
 
                 yield return null;
             }
 
-            cameraShakeAmount = Vector3.zero;
+            cameraShakeAmounts[shakerIndex] = Vector3.zero;
         }
     }
 }

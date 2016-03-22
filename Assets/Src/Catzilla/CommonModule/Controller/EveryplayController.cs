@@ -55,6 +55,7 @@ namespace Catzilla.CommonModule.Controller {
         }
 
         private void OnReadyForRecording(bool isReady) {
+            // DebugUtils.Log("EveryplayController.OnReadyForRecording()");
             if (!isReady) {
                 return;
             }

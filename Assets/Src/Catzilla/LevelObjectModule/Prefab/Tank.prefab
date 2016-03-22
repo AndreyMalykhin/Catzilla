@@ -18,6 +18,7 @@ GameObject:
   - 114: {fileID: 11495818}
   - 114: {fileID: 11401604}
   - 114: {fileID: 11444204}
+  - 114: {fileID: 11489962}
   m_Layer: 11
   m_Name: Tank
   m_TagString: Untagged
@@ -629,6 +630,20 @@ MonoBehaviour:
   MinScore: 32
   MaxScore: 64
   Collider: {fileID: 6596006}
+--- !u!114 &11489962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1103fdfaeec5e48b8b54acd9916fa7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraShakeAmount: {x: 0, y: 1, z: 0}
+  ShakeCameraInOneDirection: 1
+  CameraShakeDuration: 0.5
 --- !u!114 &11495818
 MonoBehaviour:
   m_ObjectHideFlags: 1

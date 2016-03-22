@@ -28,7 +28,6 @@ namespace Catzilla.LevelObjectModule.View {
             container.Bind<PlayerController>().ToSingle();
             container.Bind<SmashableController>().ToSingle();
             container.Bind<SmashingController>().ToSingle();
-            container.Bind<DamagingController>().ToSingle();
             container.Bind<ShootingController>().ToSingle();
             container.Bind<ProjectileController>().ToSingle();
             container.Bind<ActivatableController>().ToSingle();
@@ -63,11 +62,6 @@ namespace Catzilla.LevelObjectModule.View {
             eventBus.On(SmashingView.Event.TriggerEnter,
                 smashingContoller.OnTriggerEnter);
 
-            var damagingContoller =
-                container.Resolve<DamagingController>();
-            eventBus.On(DamagingView.Event.TriggerEnter,
-                damagingContoller.OnTriggerEnter);
-
             var projectileContoller =
                 container.Resolve<ProjectileController>();
             eventBus.On(ProjectileView.Event.TriggerEnter,
@@ -87,6 +81,8 @@ namespace Catzilla.LevelObjectModule.View {
             var explosiveController = container.Resolve<ExplosiveController>();
             eventBus.On(ExplosiveView.Event.Explode,
                 explosiveController.OnExplode);
+            eventBus.On(PlayerView.Event.Construct,
+                explosiveController.OnPlayerConstruct);
 
             var bonusController = container.Resolve<BonusController>();
             eventBus.On(

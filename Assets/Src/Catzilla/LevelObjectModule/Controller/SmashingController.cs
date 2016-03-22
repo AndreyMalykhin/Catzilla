@@ -21,10 +21,10 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
 
             // DebugUtils.Log("SmashingController.OnTriggerEnter(); {0}", collider);
-            var explosive = colliderBody.GetComponent<ExplosiveView>();
-            var smashable = colliderBody.GetComponent<SmashableView>();
+            var colliderExplosive = colliderBody.GetComponent<ExplosiveView>();
+            var colliderSmashable = colliderBody.GetComponent<SmashableView>();
 
-            if (smashable == null && explosive == null) {
+            if (colliderSmashable == null && colliderExplosive == null) {
                 return;
             }
 
@@ -32,26 +32,42 @@ namespace Catzilla.LevelObjectModule.Controller {
             var player = smashing.GetComponent<PlayerView>();
 
             if (player != null) {
-                var scoreable = colliderBody.GetComponent<ScoreableView>();
+                var colliderScoreable =
+                    colliderBody.GetComponent<ScoreableView>();
 
-                if (scoreable != null) {
-                    playerManager.AddScore(player, scoreable);
+                if (colliderScoreable != null) {
+                    playerManager.AddScore(player, colliderScoreable);
+                }
+
+                var colliderDamaging =
+                    colliderBody.GetComponent<DamagingView>();
+
+                if (colliderDamaging != null) {
+                    player.Health -= colliderDamaging.Damage;
                 }
             }
 
-            if (explosive != null) {
-                if (explosive.isActiveAndEnabled) {
-                    explosive.Explode();
+            if (colliderExplosive != null) {
+                if (colliderExplosive.isActiveAndEnabled) {
+                    colliderExplosive.Explode();
+                }
+            } else if (colliderSmashable != null
+                && colliderSmashable.isActiveAndEnabled) {
+                if (player != null) {
+                    var colliderShockwavable =
+                        colliderBody.GetComponent<ShockwavableView>();
+
+                    if (colliderShockwavable != null) {
+                        player.ShakeCamera(
+                            colliderShockwavable.CameraShakeAmount,
+                            colliderShockwavable.CameraShakeDuration,
+                            colliderShockwavable.ShakeCameraInOneDirection);
+                    }
                 }
 
-                return;
-            }
-
-            float smashForce = UnityEngine.Random.Range(
-                smashing.MinSmashForce, smashing.MaxSmashForce);
-
-            if (smashable.isActiveAndEnabled) {
-                smashable.Smash(
+                float smashForce = UnityEngine.Random.Range(
+                    smashing.MinSmashForce, smashing.MaxSmashForce);
+                colliderSmashable.Smash(
                     smashForce,
                     smashing.SmashUpwardsModifier,
                     smashing.transform.position);

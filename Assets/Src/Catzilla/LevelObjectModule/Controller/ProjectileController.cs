@@ -21,16 +21,28 @@ namespace Catzilla.LevelObjectModule.Controller {
                 return;
             }
 
+            Rigidbody colliderBody = collider.attachedRigidbody;
             bool isHitPlayer = collider.CompareTag(playerMeshTag);
 
             if (!isHitPlayer
                 && collider.GetComponent<EnvView>() == null
-                && collider.attachedRigidbody != null
-                && collider.attachedRigidbody.GetComponent<LevelObjectView>() == null) {
+                && colliderBody != null
+                && colliderBody.GetComponent<LevelObjectView>() == null) {
                 return;
             }
 
             var projectile = (ProjectileView) evt.Source;
+            PlayerView player = null;
+
+            if (isHitPlayer) {
+                player = colliderBody.GetComponent<PlayerView>();
+                var damaging = projectile.GetComponent<DamagingView>();
+
+                if (damaging != null) {
+                    player.Health -= damaging.Damage;
+                }
+            }
+
             var explosive = projectile.GetComponent<ExplosiveView>();
 
             if (explosive != null) {
@@ -38,6 +50,15 @@ namespace Catzilla.LevelObjectModule.Controller {
                     explosive.Explode();
                 }
             } else if (isHitPlayer) {
+                var shockwavable = projectile.GetComponent<ShockwavableView>();
+
+                if (shockwavable != null) {
+                    player.ShakeCamera(
+                        shockwavable.CameraShakeAmount,
+                        shockwavable.CameraShakeDuration,
+                        shockwavable.ShakeCameraInOneDirection);
+                }
+
                 poolStorage.Return(projectile.Poolable);
             }
         }

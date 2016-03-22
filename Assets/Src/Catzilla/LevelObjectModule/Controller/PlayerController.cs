@@ -105,16 +105,20 @@ namespace Catzilla.LevelObjectModule.Controller {
         }
 
         public void OnFootstep(Evt evt) {
-            if (player.FootstepSound == null) {
-                return;
-            }
+            var shockwavable = player.GetComponent<ShockwavableView>();
+            player.ShakeCamera(
+                shockwavable.CameraShakeAmount,
+                shockwavable.CameraShakeDuration,
+                shockwavable.ShakeCameraInOneDirection);
 
-            var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
-            AudioManager.Play(
-                player.FootstepSound,
-                player.LowPrioAudioSource,
-                PlayerLowPrioAudioChannel,
-                pitch);
+            if (player.FootstepSound != null) {
+                var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
+                AudioManager.Play(
+                    player.FootstepSound,
+                    player.LowPrioAudioSource,
+                    PlayerLowPrioAudioChannel,
+                    pitch);
+            }
         }
 
         public void OnScoreChange(Evt evt) {

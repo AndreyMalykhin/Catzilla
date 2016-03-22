@@ -81,8 +81,9 @@ namespace Catzilla.GameOverMenuModule.Controller {
             AnalyticsUtils.AddCategorizedEventParam(
                 "Level", PlayerStateStorage.Get().Level);
             AnalyticsUtils.LogEvent("Game.Restart");
-            Game.LoadLevel();
-            GameOverScreen.GetComponent<ShowableView>().Hide();
+            var showable = GameOverScreen.GetComponent<ShowableView>();
+            showable.OnHide += OnHideForRestart;
+            showable.Hide();
         }
 
         public void OnPlayerConstruct(Evt evt) {
@@ -120,6 +121,11 @@ namespace Catzilla.GameOverMenuModule.Controller {
             popup.Msg.text = Translator.Translate(
                 "Player.RewardEarn", addResurrectionsCount);
             PopupManager.Show(popup);
+        }
+
+        private void OnHideForRestart(ShowableView showable) {
+            showable.OnHide -= OnHideForRestart;
+            Game.LoadLevel();
         }
     }
 }

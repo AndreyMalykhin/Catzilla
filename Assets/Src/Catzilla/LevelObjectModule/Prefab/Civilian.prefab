@@ -18,6 +18,7 @@ GameObject:
   - 114: {fileID: 11429288}
   - 114: {fileID: 11479234}
   - 114: {fileID: 11494524}
+  - 114: {fileID: 11406078}
   m_Layer: 11
   m_Name: Civilian
   m_TagString: Untagged
@@ -488,6 +489,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11406078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1103fdfaeec5e48b8b54acd9916fa7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraShakeAmount: {x: 0, y: 0.5, z: 0}
+  ShakeCameraInOneDirection: 1
+  CameraShakeDuration: 0.5
 --- !u!114 &11407112
 MonoBehaviour:
   m_ObjectHideFlags: 1
