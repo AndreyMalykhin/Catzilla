@@ -1,3 +1,4 @@
+using UnityEngine;
 using System.Diagnostics;
 using System.Text;
 using Zenject;
@@ -9,8 +10,6 @@ using Catzilla.LevelModule.View;
 
 namespace Catzilla.PlayerModule.Model {
     public class PlayerManager {
-        public enum Event {PreLevelComplete}
-
         [Inject]
         private WorldSpacePopupManager popupManager;
 
@@ -35,6 +34,15 @@ namespace Catzilla.PlayerModule.Model {
         [Inject]
         private Game game;
 
+        [Inject("ScoreWorldPopupType")]
+        private int scoreWorldPopupType;
+
+        [Inject("ResurrectionWorldPopupType")]
+        private int resurrectionWorldPopupType;
+
+        [Inject("RewardWorldPopupType")]
+        private int rewardWorldPopupType;
+
         private readonly StringBuilder strBuilder = new StringBuilder(8);
 
         public void AddScore(PlayerView player, ScoreableView scoreable) {
@@ -45,21 +53,47 @@ namespace Catzilla.PlayerModule.Model {
             int score = UnityEngine.Random.Range(
                 scoreable.MinScore, scoreable.MaxScore + 1);
             player.Score += score;
-            WorldSpacePopupView popup = popupManager.Get();
-            popup.PlaceAbove(scoreable.Collider.bounds);
-            popup.LookAtTarget = player.Camera;
+            WorldSpacePopupView popup = popupManager.Get(scoreWorldPopupType);
             popup.Msg.text =
                 strBuilder.Append('+').Append(score).ToString();
             strBuilder.Length = 0;
+            popup.LookAtTarget = player.Camera;
+            popup.PlaceAbove(scoreable.Collider.bounds);
+            popupManager.Show(popup);
+        }
+
+        public void ApplyResurrectionBonus(
+            PlayerView player, ResurrectionBonusView resurrectionBonus) {
+            ++player.ResurrectionBonusesTaken;
+            int addResurrectionsCount = 1;
+            playerStateStorage.Get().AvailableResurrectionsCount +=
+                addResurrectionsCount;
+            WorldSpacePopupView popup =
+                popupManager.Get(resurrectionWorldPopupType);
+            popup.Msg.text = translator.Translate(
+                "ResurrectionBonus.Take", addResurrectionsCount);
+            popup.LookAtTarget = player.Camera;
+            popup.PlaceAbove(resurrectionBonus.Collider.bounds);
+            popupManager.Show(popup);
+        }
+
+        public void ApplyRewardBonus(
+            PlayerView player, RewardBonusView rewardBonus) {
+            int addRewardsCount = 1;
+            playerStateStorage.Get().AvailableRewardsCount += addRewardsCount;
+            WorldSpacePopupView popup = popupManager.Get(rewardWorldPopupType);
+            popup.Msg.text =
+                translator.Translate("RewardBonus.Take", addRewardsCount);
+            popup.LookAtTarget = player.Camera;
+            popup.PlaceAbove(rewardBonus.Collider.bounds);
             popupManager.Show(popup);
         }
 
         public void CompleteLevel(PlayerView player) {
-            // DebugUtils.Log("PlayerManager.CompleteLevel(); {0}", DateTime.Now);
-            eventBus.Fire(Event.PreLevelComplete, new Evt(this, player));
+            // DebugUtils.Log("PlayerManager.CompleteLevel()");
+            eventBus.Fire((int) Events.PlayerManagerPreLevelComplete,
+                new Evt(this, player));
             PlayerState playerState = playerStateStorage.Get();
-            AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
-            AnalyticsUtils.LogEvent("Level.Completion");
             GiveAchievementIfNeeded(playerState);
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;

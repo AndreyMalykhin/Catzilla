@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using System.Collections;
 using Zenject;
 using Catzilla.CommonModule.Util;
@@ -6,8 +7,6 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class ShootingView: MonoBehaviour, IPoolable {
-        public enum Event {TriggerEnter, Shot}
-
         public Collider Target {
             get {return target;}
             set {
@@ -16,19 +15,19 @@ namespace Catzilla.LevelObjectModule.View {
                 }
 
                 if (target != null) {
-                    if (shootingCoroutine != null) {
-                        StopCoroutine(shootingCoroutine);
+                    if (shooter != null) {
+                        StopCoroutine(shooter);
                     }
                 }
 
                 target = value;
 
                 if (value != null) {
-                    shootingCoroutine = StartShooting();
-                    StartCoroutine(shootingCoroutine);
+                    shooter = Shooter();
+                    StartCoroutine(shooter);
                     aimee.LookAt(GetAimPoint());
                 }
-            }
+             }
         }
 
         public AudioClip ShotSound;
@@ -51,7 +50,12 @@ namespace Catzilla.LevelObjectModule.View {
 
         [Tooltip("In degrees")]
         [SerializeField]
-        private float aimSpeed = 360f;
+        private float aimSpeed;
+
+        [SerializeField]
+        [FormerlySerializedAs("targetCheckPeriod")]
+        [Tooltip("In seconds")]
+        private float shootingDelay;
 
         [Tooltip("In seconds")]
         [SerializeField]
@@ -59,34 +63,32 @@ namespace Catzilla.LevelObjectModule.View {
 
         [Tooltip("In seconds")]
         [SerializeField]
-        private float burstPeriod = 8f;
+        private float burstPeriod;
 
         [SerializeField]
-        private int shotsInBurst = 1;
-
-        [Tooltip("In seconds")]
-        [SerializeField]
-        private float minDelay = 0.5f;
-
-        [Tooltip("In seconds")]
-        [SerializeField]
-        private float maxDelay = 0.5f;
+        private int shotsInBurst;
 
         [SerializeField]
-        private float projectileMinSpeed = 8f;
+        private float projectileMinSpeed;
 
         [SerializeField]
-        private float projectileMaxSpeed = 16f;
+        private float projectileMaxSpeed;
 
         private Collider target;
-        private IEnumerator shootingCoroutine;
         private int projectilePoolId;
         private float projectileSpeed;
+        private WaitForSeconds shotPeriodWaiter;
+        private WaitForSeconds burstPeriodWaiter;
+        private WaitForSeconds shootingDelayWaiter;
+        private IEnumerator shooter;
 
         [PostInject]
         public void OnConstruct() {
             projectilePoolId =
                 projectileProto.GetComponent<PoolableView>().PoolId;
+            shotPeriodWaiter = new WaitForSeconds(shotPeriod);
+            burstPeriodWaiter = new WaitForSeconds(burstPeriod);
+            shootingDelayWaiter = new WaitForSeconds(shootingDelay);
             SetRandomProjectileSpeed();
         }
 
@@ -101,12 +103,8 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void OnTriggerEnter(Collider collider) {
-            ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
-                Event.TriggerEnter, new Evt(this, collider));
-        }
-
-        private EventBus GetEventBus() {
-            return eventBus;
+            eventBus.Fire((int) Events.ShootingTriggerEnter,
+                new Evt(this, collider));
         }
 
         private void FixedUpdate() {
@@ -132,25 +130,20 @@ namespace Catzilla.LevelObjectModule.View {
                 targetBounds.max.z);
         }
 
-        private IEnumerator StartShooting() {
-            yield return new WaitForSeconds(
-                UnityEngine.Random.Range(minDelay, maxDelay));
+        private IEnumerator Shooter() {
+            yield return shootingDelayWaiter;
 
             while (target != null) {
-                yield return StartCoroutine(StartBurst());
+                for (int i = 0; i < shotsInBurst && target != null; ++i) {
+                    Shoot();
+
+                    if (shotPeriod != 0f) {
+                        yield return shotPeriodWaiter;
+                    }
+                }
 
                 if (burstPeriod != 0f) {
-                    yield return new WaitForSeconds(burstPeriod);
-                }
-            }
-        }
-
-        private IEnumerator StartBurst() {
-            for (int i = 0; i < shotsInBurst && target != null; ++i) {
-                Shoot();
-
-                if (shotPeriod != 0f) {
-                    yield return new WaitForSeconds(shotPeriod);
+                    yield return burstPeriodWaiter;
                 }
             }
         }
@@ -162,7 +155,7 @@ namespace Catzilla.LevelObjectModule.View {
             projectile.transform.position = projectileSource.position;
             projectile.transform.rotation = projectileSource.rotation;
             projectile.Speed = projectileSpeed;
-            eventBus.Fire(Event.Shot, new Evt(this));
+            eventBus.Fire((int) Events.ShootingShot, new Evt(this));
         }
     }
 }

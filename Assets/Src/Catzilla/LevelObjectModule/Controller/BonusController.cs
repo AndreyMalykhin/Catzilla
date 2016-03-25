@@ -6,11 +6,11 @@ using Catzilla.LevelModule.Model;
 namespace Catzilla.LevelObjectModule.Controller {
     public class BonusController {
         [Inject]
-        private LevelGenerator levelGenerator;
+        private BonusSpawnResolver bonusSpawnResolver;
 
         public void OnViewDestroy(Evt evt) {
             // DebugUtils.Log("BonusController.OnViewDestroy()");
-            --levelGenerator.ActiveBonusObjects;
+            --bonusSpawnResolver.ActiveBonusObjects;
         }
     }
 }

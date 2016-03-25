@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Serialization;
 using System;
 using System.Collections;
 using Zenject;
@@ -7,8 +8,6 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class ShowableView: MonoBehaviour, IPoolable {
-        public enum Event {PreShow, Show}
-
         public bool IsShown {get {return isShown;}}
         public AudioClip ShowSound {get {return showSound;}}
         public AudioClip PreShowSound {get {return preShowSound;}}
@@ -16,9 +15,6 @@ namespace Catzilla.CommonModule.View {
         public event Action<ShowableView> OnShow;
         public event Action<ShowableView> OnPreShow;
         public event Action<ShowableView> OnHide;
-
-        [Tooltip("In seconds")]
-        public float AutoHideDelay;
 
         private static readonly int isShownParam =
             Animator.StringToHash("IsShown");
@@ -44,11 +40,18 @@ namespace Catzilla.CommonModule.View {
         [SerializeField]
         private AudioSource audioSource;
 
+        [SerializeField]
+        [FormerlySerializedAs("AutoHideDelay")]
+        [Tooltip("In seconds")]
+        private float autoHideDelay;
+
         private bool isShown;
-        private IEnumerator autoHideCoroutine;
+        private IEnumerator autoHider;
+        private WaitForSecondsRealtime autoHideDelayWaiter;
 
         [PostInject]
         public void OnConstruct() {
+            autoHideDelayWaiter = new WaitForSecondsRealtime(autoHideDelay);
             gameObject.SetActive(isShown);
         }
 
@@ -59,13 +62,13 @@ namespace Catzilla.CommonModule.View {
             }
 
             if (OnPreShow != null) OnPreShow(this);
-            eventBus.Fire(Event.PreShow, new Evt(this));
+            eventBus.Fire((int) Events.ShowablePreShow, new Evt(this));
             isShown = true;
             gameObject.SetActive(isShown);
 
-            if (AutoHideDelay > 0f) {
-                autoHideCoroutine = AutoHide();
-                StartCoroutine(autoHideCoroutine);
+            if (autoHideDelay > 0f) {
+                autoHider = AutoHider();
+                StartCoroutine(autoHider);
             }
 
             if (animator != null) {
@@ -83,8 +86,8 @@ namespace Catzilla.CommonModule.View {
                 return;
             }
 
-            if (autoHideCoroutine != null) {
-                StopCoroutine(autoHideCoroutine);
+            if (autoHider != null) {
+                StopCoroutine(autoHider);
             }
 
             if (animator != null) {
@@ -105,10 +108,12 @@ namespace Catzilla.CommonModule.View {
                 animator.SetBool(isShownParam, isShown);
             }
 
-            if (autoHideCoroutine != null) {
-                StopCoroutine(autoHideCoroutine);
-                autoHideCoroutine = null;
+            if (autoHider != null) {
+                StopCoroutine(autoHider);
+                autoHider = null;
             }
+
+            gameObject.SetActive(isShown);
         }
 
         private void OnShowAnimationEnd() {
@@ -135,11 +140,12 @@ namespace Catzilla.CommonModule.View {
 
         private void FireShowEvent() {
             if (OnShow != null) OnShow(this);
-            eventBus.Fire(Event.Show, new Evt(this));
+            eventBus.Fire((int) Events.ShowableShow, new Evt(this));
         }
 
-        private IEnumerator AutoHide() {
-            yield return new WaitForSecondsRealtime(AutoHideDelay);
+        private IEnumerator AutoHider() {
+            autoHideDelayWaiter.Restart();
+            yield return autoHideDelayWaiter;
             Hide();
         }
     }

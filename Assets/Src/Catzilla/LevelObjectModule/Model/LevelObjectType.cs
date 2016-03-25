@@ -15,6 +15,8 @@ namespace Catzilla.LevelObjectModule.Model {
         Score,
         Soldier,
         Tank,
-        Plane
+        Plane,
+        Resurrection,
+        Reward
     }
 }

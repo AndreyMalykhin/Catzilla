@@ -10,8 +10,6 @@ using Catzilla.CommonModule.Model;
 namespace Catzilla.PlayerModule.Model {
     [CreateAssetMenuAttribute]
     public class PlayerStateStorage: ScriptableObject {
-        public enum Event {Save}
-
         [Inject]
         [NonSerialized]
         protected EventBus EventBus;
@@ -57,7 +55,7 @@ namespace Catzilla.PlayerModule.Model {
             PlayerPrefs.SetString("Player", serializedPlayer);
             PlayerPrefs.Save();
             // DebugUtils.Log("PlayerStateStorage.Save(); player={0}", Player);
-            EventBus.Fire(Event.Save, new Evt(this));
+            EventBus.Fire((int) Events.PlayerStateStorageSave, new Evt(this));
         }
 
         public virtual void Sync(

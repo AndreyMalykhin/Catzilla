@@ -125,6 +125,9 @@
 	<data name="Common.Ok" xml:space="preserve">
 		<value>OK</value>
 	</data>
+	<data name="GameOverMenu.Ad" xml:space="preserve">
+		<value>by watching ad</value>
+	</data>
 	<data name="GameOverMenu.Exit" xml:space="preserve">
 		<value>Quit</value>
 	</data>
@@ -195,6 +198,12 @@
 	<data name="Player.Score" xml:space="preserve">
 		<value>{0} / {1}</value>
 	</data>
+	<data name="ResurrectionBonus.Take" xml:space="preserve">
+		<value>+{0} resurrection</value>
+	</data>
+	<data name="RewardBonus.Take" xml:space="preserve">
+		<value>+{0} reward</value>
+	</data>
 	<data name="TutorialScreen.End" xml:space="preserve">
 		<value>Got it!</value>
 	</data>
@@ -216,7 +225,7 @@
 	<data name="TutorialScreen.Step5" xml:space="preserve">
 		<value>That's it buddy, just don't use swipe and everything will be fine... probably</value>
 	</data>
-	<data name="GameOverMenu.Ad" xml:space="preserve">
-		<value>by watching ad</value>
+	<data name="Player.Refuse" xml:space="preserve">
+		<value>Meow!</value>
 	</data>
 </root>

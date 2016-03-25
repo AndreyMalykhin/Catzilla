@@ -7,6 +7,7 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class PoolableView: MonoBehaviour, IPoolable {
+        public bool ActivateOnTake {get; set;}
         public int PoolId;
         public bool IsUI;
 

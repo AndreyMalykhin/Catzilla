@@ -30,6 +30,18 @@ namespace Catzilla.PlayerModule.View {
         [SerializeField]
         private GameObject hudWrapper;
 
+        [SerializeField]
+        private int scoreWorldPopupType;
+
+        [SerializeField]
+        private int resurrectionWorldPopupType;
+
+        [SerializeField]
+        private int rewardWorldPopupType;
+
+        [SerializeField]
+        private int speechWorldPopupType;
+
         public override void InitBindings(DiContainer container) {
             PlayerStateStorage finalPlayerStateStorage = playerStateStorage;
 
@@ -42,6 +54,14 @@ namespace Catzilla.PlayerModule.View {
             container.Bind<GiftManager>().ToInstance(giftManager);
             container.Bind<RewardManager>().ToInstance(rewardManager);
             container.Bind<GameObject>("HUDWrapper").ToInstance(hudWrapper);
+            container.Bind<int>("ScoreWorldPopupType")
+                .ToInstance(scoreWorldPopupType);
+            container.Bind<int>("ResurrectionWorldPopupType")
+                .ToInstance(resurrectionWorldPopupType);
+            container.Bind<int>("RewardWorldPopupType")
+                .ToInstance(rewardWorldPopupType);
+            container.Bind<int>("SpeechWorldPopupType")
+                .ToInstance(speechWorldPopupType);
             container.Bind<HUDScoreController>().ToSingle();
             container.Bind<HUDHealthController>().ToSingle();
             container.Bind<PlayerManager>().ToSingle();
@@ -53,19 +73,19 @@ namespace Catzilla.PlayerModule.View {
             container.Inject(container.Resolve<RewardManager>());
             var eventBus = container.Resolve<EventBus>();
 
-            var playerScoreController =
+            var hudScoreController =
                 container.Resolve<HUDScoreController>();
-            eventBus.On(
-                PlayerView.Event.ScoreChange, playerScoreController.OnChange);
-            eventBus.On(HUDScoreView.Event.Construct,
-                playerScoreController.OnViewConstruct);
+            eventBus.On((int)
+                Events.PlayerScoreChange, hudScoreController.OnChange);
+            eventBus.On((int) Events.HUDScoreConstruct,
+                hudScoreController.OnViewConstruct);
 
-            var playerHealthController =
+            var hudHealthController =
                 container.Resolve<HUDHealthController>();
-            eventBus.On(PlayerView.Event.HealthChange,
-                playerHealthController.OnChange);
-            eventBus.On(PlayerView.Event.Construct,
-                playerHealthController.OnPlayerConstruct);
+            eventBus.On((int) Events.PlayerHealthChange,
+                hudHealthController.OnChange);
+            eventBus.On((int) Events.PlayerConstruct,
+                hudHealthController.OnPlayerConstruct);
         }
     }
 }

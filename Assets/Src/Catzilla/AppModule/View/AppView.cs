@@ -6,8 +6,6 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.AppModule.View {
     public class AppView: MonoInstaller {
-        public enum Event {Start}
-
         [SerializeField]
         private ModuleView[] modules;
 
@@ -23,7 +21,7 @@ namespace Catzilla.AppModule.View {
 
         public override void Start() {
             var eventBus = Container.Resolve<EventBus>();
-            eventBus.Fire(Event.Start, new Evt(this));
+            eventBus.Fire((int) Events.AppStart, new Evt(this));
         }
 
         private void Awake() {

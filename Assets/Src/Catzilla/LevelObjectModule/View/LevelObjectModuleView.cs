@@ -49,66 +49,68 @@ namespace Catzilla.LevelObjectModule.View {
 
             var disposableController =
                 container.Resolve<DisposableController>();
-            eventBus.On(DisposableView.Event.TriggerExit,
+            eventBus.On((int) Events.DisposableTriggerExit,
                 disposableController.OnTriggerExit);
 
             var smashableContoller =
                 container.Resolve<SmashableController>();
-            eventBus.On(SmashableView.Event.Smash,
+            eventBus.On((int) Events.SmashableSmash,
                 smashableContoller.OnSmash);
 
             var smashingContoller =
                 container.Resolve<SmashingController>();
-            eventBus.On(SmashingView.Event.TriggerEnter,
+            eventBus.On((int) Events.SmashingTriggerEnter,
                 smashingContoller.OnTriggerEnter);
 
             var projectileContoller =
                 container.Resolve<ProjectileController>();
-            eventBus.On(ProjectileView.Event.TriggerEnter,
+            eventBus.On((int) Events.ProjectileTriggerEnter,
                 projectileContoller.OnTriggerEnter);
 
             var shootingContoller =
                 container.Resolve<ShootingController>();
-            eventBus.On(ShootingView.Event.TriggerEnter,
+            eventBus.On((int) Events.ShootingTriggerEnter,
                 shootingContoller.OnTriggerEnter);
-            eventBus.On(ShootingView.Event.Shot,
+            eventBus.On((int) Events.ShootingShot,
                 shootingContoller.OnShot);
 
             var takeableController = container.Resolve<TakeableController>();
-            eventBus.On(TakeableView.Event.TriggerEnter,
+            eventBus.On((int) Events.TakeableTriggerEnter,
                 takeableController.OnTriggerEnter);
 
             var explosiveController = container.Resolve<ExplosiveController>();
-            eventBus.On(ExplosiveView.Event.Explode,
+            eventBus.On((int) Events.ExplosiveExplode,
                 explosiveController.OnExplode);
-            eventBus.On(PlayerView.Event.Construct,
+            eventBus.On((int) Events.PlayerConstruct,
                 explosiveController.OnPlayerConstruct);
 
             var bonusController = container.Resolve<BonusController>();
-            eventBus.On(
-                BonusView.Event.Destroy, bonusController.OnViewDestroy);
+            eventBus.On((int)
+                Events.BonusDestroy, bonusController.OnViewDestroy);
 
             var activatableContoller =
                 container.Resolve<ActivatableController>();
-            eventBus.On(ActivatableView.Event.TriggerEnter,
+            eventBus.On((int) Events.ActivatableTriggerEnter,
                 activatableContoller.OnTriggerEnter);
 
             var playerController =
                 container.Resolve<PlayerController>();
-            eventBus.On(PlayerView.Event.Construct,
+            eventBus.On((int) Events.PlayerConstruct,
                 playerController.OnViewConstruct);
-            eventBus.On(PlayerView.Event.Destroy,
+            eventBus.On((int) Events.PlayerDestroy,
                 playerController.OnViewDestroy);
-            eventBus.On(PlayerView.Event.Death,
+            eventBus.On((int) Events.PlayerDeath,
                 playerController.OnDeath);
-            eventBus.On(PlayerView.Event.ScoreChange,
+            eventBus.On((int) Events.PlayerScoreChange,
                 playerController.OnScoreChange);
-            eventBus.On(PlayerView.Event.HealthChange,
+            eventBus.On((int) Events.PlayerHealthChange,
                 playerController.OnHealthChange);
-            eventBus.On(PlayerView.Event.Resurrect,
+            eventBus.On((int) Events.PlayerResurrect,
                 playerController.OnResurrect);
-            eventBus.On(PlayerView.Event.Footstep,
+            eventBus.On((int) Events.PlayerFootstep,
                 playerController.OnFootstep);
+            eventBus.On((int) Events.PlayerRefuse,
+                playerController.OnRefuse);
         }
     }
 }

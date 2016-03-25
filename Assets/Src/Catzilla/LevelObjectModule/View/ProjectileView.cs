@@ -6,8 +6,6 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class ProjectileView: MonoBehaviour {
-        public enum Event {TriggerEnter}
-
         public PoolableView Poolable {get {return poolable;}}
 
         public float Speed;
@@ -26,12 +24,8 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void OnTriggerEnter(Collider collider) {
-            ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
-                Event.TriggerEnter, new Evt(this, collider));
-        }
-
-        private EventBus GetEventBus() {
-            return eventBus;
+            eventBus.Fire((int) Events.ProjectileTriggerEnter,
+                new Evt(this, collider));
         }
 
         private void Fly() {

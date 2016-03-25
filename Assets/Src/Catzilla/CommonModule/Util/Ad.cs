@@ -5,14 +5,13 @@ using System.Collections;
 
 namespace Catzilla.CommonModule.Util {
     public class Ad {
-        private Action onFinish;
+        public event Action<Ad> OnView;
 
-        public void Show(Action onFinish) {
+        public void Show() {
             if (!Advertisement.IsReady()) {
                 return;
             }
 
-            this.onFinish = onFinish;
             Advertisement.Show(
                 null, new ShowOptions{resultCallback = OnShowResult});
         }
@@ -20,7 +19,7 @@ namespace Catzilla.CommonModule.Util {
         private void OnShowResult(ShowResult result) {
             switch (result) {
                 case ShowResult.Finished:
-                    onFinish();
+                    if (OnView != null) OnView(this);
                     break;
                 case ShowResult.Skipped:
                     break;

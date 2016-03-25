@@ -4,8 +4,6 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelObjectModule.View {
     public class SmashingView: MonoBehaviour {
-        public enum Event {TriggerEnter}
-
         public float MinSmashForce {get {return minSmashForce;}}
         public float MaxSmashForce {get {return maxSmashForce;}}
         public float SmashUpwardsModifier {get {return smashUpwardsModifier;}}
@@ -23,7 +21,8 @@ namespace Catzilla.LevelObjectModule.View {
         private float smashUpwardsModifier;
 
         private void OnTriggerEnter(Collider collider) {
-            eventBus.Fire(Event.TriggerEnter, new Evt(this, collider));
+            eventBus.Fire((int) Events.SmashingTriggerEnter,
+                new Evt(this, collider));
         }
     }
 }

@@ -5,8 +5,6 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelObjectModule.View {
     public class ActivatableView: MonoBehaviour, IPoolable {
-        public enum Event {TriggerEnter}
-
         [Inject]
         public EventBus EventBus {get; set;}
 
@@ -28,12 +26,8 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void OnTriggerEnter(Collider collider) {
-            ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
-                Event.TriggerEnter, new Evt(this, collider));
-        }
-
-        private EventBus GetEventBus() {
-            return EventBus;
+            EventBus.Fire((int) Events.ActivatableTriggerEnter,
+                new Evt(this, collider));
         }
     }
 }

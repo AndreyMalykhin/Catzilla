@@ -79,11 +79,11 @@ namespace Catzilla.LevelModule.Model {
             ObjectLevelSettings[] objectSettings =
                 itemsParams[levelIndex].ObjectSettings;
             var objectSettingsMap =
-                new Dictionary<LevelObjectType, ObjectLevelSettings>(16);
+                new Dictionary<int, ObjectLevelSettings>(16);
 
             for (int i = 0; i < objectSettings.Length; ++i) {
                 objectSettingsMap.Add(
-                    objectSettings[i].ObjectType, objectSettings[i]);
+                    (int) objectSettings[i].ObjectType, objectSettings[i]);
             }
 
             return new LevelSettings(

@@ -5,6 +5,8 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.CommonModule.Model {
     public class AuthManager {
+        public event Action<AuthManager> OnLoginSuccess;
+
         [Inject]
         private Server server;
 
@@ -14,9 +16,9 @@ namespace Catzilla.CommonModule.Model {
         [Inject]
         private UIBlockerView uiBlocker;
 
-        public void Login(Action onSuccess = null) {
+        public void Login() {
             if (server.IsLoggedIn) {
-                if (onSuccess != null) onSuccess();
+                FireLoginSuccessEvent();
                 return;
             }
 
@@ -28,11 +30,11 @@ namespace Catzilla.CommonModule.Model {
                         server,
                         () => {
                             showable.Hide();
-                            if (onSuccess != null) onSuccess();
+                            FireLoginSuccessEvent();
                         },
                         () => {
                             showable.Hide();
-                            if (onSuccess != null) onSuccess();
+                            FireLoginSuccessEvent();
                         }
                     );
                 },
@@ -40,6 +42,10 @@ namespace Catzilla.CommonModule.Model {
                     showable.Hide();
                 }
             );
+        }
+
+        private void FireLoginSuccessEvent() {
+            if (OnLoginSuccess != null) OnLoginSuccess(this);
         }
     }
 }

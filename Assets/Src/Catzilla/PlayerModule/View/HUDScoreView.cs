@@ -6,8 +6,6 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.PlayerModule.View {
     public class HUDScoreView: MonoBehaviour {
-        public enum Event {Construct}
-
         [Inject]
         public EventBus EventBus {get; set;}
 
@@ -45,7 +43,7 @@ namespace Catzilla.PlayerModule.View {
         public void OnConstruct() {
             textView = GetComponent<Text>();
             Render();
-            EventBus.Fire(Event.Construct, new Evt(this));
+            EventBus.Fire((int) Events.HUDScoreConstruct, new Evt(this));
         }
 
         private void Render() {

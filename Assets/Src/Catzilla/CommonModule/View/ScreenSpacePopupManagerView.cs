@@ -22,6 +22,14 @@ namespace Catzilla.CommonModule.View {
         private readonly IDictionary<int, ScreenSpacePopupView> popupProtos =
             new Dictionary<int, ScreenSpacePopupView>(4);
 
+        [PostInject]
+        public void OnConstruct() {
+            for (int i = 0; i < popupTypes.Length; ++i) {
+                PopupType popupType = popupTypes[i];
+                popupProtos.Add(popupType.Id, popupType.Proto);
+            }
+        }
+
         public ScreenSpacePopupView Get(int popupType) {
             ScreenSpacePopupView popupProto = popupProtos[popupType];
             int poolId = popupProto.GetComponent<PoolableView>().PoolId;
@@ -39,13 +47,6 @@ namespace Catzilla.CommonModule.View {
 
         private void OnPopupHide(ShowableView showable) {
             poolStorage.Return(showable.GetComponent<PoolableView>());
-        }
-
-        private void Awake() {
-            for (int i = 0; i < popupTypes.Length; ++i) {
-                PopupType popupType = popupTypes[i];
-                popupProtos.Add(popupType.Id, popupType.Proto);
-            }
         }
     }
 }

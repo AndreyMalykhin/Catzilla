@@ -11,7 +11,6 @@ namespace Catzilla.LevelObjectModule.Model {
         public int Width {get {return width;}}
         public int Depth {get {return depth;}}
         public int SpawnPriority {get {return spawnPriority;}}
-        public float SpawnChance {get {return spawnChance;}}
         public ObjectProtoInfo ProtoInfo {get {return protoInfos[0];}}
         public ObjectProtoInfo[] ProtoInfos {get {return protoInfos;}}
 
@@ -26,9 +25,6 @@ namespace Catzilla.LevelObjectModule.Model {
 
         [SerializeField]
         private int spawnPriority;
-
-        [SerializeField]
-        private float spawnChance = 1f;
 
         [SerializeField]
         private ObjectProtoInfo[] protoInfos;

@@ -189,6 +189,9 @@
 	<data name="Player.GiftEarn" xml:space="preserve">
 		<value>+{0} resurrection</value>
 	</data>
+	<data name="Player.Refuse" xml:space="preserve">
+		<value>Meow!</value>
+	</data>
 	<data name="Player.RewardEarn" xml:space="preserve">
 		<value>+{0} resurrection</value>
 	</data>
@@ -197,6 +200,12 @@
 	</data>
 	<data name="Player.Score" xml:space="preserve">
 		<value>{0} / {1}</value>
+	</data>
+	<data name="ResurrectionBonus.Take" xml:space="preserve">
+		<value>+{0} resurrection</value>
+	</data>
+	<data name="RewardBonus.Take" xml:space="preserve">
+		<value>+{0} reward</value>
 	</data>
 	<data name="TutorialScreen.End" xml:space="preserve">
 		<value>Got it!</value>

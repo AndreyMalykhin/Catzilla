@@ -12,7 +12,7 @@ namespace Catzilla.LevelModule.Model {
         public readonly float PlayerSideSpeed;
         public readonly int ResurrectionReward;
 
-        private readonly IDictionary<LevelObjectType, ObjectLevelSettings> objectSettings;
+        private readonly IDictionary<int, ObjectLevelSettings> objectSettings;
 
         public LevelSettings(
             int index,
@@ -21,7 +21,7 @@ namespace Catzilla.LevelModule.Model {
             float playerFrontSpeed,
             float playerSideSpeed,
             int resurrectionReward,
-            IDictionary<LevelObjectType, ObjectLevelSettings> objectSettings) {
+            IDictionary<int, ObjectLevelSettings> objectSettings) {
             Index = index;
             CompletionScore = completionScore;
             ExtraScore = extraScore;
@@ -37,7 +37,7 @@ namespace Catzilla.LevelModule.Model {
         public ObjectLevelSettings GetObjectSettings(
             LevelObjectType objectType) {
             ObjectLevelSettings result = null;
-            objectSettings.TryGetValue(objectType, out result);
+            objectSettings.TryGetValue((int) objectType, out result);
             return result;
         }
     }

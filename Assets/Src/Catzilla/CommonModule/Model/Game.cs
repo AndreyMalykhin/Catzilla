@@ -7,8 +7,6 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.CommonModule.Model {
     public class Game {
-        public enum Event {PreLevelLoad, LevelLoad, LevelUnload}
-
         [Inject("LevelScene")]
         public string LevelScene {get; set;}
 
@@ -48,20 +46,20 @@ namespace Catzilla.CommonModule.Model {
 
         public void LoadLevel() {
             // DebugUtils.Log("Game.LoadLevel()");
-            EventBus.Fire(Event.PreLevelLoad, new Evt(this));
+            EventBus.Fire((int) Events.GamePreLevelLoad, new Evt(this));
             CoroutineManager.Run(DoLoadLevel());
         }
 
         public void UnloadLevel() {
             SceneManager.LoadScene(EmptyScene);
-            EventBus.Fire(Event.LevelUnload, new Evt(this));
+            EventBus.Fire((int) Events.GameLevelUnload, new Evt(this));
         }
 
         private IEnumerator DoLoadLevel() {
             SceneManager.LoadScene(LevelScene);
             yield return null;
             Container.InjectGameObject(GameObject.FindWithTag(LevelTag));
-            EventBus.Fire(Event.LevelLoad, new Evt(this));
+            EventBus.Fire((int) Events.GameLevelLoad, new Evt(this));
         }
     }
 }

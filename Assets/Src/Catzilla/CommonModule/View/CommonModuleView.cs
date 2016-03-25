@@ -7,6 +7,7 @@ using Zenject;
 using Catzilla.LevelModule.View;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.GameOverMenuModule.View;
+using Catzilla.MainMenuModule.View;
 using Catzilla.PlayerModule.Model;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Model;
@@ -107,6 +108,7 @@ namespace Catzilla.CommonModule.View {
             container.Bind<ErrorController>().ToSingle();
             container.Bind<GameController>().ToSingle();
             container.Bind<EveryplayController>().ToSingle();
+            container.Bind<AnalyticsController>().ToSingle();
             container.Bind<PoolStorageView>().ToInstance(poolStorage);
             container.Bind<CoroutineManagerView>().ToInstance(coroutineManager);
             container.Bind<ScreenSpacePopupManagerView>()
@@ -150,63 +152,96 @@ namespace Catzilla.CommonModule.View {
 
             var poolStorageController =
                 container.Resolve<PoolStorageController>();
-            eventBus.On(
-                Game.Event.LevelLoad, poolStorageController.OnLevelLoad);
+            eventBus.On((int)
+                Events.GameLevelLoad, poolStorageController.OnLevelLoad);
 
             var btnController =
                 container.Resolve<BtnController>();
-            eventBus.On(
-                BtnView.Event.Click, btnController.OnClick);
+            eventBus.On((int)
+                Events.BtnClick, btnController.OnClick);
 
             var showableController =
                 container.Resolve<ShowableController>();
-            eventBus.On(
-                ShowableView.Event.Show, showableController.OnShow);
-            eventBus.On(
-                ShowableView.Event.PreShow, showableController.OnPreShow);
+            eventBus.On((int)
+                Events.ShowableShow, showableController.OnShow);
+            eventBus.On((int)
+                Events.ShowablePreShow, showableController.OnPreShow);
 
             var activityIndicatorController =
                 container.Resolve<ActivityIndicatorController>();
-            eventBus.On(Server.Event.Request,
+            eventBus.On((int) Events.ServerRequest,
                 activityIndicatorController.OnServerRequest);
-            eventBus.On(Server.Event.Response,
+            eventBus.On((int) Events.ServerResponse,
                 activityIndicatorController.OnServerResponse);
 
             var errorController =
                 container.Resolve<ErrorController>();
-            eventBus.On(
-                Server.Event.Response, errorController.OnServerResponse);
+            eventBus.On((int)
+                Events.ServerResponse, errorController.OnServerResponse);
 
             var gameController = container.Resolve<GameController>();
             var levelStartScreen = container.Resolve<LevelStartScreenView>()
                 .GetComponent<ShowableView>();
             levelStartScreen.OnShow += gameController.OnLevelStartScreenShow;
             levelStartScreen.OnHide += gameController.OnLevelStartScreenHide;
-            var gameOverScreen = container.Resolve<GameOverScreenView>()
-                .GetComponent<ShowableView>();
-            gameOverScreen.OnShow += gameController.OnGameOverScreenShow;
-            gameOverScreen.OnHide += gameController.OnGameOverScreenHide;
+            var gameOverScreen = container.Resolve<GameOverScreenView>();
+            var gameOverScreenShowable =
+                gameOverScreen.GetComponent<ShowableView>();
+            gameOverScreenShowable.OnShow +=
+                gameController.OnGameOverScreenShow;
+            gameOverScreenShowable.OnHide +=
+                gameController.OnGameOverScreenHide;
             var tutorialScreen = container.Resolve<TutorialScreenView>()
                 .GetComponent<ShowableView>();
             tutorialScreen.OnPreShow += gameController.OnTutorialPreShow;
             tutorialScreen.OnHide += gameController.OnTutorialHide;
 
             var everyplayController = container.Resolve<EveryplayController>();
-            eventBus.On(
-                Game.Event.LevelUnload, everyplayController.OnLevelUnload);
-            eventBus.On(
-                Game.Event.PreLevelLoad, everyplayController.OnPreLevelLoad);
-            eventBus.On(PlayerView.Event.Resurrect,
+            eventBus.On((int)
+                Events.GameLevelUnload, everyplayController.OnLevelUnload);
+            eventBus.On((int)
+                Events.GamePreLevelLoad, everyplayController.OnPreLevelLoad);
+            eventBus.On((int) Events.PlayerResurrect,
                 everyplayController.OnPlayerResurrect);
-            eventBus.On(PlayerManager.Event.PreLevelComplete,
+            eventBus.On((int) Events.PlayerManagerPreLevelComplete,
                 everyplayController.OnPreLevelComplete);
-            gameOverScreen.OnShow += everyplayController.OnGameOverScreenShow;
+            gameOverScreenShowable.OnShow +=
+                everyplayController.OnGameOverScreenShow;
             levelStartScreen.OnShow +=
                 everyplayController.OnLevelStartScreenShow;
             var levelCompleteScreen =
                 container.Resolve<LevelCompleteScreenView>();
             levelCompleteScreen.GetComponent<ShowableView>().OnShow +=
                 everyplayController.OnLevelCompleteScreenShow;
+
+            var analyticsController = container.Resolve<AnalyticsController>();
+            eventBus.On((int) Events.PlayerManagerPreLevelComplete,
+                analyticsController.OnPreLevelComplete);
+            eventBus.On((int) Events.PlayerDeath,
+                analyticsController.OnPlayerDeath);
+            eventBus.On((int) Events.PlayerResurrect,
+                analyticsController.OnPlayerResurrect);
+            var mainScreen = container.Resolve<MainScreenView>();
+            mainScreen.FeedbackBtn.onClick.AddListener(
+                analyticsController.OnMainScreenFeedbackBtnClick);
+            mainScreen.StartBtn.onClick.AddListener(
+                analyticsController.OnMainScreenStartBtnClick);
+            mainScreen.LeaderboardBtn.onClick.AddListener(
+                analyticsController.OnMainScreenLeaderboardBtnClick);
+            mainScreen.AchievementsBtn.onClick.AddListener(
+                analyticsController.OnMainScreenAchievementsBtnClick);
+            mainScreen.ReplaysBtn.onClick.AddListener(
+                analyticsController.OnMainScreenReplaysBtnClick);
+            gameOverScreen.ExitBtn.onClick.AddListener(
+                analyticsController.OnGameOverScreenExitBtnClick);
+            gameOverScreen.RestartBtn.onClick.AddListener(
+                analyticsController.OnGameOverScreenRestartBtnClick);
+            levelCompleteScreen.ShareBtn.onClick.AddListener(
+                analyticsController.OnLevelCompleteScreenShareBtnClick);
+            var ad = container.Resolve<Ad>();
+            ad.OnView += analyticsController.OnAdView;
+            var authManager = container.Resolve<AuthManager>();
+            authManager.OnLoginSuccess += analyticsController.OnLogin;
         }
     }
 }

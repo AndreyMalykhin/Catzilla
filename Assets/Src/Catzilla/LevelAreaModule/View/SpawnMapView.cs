@@ -16,7 +16,7 @@ namespace Catzilla.LevelAreaModule.View {
         [SerializeField]
         private int depth = 24;
 
-        private IDictionary<LevelObjectType, List<SpawnLocation>> spawnsMap;
+        private IDictionary<int, List<SpawnLocation>> spawnsMap;
         private LevelObjectType[] objectTypes;
 
         public LevelObjectType[] GetObjectTypes() {
@@ -26,7 +26,7 @@ namespace Catzilla.LevelAreaModule.View {
 
         public List<SpawnLocation> GetLocations(LevelObjectType objectType) {
             EnsureCache();
-            return spawnsMap[objectType];
+            return spawnsMap[(int) objectType];
         }
 
         private void OnDrawGizmos() {
@@ -50,7 +50,7 @@ namespace Catzilla.LevelAreaModule.View {
                 return;
             }
 
-            spawnsMap = new Dictionary<LevelObjectType, List<SpawnLocation>>();
+            spawnsMap = new Dictionary<int, List<SpawnLocation>>();
 
             for (int i = 0; i < spawns.Length; ++i) {
                 SpawnView spawn = spawns[i];
@@ -60,9 +60,9 @@ namespace Catzilla.LevelAreaModule.View {
                     List<SpawnLocation> spawnLocations;
 
                     if (!spawnsMap.TryGetValue(
-                            spawnObjectTypes[j], out spawnLocations)) {
+                            (int) spawnObjectTypes[j], out spawnLocations)) {
                         spawnLocations = new List<SpawnLocation>(64);
-                        spawnsMap[spawnObjectTypes[j]] = spawnLocations;
+                        spawnsMap[(int) spawnObjectTypes[j]] = spawnLocations;
                     }
 
                     spawnLocations.Add(spawn.Location);
@@ -72,7 +72,12 @@ namespace Catzilla.LevelAreaModule.View {
             var objectTypesCollection = spawnsMap.Keys;
             objectTypes =
                 new LevelObjectType[objectTypesCollection.Count];
-            objectTypesCollection.CopyTo(objectTypes, 0);
+            var k = 0;
+
+            foreach (int objectType in objectTypesCollection) {
+                objectTypes[k] = (LevelObjectType) objectType;
+                ++k;
+            }
         }
     }
 }

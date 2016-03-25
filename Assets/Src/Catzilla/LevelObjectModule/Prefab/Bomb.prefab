@@ -494,8 +494,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1103fdfaeec5e48b8b54acd9916fa7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraShakeAmount: {x: 0, y: 1, z: 0}
   ShakeCameraInOneDirection: 0
+  CameraShakeMinAmount: 1
+  CameraShakeMaxAmount: 2
+  CameraShakeDirection: {x: 0, y: 1, z: 0}
   CameraShakeDuration: 0.5
 --- !u!1001 &100100000
 Prefab:

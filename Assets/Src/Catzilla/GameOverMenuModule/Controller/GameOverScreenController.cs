@@ -48,39 +48,35 @@ namespace Catzilla.GameOverMenuModule.Controller {
 
         [PostInject]
         public void OnConstruct() {
-            GameOverScreen.Menu.ResurrectTextTemplate =
+            GameOverScreen.ResurrectTextTemplate =
                 Translator.Translate("GameOverMenu.Resurrect");
-            GameOverScreen.Menu.RewardTextTemplate =
+            GameOverScreen.RewardTextTemplate =
                 Translator.Translate("GameOverMenu.Reward");
             PlayerState playerState = PlayerStateStorage.Get();
 
             if (playerState != null) {
-                GameOverScreen.Menu.AvailableResurrectionsCount =
+                GameOverScreen.AvailableResurrectionsCount =
                     playerState.AvailableResurrectionsCount;
-                GameOverScreen.Menu.AvailableRewardsCount =
+                GameOverScreen.AvailableRewardsCount =
                     playerState.AvailableRewardsCount;
             }
         }
 
         public void OnPlayerStateStorageSave(Evt evt) {
             PlayerState playerState = PlayerStateStorage.Get();
-            GameOverScreen.Menu.AvailableResurrectionsCount =
+            GameOverScreen.AvailableResurrectionsCount =
                 playerState.AvailableResurrectionsCount;
-            GameOverScreen.Menu.AvailableRewardsCount =
+            GameOverScreen.AvailableRewardsCount =
                 playerState.AvailableRewardsCount;
         }
 
         public void OnExitBtnClick() {
-            AnalyticsUtils.LogEvent("Game.Exit");
             Game.UnloadLevel();
             GameOverScreen.GetComponent<ShowableView>().Hide();
             MainScreen.GetComponent<ShowableView>().Show();
         }
 
         public void OnRestartBtnClick() {
-            AnalyticsUtils.AddCategorizedEventParam(
-                "Level", PlayerStateStorage.Get().Level);
-            AnalyticsUtils.LogEvent("Game.Restart");
             var showable = GameOverScreen.GetComponent<ShowableView>();
             showable.OnHide += OnHideForRestart;
             showable.Hide();
@@ -101,17 +97,13 @@ namespace Catzilla.GameOverMenuModule.Controller {
         }
 
         public void OnRewardBtnClick() {
-            AnalyticsUtils.AddCategorizedEventParam(
-                "Level", PlayerStateStorage.Get().Level);
-            AnalyticsUtils.LogEvent("Ad.Show");
-            Ad.Show(OnAdView);
+            Ad.OnView += OnAdView;
+            Ad.Show();
         }
 
-        private void OnAdView() {
-            PlayerState playerState = PlayerStateStorage.Get();
-            AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
-            AnalyticsUtils.LogEvent("Ad.View");
-            RewardPlayer(playerState);
+        private void OnAdView(Ad ad) {
+            ad.OnView -= OnAdView;
+            RewardPlayer(PlayerStateStorage.Get());
         }
 
         private void RewardPlayer(PlayerState playerState) {

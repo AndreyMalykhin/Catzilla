@@ -598,7 +598,7 @@ MonoBehaviour:
   objectTypeInfoStorage: {fileID: 11400000, guid: c94c41fc41d4440969a8f8810acac19b,
     type: 2}
   objectType: 8
-  extraObjectTypes: 09000000
+  extraObjectTypes: 090000000d0000000e000000
   itemsAcrossX: 14
   itemsAcrossZ: 5
   color: {r: 1, g: 1, b: 1, a: 1}

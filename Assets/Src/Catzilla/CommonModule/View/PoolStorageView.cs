@@ -23,13 +23,14 @@ namespace Catzilla.CommonModule.View {
         public PoolableView Take(int poolId) {
             PoolableView instance = poolsMap[poolId].Take();
             instance.transform.SetParent(null, !instance.IsUI);
-            instance.gameObject.SetActive(true);
+            instance.gameObject.SetActive(instance.ActivateOnTake);
             return instance;
         }
 
         public void Return(PoolableView instance) {
             DebugUtils.Assert(instance.transform.parent != transform);
             poolsMap[instance.PoolId].Return(instance);
+            instance.ActivateOnTake = instance.gameObject.activeSelf;
             instance.transform.SetParent(transform, !instance.IsUI);
             instance.gameObject.SetActive(false);
             // DebugUtils.Log("PoolStorageView.Return(); left={0}; instance={1}",

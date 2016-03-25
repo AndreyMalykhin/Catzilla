@@ -15,122 +15,111 @@ using Catzilla.LevelObjectModule.View;
 namespace Catzilla.LevelObjectModule.Controller {
     public class PlayerController {
         [Inject]
-        public GameOverScreenView GameOverScreen {get; set;}
+        private GameOverScreenView gameOverScreen;
 
         [Inject]
-        public PlayerStateStorage PlayerStateStorage {get; set;}
+        private PlayerStateStorage playerStateStorage;
 
         [Inject]
-        public LevelCompleteScreenView LevelCompleteScreen {get; set;}
+        private LevelSettingsStorage levelSettingsStorage;
 
         [Inject]
-        public LevelSettingsStorage LevelSettingsStorage {get; set;}
+        private PoolStorageView poolStorage;
 
         [Inject]
-        public PoolStorageView PoolStorage {get; set;}
+        private AudioManager audioManager;
 
         [Inject]
-        public AudioManager AudioManager {get; set;}
-
-        [Inject]
-        public Server Server {get; set;}
-
-        [Inject]
-        public Game Game {get; set;}
+        private Server server;
 
         [Inject("PlayerHighPrioAudioChannel")]
-        public int PlayerHighPrioAudioChannel {get; set;}
+        private int playerHighPrioAudioChannel;
 
         [Inject("PlayerLowPrioAudioChannel")]
-        public int PlayerLowPrioAudioChannel {get; set;}
+        private int playerLowPrioAudioChannel;
 
         [Inject("PlayStopwatch")]
-        public Stopwatch PlayStopwatch {get; set;}
+        private Stopwatch playStopwatch;
 
         [Inject]
-        public GiftManager GiftManager {get; set;}
-
-        [Inject]
-        public ScreenSpacePopupManagerView PopupManager {get; set;}
-
-        [Inject]
-        public Translator Translator {get; set;}
-
-        [Inject("CommonPopupType")]
-        public int CommonPopupType {get; set;}
-
-        [Inject]
-        public RewardManager RewardManager {get; set;}
+        private Translator translator;
 
         [Inject("MainCamera")]
-        public Camera MainCamera {get; set;}
+        private Camera mainCamera;
 
         [Inject]
-        public PlayerManager PlayerManager {get; set;}
+        private PlayerManager playerManager;
+
+        [Inject]
+        private WorldSpacePopupManager worldSpacePopupManager;
+
+        [Inject("SpeechWorldPopupType")]
+        private int speechWorldPopupType;
 
         private PlayerView player;
 
         public void OnViewConstruct(Evt evt) {
             player = (PlayerView) evt.Source;
-            PlayStopwatch.Reset();
-            PlayStopwatch.Start();
-            MainCamera.gameObject.SetActive(false);
+            playStopwatch.Reset();
+            playStopwatch.Start();
+            mainCamera.gameObject.SetActive(false);
         }
 
         public void OnViewDestroy(Evt evt) {
-            if (MainCamera != null) {
-                MainCamera.gameObject.SetActive(true);
+            if (mainCamera != null) {
+                mainCamera.gameObject.SetActive(true);
             }
         }
 
         public void OnDeath(Evt evt) {
-            PlayerState playerState = PlayerStateStorage.Get();
-            AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
-            AnalyticsUtils.LogEvent("Player.Death");
-            PlayStopwatch.Stop();
+            playStopwatch.Stop();
+            PlayerState playerState = playerStateStorage.Get();
             playerState.ScoreRecord = player.Score;
-            playerState.PlayTime += PlayStopwatch.Elapsed;
-            PlayerStateStorage.Save(playerState);
+            playerState.PlayTime += playStopwatch.Elapsed;
+            playerStateStorage.Save(playerState);
 
-            if (Server.IsLoggedIn) {
-                PlayerStateStorage.Sync(Server);
+            if (server.IsLoggedIn) {
+                playerStateStorage.Sync(server);
             }
 
-            GameOverScreen.GetComponent<ShowableView>().Show();
+            gameOverScreen.GetComponent<ShowableView>().Show();
 
             if (player.DeathSound != null) {
-                AudioManager.Play(player.DeathSound, player.HighPrioAudioSource,
-                    PlayerHighPrioAudioChannel);
+                audioManager.Play(player.DeathSound, player.HighPrioAudioSource,
+                    playerHighPrioAudioChannel);
             }
         }
 
         public void OnFootstep(Evt evt) {
             var shockwavable = player.GetComponent<ShockwavableView>();
-            player.ShakeCamera(
-                shockwavable.CameraShakeAmount,
-                shockwavable.CameraShakeDuration,
-                shockwavable.ShakeCameraInOneDirection);
+
+            if (shockwavable != null) {
+                player.ShakeCamera(
+                    shockwavable.CameraShakeAmount,
+                    shockwavable.CameraShakeDuration,
+                    shockwavable.ShakeCameraInOneDirection);
+            }
 
             if (player.FootstepSound != null) {
                 var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
-                AudioManager.Play(
+                audioManager.Play(
                     player.FootstepSound,
                     player.LowPrioAudioSource,
-                    PlayerLowPrioAudioChannel,
+                    playerLowPrioAudioChannel,
                     pitch);
             }
         }
 
         public void OnScoreChange(Evt evt) {
             LevelSettings levelSettings =
-                LevelSettingsStorage.Get(PlayerStateStorage.Get().Level);
+                levelSettingsStorage.Get(playerStateStorage.Get().Level);
 
             if (player.Score < levelSettings.CompletionScore) {
                 return;
             }
 
-            PlayStopwatch.Stop();
-            PlayerManager.CompleteLevel(player);
+            playStopwatch.Stop();
+            playerManager.CompleteLevel(player);
         }
 
         public void OnHealthChange(Evt evt) {
@@ -142,10 +131,10 @@ namespace Catzilla.LevelObjectModule.Controller {
                 }
 
                 var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
-                AudioManager.Play(
+                audioManager.Play(
                     player.HurtSound,
                     player.HighPrioAudioSource,
-                    PlayerHighPrioAudioChannel,
+                    playerHighPrioAudioChannel,
                     pitch);
             } else if (player.Health > oldHealth) {
                 if (player.TreatSound == null) {
@@ -153,17 +142,23 @@ namespace Catzilla.LevelObjectModule.Controller {
                 }
 
                 var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
-                AudioManager.Play(player.TreatSound, player.HighPrioAudioSource,
-                    PlayerHighPrioAudioChannel, pitch);
+                audioManager.Play(player.TreatSound, player.HighPrioAudioSource,
+                    playerHighPrioAudioChannel, pitch);
             }
         }
 
+        public void OnRefuse(Evt evt) {
+            WorldSpacePopupView popup =
+                worldSpacePopupManager.Get(speechWorldPopupType);
+            popup.Msg.text = translator.Translate("Player.Refuse");
+            popup.LookAtTarget = player.Camera;
+            popup.PlaceAbove(player.Collider.bounds);
+            worldSpacePopupManager.Show(popup);
+        }
+
         public void OnResurrect(Evt evt) {
-            PlayStopwatch.Reset();
-            PlayStopwatch.Start();
-            AnalyticsUtils.AddCategorizedEventParam(
-                "Level", PlayerStateStorage.Get().Level);
-            AnalyticsUtils.LogEvent("Player.Resurrection");
+            playStopwatch.Reset();
+            playStopwatch.Start();
             CleanProjectiles();
         }
 
@@ -172,7 +167,7 @@ namespace Catzilla.LevelObjectModule.Controller {
                 typeof(ProjectileView));
 
             for (int i = 0; i < projectiles.Length; ++i) {
-                PoolStorage.Return(projectiles[i].GetComponent<PoolableView>());
+                poolStorage.Return(projectiles[i].GetComponent<PoolableView>());
             }
         }
     }

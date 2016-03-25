@@ -25,11 +25,11 @@ namespace Catzilla.LevelAreaModule.View {
             var eventBus = container.Resolve<EventBus>();
             var levelAreaController =
                 container.Resolve<LevelAreaController>();
-            eventBus.On(LevelView.Event.Construct,
+            eventBus.On((int) Events.LevelConstruct,
                 levelAreaController.OnLevelConstruct);
-            eventBus.On(PlayerView.Event.Construct,
+            eventBus.On((int) Events.PlayerConstruct,
                 levelAreaController.OnPlayerConstruct);
-            eventBus.On(LevelAreaView.Event.TriggerEnter,
+            eventBus.On((int) Events.LevelAreaTriggerEnter,
                 levelAreaController.OnTriggerEnter);
         }
     }

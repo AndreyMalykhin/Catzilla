@@ -23,18 +23,18 @@ namespace Catzilla.GameOverMenuModule.View {
             var eventBus = container.Resolve<EventBus>();
             var gameOverScreenController =
                 container.Resolve<GameOverScreenController>();
-            eventBus.On(PlayerView.Event.Construct,
+            eventBus.On((int) Events.PlayerConstruct,
                 gameOverScreenController.OnPlayerConstruct);
-            eventBus.On(PlayerStateStorage.Event.Save,
+            eventBus.On((int) Events.PlayerStateStorageSave,
                 gameOverScreenController.OnPlayerStateStorageSave);
             var gameOverScreen = container.Resolve<GameOverScreenView>();
-            gameOverScreen.Menu.ExitBtn.onClick.AddListener(
+            gameOverScreen.ExitBtn.onClick.AddListener(
                 gameOverScreenController.OnExitBtnClick);
-            gameOverScreen.Menu.RestartBtn.onClick.AddListener(
+            gameOverScreen.RestartBtn.onClick.AddListener(
                 gameOverScreenController.OnRestartBtnClick);
-            gameOverScreen.Menu.ResurrectBtn.onClick.AddListener(
+            gameOverScreen.ResurrectBtn.onClick.AddListener(
                 gameOverScreenController.OnResurrectBtnClick);
-            gameOverScreen.Menu.RewardBtn.onClick.AddListener(
+            gameOverScreen.RewardBtn.onClick.AddListener(
                 gameOverScreenController.OnRewardBtnClick);
         }
     }

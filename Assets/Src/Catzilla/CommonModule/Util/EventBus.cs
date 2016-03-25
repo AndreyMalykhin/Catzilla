@@ -4,11 +4,11 @@ namespace Catzilla.CommonModule.Util {
     public class EventBus {
         public delegate void Listener(Evt evt);
 
-        private readonly IDictionary<object, List<Listener>> eventListeners =
-            new Dictionary<object, List<Listener>>();
+        private readonly IDictionary<int, List<Listener>> eventListeners =
+            new Dictionary<int, List<Listener>>(64);
 
-        public void Fire(object eventId, Evt evt) {
-            List<Listener> listeners;
+        public void Fire(int eventId, Evt evt) {
+            List<Listener> listeners = null;
 
             if (!eventListeners.TryGetValue(eventId, out listeners)) {
                 return;
@@ -19,8 +19,8 @@ namespace Catzilla.CommonModule.Util {
             }
         }
 
-        public void On(object eventId, Listener listener) {
-            List<Listener> listeners;
+        public void On(int eventId, Listener listener) {
+            List<Listener> listeners = null;
 
             if (!eventListeners.TryGetValue(eventId, out listeners)) {
                 listeners = new List<Listener>(4);

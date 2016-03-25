@@ -32,7 +32,6 @@ namespace Catzilla.MainMenuModule.Controller {
         }
 
         public void OnFeedbackBtnClick() {
-            AnalyticsUtils.LogEvent("Feedback.Leave");
             string subject = WWW.EscapeURL("Feedback");
             string url =
                 string.Format("mailto:{0}?subject={1}", FeedbackEmail, subject);
@@ -40,13 +39,13 @@ namespace Catzilla.MainMenuModule.Controller {
         }
 
         public void OnLoginBtnClick() {
-            AnalyticsUtils.LogEvent("Player.Login");
-            AuthManager.Login(OnLogin);
+            AuthManager.OnLoginSuccess += OnLogin;
+            AuthManager.Login();
         }
 
         public void OnServerDispose(Evt evt) {
-            MainScreen.Menu.LeaderboardBtn.interactable = false;
-            MainScreen.Menu.AchievementsBtn.interactable = false;
+            MainScreen.LeaderboardBtn.interactable = false;
+            MainScreen.AchievementsBtn.interactable = false;
             MainScreen.LoginBtn.interactable = false;
         }
 
@@ -55,40 +54,38 @@ namespace Catzilla.MainMenuModule.Controller {
         }
 
         public void OnStartBtnClick() {
-            AnalyticsUtils.LogEvent("Game.Start");
             MainScreen.GetComponent<ShowableView>().Hide();
             Game.LoadLevel();
         }
 
         public void OnLeaderboardBtnClick() {
-            AnalyticsUtils.AddCategorizedEventParam(
-                "Level", PlayerStateStorage.Get().Level);
-            AnalyticsUtils.LogEvent("Leaderboard.View");
-            AuthManager.Login(OnLoginForLeaderboard);
+            AuthManager.OnLoginSuccess += OnLoginForLeaderboard;
+            AuthManager.Login();
         }
 
         public void OnAchievementsBtnClick() {
-            AnalyticsUtils.AddCategorizedEventParam(
-                "Level", PlayerStateStorage.Get().Level);
-            AnalyticsUtils.LogEvent("Achievements.View");
-            AuthManager.Login(OnLoginForAchievements);
+            AuthManager.OnLoginSuccess += OnLoginForAchievements;
+            AuthManager.Login();
         }
 
         public void OnReplaysBtnClick() {
             Everyplay.ShowWithPath("/feed/game");
         }
 
-        private void OnLoginForLeaderboard() {
-            OnLogin();
+        private void OnLoginForLeaderboard(AuthManager authManager) {
+            authManager.OnLoginSuccess += OnLoginForLeaderboard;
+            OnLogin(authManager);
             Social.ShowLeaderboardUI();
         }
 
-        private void OnLoginForAchievements() {
-            OnLogin();
+        private void OnLoginForAchievements(AuthManager authManager) {
+            authManager.OnLoginSuccess += OnLoginForAchievements;
+            OnLogin(authManager);
             Social.ShowAchievementsUI();
         }
 
-        private void OnLogin() {
+        private void OnLogin(AuthManager authManager) {
+            authManager.OnLoginSuccess -= OnLogin;
             MainScreen.LoginBtn.gameObject.SetActive(false);
         }
     }

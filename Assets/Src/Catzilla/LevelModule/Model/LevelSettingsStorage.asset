@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff7d20bf6070b4fcfa7c45db0f9fd970, type: 3}
   m_Name: LevelSettingsStorage
   m_EditorClassIdentifier: 
-  completionScoreLevelFactor: 512
+  completionScoreLevelFactor: 1024
   minCompletionScore: 2048
   playerMinFrontSpeed: 8
   playerMaxFrontSpeed: 8
@@ -26,9 +26,11 @@ MonoBehaviour:
     - objectType: 1
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
+      spawnChance: 1
     - objectType: 7
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 8
+      spawnChance: 1
   - ObjectSettings: []
   - ObjectSettings: []
   - ObjectSettings: []
@@ -38,36 +40,56 @@ MonoBehaviour:
     - objectType: 1
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
+      spawnChance: 0.75
     - objectType: 3
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
+      spawnChance: 0.75
     - objectType: 4
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
+      spawnChance: 0.75
     - objectType: 5
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
+      spawnChance: 0.75
     - objectType: 6
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
+      spawnChance: 0.75
     - objectType: 8
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
+      spawnChance: 0.75
     - objectType: 9
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
+      spawnChance: 0.75
     - objectType: 2
-      minSpawnsPerArea: 0
+      minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
+      spawnChance: 0.5
     - objectType: 10
-      minSpawnsPerArea: 0
+      minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
+      spawnChance: 0.5
     - objectType: 7
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
+      spawnChance: 0.5
     - objectType: 11
-      minSpawnsPerArea: 0
+      minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
+      spawnChance: 0.5
     - objectType: 12
-      minSpawnsPerArea: 0
+      minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
+      spawnChance: 0.5
+    - objectType: 13
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+      spawnChance: 0.75
+    - objectType: 14
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+      spawnChance: 0.75

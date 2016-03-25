@@ -11,8 +11,6 @@ using Catzilla.LevelModule.Model;
 
 namespace Catzilla.LevelModule.View {
     public class LevelView: MonoBehaviour {
-        public enum Event {Construct}
-
         [Inject]
         public EventBus EventBus {get; set;}
 
@@ -32,7 +30,7 @@ namespace Catzilla.LevelModule.View {
         [PostInject]
         public void OnConstruct() {
             // DebugUtils.Log("LevelView.OnConstruct()");
-            EventBus.Fire(Event.Construct, new Evt(this));
+            EventBus.Fire((int) Events.LevelConstruct, new Evt(this));
         }
 
         public void Init(int index) {

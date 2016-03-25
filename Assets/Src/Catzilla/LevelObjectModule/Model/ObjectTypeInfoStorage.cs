@@ -10,11 +10,11 @@ namespace Catzilla.LevelObjectModule.Model {
         private ObjectTypeInfo[] items;
 
         [NonSerialized]
-        private readonly IDictionary<LevelObjectType, ObjectTypeInfo> itemsMap =
-            new Dictionary<LevelObjectType, ObjectTypeInfo>(16);
+        private readonly IDictionary<int, ObjectTypeInfo> itemsMap =
+            new Dictionary<int, ObjectTypeInfo>(16);
 
         public ObjectTypeInfo Get(LevelObjectType type) {
-            return itemsMap[type];
+            return itemsMap[(int) type];
         }
 
         public ICollection<ObjectTypeInfo> GetAll() {
@@ -23,7 +23,7 @@ namespace Catzilla.LevelObjectModule.Model {
 
         private void OnEnable() {
             for (int i = 0; i < items.Length; ++i) {
-                itemsMap.Add(items[i].Type, items[i]);
+                itemsMap.Add((int) items[i].Type, items[i]);
             }
         }
     }

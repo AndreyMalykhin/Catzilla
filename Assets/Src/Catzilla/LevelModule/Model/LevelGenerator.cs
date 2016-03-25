@@ -33,62 +33,64 @@ namespace Catzilla.LevelModule.Model {
             }
         }
 
-        [Inject]
-        public LevelAreaGenerator AreaGenerator {get; set;}
+        public int InitialAreasCount {get {return 3;}}
 
         [Inject]
-        public EnvTypeInfoStorage EnvTypeInfoStorage {get; set;}
+        private LevelAreaGenerator areaGenerator;
 
         [Inject]
-        public ObjectTypeInfoStorage ObjectTypeInfoStorage {get; set;}
+        private EnvTypeInfoStorage envTypeInfoStorage;
 
         [Inject]
-        public LevelSettingsStorage LevelSettingsStorage {get; set;}
+        private ObjectTypeInfoStorage objectTypeInfoStorage;
+
+        [Inject]
+        private LevelSettingsStorage levelSettingsStorage;
 
         [Inject("PlayerObjectType")]
-        public LevelObjectType PlayerObjectType {get; set;}
+        private LevelObjectType playerObjectType;
 
-        public int InitialAreasCount {get {return 3;}}
-        public int ActiveBonusObjects {get; set;}
+        [Inject]
+        private BonusSpawnResolver bonusSpawnResolver;
 
         private State nextState;
-        private readonly IDictionary<State, StateTransition[]> states =
-            new Dictionary<State, StateTransition[]>();
+        private readonly IDictionary<int, StateTransition[]> states =
+            new Dictionary<int, StateTransition[]>(16);
         private readonly List<SpawnsInfo> spawnsInfosBuffer =
             new List<SpawnsInfo>(16);
 
         [PostInject]
         public void OnConstruct() {
-            states[State.First] = new StateTransition[] {
+            states[(int) State.First] = new StateTransition[] {
                 new StateTransition(EnvType.HoodEnd, State.Second)
             };
-            states[State.Second] = new StateTransition[] {
+            states[(int) State.Second] = new StateTransition[] {
                 new StateTransition(EnvType.HoodStart, State.Third)
             };
-            states[State.Third] = new StateTransition[] {
+            states[(int) State.Third] = new StateTransition[] {
                 new StateTransition(EnvType.HoodMiddle, State.HoodMiddle)
             };
-            states[State.TrackMiddle] = new StateTransition[] {
+            states[(int) State.TrackMiddle] = new StateTransition[] {
                 new StateTransition(EnvType.TrackMiddle, State.TrackMiddle),
                 new StateTransition(EnvType.TrackEnd, State.TrackEnd)
             };
-            states[State.TrackEnd] = new StateTransition[] {
+            states[(int) State.TrackEnd] = new StateTransition[] {
                 new StateTransition(EnvType.HoodStart, State.HoodMiddle),
                 new StateTransition(EnvType.ParkStart, State.ParkMiddle)
             };
-            states[State.HoodMiddle] = new StateTransition[] {
+            states[(int) State.HoodMiddle] = new StateTransition[] {
                 new StateTransition(EnvType.HoodMiddle, State.HoodMiddle),
                 new StateTransition(EnvType.HoodEnd, State.HoodEnd)
             };
-            states[State.HoodEnd] = new StateTransition[] {
+            states[(int) State.HoodEnd] = new StateTransition[] {
                 new StateTransition(EnvType.TrackStart, State.TrackMiddle),
                 new StateTransition(EnvType.ParkStart, State.ParkMiddle)
             };
-            states[State.ParkMiddle] = new StateTransition[] {
+            states[(int) State.ParkMiddle] = new StateTransition[] {
                 new StateTransition(EnvType.ParkMiddle, State.ParkMiddle),
                 new StateTransition(EnvType.ParkEnd, State.ParkEnd)
             };
-            states[State.ParkEnd] = new StateTransition[] {
+            states[(int) State.ParkEnd] = new StateTransition[] {
                 new StateTransition(EnvType.TrackStart, State.TrackMiddle),
                 new StateTransition(EnvType.HoodStart, State.HoodMiddle)
             };
@@ -99,20 +101,20 @@ namespace Catzilla.LevelModule.Model {
             // DebugUtils.Log("LevelGenerator.NewLevel()");
             outputLevel.Init(levelIndex);
             nextState = State.First;
-            ActiveBonusObjects = 0;
+            bonusSpawnResolver.ActiveBonusObjects = 0;
             spawnsInfosBuffer.Clear();
             LevelSettings levelSettings =
-                LevelSettingsStorage.Get(outputLevel.Index);
+                levelSettingsStorage.Get(outputLevel.Index);
             EnvType envType = NextState(levelSettings);
-            EnvTypeInfo envTypeInfo = EnvTypeInfoStorage.Get(envType);
-            AreaGenerator.NewArea(
+            EnvTypeInfo envTypeInfo = envTypeInfoStorage.Get(envType);
+            areaGenerator.NewArea(
                 envTypeInfo,
                 spawnsInfosBuffer,
                 levelSettings,
                 outputLevel,
                 (LevelAreaView area1) => {
                     envType = NextState(levelSettings);
-                    envTypeInfo = EnvTypeInfoStorage.Get(envType);
+                    envTypeInfo = envTypeInfoStorage.Get(envType);
                     PlayerView player = null;
                     bool spawnPlayer = true;
                     List<SpawnsInfo> spawnsInfos = GetSpawnsInfos(
@@ -120,21 +122,21 @@ namespace Catzilla.LevelModule.Model {
                         envTypeInfo,
                         spawnPlayer,
                         player);
-                    AreaGenerator.NewArea(
+                    areaGenerator.NewArea(
                         envTypeInfo,
                         spawnsInfos,
                         levelSettings,
                         outputLevel,
                         (LevelAreaView area2) => {
                             envType = NextState(levelSettings);
-                            envTypeInfo = EnvTypeInfoStorage.Get(envType);
+                            envTypeInfo = envTypeInfoStorage.Get(envType);
                             spawnPlayer = false;
                             spawnsInfos = GetSpawnsInfos(
                                 levelSettings,
                                 envTypeInfo,
                                 spawnPlayer,
                                 player);
-                            AreaGenerator.NewArea(
+                            areaGenerator.NewArea(
                                 envTypeInfo,
                                 spawnsInfos,
                                 levelSettings,
@@ -150,13 +152,13 @@ namespace Catzilla.LevelModule.Model {
             Action<LevelAreaView> onDone = null) {
             // DebugUtils.Log("LevelGenerator.NewArea()");
             LevelSettings levelSettings =
-                LevelSettingsStorage.Get(outputLevel.Index);
+                levelSettingsStorage.Get(outputLevel.Index);
             bool spawnPlayer = false;
             EnvType envType = NextState(levelSettings);
-            EnvTypeInfo envTypeInfo = EnvTypeInfoStorage.Get(envType);
+            EnvTypeInfo envTypeInfo = envTypeInfoStorage.Get(envType);
             List<SpawnsInfo> spawnsInfos =
                 GetSpawnsInfos(levelSettings, envTypeInfo, spawnPlayer, player);
-            AreaGenerator.NewArea(
+            areaGenerator.NewArea(
                 envTypeInfo,
                 spawnsInfos,
                 levelSettings,
@@ -165,14 +167,14 @@ namespace Catzilla.LevelModule.Model {
         }
 
         private EnvType NextState(LevelSettings levelSettings) {
-            StateTransition[] stateTransitions = states[nextState];
+            StateTransition[] stateTransitions = states[(int) nextState];
             int stateTransitionsCount = stateTransitions.Length;
             int weightsSum = 0;
             int levelIndex = levelSettings.Index;
 
             for (int i = 0; i < stateTransitionsCount; ++i) {
                 EnvTypeInfo envTypeInfo =
-                    EnvTypeInfoStorage.Get(stateTransitions[i].EnvType);
+                    envTypeInfoStorage.Get(stateTransitions[i].EnvType);
                 weightsSum += envTypeInfo.GetSpawnWeight(levelIndex);
             }
 
@@ -182,7 +184,7 @@ namespace Catzilla.LevelModule.Model {
             for (int i = 0; i < stateTransitionsCount; ++i) {
                 var stateTransition = stateTransitions[i];
                 EnvTypeInfo envTypeInfo =
-                    EnvTypeInfoStorage.Get(stateTransition.EnvType);
+                    envTypeInfoStorage.Get(stateTransition.EnvType);
                 currentWeight += envTypeInfo.GetSpawnWeight(levelIndex);
 
                 if (currentWeight >= randomWeight) {
@@ -209,17 +211,17 @@ namespace Catzilla.LevelModule.Model {
             for (int i = 0; i < objectTypesCount; ++i) {
                 LevelObjectType objectType = objectTypes[i];
                 ObjectTypeInfo objectTypeInfo =
-                    ObjectTypeInfoStorage.Get(objectType);
+                    objectTypeInfoStorage.Get(objectType);
                 ObjectLevelSettings objectLevelSettings =
                     levelSettings.GetObjectSettings(objectType);
                 int spawnsCount = 0;
 
-                if (objectType == PlayerObjectType) {
+                if (objectType == playerObjectType) {
                     spawnsCount = spawnPlayer ? 1 : 0;
                     spawnPlayer = false;
                 } else if (objectLevelSettings != null
                            && UnityEngine.Random.value <=
-                               objectTypeInfo.SpawnChance) {
+                               objectLevelSettings.SpawnChance) {
                     LevelObjectView objectProto = objectTypeInfo.ProtoInfo.View;
                     spawnsCount = UnityEngine.Random.Range(
                         objectLevelSettings.MinSpawnsPerArea,
@@ -228,12 +230,12 @@ namespace Catzilla.LevelModule.Model {
 
                     if (bonus != null) {
                         if (player == null
-                            || ActiveBonusObjects > 0
-                            || !bonus.IsNeeded(player, levelSettings)
-                            || !bonus.CanGive(player, levelSettings)) {
+                            || !bonusSpawnResolver.IsTimeToSpawn(
+                                    bonus, player)) {
                             spawnsCount = 0;
                         } else {
-                            ActiveBonusObjects += spawnsCount;
+                            bonusSpawnResolver.ActiveBonusObjects +=
+                                spawnsCount;
                         }
                     }
                 }
@@ -246,8 +248,14 @@ namespace Catzilla.LevelModule.Model {
 
         private int ObjectTypeComparator(
             LevelObjectType lhs, LevelObjectType rhs) {
-            return ObjectTypeInfoStorage.Get(lhs).SpawnPriority.CompareTo(
-                ObjectTypeInfoStorage.Get(rhs).SpawnPriority);
+            int result = objectTypeInfoStorage.Get(lhs).SpawnPriority
+                - objectTypeInfoStorage.Get(rhs).SpawnPriority;
+
+            if (result == 0) {
+                return UnityEngine.Random.Range(0, 2) == 0 ? 1 : -1;
+            }
+
+            return result;
         }
     }
 }

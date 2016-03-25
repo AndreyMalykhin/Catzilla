@@ -15,8 +15,6 @@ using Catzilla.PlayerModule.Model;
 namespace Catzilla.CommonModule.Model {
     [CreateAssetMenuAttribute]
     public class Server: ScriptableObject, IDisposable {
-        public enum Event {Request, Response, Dispose}
-
         [Inject]
         public CoroutineManagerView CoroutineManager {get; set;}
 
@@ -175,21 +173,21 @@ namespace Catzilla.CommonModule.Model {
             isConnected = false;
             isLoggedIn = false;
             isDisposed = true;
-            EventBus.Fire(Event.Dispose, new Evt(this));
+            EventBus.Fire((int) Events.ServerDispose, new Evt(this));
         }
 
         private void OnRequest() {
             ++pendingRequestsCount;
             // DebugUtils.Log("Server.OnRequest(); pendingRequestsCount={0}",
             //     PendingRequestsCount);
-            EventBus.Fire(Event.Request, new Evt(this));
+            EventBus.Fire((int) Events.ServerRequest, new Evt(this));
         }
 
         private void OnResponse(bool isSuccess) {
             --pendingRequestsCount;
             // DebugUtils.Log("Server.OnResponse(); pendingRequestsCount={0}",
             //     PendingRequestsCount);
-            EventBus.Fire(Event.Response, new Evt(this, isSuccess));
+            EventBus.Fire((int) Events.ServerResponse, new Evt(this, isSuccess));
         }
 
         private void OpenSavedGame(

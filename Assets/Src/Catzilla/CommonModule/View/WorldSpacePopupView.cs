@@ -9,26 +9,37 @@ namespace Catzilla.CommonModule.View {
     public class WorldSpacePopupView: MonoBehaviour, IPoolable {
         public Camera LookAtTarget {
             get {return lookAtTarget;}
-            set {
-                lookAtTarget = value;
-                FitIntoCamera();
-            }
+            set {lookAtTarget = value;}
         }
 
         public Text Msg;
-        public float Offset;
+        public Vector3 Offset;
+
+        [SerializeField]
+        private Vector3 offScreenPosition = new Vector3(Int16.MinValue, 0f, 0f);
 
         private Camera lookAtTarget;
         private readonly Vector3[] corners = new Vector3[4];
+        private int countOfUpdatesTillPlacement = -1;
+        private Bounds placementTargetBounds;
 
         public void PlaceAbove(Bounds bounds) {
-            transform.position = new Vector3(
-                bounds.center.x, bounds.max.y + Offset, bounds.center.z);
-            FitIntoCamera();
+            placementTargetBounds = bounds;
+            countOfUpdatesTillPlacement = 1;
         }
 
         void IPoolable.Reset() {
             LookAtTarget = null;
+            countOfUpdatesTillPlacement = -1;
+            ResetPosition();
+        }
+
+        private void Awake() {
+            ResetPosition();
+        }
+
+        private void ResetPosition() {
+            transform.position = offScreenPosition;
         }
 
         private void FitIntoCamera() {
@@ -40,6 +51,7 @@ namespace Catzilla.CommonModule.View {
             transform.GetWorldCorners(corners);
             Vector3 popupRight = corners[2];
             Vector3 popupLeft = corners[0];
+            Debug.DrawLine(popupLeft, popupRight);
             float distance =
                 lookAtTarget.transform.position.y - transform.position.y;
             Vector3 screenRight = lookAtTarget.ViewportToWorldPoint(
@@ -47,10 +59,10 @@ namespace Catzilla.CommonModule.View {
             Vector3 screenLeft = lookAtTarget.ViewportToWorldPoint(
                 new Vector3(0f, 0f, distance));
 
-            if (popupRight.x > screenRight.x) {
-                transform.Translate(screenRight.x - popupRight.x, 0f, 0f);
-            } else if (popupLeft.x < screenLeft.x) {
+            if (popupLeft.x < screenLeft.x) {
                 transform.Translate(screenLeft.x - popupLeft.x, 0f, 0f);
+            } else if (popupRight.x > screenRight.x) {
+                transform.Translate(screenRight.x - popupRight.x, 0f, 0f);
             }
         }
 
@@ -61,6 +73,20 @@ namespace Catzilla.CommonModule.View {
 
             transform.rotation =
                 Quaternion.LookRotation(LookAtTarget.transform.forward);
+            Place();
+        }
+
+        private void Place() {
+            if (countOfUpdatesTillPlacement == 0) {
+                transform.position = new Vector3(
+                    placementTargetBounds.center.x,
+                    placementTargetBounds.max.y,
+                    placementTargetBounds.center.z) + Offset;
+                FitIntoCamera();
+                --countOfUpdatesTillPlacement;
+            } else if (countOfUpdatesTillPlacement > 0) {
+                --countOfUpdatesTillPlacement;
+            }
         }
     }
 }

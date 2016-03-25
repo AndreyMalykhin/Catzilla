@@ -189,6 +189,9 @@
 	<data name="Player.GiftEarn" xml:space="preserve">
 		<value>+{0} воскрешение</value>
 	</data>
+	<data name="Player.Refuse" xml:space="preserve">
+		<value>Мяу!</value>
+	</data>
 	<data name="Player.RewardEarn" xml:space="preserve">
 		<value>+{0} воскрешение</value>
 	</data>
@@ -198,6 +201,12 @@
 	<data name="Player.Score" xml:space="preserve">
 		<value>{0} / {1}</value>
 	</data>
+	<data name="ResurrectionBonus.Take" xml:space="preserve">
+		<value>+{0} воскрешение</value>
+	</data>
+	<data name="RewardBonus.Take" xml:space="preserve">
+		<value>+{0} приз</value>
+	</data>
 	<data name="TutorialScreen.End" xml:space="preserve">
 		<value>Ясно!</value>
 	</data>
@@ -205,7 +214,7 @@
 		<value>Далее</value>
 	</data>
 	<data name="TutorialScreen.Step1" xml:space="preserve">
-		<value>Привет, дружище. Это короткое руководство объяснит, как перестать водить пальцами по экрану и начать побеждать... или умереть пытаясь</value>
+		<value>Привет, дружище. Это короткое руководство объяснит, как перестать использовать жесты и начать побеждать... или умереть пытаясь</value>
 	</data>
 	<data name="TutorialScreen.Step2" xml:space="preserve">
 		<value>Нажатие в этой области перемещает тебя в соответствующую сторону</value>

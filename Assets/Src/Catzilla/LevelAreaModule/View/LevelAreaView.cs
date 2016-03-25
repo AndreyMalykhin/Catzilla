@@ -8,8 +8,6 @@ using Catzilla.LevelObjectModule.View;
 
 namespace Catzilla.LevelAreaModule.View {
     public class LevelAreaView: MonoBehaviour {
-        public enum Event {TriggerEnter}
-
         [Inject]
         public EventBus EventBus {get; set;}
 
@@ -20,12 +18,8 @@ namespace Catzilla.LevelAreaModule.View {
         }
 
         private void OnTriggerEnter(Collider collider) {
-            ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
-                Event.TriggerEnter, new Evt(this, collider));
-        }
-
-        private EventBus GetEventBus() {
-            return EventBus;
+            EventBus.Fire((int) Events.LevelAreaTriggerEnter,
+                new Evt(this, collider));
         }
     }
 }

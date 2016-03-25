@@ -33,12 +33,20 @@ namespace Catzilla.LevelObjectModule.Controller {
 
             if (scoreBonus != null) {
                 ++player.ScoreBonusesTaken;
+                playerManager.AddScore(player, scoreBonus.Scoreable);
             }
 
-            var scoreable = takeable.GetComponent<ScoreableView>();
+            var resurrectionBonus =
+                takeable.GetComponent<ResurrectionBonusView>();
 
-            if (scoreable != null) {
-                playerManager.AddScore(player, scoreable);
+            if (resurrectionBonus != null) {
+                playerManager.ApplyResurrectionBonus(player, resurrectionBonus);
+            }
+
+            var rewardBonus = takeable.GetComponent<RewardBonusView>();
+
+            if (rewardBonus != null) {
+                playerManager.ApplyRewardBonus(player, rewardBonus);
             }
 
             var treating = takeable.GetComponent<TreatingView>();

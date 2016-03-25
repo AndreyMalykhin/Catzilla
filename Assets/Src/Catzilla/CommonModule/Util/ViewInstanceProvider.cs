@@ -21,6 +21,7 @@ namespace Catzilla.CommonModule.Util {
             var instance = instantiator.InstantiatePrefab(proto.gameObject)
                 .GetComponent<PoolableView>();
             instance.transform.SetParent(parent, !instance.IsUI);
+            instance.ActivateOnTake = instance.gameObject.activeSelf;
             instance.gameObject.SetActive(false);
             return instance;
         }

@@ -4,8 +4,6 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelObjectModule.View {
     public class ExplosiveView: MonoBehaviour {
-        public enum Event {Explode}
-
         public struct ExplosionInfo {
             public readonly Vector3 Position;
             public readonly float Force;
@@ -62,7 +60,8 @@ namespace Catzilla.LevelObjectModule.View {
                 explosionForce, explosionUpwardsModifier, explosionSource);
             var explosionInfo = new ExplosionInfo(explosionSource,
                 explosionForce, hitObjectsCount, hitObjects);
-            eventBus.Fire(Event.Explode, new Evt(this, explosionInfo));
+            eventBus.Fire((int) Events.ExplosiveExplode,
+                new Evt(this, explosionInfo));
         }
 
         private void OnDrawGizmos() {

@@ -5,8 +5,6 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class TakeableView: MonoBehaviour, IPoolable {
-        public enum Event {TriggerEnter}
-
         public bool IsTaken {get {return isTaken;}}
         public AudioClip TakeSound;
 
@@ -31,7 +29,8 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void OnTriggerEnter(Collider collider) {
-            eventBus.Fire(Event.TriggerEnter, new Evt(this, collider));
+            eventBus.Fire((int) Events.TakeableTriggerEnter,
+                new Evt(this, collider));
         }
     }
 }

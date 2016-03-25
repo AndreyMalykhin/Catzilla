@@ -6,8 +6,6 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class BtnView: MonoBehaviour {
-        public enum Event {Click}
-
         [Inject]
         public EventBus EventBus {get; set;}
 
@@ -20,7 +18,7 @@ namespace Catzilla.CommonModule.View {
         }
 
         private void OnClick() {
-            EventBus.Fire(Event.Click, new Evt(this));
+            EventBus.Fire((int) Events.BtnClick, new Evt(this));
         }
     }
 }

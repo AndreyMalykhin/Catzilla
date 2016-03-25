@@ -5,7 +5,7 @@ AnimatorOverrideController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ScorePopup
+  m_Name: WorldSpacePopup
   m_Controller: {fileID: 9100000, guid: 46b213811630d40d7a5e3360b10656c4, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: a82dc77563adf4c93a65dee520d62b78, type: 2}

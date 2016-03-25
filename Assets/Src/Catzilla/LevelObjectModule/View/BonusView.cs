@@ -2,22 +2,17 @@ using UnityEngine;
 using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelModule.Model;
+using Catzilla.LevelObjectModule.Model;
 
 namespace Catzilla.LevelObjectModule.View {
     public abstract class BonusView: MonoBehaviour, IPoolable {
-        public enum Event {Destroy}
-
         [Inject]
         protected EventBus EventBus;
 
-        public abstract bool IsNeeded(
-            PlayerView player, LevelSettings levelSettings);
-
-        public abstract bool CanGive(
-            PlayerView player, LevelSettings levelSettings);
+        public abstract void Accept(BonusVisitor visitor);
 
         void IPoolable.Reset() {
-            EventBus.Fire(Event.Destroy, new Evt(this));
+            EventBus.Fire((int) Events.BonusDestroy, new Evt(this));
         }
     }
 }

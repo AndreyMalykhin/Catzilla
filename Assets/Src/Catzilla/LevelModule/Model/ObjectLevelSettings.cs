@@ -8,6 +8,7 @@ namespace Catzilla.LevelModule.Model {
         public LevelObjectType ObjectType {get {return objectType;}}
         public int MinSpawnsPerArea {get {return minSpawnsPerArea;}}
         public int MaxSpawnsPerArea {get {return maxSpawnsPerArea;}}
+        public float SpawnChance {get {return spawnChance;}}
 
         [SerializeField]
         private LevelObjectType objectType;
@@ -17,5 +18,8 @@ namespace Catzilla.LevelModule.Model {
 
         [SerializeField]
         private int maxSpawnsPerArea;
+
+        [SerializeField]
+        private float spawnChance = 1f;
     }
 }

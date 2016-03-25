@@ -13,6 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 6
   scoreRecord: 0
-  availableResurrectionsCount: 7
-  availableRewardsCount: 1
+  availableResurrectionsCount: 0
+  availableRewardsCount: 0
   wasTutorialShown: 0

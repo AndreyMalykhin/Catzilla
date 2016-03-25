@@ -8,29 +8,8 @@ using Catzilla.PlayerModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class PlayerView: LevelObjectView {
-        public enum Event {
-            Construct,
-            HealthChange,
-            Death,
-            ScoreChange,
-            Resurrect,
-            Footstep,
-            Destroy
-        }
-
-        [Inject]
-        public EventBus EventBus {get; set;}
-
-        [Inject("LevelMinX")]
-        public float LevelMinX {get; set;}
-
-        [Inject("LevelMaxX")]
-        public float LevelMaxX {get; set;}
-
-        [Inject]
-        public IInstantiator Instantiator {get; set;}
-
         public int ScoreBonusesTaken {get; set;}
+        public int ResurrectionBonusesTaken {get; set;}
 
         public int Score {
             get {return score;}
@@ -42,7 +21,7 @@ namespace Catzilla.LevelObjectModule.View {
                 }
 
                 score = value;
-                EventBus.Fire(Event.ScoreChange, new Evt(this));
+                eventBus.Fire((int) Events.PlayerScoreChange, new Evt(this));
             }
         }
 
@@ -56,13 +35,25 @@ namespace Catzilla.LevelObjectModule.View {
                 int oldValue = health;
                 health = value;
                 health = Mathf.Clamp(health, 0, MaxHealth);
-                EventBus.Fire(
-                    Event.HealthChange, new Evt(this, oldValue));
+                eventBus.Fire(
+                    (int) Events.PlayerHealthChange, new Evt(this, oldValue));
 
                 if (health <= 0) {
                     Die();
                 }
             }
+        }
+
+        public float FrontSpeed {
+            get {return frontSpeed;}
+            set {
+                frontSpeed = value;
+                Animator.SetFloat(frontSpeedParam, frontSpeed);
+            }
+        }
+
+        public int ActionsPerMinuteRank {
+            get {return (int) (actionsCount / (Time.time - creationTime) * 6f);}
         }
 
         public Collider Collider;
@@ -77,10 +68,27 @@ namespace Catzilla.LevelObjectModule.View {
         public AudioSource HighPrioAudioSource;
         public bool IsHealthFreezed;
         public bool IsScoreFreezed;
-        public float FrontSpeed = 5f;
         public float SideSpeed = 5f;
         public int MaxHealth = 100;
         public float CameraShakeNoiseFactor = 0.25f;
+
+        private static readonly int frontSpeedParam =
+            Animator.StringToHash("FrontSpeed");
+
+        [Inject]
+        private EventBus eventBus;
+
+        [Inject("LevelMinX")]
+        private float levelMinX;
+
+        [Inject("LevelMaxX")]
+        private float levelMaxX;
+
+        [Inject]
+        private IInstantiator instantiator;
+
+        [SerializeField]
+        private Rigidbody body;
 
         [SerializeField]
         private HUDView hudProto;
@@ -88,7 +96,35 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private LayerMask envLayer;
 
-        private Vector3[] cameraShakeAmounts = new Vector3[4];
+        [SerializeField]
+        private float refuseChance;
+
+        [SerializeField]
+        [Tooltip("In seconds")]
+        private float refuseCheckRate;
+
+        [SerializeField]
+        [Tooltip("In seconds")]
+        private float refuseDuration;
+
+        [SerializeField]
+        [Tooltip("In seconds")]
+        private float speedChangeDelay;
+
+        [SerializeField]
+        [Tooltip("In seconds")]
+        private float speedCheckRate;
+
+        [SerializeField]
+        private float speedChangeChance;
+
+        [SerializeField]
+        private float speedRestoreChance;
+
+        [SerializeField]
+        private float speedChangeAmount;
+
+        private readonly Vector3[] cameraShakeAmounts = new Vector3[4];
         private Vector3 cameraStartPosition;
         private int score;
         private int health;
@@ -96,21 +132,33 @@ namespace Catzilla.LevelObjectModule.View {
         private float minX;
         private float maxX;
         private float targetX;
-        private float nextFootstepTime;
-        private Rigidbody body;
+        private float frontSpeed;
+        private int actionsCount;
+        private float creationTime;
+        private bool isRefusing;
+        private WaitForSeconds refuseCheckRateWaiter;
+        private WaitForSeconds refuseDurationWaiter;
+        private WaitForSeconds speedChangeDelayWaiter;
+        private WaitForSeconds speedCheckRateWaiter;
 
         [PostInject]
         public void OnConstruct() {
             // DebugUtils.Log("PlayerView.OnConstruct()");
-            body = GetComponent<Rigidbody>();
             float halfWidth = Collider.bounds.extents.x;
-            minX = LevelMinX + halfWidth;
-            maxX = LevelMaxX - halfWidth;
+            minX = levelMinX + halfWidth;
+            maxX = levelMaxX - halfWidth;
             health = MaxHealth;
             cameraStartPosition = Camera.transform.localPosition;
-            HUD = Instantiator.InstantiatePrefab(hudProto.gameObject)
+            HUD = instantiator.InstantiatePrefab(hudProto.gameObject)
                 .GetComponent<HUDView>();
-            EventBus.Fire(Event.Construct, new Evt(this));
+            creationTime = Time.time;
+            refuseCheckRateWaiter = new WaitForSeconds(refuseCheckRate);
+            refuseDurationWaiter = new WaitForSeconds(refuseDuration);
+            speedChangeDelayWaiter = new WaitForSeconds(speedChangeDelay);
+            speedCheckRateWaiter = new WaitForSeconds(speedCheckRate);
+            StartCoroutine(Refuser());
+            StartCoroutine(SpeedChanger());
+            eventBus.Fire((int) Events.PlayerConstruct, new Evt(this));
         }
 
         public void Resurrect() {
@@ -122,7 +170,7 @@ namespace Catzilla.LevelObjectModule.View {
             targetX = body.position.x;
             Animator.enabled = true;
             Health = MaxHealth;
-            EventBus.Fire(Event.Resurrect, new Evt(this));
+            eventBus.Fire((int) Events.PlayerResurrect, new Evt(this));
         }
 
         public void ShakeCamera(
@@ -138,7 +186,7 @@ namespace Catzilla.LevelObjectModule.View {
                 }
 
                 var shakerIndex = i;
-                StartCoroutine(DoShakeCamera(
+                StartCoroutine(CameraShaker(
                     amount, duration, inOneDirection, shakerIndex));
                 break;
             }
@@ -149,7 +197,7 @@ namespace Catzilla.LevelObjectModule.View {
                 Destroy(HUD.gameObject);
             }
 
-            EventBus.Fire(Event.Destroy, new Evt(this));
+            eventBus.Fire((int) Events.PlayerDestroy, new Evt(this));
         }
 
         private void Die() {
@@ -159,7 +207,7 @@ namespace Catzilla.LevelObjectModule.View {
 
             isDead = true;
             Animator.enabled = false;
-            EventBus.Fire(Event.Death, new Evt(this));
+            eventBus.Fire((int) Events.PlayerDeath, new Evt(this));
         }
 
         private void Update() {
@@ -168,7 +216,75 @@ namespace Catzilla.LevelObjectModule.View {
             }
 
             if (Input.GetMouseButtonDown(0)) {
-                SetTargetX(Input.mousePosition);
+                ++actionsCount;
+
+                if (isRefusing) {
+                    eventBus.Fire((int) Events.PlayerRefuse, new Evt(this));
+                } else {
+                    SetTargetX(Input.mousePosition);
+                }
+            }
+        }
+
+        private IEnumerator CameraShaker(
+            Vector3 amount,
+            float duration,
+            bool inOneDirection,
+            int shakerIndex) {
+            float remainingTime = duration;
+            float amplitudeSign = 1f;
+            Vector3 maxNoise = amount * CameraShakeNoiseFactor;
+
+            while (remainingTime > 0f) {
+                Vector3 noise = maxNoise *
+                    (Mathf.PerlinNoise(Time.time, 0f) - 0.5f);
+                cameraShakeAmounts[shakerIndex] = (amount * (amplitudeSign *
+                    (remainingTime / duration))) + noise;
+                remainingTime -= Time.deltaTime;
+
+                if (!inOneDirection) {
+                    amplitudeSign *= -1f;
+                }
+
+                yield return null;
+            }
+
+            cameraShakeAmounts[shakerIndex] = Vector3.zero;
+        }
+
+        private IEnumerator Refuser() {
+            while (true) {
+                isRefusing = UnityEngine.Random.value <= refuseChance;
+
+                if (isRefusing) {
+                    yield return refuseDurationWaiter;
+                    isRefusing = false;
+                }
+
+                yield return refuseCheckRateWaiter;
+            }
+        }
+
+        private IEnumerator SpeedChanger() {
+            yield return speedChangeDelayWaiter;
+
+            while (true) {
+                if (UnityEngine.Random.value <= speedChangeChance) {
+                    float normalSpeed = frontSpeed;
+                    FrontSpeed += UnityEngine.Random.Range(0, 2) == 0 ?
+                        speedChangeAmount : -speedChangeAmount;
+
+                    while (true) {
+                        if (UnityEngine.Random.value <= speedRestoreChance) {
+                            FrontSpeed = normalSpeed;
+                            break;
+                        }
+
+                        yield return speedCheckRateWaiter;
+                    }
+                }
+
+                yield return speedCheckRateWaiter;
             }
         }
 
@@ -214,7 +330,7 @@ namespace Catzilla.LevelObjectModule.View {
             Vector3 currentPosition = body.position;
             float newX = Mathf.MoveTowards(
                 currentPosition.x, targetX, SideSpeed * Time.deltaTime);
-            float newZ = currentPosition.z + FrontSpeed * Time.deltaTime;
+            float newZ = currentPosition.z + frontSpeed * Time.deltaTime;
             body.MovePosition(new Vector3(newX, currentPosition.y, newZ));
         }
 
@@ -223,33 +339,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void OnFootstep() {
-            EventBus.Fire(Event.Footstep, new Evt(this));
-        }
-
-        private IEnumerator DoShakeCamera(
-            Vector3 amount,
-            float duration,
-            bool inOneDirection,
-            int shakerIndex) {
-            float remainingTime = duration;
-            float amplitudeSign = 1f;
-            Vector3 maxNoise = amount * CameraShakeNoiseFactor;
-
-            while (remainingTime > 0f) {
-                Vector3 noise = maxNoise *
-                    (Mathf.PerlinNoise(Time.time, 0f) - 0.5f);
-                cameraShakeAmounts[shakerIndex] = (amount * (amplitudeSign *
-                    (remainingTime / duration))) + noise;
-                remainingTime -= Time.deltaTime;
-
-                if (!inOneDirection) {
-                    amplitudeSign *= -1f;
-                }
-
-                yield return null;
-            }
-
-            cameraShakeAmounts[shakerIndex] = Vector3.zero;
+            eventBus.Fire((int) Events.PlayerFootstep, new Evt(this));
         }
     }
 }

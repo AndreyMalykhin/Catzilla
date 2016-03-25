@@ -19,7 +19,7 @@ namespace Catzilla.AppModule.View {
         public override void PostBindings(DiContainer container) {
             var eventBus = container.Resolve<EventBus>();
             var appController = container.Resolve<AppController>();
-            eventBus.On(AppView.Event.Start, appController.OnStart);
+            eventBus.On((int) Events.AppStart, appController.OnStart);
         }
     }
 }

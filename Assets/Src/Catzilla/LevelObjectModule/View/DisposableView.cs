@@ -6,8 +6,6 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class DisposableView: MonoBehaviour {
-        public enum Event {TriggerExit}
-
         [Inject]
         public EventBus EventBus {get; set;}
 
@@ -29,12 +27,8 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void OnTriggerExit(Collider collider) {
-            ViewUtils.DispatchNowOrAtFixedUpdate(this, GetEventBus,
-                Event.TriggerExit, new Evt(this, collider));
-        }
-
-        private EventBus GetEventBus() {
-            return EventBus;
+            EventBus.Fire((int) Events.DisposableTriggerExit,
+                new Evt(this, collider));
         }
     }
 }

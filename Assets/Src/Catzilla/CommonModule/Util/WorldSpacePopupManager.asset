@@ -11,5 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31857ea918fbc430bb5b2713810f1418, type: 3}
   m_Name: WorldSpacePopupManager
   m_EditorClassIdentifier: 
-  popupProto: {fileID: 11463962, guid: f055717bd0d0c40bfbf78926508e3dbc, type: 2}
   simultaneousPopupsCount: 4
+  popupTypes:
+  - Id: 0
+    Proto: {fileID: 11463962, guid: f055717bd0d0c40bfbf78926508e3dbc, type: 2}
+  - Id: 1
+    Proto: {fileID: 11463962, guid: 8bd019a0116034f38bb10472b4a4fc3e, type: 2}
+  - Id: 2
+    Proto: {fileID: 11463962, guid: d2f667ca416c44af2ad55ef683f197ac, type: 2}
+  - Id: 3
+    Proto: {fileID: 11463962, guid: 7b5bc2ff604ff4e28a39650ad4a90202, type: 2}

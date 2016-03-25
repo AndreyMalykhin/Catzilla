@@ -6,8 +6,6 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class SmashableView: MonoBehaviour {
-        public enum Event {Smash}
-
         public Transform[] Parts {get {return parts;}}
 
         [Inject]
@@ -38,7 +36,7 @@ namespace Catzilla.LevelObjectModule.View {
             var smashed =
                 poolStorage.Take(smashedPoolId).GetComponent<SmashedView>();
             smashed.Init(this, force, upwardsModifier, sourcePosition);
-            eventBus.Fire(Event.Smash, new Evt(this, smashed));
+            eventBus.Fire((int) Events.SmashableSmash, new Evt(this, smashed));
             poolStorage.Return(poolable);
             return smashed;
         }

@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0.2, b: 0.2, a: 1}
-  m_EffectDistance: {x: 2, y: 2}
+  m_EffectDistance: {x: 4, y: 4}
   m_UseGraphicAlpha: 0
 --- !u!114 &11447828
 MonoBehaviour:
@@ -119,7 +119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Msg: {fileID: 11447828}
-  Offset: 0
+  Offset: {x: 4, y: 0, z: 0}
+  offScreenPosition: {x: -32768, y: 0, z: 0}
 --- !u!114 &11466482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,6 +189,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
