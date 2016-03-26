@@ -50,7 +50,7 @@ namespace Catzilla.MainMenuModule.Controller {
         }
 
         public void OnExitBtnClick() {
-            Game.Exit();
+            Application.Quit();
         }
 
         public void OnStartBtnClick() {

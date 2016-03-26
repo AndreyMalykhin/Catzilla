@@ -10,6 +10,7 @@ namespace Catzilla.LevelObjectModule.View {
     public class PlayerView: LevelObjectView {
         public int ScoreBonusesTaken {get; set;}
         public int ResurrectionBonusesTaken {get; set;}
+        public int SmashedCops {get; set;}
 
         public int Score {
             get {return score;}
@@ -53,8 +54,14 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         public int ActionsPerMinuteRank {
-            get {return (int) (actionsCount / (Time.time - creationTime) * 6f);}
+            get {return (int) (actionsCount / TotalLifetime * 6f);}
         }
+
+        public float TotalLifetime {
+            get {return Time.time - creationTime;}
+        }
+
+        public int DeathsCount {get {return deathsCount;}}
 
         public Collider Collider;
         public Camera Camera;
@@ -101,6 +108,10 @@ namespace Catzilla.LevelObjectModule.View {
 
         [SerializeField]
         [Tooltip("In seconds")]
+        private float refuseDelay;
+
+        [SerializeField]
+        [Tooltip("In seconds")]
         private float refuseCheckRate;
 
         [SerializeField]
@@ -136,10 +147,12 @@ namespace Catzilla.LevelObjectModule.View {
         private int actionsCount;
         private float creationTime;
         private bool isRefusing;
+        private int deathsCount;
         private WaitForSeconds refuseCheckRateWaiter;
         private WaitForSeconds refuseDurationWaiter;
         private WaitForSeconds speedChangeDelayWaiter;
         private WaitForSeconds speedCheckRateWaiter;
+        private WaitForSeconds refuseDelayWaiter;
 
         [PostInject]
         public void OnConstruct() {
@@ -156,6 +169,7 @@ namespace Catzilla.LevelObjectModule.View {
             refuseDurationWaiter = new WaitForSeconds(refuseDuration);
             speedChangeDelayWaiter = new WaitForSeconds(speedChangeDelay);
             speedCheckRateWaiter = new WaitForSeconds(speedCheckRate);
+            refuseDelayWaiter = new WaitForSeconds(refuseDelay);
             StartCoroutine(Refuser());
             StartCoroutine(SpeedChanger());
             eventBus.Fire((int) Events.PlayerConstruct, new Evt(this));
@@ -207,6 +221,7 @@ namespace Catzilla.LevelObjectModule.View {
 
             isDead = true;
             Animator.enabled = false;
+            ++deathsCount;
             eventBus.Fire((int) Events.PlayerDeath, new Evt(this));
         }
 
@@ -253,6 +268,12 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private IEnumerator Refuser() {
+            if (refuseChance == 0f || refuseDuration == 0f) {
+                yield break;
+            }
+
+            yield return refuseDelayWaiter;
+
             while (true) {
                 isRefusing = UnityEngine.Random.value <= refuseChance;
 
@@ -266,6 +287,10 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private IEnumerator SpeedChanger() {
+            if (speedChangeChance == 0f) {
+                yield break;
+            }
+
             yield return speedChangeDelayWaiter;
 
             while (true) {

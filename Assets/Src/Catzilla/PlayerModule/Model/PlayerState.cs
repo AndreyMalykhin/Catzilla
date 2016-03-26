@@ -8,15 +8,11 @@ namespace Catzilla.PlayerModule.Model {
     [Serializable]
     public class PlayerState: ISerializationCallbackReceiver {
         public List<Achievement> Achievements {get {return achievements;}}
+        public List<Record> Records {get {return records;}}
 
         public bool WasTutorialShown {
             get {return wasTutorialShown;}
             set {wasTutorialShown = value;}
-        }
-
-        public bool IsScoreSynced {
-            get {return isScoreSynced;}
-            set {isScoreSynced = value;}
         }
 
         public int Level {
@@ -54,26 +50,14 @@ namespace Catzilla.PlayerModule.Model {
             set {playTime = value;}
         }
 
-        public int ScoreRecord {
-            get {return scoreRecord;}
-            set {
-                if (value <= scoreRecord) {
-                    return;
-                }
-
-                scoreRecord = value;
-                isScoreSynced = false;
-            }
-        }
-
         [SerializeField]
         private List<Achievement> achievements = new List<Achievement>(8);
 
         [SerializeField]
-        private bool wasTutorialShown;
+        private List<Record> records = new List<Record>(8);
 
         [SerializeField]
-        private bool isScoreSynced;
+        private bool wasTutorialShown;
 
         [SerializeField]
         private int availableResurrectionsCount = 1;
@@ -83,9 +67,6 @@ namespace Catzilla.PlayerModule.Model {
 
         [SerializeField]
         private int level;
-
-        [SerializeField]
-        private int scoreRecord;
 
         [SerializeField]
         private long serializedSaveDate;
@@ -115,6 +96,22 @@ namespace Catzilla.PlayerModule.Model {
             achievements.Add(achievement);
         }
 
+        public Record GetRecord(string id) {
+            Record record = null;
+
+            for (int i = 0; i < records.Count; ++i) {
+                record = records[i];
+
+                if (record.Id == id) {
+                    return record;
+                }
+            }
+
+            record = new Record(id);
+            records.Add(record);
+            return record;
+        }
+
         public void OnBeforeSerialize() {
             // DebugUtils.Log(
             //     "PlayerState.OnBeforeSerialize(); saveDate={0}", SaveDate);
@@ -140,9 +137,15 @@ namespace Catzilla.PlayerModule.Model {
                 achievementsStr.Append(achievements[i]).Append(", ");
             }
 
+            StringBuilder recordsStr = new StringBuilder(64);
+
+            for (int i = 0; i < records.Count; ++i) {
+                recordsStr.Append(records[i]).Append(", ");
+            }
+
             return string.Format(
-                "level={0}; scoreRecord={1}; availableResurrectionsCount={2}; saveDate={3}; lastSeenDate={4}; playTime={5}; isScoreSynced={6}; achievements={7}; rewardUnlockDate={8}; availableRewardsCount={9}; wasTutorialShown={10}",
-                level, scoreRecord, availableResurrectionsCount, saveDate, lastSeenDate, playTime, isScoreSynced, achievementsStr.ToString(), rewardUnlockDate, availableRewardsCount, wasTutorialShown);
+                "level={0}; availableResurrectionsCount={1}; saveDate={2}; lastSeenDate={3}; playTime={4}; achievements={5}; rewardUnlockDate={6}; availableRewardsCount={7}; wasTutorialShown={8}; records={9}",
+                level, availableResurrectionsCount, saveDate, lastSeenDate, playTime, achievementsStr.ToString(), rewardUnlockDate, availableRewardsCount, wasTutorialShown, recordsStr.ToString());
         }
     }
 }

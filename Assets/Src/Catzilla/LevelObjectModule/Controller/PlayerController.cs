@@ -15,9 +15,6 @@ using Catzilla.LevelObjectModule.View;
 namespace Catzilla.LevelObjectModule.Controller {
     public class PlayerController {
         [Inject]
-        private GameOverScreenView gameOverScreen;
-
-        [Inject]
         private PlayerStateStorage playerStateStorage;
 
         [Inject]
@@ -73,21 +70,7 @@ namespace Catzilla.LevelObjectModule.Controller {
 
         public void OnDeath(Evt evt) {
             playStopwatch.Stop();
-            PlayerState playerState = playerStateStorage.Get();
-            playerState.ScoreRecord = player.Score;
-            playerState.PlayTime += playStopwatch.Elapsed;
-            playerStateStorage.Save(playerState);
-
-            if (server.IsLoggedIn) {
-                playerStateStorage.Sync(server);
-            }
-
-            gameOverScreen.GetComponent<ShowableView>().Show();
-
-            if (player.DeathSound != null) {
-                audioManager.Play(player.DeathSound, player.HighPrioAudioSource,
-                    playerHighPrioAudioChannel);
-            }
+            playerManager.Loose(player);
         }
 
         public void OnFootstep(Evt evt) {

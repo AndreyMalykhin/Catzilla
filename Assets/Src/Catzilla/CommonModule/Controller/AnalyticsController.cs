@@ -1,6 +1,8 @@
+using System;
 using Zenject;
 using Catzilla.PlayerModule.Model;
 using Catzilla.LevelObjectModule.View;
+using Catzilla.LevelModule.Model;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
 
@@ -9,21 +11,31 @@ namespace Catzilla.CommonModule.Controller {
         [Inject]
         private PlayerStateStorage playerStateStorage;
 
+        [Inject]
+        private LevelSettingsStorage levelSettingsStorage;
+
+        private PlayerView player;
+
+        public void OnPlayerConstruct(Evt evt) {
+            player = (PlayerView) evt.Source;
+        }
+
         public void OnPreLevelComplete(Evt evt) {
-            var player = (PlayerView) evt.Data;
-            AnalyticsUtils.AddCategorizedEventParam(
-                "ActionsPerMinuteRank", player.ActionsPerMinuteRank);
+            AnalyticsUtils.AddEventParam(
+                "Player.TotalLifetime", (int) player.TotalLifetime);
+            AddPlayerActionsPerMinuteRank();
+            AddPlayerDeaths();
             LogEvent("Level.Completion");
         }
 
         public void OnPlayerDeath(Evt evt) {
-            var player = (PlayerView) evt.Source;
-            AnalyticsUtils.AddCategorizedEventParam(
-                "ActionsPerMinuteRank", player.ActionsPerMinuteRank);
+            AddPlayerActionsPerMinuteRank();
+            AddPlayerLevelCompletionPercentage();
             LogEvent("Player.Death");
         }
 
         public void OnPlayerResurrect(Evt evt) {
+            AddPlayerLevelCompletionPercentage();
             LogEvent("Player.Resurrection");
         }
 
@@ -43,6 +55,10 @@ namespace Catzilla.CommonModule.Controller {
             LogEvent("Achievements.View");
         }
 
+        public void OnMainScreenExitBtnClick() {
+            LogEvent("App.Exit");
+        }
+
         public void OnMainScreenReplaysBtnClick() {
             LogEvent("Replays.View");
         }
@@ -59,7 +75,14 @@ namespace Catzilla.CommonModule.Controller {
             LogEvent("Replay.Share");
         }
 
+        public void OnAppStart(Evt evt) {
+            LogEvent("App.Start");
+        }
+
         public void OnAdView(Ad ad) {
+            AddPlayerDeaths();
+            AddPlayerLevelCompletionPercentage();
+            AddPlayerActionsPerMinuteRank();
             LogEvent("Ad.View");
         }
 
@@ -69,8 +92,28 @@ namespace Catzilla.CommonModule.Controller {
 
         private void LogEvent(string name) {
             PlayerState playerState = playerStateStorage.Get();
-            AnalyticsUtils.AddCategorizedEventParam("Level", playerState.Level);
+            AnalyticsUtils.AddCategorizedEventParam(
+                "Level", playerState == null ? 0 : playerState.Level);
             AnalyticsUtils.LogEvent(name);
+        }
+
+        private void AddPlayerLevelCompletionPercentage() {
+            int level = playerStateStorage.Get().Level;
+            int levelCompletionScore =
+                levelSettingsStorage.Get(level).CompletionScore;
+            int levelCompletionPercentage =
+                player.Score * 10 / levelCompletionScore;
+            AnalyticsUtils.AddCategorizedEventParam(
+                "Player.LevelCompletionPercentage", levelCompletionPercentage);
+        }
+
+        private void AddPlayerActionsPerMinuteRank() {
+            AnalyticsUtils.AddCategorizedEventParam(
+                "Player.ActionsPerMinuteRank", player.ActionsPerMinuteRank);
+        }
+
+        private void AddPlayerDeaths() {
+            AnalyticsUtils.AddEventParam("Player.Deaths", player.DeathsCount);
         }
     }
 }

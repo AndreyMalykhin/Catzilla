@@ -63,6 +63,10 @@ namespace Catzilla.LevelObjectModule.Controller {
                             colliderShockwavable.CameraShakeDuration,
                             colliderShockwavable.ShakeCameraInOneDirection);
                     }
+
+                    if (colliderBody.GetComponent<CopView>() != null) {
+                        ++player.SmashedCops;
+                    }
                 }
 
                 float smashForce = UnityEngine.Random.Range(

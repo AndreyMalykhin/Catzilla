@@ -18,7 +18,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
 
             var activatable = (ActivatableView) evt.Source;
-            activatable.Activate();
+            activatable.IsActive = true;
         }
     }
 }

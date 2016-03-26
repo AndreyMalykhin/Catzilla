@@ -69,6 +69,7 @@ namespace Catzilla.LevelAreaModule.Model {
             int areaIndex,
             LevelSettings levelSettings,
             LevelView outputLevel) {
+            // DebugUtils.Log("LevelAreaGenerator.NewObjects()");
             List<SpawnLocation> spawnLocations =
                 envTypeInfo.SpawnMap.GetLocations(objectType);
             ObjectTypeInfo objectTypeInfo =

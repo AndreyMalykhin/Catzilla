@@ -813,9 +813,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   refuseChance: 0.25
+  refuseDelay: 0
   refuseCheckRate: 2
   refuseDuration: 1
-  speedChangeDelay: 32
+  speedChangeDelay: 0
   speedCheckRate: 2
   speedChangeChance: 0.25
   speedRestoreChance: 0.25

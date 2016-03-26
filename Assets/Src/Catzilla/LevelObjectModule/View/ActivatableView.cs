@@ -5,28 +5,36 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.LevelObjectModule.View {
     public class ActivatableView: MonoBehaviour, IPoolable {
+        public bool IsActive {
+            get {return isActive;}
+            set {
+                isActive = value;
+
+                for (int i = 0; i < behaviours.Length; ++i) {
+                    behaviours[i].enabled = value;
+                }
+            }
+        }
+
         [Inject]
-        public EventBus EventBus {get; set;}
+        private EventBus eventBus;
 
         [SerializeField]
-        private MonoBehaviour behaviour;
+        private MonoBehaviour[] behaviours;
+
+        private bool isActive;
 
         [PostInject]
         public void OnConstruct() {
-            behaviour.enabled = false;
-        }
-
-        public void Activate() {
-            // DebugUtils.Log("ActivatableView.Activate()");
-            behaviour.enabled = true;
+            IsActive = false;
         }
 
         void IPoolable.Reset() {
-            behaviour.enabled = false;
+            IsActive = false;
         }
 
         private void OnTriggerEnter(Collider collider) {
-            EventBus.Fire((int) Events.ActivatableTriggerEnter,
+            eventBus.Fire((int) Events.ActivatableTriggerEnter,
                 new Evt(this, collider));
         }
     }

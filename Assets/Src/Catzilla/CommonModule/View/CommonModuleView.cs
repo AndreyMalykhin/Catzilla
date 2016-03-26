@@ -221,6 +221,10 @@ namespace Catzilla.CommonModule.View {
                 analyticsController.OnPlayerDeath);
             eventBus.On((int) Events.PlayerResurrect,
                 analyticsController.OnPlayerResurrect);
+            eventBus.On((int) Events.PlayerConstruct,
+                analyticsController.OnPlayerConstruct);
+            eventBus.On((int) Events.AppStart,
+                analyticsController.OnAppStart);
             var mainScreen = container.Resolve<MainScreenView>();
             mainScreen.FeedbackBtn.onClick.AddListener(
                 analyticsController.OnMainScreenFeedbackBtnClick);
@@ -232,6 +236,8 @@ namespace Catzilla.CommonModule.View {
                 analyticsController.OnMainScreenAchievementsBtnClick);
             mainScreen.ReplaysBtn.onClick.AddListener(
                 analyticsController.OnMainScreenReplaysBtnClick);
+            mainScreen.ExitBtn.onClick.AddListener(
+                analyticsController.OnMainScreenExitBtnClick);
             gameOverScreen.ExitBtn.onClick.AddListener(
                 analyticsController.OnGameOverScreenExitBtnClick);
             gameOverScreen.RestartBtn.onClick.AddListener(

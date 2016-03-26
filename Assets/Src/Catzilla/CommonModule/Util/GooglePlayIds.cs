@@ -28,6 +28,7 @@ public static class GooglePlayIds
         public const string achievement_complete_level_15 = "CgkIxNOhipUSEAIQBw"; // <GPGSID>
         public const string leaderboard_scores = "CgkIxNOhipUSEAIQAg"; // <GPGSID>
         public const string achievement_complete_level_20 = "CgkIxNOhipUSEAIQCA"; // <GPGSID>
+        public const string leaderboard_smashed_cops = "CgkIxNOhipUSEAIQCw"; // <GPGSID>
         public const string achievement_complete_level_10 = "CgkIxNOhipUSEAIQBg"; // <GPGSID>
         public const string achievement_complete_level_5 = "CgkIxNOhipUSEAIQBQ"; // <GPGSID>
 

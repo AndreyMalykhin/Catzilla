@@ -660,7 +660,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d68737fed9ab4e9394e712c63ef1da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviour: {fileID: 11483028}
+  behaviours:
+  - {fileID: 11483028}
 --- !u!114 &11483028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -678,11 +679,10 @@ MonoBehaviour:
   projectileSource: {fileID: 450834}
   aimee: {fileID: 424354}
   aimSpeed: 360
+  shootingDelay: 1
   shotPeriod: 0.125
   burstPeriod: 16
   shotsInBurst: 2
-  minDelay: 0.5
-  maxDelay: 0.5
   projectileMinSpeed: 6
   projectileMaxSpeed: 6
 --- !u!114 &11485288

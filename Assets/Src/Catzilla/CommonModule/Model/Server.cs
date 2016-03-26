@@ -105,25 +105,17 @@ namespace Catzilla.CommonModule.Model {
                             return;
                         }
 
-                        if (player.IsScoreSynced) {
-                            SavePlayerAchievements(player, onSuccess, onFail);
-                            return;
-                        }
-
-                        Social.ReportScore(
-                            player.ScoreRecord,
-                            GooglePlayIds.leaderboard_scores,
-                            (bool isSuccess) => {
-                                if (!isSuccess) {
-                                    OnResponse(isSuccess);
-                                    if (onFail != null) onFail();
-                                    return;
-                                }
-
-                                player.IsScoreSynced = true;
+                        SavePlayerRecords(
+                            player,
+                            () => {
                                 SavePlayerAchievements(
                                     player, onSuccess, onFail);
-                            });
+                            },
+                            () => {
+                                OnResponse(false);
+                                if (onFail != null) onFail();
+                            }
+                        );
                     });
             });
         }
@@ -205,8 +197,9 @@ namespace Catzilla.CommonModule.Model {
             List<Catzilla.PlayerModule.Model.Achievement> achievements =
                 player.Achievements;
             bool isSuccess = true;
+            int achievementsCount = achievements.Count;
 
-            if (achievements.Count == 0) {
+            if (achievementsCount == 0) {
                 OnResponse(isSuccess);
                 if (onSuccess != null) onSuccess();
                 return;
@@ -214,7 +207,7 @@ namespace Catzilla.CommonModule.Model {
 
             int savedAchievementsCount = 0;
 
-            for (int i = 0; i < achievements.Count; ++i) {
+            for (int i = 0; i < achievementsCount; ++i) {
                 var achievement = achievements[i];
 
                 if (achievement.IsSynced) {
@@ -235,7 +228,7 @@ namespace Catzilla.CommonModule.Model {
                         achievement.IsSynced = true;
                         ++savedAchievementsCount;
 
-                        if (savedAchievementsCount < achievements.Count) {
+                        if (savedAchievementsCount < achievementsCount) {
                             return;
                         }
 
@@ -244,7 +237,59 @@ namespace Catzilla.CommonModule.Model {
                     });
             }
 
-            if (savedAchievementsCount < achievements.Count) {
+            if (savedAchievementsCount < achievementsCount) {
+                return;
+            }
+
+            OnResponse(isSuccess);
+            if (onSuccess != null) onSuccess();
+        }
+
+        private void SavePlayerRecords(
+            PlayerState player, Action onSuccess = null, Action onFail = null) {
+            List<Record> records = player.Records;
+            bool isSuccess = true;
+            int recordsCount = records.Count;
+
+            if (recordsCount == 0) {
+                OnResponse(isSuccess);
+                if (onSuccess != null) onSuccess();
+                return;
+            }
+
+            int savedRecordsCount = 0;
+
+            for (int i = 0; i < recordsCount; ++i) {
+                var record = records[i];
+
+                if (record.IsSynced) {
+                    ++savedRecordsCount;
+                    continue;
+                }
+
+                Social.ReportScore(
+                    record.Value,
+                    record.Id,
+                    (bool isSuccess2) => {
+                        if (!isSuccess2) {
+                            OnResponse(isSuccess2);
+                            if (onFail != null) onFail();
+                            return;
+                        }
+
+                        record.IsSynced = true;
+                        ++savedRecordsCount;
+
+                        if (savedRecordsCount < recordsCount) {
+                            return;
+                        }
+
+                        OnResponse(isSuccess2);
+                        if (onSuccess != null) onSuccess();
+                    });
+            }
+
+            if (savedRecordsCount < recordsCount) {
                 return;
             }
 

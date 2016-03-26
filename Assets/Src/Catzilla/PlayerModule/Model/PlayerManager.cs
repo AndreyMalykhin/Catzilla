@@ -5,6 +5,7 @@ using Zenject;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
+using Catzilla.GameOverMenuModule.View;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.View;
 
@@ -42,6 +43,15 @@ namespace Catzilla.PlayerModule.Model {
 
         [Inject("RewardWorldPopupType")]
         private int rewardWorldPopupType;
+
+        [Inject("PlayerHighPrioAudioChannel")]
+        private int playerHighPrioAudioChannel;
+
+        [Inject]
+        private AudioManager audioManager;
+
+        [Inject]
+        private GameOverScreenView gameOverScreen;
 
         private readonly StringBuilder strBuilder = new StringBuilder(8);
 
@@ -98,8 +108,8 @@ namespace Catzilla.PlayerModule.Model {
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;
             ++playerState.Level;
-            playerState.ScoreRecord = player.Score;
             playerState.PlayTime += playStopwatch.Elapsed;
+            SaveRecords(player, playerState);
             playerStateStorage.Save(playerState);
 
             if (server.IsLoggedIn) {
@@ -111,6 +121,31 @@ namespace Catzilla.PlayerModule.Model {
             var showable = levelCompleteScreen.GetComponent<ShowableView>();
             showable.OnShow += OnLevelCompleteScreenShow;
             showable.Show();
+        }
+
+        public void Loose(PlayerView player) {
+            PlayerState playerState = playerStateStorage.Get();
+            playerState.PlayTime += playStopwatch.Elapsed;
+            SaveRecords(player, playerState);
+            playerStateStorage.Save(playerState);
+
+            if (server.IsLoggedIn) {
+                playerStateStorage.Sync(server);
+            }
+
+            if (player.DeathSound != null) {
+                audioManager.Play(player.DeathSound, player.HighPrioAudioSource,
+                    playerHighPrioAudioChannel);
+            }
+
+            gameOverScreen.GetComponent<ShowableView>().Show();
+        }
+
+        private void SaveRecords(PlayerView player, PlayerState playerState) {
+            playerState.GetRecord(GooglePlayIds.leaderboard_scores).Value =
+                player.Score;
+            playerState.GetRecord(GooglePlayIds.leaderboard_smashed_cops)
+                .Value += player.SmashedCops;
         }
 
         private void OnLevelCompleteScreenShow(ShowableView showable) {

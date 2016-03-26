@@ -12,9 +12,6 @@ namespace Catzilla.PlayerModule.Model {
         private int level;
 
         [SerializeField]
-        private int scoreRecord;
-
-        [SerializeField]
         private int availableResurrectionsCount = 1;
 
         [SerializeField]
@@ -32,7 +29,6 @@ namespace Catzilla.PlayerModule.Model {
             if (Player == null) {
                 Player = new PlayerState{
                     Level = level,
-                    ScoreRecord = scoreRecord,
                     AvailableResurrectionsCount =
                         availableResurrectionsCount,
                     AvailableRewardsCount = availableRewardsCount,
@@ -46,6 +42,7 @@ namespace Catzilla.PlayerModule.Model {
         public override void Save(PlayerState player) {
             Player = player;
             Player.SaveDate = DateTime.UtcNow;
+            // DebugUtils.Log("PlayerStateStorageStub.Save(); player={0}", Player);
             EventBus.Fire((int) Events.PlayerStateStorageSave, new Evt(this));
         }
 

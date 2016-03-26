@@ -40,10 +40,6 @@ namespace Catzilla.CommonModule.Model {
             AudioManager.IsPaused = false;
         }
 
-        public void Exit() {
-            Application.Quit();
-        }
-
         public void LoadLevel() {
             // DebugUtils.Log("Game.LoadLevel()");
             EventBus.Fire((int) Events.GamePreLevelLoad, new Evt(this));

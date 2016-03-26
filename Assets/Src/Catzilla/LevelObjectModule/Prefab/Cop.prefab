@@ -19,6 +19,7 @@ GameObject:
   - 114: {fileID: 11401604}
   - 114: {fileID: 11470220}
   - 114: {fileID: 11468298}
+  - 114: {fileID: 11457644}
   m_Layer: 11
   m_Name: Cop
   m_TagString: Untagged
@@ -644,7 +645,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d68737fed9ab4e9394e712c63ef1da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviour: {fileID: 11483028}
+  behaviours:
+  - {fileID: 11483028}
+--- !u!114 &11457644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c1cc34e55eed41c6941fd64741530c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11468298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -698,11 +711,10 @@ MonoBehaviour:
   projectileSource: {fileID: 450834}
   aimee: {fileID: 424354}
   aimSpeed: 360
+  shootingDelay: 1
   shotPeriod: 0
   burstPeriod: 16
   shotsInBurst: 1
-  minDelay: 0.5
-  maxDelay: 0.5
   projectileMinSpeed: 6
   projectileMaxSpeed: 6
 --- !u!114 &11487140

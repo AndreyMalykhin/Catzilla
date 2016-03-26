@@ -57,7 +57,7 @@ namespace Catzilla.LevelAreaModule.View {
                 List<LevelObjectType> spawnObjectTypes = spawn.ObjectTypes;
 
                 for (int j = 0; j < spawnObjectTypes.Count; ++j) {
-                    List<SpawnLocation> spawnLocations;
+                    List<SpawnLocation> spawnLocations = null;
 
                     if (!spawnsMap.TryGetValue(
                             (int) spawnObjectTypes[j], out spawnLocations)) {
