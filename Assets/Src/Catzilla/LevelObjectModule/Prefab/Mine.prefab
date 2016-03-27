@@ -515,7 +515,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a21ae46380c44568fba0130f020764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smashable: {fileID: 11425908}
   explosionUpwardsModifier: 0
   explosionRadius: 0
   minForce: 768
@@ -524,6 +523,7 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
+  poolable: {fileID: 11466988}
 --- !u!114 &11466988
 MonoBehaviour:
   m_ObjectHideFlags: 1

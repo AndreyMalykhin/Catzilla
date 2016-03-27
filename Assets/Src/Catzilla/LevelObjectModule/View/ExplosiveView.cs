@@ -1,9 +1,10 @@
 using UnityEngine;
 using Zenject;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
-    public class ExplosiveView: MonoBehaviour {
+    public class ExplosiveView: MonoBehaviour, IPoolable {
         public struct ExplosionInfo {
             public readonly Vector3 Position;
             public readonly float Force;
@@ -19,11 +20,15 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
+        public float ExplosionUpwardsModifier {
+            get {return explosionUpwardsModifier;}
+        }
+
         [Inject]
         private EventBus eventBus;
 
-        [SerializeField]
-        private SmashableView smashable;
+        [Inject]
+        private PoolStorageView poolStorage;
 
         [SerializeField]
         private float explosionUpwardsModifier;
@@ -32,10 +37,10 @@ namespace Catzilla.LevelObjectModule.View {
         private float explosionRadius;
 
         [SerializeField]
-        private float minForce = 256f;
+        private float minForce;
 
         [SerializeField]
-        private float maxForce = 512f;
+        private float maxForce;
 
         [SerializeField]
         private int maxHitObjects;
@@ -43,10 +48,18 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private LayerMask hitLayer;
 
+        [SerializeField]
+        private PoolableView poolable;
+
+        private bool isExploded;
         private Collider[] hitObjects;
 
         public void Explode() {
             // DebugUtils.Log("ExplosiveView.Explode()");
+            if (isExploded) {
+                return;
+            }
+
             Vector3 explosionSource = transform.position;
             float explosionForce = UnityEngine.Random.Range(minForce, maxForce);
             int hitObjectsCount = Mathf.Min(
@@ -56,12 +69,16 @@ namespace Catzilla.LevelObjectModule.View {
                     hitObjects,
                     hitLayer.value),
                 maxHitObjects);
-            smashable.Smash(
-                explosionForce, explosionUpwardsModifier, explosionSource);
             var explosionInfo = new ExplosionInfo(explosionSource,
                 explosionForce, hitObjectsCount, hitObjects);
+            isExploded = true;
             eventBus.Fire((int) Events.ExplosiveExplode,
                 new Evt(this, explosionInfo));
+            poolStorage.ReturnLater(poolable);
+        }
+
+        void IPoolable.Reset() {
+            isExploded = false;
         }
 
         private void OnDrawGizmos() {
@@ -71,6 +88,11 @@ namespace Catzilla.LevelObjectModule.View {
 
         private void Awake() {
             hitObjects = new Collider[maxHitObjects];
+        }
+
+        private void OnTriggerEnter(Collider collider) {
+            eventBus.Fire((int) Events.ExplosiveTriggerEnter,
+                new Evt(this, collider));
         }
     }
 }

@@ -20,8 +20,12 @@ namespace Catzilla.LevelObjectModule.View {
         private bool isTaken;
 
         public void Take() {
+            if (isTaken) {
+                return;
+            }
+
             isTaken = true;
-            poolStorage.Return(poolable);
+            poolStorage.ReturnLater(poolable);
         }
 
         void IPoolable.Reset() {

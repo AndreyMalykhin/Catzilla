@@ -8,10 +8,10 @@ using Catzilla.CommonModule.Util;
 namespace Catzilla.CommonModule.Controller {
     public class PoolStorageController {
         [Inject]
-        public PoolStorageView PoolStorage {get; set;}
+        private PoolStorageView poolStorage;
 
         public void OnLevelLoad(Evt evt) {
-            PoolStorage.Refill();
+            poolStorage.Refill();
             GC.Collect();
         }
     }

@@ -5,7 +5,7 @@ using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
-    public class ProjectileView: MonoBehaviour {
+    public class ProjectileView: MonoBehaviour, IPoolable {
         public PoolableView Poolable {get {return poolable;}}
 
         public float Speed;
@@ -13,11 +13,29 @@ namespace Catzilla.LevelObjectModule.View {
         [Inject]
         private EventBus eventBus;
 
+        [Inject]
+        private PoolStorageView poolStorage;
+
         [SerializeField]
         private Rigidbody body;
 
         [SerializeField]
         private PoolableView poolable;
+
+        private bool isHit;
+
+        public void Hit() {
+            if (isHit) {
+                return;
+            }
+
+            isHit = true;
+            poolStorage.ReturnLater(poolable);
+        }
+
+        void IPoolable.Reset() {
+            isHit = false;
+        }
 
         private void FixedUpdate() {
             Fly();

@@ -23,7 +23,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         public void Dispose() {
-            PoolStorage.Return(poolable);
+            PoolStorage.ReturnLater(poolable);
         }
 
         private void OnTriggerExit(Collider collider) {

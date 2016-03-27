@@ -11,9 +11,6 @@ namespace Catzilla.LevelObjectModule.Controller {
         private string playerMeshTag;
 
         [Inject]
-        private PlayerManager playerManager;
-
-        [Inject]
         private AudioManager audioManager;
 
         [Inject("PlayerHighPrioAudioChannel")]
@@ -27,35 +24,10 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
 
             var takeable = (TakeableView) evt.Source;
-            var scoreBonus = takeable.GetComponent<ScoreBonusView>();
-            var player =
-                collider.attachedRigidbody.GetComponent<PlayerView>();
-
-            if (scoreBonus != null) {
-                ++player.ScoreBonusesTaken;
-                playerManager.AddScore(player, scoreBonus.Scoreable);
-            }
-
-            var resurrectionBonus =
-                takeable.GetComponent<ResurrectionBonusView>();
-
-            if (resurrectionBonus != null) {
-                playerManager.ApplyResurrectionBonus(player, resurrectionBonus);
-            }
-
-            var rewardBonus = takeable.GetComponent<RewardBonusView>();
-
-            if (rewardBonus != null) {
-                playerManager.ApplyRewardBonus(player, rewardBonus);
-            }
-
-            var treating = takeable.GetComponent<TreatingView>();
-
-            if (treating != null) {
-                player.Health += treating.AddHealth;
-            }
 
             if (takeable.TakeSound != null) {
+                var player =
+                    collider.attachedRigidbody.GetComponent<PlayerView>();
                 var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
                 audioManager.Play(
                     takeable.TakeSound,

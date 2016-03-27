@@ -19,10 +19,5 @@ namespace Catzilla.LevelObjectModule.View {
 
         [SerializeField]
         private float smashUpwardsModifier;
-
-        private void OnTriggerEnter(Collider collider) {
-            eventBus.Fire((int) Events.SmashingTriggerEnter,
-                new Evt(this, collider));
-        }
     }
 }

@@ -22,45 +22,17 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
 
             Rigidbody colliderBody = collider.attachedRigidbody;
-            bool isHitPlayer = collider.CompareTag(playerMeshTag);
 
-            if (!isHitPlayer
-                && collider.GetComponent<EnvView>() == null
-                && colliderBody != null
-                && colliderBody.GetComponent<LevelObjectView>() == null) {
+            if (!(collider.CompareTag(playerMeshTag)
+                || collider.GetComponent<EnvView>() != null
+                || (colliderBody != null
+                    && colliderBody.GetComponent<LevelObjectView>() != null
+                    && colliderBody.GetComponent<ExplosiveView>() != null))) {
                 return;
             }
 
             var projectile = (ProjectileView) evt.Source;
-            PlayerView player = null;
-
-            if (isHitPlayer) {
-                player = colliderBody.GetComponent<PlayerView>();
-                var damaging = projectile.GetComponent<DamagingView>();
-
-                if (damaging != null) {
-                    player.Health -= damaging.Damage;
-                }
-            }
-
-            var explosive = projectile.GetComponent<ExplosiveView>();
-
-            if (explosive != null) {
-                if (explosive.isActiveAndEnabled) {
-                    explosive.Explode();
-                }
-            } else if (isHitPlayer) {
-                var shockwavable = projectile.GetComponent<ShockwavableView>();
-
-                if (shockwavable != null) {
-                    player.ShakeCamera(
-                        shockwavable.CameraShakeAmount,
-                        shockwavable.CameraShakeDuration,
-                        shockwavable.ShakeCameraInOneDirection);
-                }
-
-                poolStorage.Return(projectile.Poolable);
-            }
+            projectile.Hit();
         }
     }
 }

@@ -226,6 +226,9 @@
 		<value>Это твои очки и макс. очки для уровня, разрушь что-то, чтобы заработать немного</value>
 	</data>
 	<data name="TutorialScreen.Step5" xml:space="preserve">
+		<value>Иногда персонаж не будет тебя слушать... да, он упрям... просто будь настойчивее</value>
+	</data>
+	<data name="TutorialScreen.Step6" xml:space="preserve">
 		<value>Вот и все, приятель, главное не используй жесты и все будет хорошо... наверное</value>
 	</data>
 </root>

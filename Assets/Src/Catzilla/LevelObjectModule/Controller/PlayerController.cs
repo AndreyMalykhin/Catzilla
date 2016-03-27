@@ -68,13 +68,73 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
         }
 
-        public void OnDeath(Evt evt) {
-            playStopwatch.Stop();
-            playerManager.Loose(player);
+        public void OnTriggerEnter(Evt evt) {
+            var collider = (Collider) evt.Data;
+            Rigidbody colliderBody = collider.attachedRigidbody;
+
+            if (collider == null || colliderBody == null) {
+                return;
+            }
+
+            var colliderDamaging = colliderBody.GetComponent<DamagingView>();
+
+            if (colliderDamaging != null) {
+                player.Health -= colliderDamaging.Damage;
+            }
+
+            var colliderTreating = colliderBody.GetComponent<TreatingView>();
+
+            if (colliderTreating != null) {
+                player.Health += colliderTreating.AddHealth;
+            }
+
+            var colliderShockwavable =
+                colliderBody.GetComponent<ShockwavableView>();
+
+            if (colliderShockwavable != null
+                && colliderShockwavable.GetComponent<ExplosiveView>() == null) {
+                player.ShakeCamera(
+                    colliderShockwavable.CameraShakeAmount,
+                    colliderShockwavable.CameraShakeDuration,
+                    colliderShockwavable.ShakeCameraInOneDirection);
+            }
+
+            var colliderReward = colliderBody.GetComponent<RewardBonusView>();
+
+            if (colliderReward != null) {
+                playerManager.ApplyRewardBonus(player, colliderReward);
+            }
+
+            var colliderResurrection =
+                colliderBody.GetComponent<ResurrectionBonusView>();
+
+            if (colliderResurrection != null) {
+                playerManager.ApplyResurrectionBonus(
+                    player, colliderResurrection);
+            }
+
+            var colliderScore = colliderBody.GetComponent<ScoreBonusView>();
+
+            if (colliderScore != null) {
+                ++player.ScoreBonusesTaken;
+            }
+
+            var colliderScoreable =
+                colliderBody.GetComponent<ScoreableView>();
+
+            if (colliderScoreable != null) {
+                playerManager.AddScore(player, colliderScoreable);
+            }
+
+            if (colliderBody.GetComponent<SmashableView>() != null
+                && colliderBody.GetComponent<CopView>() != null) {
+                ++player.SmashedCops;
+            }
         }
 
-        public void OnFootstep(Evt evt) {
-            var shockwavable = player.GetComponent<ShockwavableView>();
+        public void OnExplosion(Evt evt) {
+            var explosive = (ExplosiveView) evt.Source;
+            var shockwavable = explosive.GetComponent<ShockwavableView>();
 
             if (shockwavable != null) {
                 player.ShakeCamera(
@@ -82,7 +142,14 @@ namespace Catzilla.LevelObjectModule.Controller {
                     shockwavable.CameraShakeDuration,
                     shockwavable.ShakeCameraInOneDirection);
             }
+        }
 
+        public void OnDeath(Evt evt) {
+            playStopwatch.Stop();
+            playerManager.Loose(player);
+        }
+
+        public void OnFootstep(Evt evt) {
             if (player.FootstepSound != null) {
                 var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
                 audioManager.Play(
@@ -150,7 +217,8 @@ namespace Catzilla.LevelObjectModule.Controller {
                 typeof(ProjectileView));
 
             for (int i = 0; i < projectiles.Length; ++i) {
-                poolStorage.Return(projectiles[i].GetComponent<PoolableView>());
+                poolStorage.ReturnLater(
+                    projectiles[i].GetComponent<PoolableView>());
             }
         }
     }

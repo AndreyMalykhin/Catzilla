@@ -27,7 +27,6 @@ namespace Catzilla.LevelObjectModule.View {
                 .ToInstance(objectTypeInfoStorage);
             container.Bind<PlayerController>().ToSingle();
             container.Bind<SmashableController>().ToSingle();
-            container.Bind<SmashingController>().ToSingle();
             container.Bind<ShootingController>().ToSingle();
             container.Bind<ProjectileController>().ToSingle();
             container.Bind<ActivatableController>().ToSingle();
@@ -56,11 +55,10 @@ namespace Catzilla.LevelObjectModule.View {
                 container.Resolve<SmashableController>();
             eventBus.On((int) Events.SmashableSmash,
                 smashableContoller.OnSmash);
-
-            var smashingContoller =
-                container.Resolve<SmashingController>();
-            eventBus.On((int) Events.SmashingTriggerEnter,
-                smashingContoller.OnTriggerEnter);
+            eventBus.On((int) Events.SmashableTriggerEnter,
+                smashableContoller.OnTriggerEnter);
+            eventBus.On((int) Events.ExplosiveExplode,
+                smashableContoller.OnExplosion);
 
             var projectileContoller =
                 container.Resolve<ProjectileController>();
@@ -81,8 +79,8 @@ namespace Catzilla.LevelObjectModule.View {
             var explosiveController = container.Resolve<ExplosiveController>();
             eventBus.On((int) Events.ExplosiveExplode,
                 explosiveController.OnExplode);
-            eventBus.On((int) Events.PlayerConstruct,
-                explosiveController.OnPlayerConstruct);
+            eventBus.On((int) Events.ExplosiveTriggerEnter,
+                explosiveController.OnTriggerEnter);
 
             var bonusController = container.Resolve<BonusController>();
             eventBus.On((int)
@@ -99,6 +97,8 @@ namespace Catzilla.LevelObjectModule.View {
                 playerController.OnViewConstruct);
             eventBus.On((int) Events.PlayerDestroy,
                 playerController.OnViewDestroy);
+            eventBus.On((int) Events.PlayerTriggerEnter,
+                playerController.OnTriggerEnter);
             eventBus.On((int) Events.PlayerDeath,
                 playerController.OnDeath);
             eventBus.On((int) Events.PlayerScoreChange,
@@ -111,6 +111,8 @@ namespace Catzilla.LevelObjectModule.View {
                 playerController.OnFootstep);
             eventBus.On((int) Events.PlayerRefuse,
                 playerController.OnRefuse);
+            eventBus.On((int) Events.ExplosiveExplode,
+                playerController.OnExplosion);
         }
     }
 }

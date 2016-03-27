@@ -214,7 +214,7 @@
 		<value>Next</value>
 	</data>
 	<data name="TutorialScreen.Step1" xml:space="preserve">
-		<value>Hello buddy. This short tutorial will explain you how to stop using your favorite swipe and start to win... or die trying</value>
+		<value>Hello buddy. This short tutorial will explain you how to stop using your favorite swipe and start winning... or die trying</value>
 	</data>
 	<data name="TutorialScreen.Step2" xml:space="preserve">
 		<value>Tapping in this area moves you to corresponding side</value>
@@ -226,6 +226,9 @@
 		<value>This is your score and max score for level, smash some to get some</value>
 	</data>
 	<data name="TutorialScreen.Step5" xml:space="preserve">
+		<value>Sometimes character will not listen you... yep, he is stubborn... just be more insistent</value>
+	</data>
+	<data name="TutorialScreen.Step6" xml:space="preserve">
 		<value>That's it buddy, just don't use swipe and everything will be fine... probably</value>
 	</data>
 </root>

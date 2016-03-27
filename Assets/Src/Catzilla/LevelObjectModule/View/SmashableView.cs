@@ -5,7 +5,7 @@ using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
-    public class SmashableView: MonoBehaviour {
+    public class SmashableView: MonoBehaviour, IPoolable {
         public Transform[] Parts {get {return parts;}}
 
         [Inject]
@@ -23,6 +23,7 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private PoolableView poolable;
 
+        private bool isSmashed;
         private int smashedPoolId;
 
         [PostInject]
@@ -31,14 +32,27 @@ namespace Catzilla.LevelObjectModule.View {
             smashedPoolId = smashedProto.GetComponent<PoolableView>().PoolId;
         }
 
-        public SmashedView Smash(
+        public void Smash(
             float force, float upwardsModifier, Vector3 sourcePosition) {
+            if (isSmashed) {
+                return;
+            }
+
             var smashed =
                 poolStorage.Take(smashedPoolId).GetComponent<SmashedView>();
             smashed.Init(this, force, upwardsModifier, sourcePosition);
+            isSmashed = true;
             eventBus.Fire((int) Events.SmashableSmash, new Evt(this, smashed));
-            poolStorage.Return(poolable);
-            return smashed;
+            poolStorage.ReturnLater(poolable);
+        }
+
+        void IPoolable.Reset() {
+            isSmashed = false;
+        }
+
+        private void OnTriggerEnter(Collider collider) {
+            eventBus.Fire((int) Events.SmashableTriggerEnter,
+                new Evt(this, collider));
         }
     }
 }

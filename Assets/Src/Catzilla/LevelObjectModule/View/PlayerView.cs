@@ -363,6 +363,11 @@ namespace Catzilla.LevelObjectModule.View {
             targetX = body.position.x;
         }
 
+        private void OnTriggerEnter(Collider collider) {
+            eventBus.Fire((int) Events.PlayerTriggerEnter,
+                new Evt(this, collider));
+        }
+
         private void OnFootstep() {
             eventBus.Fire((int) Events.PlayerFootstep, new Evt(this));
         }

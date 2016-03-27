@@ -116,7 +116,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void Dispose() {
-            poolStorage.Return(poolable);
+            poolStorage.ReturnLater(poolable);
         }
     }
 }

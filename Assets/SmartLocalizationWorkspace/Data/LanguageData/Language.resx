@@ -189,6 +189,9 @@
 	<data name="Player.GiftEarn" xml:space="preserve">
 		<value>+{0} resurrection</value>
 	</data>
+	<data name="Player.Refuse" xml:space="preserve">
+		<value>Meow!</value>
+	</data>
 	<data name="Player.RewardEarn" xml:space="preserve">
 		<value>+{0} resurrection</value>
 	</data>
@@ -222,10 +225,10 @@
 	<data name="TutorialScreen.Step4" xml:space="preserve">
 		<value>This is your score and max score for level, smash some to get some</value>
 	</data>
-	<data name="TutorialScreen.Step5" xml:space="preserve">
+	<data name="TutorialScreen.Step6" xml:space="preserve">
 		<value>That's it buddy, just don't use swipe and everything will be fine... probably</value>
 	</data>
-	<data name="Player.Refuse" xml:space="preserve">
-		<value>Meow!</value>
+	<data name="TutorialScreen.Step5" xml:space="preserve">
+		<value>Sometimes character will not listen you... yep, he is stubborn... just be more insistent</value>
 	</data>
 </root>
