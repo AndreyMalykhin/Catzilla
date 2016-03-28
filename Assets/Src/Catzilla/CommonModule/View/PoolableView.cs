@@ -7,15 +7,20 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class PoolableView: MonoBehaviour, IPoolable {
-        public bool ActivateOnTake {get; set;}
         public int PoolId;
         public bool IsUI;
 
         private readonly List<IPoolable> poolables = new List<IPoolable>(8);
 
-		void IPoolable.Reset() {
+		void IPoolable.OnReturn() {
             for (var i = 0; i < poolables.Count; ++i) {
-                poolables[i].Reset();
+                poolables[i].OnReturn();
+            }
+        }
+
+		void IPoolable.OnTake() {
+            for (var i = 0; i < poolables.Count; ++i) {
+                poolables[i].OnTake();
             }
         }
 

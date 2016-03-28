@@ -41,7 +41,8 @@ namespace Catzilla.LevelModule.Model {
 
         void BonusVisitor.Visit(ResurrectionBonusView resurrectionBonus) {
             LevelSettings levelSettings = GetLevelSettings();
-            result = player.Score >= 0.25f * levelSettings.CompletionScore
+            result = player.ResurrectionBonusesTaken == 0
+                && player.Score >= 0.25f * levelSettings.CompletionScore
                 && player.Score <= 0.75f * levelSettings.CompletionScore
                 && playerStateStorage.Get().AvailableResurrectionsCount == 0;
         }

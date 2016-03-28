@@ -23,6 +23,7 @@ namespace Catzilla.PlayerModule.Model {
 
         public bool IsDeserved(PlayerState playerState) {
             return playerState.AvailableResurrectionsCount == 0
+                && playerState.LastSeenDate != DateTime.MinValue
                 && DateTime.UtcNow >
                     playerState.LastSeenDate.AddHours(playerAbsenceTime);
         }

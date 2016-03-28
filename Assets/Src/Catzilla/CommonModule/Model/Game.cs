@@ -7,6 +7,8 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.CommonModule.Model {
     public class Game {
+        public bool IsPaused {get {return AudioManager.IsPaused;}}
+
         [Inject("LevelScene")]
         public string LevelScene {get; set;}
 

@@ -33,6 +33,7 @@ GameObject:
   - 114: {fileID: 11484932}
   - 114: {fileID: 11494732}
   - 114: {fileID: 11451472}
+  - 114: {fileID: 11480680}
   m_Layer: 14
   m_Name: Reward
   m_TagString: Untagged
@@ -178,6 +179,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cabe621d1034ff09371fab4a1430ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11480680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d68737fed9ab4e9394e712c63ef1da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviours: []
+  renderers:
+  - {fileID: 2305474}
 --- !u!114 &11484932
 MonoBehaviour:
   m_ObjectHideFlags: 1

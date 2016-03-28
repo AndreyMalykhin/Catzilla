@@ -77,9 +77,11 @@ namespace Catzilla.LevelObjectModule.View {
             poolStorage.ReturnLater(poolable);
         }
 
-        void IPoolable.Reset() {
+        void IPoolable.OnReturn() {
             isExploded = false;
         }
+
+		void IPoolable.OnTake() {}
 
         private void OnDrawGizmos() {
             Gizmos.color = new Color(1f, 1f, 1f, 0.5f);

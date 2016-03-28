@@ -8,9 +8,11 @@ namespace Catzilla.CommonModule.View {
 
         private int triggersCount;
 
-        void IPoolable.Reset() {
+        void IPoolable.OnReturn() {
             MoveIn();
         }
+
+		void IPoolable.OnTake() {}
 
         private void Awake() {
             triggersCount = triggers.Length;

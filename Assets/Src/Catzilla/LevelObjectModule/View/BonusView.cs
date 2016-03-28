@@ -11,8 +11,10 @@ namespace Catzilla.LevelObjectModule.View {
 
         public abstract void Accept(BonusVisitor visitor);
 
-        void IPoolable.Reset() {
+        void IPoolable.OnReturn() {
             EventBus.Fire((int) Events.BonusDestroy, new Evt(this));
         }
+
+        void IPoolable.OnTake() {}
     }
 }

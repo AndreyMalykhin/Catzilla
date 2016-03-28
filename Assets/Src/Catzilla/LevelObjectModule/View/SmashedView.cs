@@ -71,7 +71,7 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
-        void IPoolable.Reset() {
+        void IPoolable.OnReturn() {
             isSmashed = false;
 
             for (int i = 0; i < parts.Length; ++i) {
@@ -88,6 +88,8 @@ namespace Catzilla.LevelObjectModule.View {
                 partBody.Sleep();
             }
         }
+
+		void IPoolable.OnTake() {}
 
         private void FixedUpdate() {
             if (isSmashed) {

@@ -19,7 +19,7 @@ namespace Catzilla.LevelAreaModule.Model {
         public LevelObjectType PlayerObjectType {get; set;}
 
         private readonly IDictionary<Vector3, bool> reservedSpawnPoints =
-            new Dictionary<Vector3, bool>(32, new Vector3Comparer());
+            new Dictionary<Vector3, bool>(64, new Vector3Comparer());
 
         public void NewArea(
             EnvTypeInfo envTypeInfo,

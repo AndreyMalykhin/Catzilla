@@ -10,7 +10,6 @@ GameObject:
   - 224: {fileID: 22412854}
   - 223: {fileID: 22391418}
   - 222: {fileID: 22208896}
-  - 95: {fileID: 9592296}
   - 114: {fileID: 11466482}
   - 114: {fileID: 11484262}
   - 114: {fileID: 11447828}
@@ -25,23 +24,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &9592296
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120974}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: a1df59c0b8ffb43efa89784d1f72ea00, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11412484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53,13 +35,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f494f5c66184f8d97344cf9c511a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoHideDelay: 0.5
-  animator: {fileID: 9592296}
-  isShowAnimated: 1
+  animator: {fileID: 0}
+  isShowAnimated: 0
   isHideAnimated: 0
   showSound: {fileID: 0}
   preShowSound: {fileID: 0}
   audioSource: {fileID: 0}
+  autoHideDelay: 0.5
 --- !u!114 &11424348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -119,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Msg: {fileID: 11447828}
-  Offset: {x: 4, y: 0, z: 0}
+  Offset: {x: 4, y: 8, z: -4}
   offScreenPosition: {x: -32768, y: 0, z: 0}
 --- !u!114 &11466482
 MonoBehaviour:
@@ -301,7 +283,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: animator
       value: 
-      objectReference: {fileID: 9592296}
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: isShowAnimated
       value: 1

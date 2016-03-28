@@ -99,7 +99,7 @@ namespace Catzilla.CommonModule.View {
             }
         }
 
-        void IPoolable.Reset() {
+        void IPoolable.OnReturn() {
             isShown = false;
             OnHide = null;
             OnShow = null;
@@ -115,6 +115,8 @@ namespace Catzilla.CommonModule.View {
 
             gameObject.SetActive(isShown);
         }
+
+		void IPoolable.OnTake() {}
 
         private void OnShowAnimationEnd() {
             if (!isShowAnimated) {

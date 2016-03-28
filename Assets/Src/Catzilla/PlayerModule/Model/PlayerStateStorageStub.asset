@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: PlayerStateStorageStub
   m_EditorClassIdentifier: 
   level: 0
-  availableResurrectionsCount: 1
+  availableResurrectionsCount: 0
   availableRewardsCount: 1
   wasTutorialShown: 1

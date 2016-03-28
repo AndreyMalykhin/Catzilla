@@ -66,24 +66,7 @@ GameObject:
   - 20: {fileID: 2010502}
   - 92: {fileID: 9207372}
   m_Layer: 8
-  m_Name: MainCamera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &144000
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 432502}
-  - 20: {fileID: 2046270}
-  - 92: {fileID: 9241696}
-  m_Layer: 8
-  m_Name: UICamera
+  m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,18 +197,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 497578}
   m_RootOrder: 2
---- !u!4 &432502
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 144000}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 472358}
-  m_RootOrder: 0
 --- !u!4 &446176
 Transform:
   m_ObjectHideFlags: 1
@@ -271,8 +242,7 @@ Transform:
   m_LocalRotation: {x: 0.52862847, y: -0.059156846, z: 0.036965307, w: 0.8459823}
   m_LocalPosition: {x: 0, y: 32, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 432502}
+  m_Children: []
   m_Father: {fileID: 406494}
   m_RootOrder: 1
 --- !u!4 &477530
@@ -328,47 +298,13 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967263
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
---- !u!20 &2046270
-Camera:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 144000}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 3
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 64
-  field of view: 60
-  orthographic: 1
-  orthographic size: 16
-  m_Depth: 1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 32
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 0
-  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
@@ -746,13 +682,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121812}
   m_Enabled: 1
---- !u!92 &9241696
-Behaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 144000}
-  m_Enabled: 1
 --- !u!95 &9551204
 Animator:
   serializedVersion: 3
@@ -813,10 +742,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   refuseChance: 0.25
-  refuseDelay: 0
+  refuseDelay: 32
   refuseCheckRate: 2
   refuseDuration: 1
-  speedChangeDelay: 0
+  speedChangeDelay: 32
   speedCheckRate: 2
   speedChangeChance: 0.25
   speedRestoreChance: 0.25
@@ -918,7 +847,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: camera
       value: 
-      objectReference: {fileID: 2046270}
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: animator
       value: 
@@ -1031,7 +960,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: UICamera
       value: 
-      objectReference: {fileID: 2046270}
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: MainCamera
       value: 

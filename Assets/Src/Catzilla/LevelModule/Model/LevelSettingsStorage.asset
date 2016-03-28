@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: LevelSettingsStorage
   m_EditorClassIdentifier: 
   completionScoreLevelFactor: 1024
-  minCompletionScore: 2048
+  minCompletionScore: 3072
   playerMinFrontSpeed: 8
   playerMaxFrontSpeed: 8
   playerFrontSpeedLevelFactor: 0
@@ -43,25 +43,17 @@ MonoBehaviour:
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
       spawnChance: 0.75
+    - objectType: 2
+      minSpawnsPerArea: 4
+      maxSpawnsPerArea: 4
+      spawnChance: 0.75
     - objectType: 8
-      minSpawnsPerArea: 1
-      maxSpawnsPerArea: 1
-      spawnChance: 0.75
-    - objectType: 9
-      minSpawnsPerArea: 1
-      maxSpawnsPerArea: 1
-      spawnChance: 0.75
-    - objectType: 13
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
       spawnChance: 0.75
     - objectType: 14
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
-      spawnChance: 0.75
-    - objectType: 7
-      minSpawnsPerArea: 1
-      maxSpawnsPerArea: 8
       spawnChance: 0.75
   - ObjectSettings: []
   - ObjectSettings: []

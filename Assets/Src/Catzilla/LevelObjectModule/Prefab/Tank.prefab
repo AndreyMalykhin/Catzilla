@@ -593,6 +593,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   behaviours:
   - {fileID: 11483028}
+  renderers:
+  - {fileID: 2353050}
+  - {fileID: 2302648}
+  - {fileID: 2332120}
+  - {fileID: 2326252}
+  - {fileID: 2325838}
 --- !u!114 &11483028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -609,7 +615,8 @@ MonoBehaviour:
   projectileProto: {fileID: 11467526, guid: 7ace5b98a77fb42dc9f4cd450f354280, type: 2}
   projectileSource: {fileID: 450834}
   aimee: {fileID: 457654}
-  aimSpeed: 360
+  aimSpeed: 16
+  aimPeriod: 0.125
   shootingDelay: 1
   shotPeriod: 0
   burstPeriod: 16

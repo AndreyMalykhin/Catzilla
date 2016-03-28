@@ -33,6 +33,7 @@ GameObject:
   - 114: {fileID: 11484932}
   - 114: {fileID: 11494732}
   - 114: {fileID: 11446284}
+  - 114: {fileID: 11477902}
   m_Layer: 14
   m_Name: Resurrection
   m_TagString: Untagged
@@ -167,6 +168,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collider: {fileID: 6521948}
+--- !u!114 &11477902
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d68737fed9ab4e9394e712c63ef1da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviours: []
+  renderers:
+  - {fileID: 2332952}
 --- !u!114 &11478868
 MonoBehaviour:
   m_ObjectHideFlags: 1

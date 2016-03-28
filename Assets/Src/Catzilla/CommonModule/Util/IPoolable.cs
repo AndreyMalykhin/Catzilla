@@ -1,5 +1,6 @@
 namespace Catzilla.CommonModule.Util {
     public interface IPoolable {
-        void Reset();
+        void OnReturn();
+        void OnTake();
     }
 }

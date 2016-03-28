@@ -28,9 +28,11 @@ namespace Catzilla.LevelObjectModule.View {
             poolStorage.ReturnLater(poolable);
         }
 
-        void IPoolable.Reset() {
+        void IPoolable.OnReturn() {
             isTaken = false;
         }
+
+		void IPoolable.OnTake() {}
 
         private void OnTriggerEnter(Collider collider) {
             eventBus.Fire((int) Events.TakeableTriggerEnter,

@@ -11,30 +11,34 @@ namespace Catzilla.CommonModule.View {
             public int InitialSize;
         }
 
-        [SerializeField]
-        private PoolParams[] poolsParams;
-
         [Inject]
         private IInstantiator instantiator;
 
+        [SerializeField]
+        private Transform instanceContainer;
+
+        [SerializeField]
+        private PoolParams[] poolsParams;
+
         private readonly IDictionary<int, Pool<PoolableView>> poolsMap =
-            new Dictionary<int, Pool<PoolableView>>();
+            new Dictionary<int, Pool<PoolableView>>(64);
         private readonly List<PoolableView> returnList =
             new List<PoolableView>(32);
 
         public PoolableView Take(int poolId) {
             PoolableView instance = poolsMap[poolId].Take();
-            instance.transform.SetParent(null, !instance.IsUI);
-            instance.gameObject.SetActive(instance.ActivateOnTake);
+
+            if (instance.transform.parent == instanceContainer) {
+                instance.transform.SetParent(null, !instance.IsUI);
+            }
+
             return instance;
         }
 
         public void Return(PoolableView instance) {
             DebugUtils.Assert(!IsInPool(instance));
             poolsMap[instance.PoolId].Return(instance);
-            instance.ActivateOnTake = instance.gameObject.activeSelf;
-            instance.transform.SetParent(transform, !instance.IsUI);
-            instance.gameObject.SetActive(false);
+            instance.transform.SetParent(instanceContainer, !instance.IsUI);
             // DebugUtils.Log("PoolStorageView.Return(); left={0}; instance={1}",
             //     poolsMap[instance.PoolId].available, instance);
         }
@@ -59,11 +63,13 @@ namespace Catzilla.CommonModule.View {
         [PostInject]
         public void OnConstruct() {
             // DebugUtils.Log("PoolStorageView.OnConstruct()");
+            DebugUtils.Assert(instanceContainer.gameObject != gameObject);
+            instanceContainer.gameObject.SetActive(false);
 
             for (int i = 0; i < poolsParams.Length; ++i) {
                 PoolParams poolParams = poolsParams[i];
                 var instanceProvider = new ViewInstanceProvider(
-                    poolParams.ViewProto, transform, instantiator);
+                    poolParams.ViewProto, instanceContainer, instantiator);
                 var pool = new Pool<PoolableView>(
                     instanceProvider, poolParams.InitialSize);
                 poolsMap.Add(poolParams.ViewProto.PoolId, pool);
@@ -84,7 +90,7 @@ namespace Catzilla.CommonModule.View {
         }
 
         private bool IsInPool(PoolableView instance) {
-            return instance.transform.parent == transform;
+            return instance.transform.parent == instanceContainer;
         }
     }
 }

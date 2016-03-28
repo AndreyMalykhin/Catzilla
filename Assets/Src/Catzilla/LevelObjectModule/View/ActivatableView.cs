@@ -13,6 +13,10 @@ namespace Catzilla.LevelObjectModule.View {
                 for (int i = 0; i < behaviours.Length; ++i) {
                     behaviours[i].enabled = value;
                 }
+
+                for (int i = 0; i < renderers.Length; ++i) {
+                    renderers[i].enabled = value;
+                }
             }
         }
 
@@ -22,15 +26,23 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private MonoBehaviour[] behaviours;
 
+        [SerializeField]
+        private Renderer[] renderers;
+
         private bool isActive;
 
         [PostInject]
         public void OnConstruct() {
             IsActive = false;
+            eventBus.Fire((int) Events.ActivatableConstruct, new Evt(this));
         }
 
-        void IPoolable.Reset() {
+        void IPoolable.OnReturn() {
             IsActive = false;
+        }
+
+        void IPoolable.OnTake() {
+            eventBus.Fire((int) Events.ActivatableConstruct, new Evt(this));
         }
 
         private void OnTriggerEnter(Collider collider) {

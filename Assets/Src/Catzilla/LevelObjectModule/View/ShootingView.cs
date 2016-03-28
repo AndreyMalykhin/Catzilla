@@ -14,18 +14,23 @@ namespace Catzilla.LevelObjectModule.View {
                     return;
                 }
 
-                if (target != null) {
-                    if (shooter != null) {
-                        StopCoroutine(shooter);
-                    }
-                }
-
                 target = value;
 
-                if (value != null) {
-                    shooter = Shooter();
-                    StartCoroutine(shooter);
+                if (shooter != null) {
+                    StopCoroutine(shooter);
+                }
+
+                if (aimer != null) {
+                    StopCoroutine(aimer);
+                }
+
+                if (target != null) {
+                    targetOldPosition = target.transform.position;
                     aimee.LookAt(GetAimPoint());
+                    shooter = Shooter();
+                    aimer = Aimer();
+                    StartCoroutine(shooter);
+                    StartCoroutine(aimer);
                 }
              }
         }
@@ -38,6 +43,12 @@ namespace Catzilla.LevelObjectModule.View {
 
         [Inject]
         private EventBus eventBus;
+
+        [Inject("LevelMinX")]
+        private float levelMinX;
+
+        [Inject("LevelMaxX")]
+        private float levelMaxX;
 
         [SerializeField]
         private ProjectileView projectileProto;
@@ -52,8 +63,11 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private float aimSpeed;
 
+        [Tooltip("In seconds")]
         [SerializeField]
-        [FormerlySerializedAs("targetCheckPeriod")]
+        private float aimPeriod;
+
+        [SerializeField]
         [Tooltip("In seconds")]
         private float shootingDelay;
 
@@ -80,7 +94,10 @@ namespace Catzilla.LevelObjectModule.View {
         private WaitForSeconds shotPeriodWaiter;
         private WaitForSeconds burstPeriodWaiter;
         private WaitForSeconds shootingDelayWaiter;
+        private WaitForSeconds aimPeriodWaiter;
         private IEnumerator shooter;
+        private IEnumerator aimer;
+        private Vector3 targetOldPosition;
 
         [PostInject]
         public void OnConstruct() {
@@ -89,15 +106,18 @@ namespace Catzilla.LevelObjectModule.View {
             shotPeriodWaiter = new WaitForSeconds(shotPeriod);
             burstPeriodWaiter = new WaitForSeconds(burstPeriod);
             shootingDelayWaiter = new WaitForSeconds(shootingDelay);
-            SetRandomProjectileSpeed();
+            aimPeriodWaiter = new WaitForSeconds(aimPeriod);
+            InitProjectileSpeed();
         }
 
-        void IPoolable.Reset() {
+        void IPoolable.OnReturn() {
             Target = null;
-            SetRandomProjectileSpeed();
+            InitProjectileSpeed();
         }
 
-        private void SetRandomProjectileSpeed() {
+		void IPoolable.OnTake() {}
+
+        private void InitProjectileSpeed() {
             projectileSpeed =
                 Random.Range(projectileMinSpeed, projectileMaxSpeed);
         }
@@ -107,27 +127,43 @@ namespace Catzilla.LevelObjectModule.View {
                 new Evt(this, collider));
         }
 
-        private void FixedUpdate() {
-            if (target == null) {
-                return;
+        private IEnumerator Aimer() {
+            while (target != null) {
+                Aim();
+                yield return aimPeriodWaiter;
             }
-
-            Aim();
         }
 
         private void Aim() {
             Quaternion rotationToTarget =
                 Quaternion.LookRotation(GetAimPoint() - aimee.position);
             aimee.rotation = Quaternion.RotateTowards(
-                aimee.rotation, rotationToTarget, aimSpeed * Time.deltaTime);
+                aimee.rotation, rotationToTarget, aimSpeed * aimPeriod);
+            targetOldPosition = target.transform.position;
         }
 
         private Vector3 GetAimPoint() {
-            Bounds targetBounds = target.bounds;
+            // DebugUtils.Log("ShootingView.GetAimPoint()");
+            Vector3 targetPosition = target.transform.position;
+            Vector3 targetSpeed =
+                (targetPosition - targetOldPosition) / aimPeriod;
+            float distanceToTarget =
+                (aimee.position - targetPosition).magnitude;
+            float projectileHitTime = distanceToTarget / projectileSpeed;
+            Vector3 predictedOffset = targetSpeed * projectileHitTime;
             return new Vector3(
-                targetBounds.center.x,
+                Mathf.Clamp(
+                    targetPosition.x + predictedOffset.x, levelMinX, levelMaxX),
                 aimee.position.y,
-                targetBounds.max.z);
+                targetPosition.z + predictedOffset.z);
+        }
+
+        private void OnDrawGizmos() {
+            if (target == null) {
+                return;
+            }
+
+            Gizmos.DrawLine(aimee.position, GetAimPoint());
         }
 
         private IEnumerator Shooter() {

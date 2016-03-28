@@ -33,9 +33,11 @@ namespace Catzilla.LevelObjectModule.View {
             poolStorage.ReturnLater(poolable);
         }
 
-        void IPoolable.Reset() {
+        void IPoolable.OnReturn() {
             isHit = false;
         }
+
+		void IPoolable.OnTake() {}
 
         private void FixedUpdate() {
             Fly();

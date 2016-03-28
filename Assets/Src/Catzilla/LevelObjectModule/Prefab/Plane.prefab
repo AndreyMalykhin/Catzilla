@@ -665,6 +665,8 @@ MonoBehaviour:
   behaviours:
   - {fileID: 11483028}
   - {fileID: 11489738}
+  renderers:
+  - {fileID: 2362736}
 --- !u!114 &11483028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -682,6 +684,7 @@ MonoBehaviour:
   projectileSource: {fileID: 496598}
   aimee: {fileID: 424354}
   aimSpeed: 32
+  aimPeriod: 0.125
   shootingDelay: 1
   shotPeriod: 0
   burstPeriod: 8

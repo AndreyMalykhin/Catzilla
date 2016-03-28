@@ -529,6 +529,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   behaviours:
   - {fileID: 11442074}
+  renderers:
+  - {fileID: 2362690}
+  - {fileID: 2333712}
+  - {fileID: 2375548}
+  - {fileID: 2354108}
+  - {fileID: 2325276}
+  - {fileID: 2362410}
 --- !u!114 &11429288
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -35,13 +35,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f494f5c66184f8d97344cf9c511a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoHideDelay: 1
   animator: {fileID: 0}
   isShowAnimated: 0
   isHideAnimated: 0
   showSound: {fileID: 0}
   preShowSound: {fileID: 0}
   audioSource: {fileID: 0}
+  autoHideDelay: 1
 --- !u!114 &11424348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Msg: {fileID: 11447828}
-  Offset: {x: 0, y: 0, z: 2}
+  Offset: {x: 0, y: 8, z: -4}
   offScreenPosition: {x: -32768, y: 0, z: 0}
 --- !u!114 &11466482
 MonoBehaviour:

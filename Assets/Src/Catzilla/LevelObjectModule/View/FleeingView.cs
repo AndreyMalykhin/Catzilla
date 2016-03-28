@@ -16,10 +16,10 @@ namespace Catzilla.LevelObjectModule.View {
         private LayerMask obstacleLayer;
 
         [SerializeField]
-        private float minSpeed = 1f;
+        private float minSpeed;
 
         [SerializeField]
-        private float maxSpeed = 1.25f;
+        private float maxSpeed;
 
         [SerializeField]
         private float speed;
@@ -28,7 +28,7 @@ namespace Catzilla.LevelObjectModule.View {
         private float desiredSpeed;
 
         [SerializeField]
-        private float stopDistance = 0.5f;
+        private float stopDistance;
 
         [SerializeField]
         new private Collider collider;
@@ -43,9 +43,11 @@ namespace Catzilla.LevelObjectModule.View {
         private float slowDownDistance;
         private float nextAdjustSpeedTime;
 
-        void IPoolable.Reset() {
+        void IPoolable.OnReturn() {
             InitSpeed();
         }
+
+		void IPoolable.OnTake() {}
 
         private void Awake() {
             halfDepth = collider.bounds.extents.z;

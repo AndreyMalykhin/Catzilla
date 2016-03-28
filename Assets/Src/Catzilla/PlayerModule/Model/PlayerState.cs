@@ -60,7 +60,7 @@ namespace Catzilla.PlayerModule.Model {
         private bool wasTutorialShown;
 
         [SerializeField]
-        private int availableResurrectionsCount = 1;
+        private int availableResurrectionsCount;
 
         [SerializeField]
         private int availableRewardsCount = 1;

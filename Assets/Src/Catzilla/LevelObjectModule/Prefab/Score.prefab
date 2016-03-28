@@ -34,6 +34,7 @@ GameObject:
   - 114: {fileID: 11494732}
   - 114: {fileID: 11412550}
   - 114: {fileID: 11438514}
+  - 114: {fileID: 11439088}
   m_Layer: 14
   m_Name: Score
   m_TagString: Untagged
@@ -182,6 +183,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TakeSound: {fileID: 8300000, guid: c213560c407cb4b0ca287bb4e4afdff3, type: 3}
   poolable: {fileID: 11484932}
+--- !u!114 &11439088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d68737fed9ab4e9394e712c63ef1da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviours: []
+  renderers:
+  - {fileID: 2387792}
 --- !u!114 &11478868
 MonoBehaviour:
   m_ObjectHideFlags: 1

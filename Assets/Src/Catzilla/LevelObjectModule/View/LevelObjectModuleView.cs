@@ -90,6 +90,8 @@ namespace Catzilla.LevelObjectModule.View {
                 container.Resolve<ActivatableController>();
             eventBus.On((int) Events.ActivatableTriggerEnter,
                 activatableContoller.OnTriggerEnter);
+            eventBus.On((int) Events.ActivatableConstruct,
+                activatableContoller.OnConstruct);
 
             var playerController =
                 container.Resolve<PlayerController>();

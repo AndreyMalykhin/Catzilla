@@ -20,7 +20,7 @@ namespace Catzilla.CommonModule.Util {
         }
 
         public void Return(T instance) {
-            instance.Reset();
+            instance.OnReturn();
             instances.Add(instance);
         }
 
@@ -33,6 +33,7 @@ namespace Catzilla.CommonModule.Util {
             int topIndex = instances.Count - 1;
             T instance = instances[topIndex];
             instances.RemoveAt(topIndex);
+            instance.OnTake();
             return instance;
         }
 

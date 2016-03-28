@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Diagnostics;
 using System.Text;
 using Zenject;
@@ -110,35 +111,49 @@ namespace Catzilla.PlayerModule.Model {
             ++playerState.Level;
             playerState.PlayTime += playStopwatch.Elapsed;
             SaveRecords(player, playerState);
-            playerStateStorage.Save(playerState);
-
-            if (server.IsLoggedIn) {
-                playerStateStorage.Sync(server);
-            }
 
             levelCompleteScreen.Score.text =
                 translator.Translate("LevelCompleteScreen.Score", player.Score);
-            var showable = levelCompleteScreen.GetComponent<ShowableView>();
-            showable.OnShow += OnLevelCompleteScreenShow;
-            showable.Show();
+            var levelCompleteScreenShowable =
+                levelCompleteScreen.GetComponent<ShowableView>();
+            Action<ShowableView> levelCompleteScreenShowHandler;
+            levelCompleteScreenShowHandler = delegate (ShowableView showable) {
+                showable.OnShow -= levelCompleteScreenShowHandler;
+                game.UnloadLevel();
+                playerStateStorage.Save(playerState);
+
+                if (server.IsLoggedIn) {
+                    playerStateStorage.Sync(server);
+                }
+            };
+            levelCompleteScreenShowable.OnShow +=
+                levelCompleteScreenShowHandler;
+            levelCompleteScreenShowable.Show();
         }
 
         public void Loose(PlayerView player) {
             PlayerState playerState = playerStateStorage.Get();
             playerState.PlayTime += playStopwatch.Elapsed;
             SaveRecords(player, playerState);
-            playerStateStorage.Save(playerState);
-
-            if (server.IsLoggedIn) {
-                playerStateStorage.Sync(server);
-            }
 
             if (player.DeathSound != null) {
                 audioManager.Play(player.DeathSound, player.HighPrioAudioSource,
                     playerHighPrioAudioChannel);
             }
 
-            gameOverScreen.GetComponent<ShowableView>().Show();
+            var gameOverScreenShowable =
+                gameOverScreen.GetComponent<ShowableView>();
+            Action<ShowableView> gameOverScreenShowHandler;
+            gameOverScreenShowHandler = delegate (ShowableView showable) {
+                showable.OnShow -= gameOverScreenShowHandler;
+                playerStateStorage.Save(playerState);
+
+                if (server.IsLoggedIn) {
+                    playerStateStorage.Sync(server);
+                }
+            };
+            gameOverScreenShowable.OnShow += gameOverScreenShowHandler;
+            gameOverScreenShowable.Show();
         }
 
         private void SaveRecords(PlayerView player, PlayerState playerState) {
@@ -146,11 +161,6 @@ namespace Catzilla.PlayerModule.Model {
                 player.Score;
             playerState.GetRecord(GooglePlayIds.leaderboard_smashed_cops)
                 .Value += player.SmashedCops;
-        }
-
-        private void OnLevelCompleteScreenShow(ShowableView showable) {
-            showable.OnShow -= OnLevelCompleteScreenShow;
-            game.UnloadLevel();
         }
 
         private void GiveAchievementIfNeeded(PlayerState playerState) {

@@ -28,11 +28,13 @@ namespace Catzilla.CommonModule.View {
             countOfUpdatesTillPlacement = 1;
         }
 
-        void IPoolable.Reset() {
+        void IPoolable.OnReturn() {
             LookAtTarget = null;
             countOfUpdatesTillPlacement = -1;
             ResetPosition();
         }
+
+		void IPoolable.OnTake() {}
 
         private void Awake() {
             ResetPosition();

@@ -13,6 +13,7 @@ namespace Catzilla.CommonModule.Util {
         LevelAreaTriggerEnter,
         LevelConstruct,
         ActivatableTriggerEnter,
+        ActivatableConstruct,
         BonusDestroy,
         DisposableTriggerExit,
         ExplosiveExplode,
