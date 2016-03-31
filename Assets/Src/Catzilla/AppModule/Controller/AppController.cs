@@ -37,7 +37,7 @@ namespace Catzilla.AppModule.Controller {
 
         public void OnStart(Evt evt) {
             // DebugUtils.Log("AppController.OnStart()");
-            Application.targetFrameRate = 60;
+            Application.targetFrameRate = 30;
             PlayerState playerState = PlayerStateStorage.Get();
 
             if (playerState == null) {

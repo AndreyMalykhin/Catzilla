@@ -29,6 +29,9 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject]
         private Server server;
 
+        [Inject("EffectsHighPrioAudioChannel")]
+        private int effectsHighPrioAudioChannel;
+
         [Inject("PlayerHighPrioAudioChannel")]
         private int playerHighPrioAudioChannel;
 
@@ -54,6 +57,12 @@ namespace Catzilla.LevelObjectModule.Controller {
         private int speechWorldPopupType;
 
         private PlayerView player;
+        private string refuseMsg;
+
+        [PostInject]
+        public void OnConstruct() {
+            refuseMsg = translator.Translate("Player.Refuse");
+        }
 
         public void OnViewConstruct(Evt evt) {
             player = (PlayerView) evt.Source;
@@ -121,14 +130,20 @@ namespace Catzilla.LevelObjectModule.Controller {
 
             var colliderScoreable =
                 colliderBody.GetComponent<ScoreableView>();
+            int addedScore = 0;
 
             if (colliderScoreable != null) {
-                playerManager.AddScore(player, colliderScoreable);
+                addedScore = playerManager.AddScore(player, colliderScoreable);
             }
 
-            if (colliderBody.GetComponent<SmashableView>() != null
-                && colliderBody.GetComponent<CopView>() != null) {
-                ++player.SmashedCops;
+            var colliderSmashable = colliderBody.GetComponent<SmashableView>();
+
+            if (colliderSmashable != null) {
+                if (colliderBody.GetComponent<CopView>() != null) {
+                    ++player.SmashedCops;
+                }
+
+                player.AddSmash(addedScore);
             }
         }
 
@@ -197,10 +212,31 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
         }
 
+        public void OnSmashStreak(Evt evt) {
+            PlayerState playerState = playerStateStorage.Get();
+            var streak = (PlayerView.SmashStreak) evt.Data;
+            playerState.GetRecord(GooglePlayIds.leaderboard_smash_streak_scores)
+                .Value = streak.ExtraScore;
+
+            if (player.SmashStreakSound != null) {
+                audioManager.Play(
+                    player.SmashStreakSound,
+                    player.HighPrioAudioSource,
+                    playerHighPrioAudioChannel);
+            }
+        }
+
         public void OnRefuse(Evt evt) {
+            if (player.RefuseSound != null) {
+                audioManager.Play(
+                    player.RefuseSound,
+                    player.LowPrioAudioSource,
+                    playerLowPrioAudioChannel);
+            }
+
             WorldSpacePopupView popup =
                 worldSpacePopupManager.Get(speechWorldPopupType);
-            popup.Msg.text = translator.Translate("Player.Refuse");
+            popup.Msg.text = refuseMsg;
             popup.LookAtTarget = player.Camera;
             popup.PlaceAbove(player.Collider.bounds);
             worldSpacePopupManager.Show(popup);

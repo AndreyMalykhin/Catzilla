@@ -56,9 +56,12 @@ namespace Catzilla.PlayerModule.Model {
 
         private readonly StringBuilder strBuilder = new StringBuilder(8);
 
-        public void AddScore(PlayerView player, ScoreableView scoreable) {
+        /**
+         * @return Added score
+         */
+        public int AddScore(PlayerView player, ScoreableView scoreable) {
             if (player.IsScoreFreezed) {
-                return;
+                return 0;
             }
 
             int score = UnityEngine.Random.Range(
@@ -71,6 +74,7 @@ namespace Catzilla.PlayerModule.Model {
             popup.LookAtTarget = player.Camera;
             popup.PlaceAbove(scoreable.Collider.bounds);
             popupManager.Show(popup);
+            return score;
         }
 
         public void ApplyResurrectionBonus(
@@ -114,6 +118,11 @@ namespace Catzilla.PlayerModule.Model {
 
             levelCompleteScreen.Score.text =
                 translator.Translate("LevelCompleteScreen.Score", player.Score);
+            var levelDuration = new TimeSpan(0, 0, (int) player.TotalLifetime);
+            var formattedLevelDuration = string.Format(
+                "{0:00}:{1:00}", levelDuration.Minutes, levelDuration.Seconds);
+            levelCompleteScreen.Time.text = translator.Translate(
+                "LevelCompleteScreen.Time", formattedLevelDuration);
             var levelCompleteScreenShowable =
                 levelCompleteScreen.GetComponent<ShowableView>();
             Action<ShowableView> levelCompleteScreenShowHandler;

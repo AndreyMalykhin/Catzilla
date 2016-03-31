@@ -113,6 +113,8 @@ namespace Catzilla.LevelObjectModule.View {
                 playerController.OnFootstep);
             eventBus.On((int) Events.PlayerRefuse,
                 playerController.OnRefuse);
+            eventBus.On((int) Events.PlayerSmashStreak,
+                playerController.OnSmashStreak);
             eventBus.On((int) Events.ExplosiveExplode,
                 playerController.OnExplosion);
         }

@@ -53,6 +53,7 @@ namespace Catzilla.CommonModule.Controller {
         public void OnPreLevelComplete(Evt evt) {
             var player = (PlayerView) evt.Data;
             Everyplay.SetMetadata("Score", player.Score);
+            Everyplay.SetMetadata("Time", player.TotalLifetime);
             Everyplay.SetMetadata("Level", playerStateStorage.Get().Level);
         }
 

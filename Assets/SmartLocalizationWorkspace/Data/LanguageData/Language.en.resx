@@ -150,11 +150,13 @@
 		<value>Level complete!</value>
 	</data>
 	<data name="LevelCompleteScreen.Score" xml:space="preserve">
-		<value>Score
-{0}</value>
+		<value>Score: {0}</value>
 	</data>
 	<data name="LevelCompleteScreen.Share" xml:space="preserve">
 		<value>Share replay</value>
+	</data>
+	<data name="LevelCompleteScreen.Time" xml:space="preserve">
+		<value>Time: {0}</value>
 	</data>
 	<data name="LevelStartScreen.Level" xml:space="preserve">
 		<value>Level {0}</value>
@@ -201,6 +203,10 @@
 	<data name="Player.Score" xml:space="preserve">
 		<value>{0} / {1}</value>
 	</data>
+	<data name="Player.SmashStreak" xml:space="preserve">
+		<value>x{0} SMASH STREAK!
++{1}</value>
+	</data>
 	<data name="ResurrectionBonus.Take" xml:space="preserve">
 		<value>+{0} resurrection</value>
 	</data>
@@ -223,7 +229,7 @@
 		<value>This is your health, don't let them cops bring it down</value>
 	</data>
 	<data name="TutorialScreen.Step4" xml:space="preserve">
-		<value>This is your score and max score for level, smash some to get some</value>
+		<value>This is your current score and score, required for new level, smash some to get some</value>
 	</data>
 	<data name="TutorialScreen.Step5" xml:space="preserve">
 		<value>Sometimes character will not listen you... yep, he is stubborn... just be more insistent</value>

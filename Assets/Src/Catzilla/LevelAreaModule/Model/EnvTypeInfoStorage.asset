@@ -30,12 +30,12 @@ MonoBehaviour:
   - type: 3
     viewProto: {fileID: 11461362, guid: 881190ac123ff4fc3a8b41372ceceb81, type: 2}
     spawnMap: {fileID: 11407462, guid: 6ecf7973443ea4ec28c7e55f259bf729, type: 2}
-    minSpawnWeight: 2
+    minSpawnWeight: 3
     spawnWeightLevelFactor: 0
   - type: 4
     viewProto: {fileID: 11461362, guid: 89b880857bb954d4788e49fb5a46e571, type: 2}
     spawnMap: {fileID: 11407462, guid: 2f015d500668f4c98a054adf29f2a593, type: 2}
-    minSpawnWeight: 2
+    minSpawnWeight: 3
     spawnWeightLevelFactor: 1
   - type: 5
     viewProto: {fileID: 11461362, guid: b72d728f45850423399242f6e2ca5bdc, type: 2}
@@ -45,12 +45,12 @@ MonoBehaviour:
   - type: 6
     viewProto: {fileID: 11461362, guid: 969e7a2421f8c4825a643da452a6d03b, type: 2}
     spawnMap: {fileID: 11407462, guid: 2fa473264f6ac434d9dd62eb80c7b265, type: 2}
-    minSpawnWeight: 2
+    minSpawnWeight: 3
     spawnWeightLevelFactor: 0
   - type: 7
     viewProto: {fileID: 11461362, guid: e3bc46baad0884a3a98837c2ee9b7e86, type: 2}
     spawnMap: {fileID: 11407462, guid: 6f202d3b080244aa7bcec049f7187063, type: 2}
-    minSpawnWeight: 2
+    minSpawnWeight: 3
     spawnWeightLevelFactor: 1
   - type: 8
     viewProto: {fileID: 11461362, guid: e4cdd3c644caf4cf58f707e70ae80ea6, type: 2}

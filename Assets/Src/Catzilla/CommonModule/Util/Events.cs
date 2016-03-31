@@ -27,6 +27,7 @@ namespace Catzilla.CommonModule.Util {
         PlayerRefuse,
         PlayerFootstep,
         PlayerTriggerEnter,
+        PlayerSmashStreak,
         SmashableSmash,
         SmashableTriggerEnter,
         ShootingTriggerEnter,
@@ -36,6 +37,7 @@ namespace Catzilla.CommonModule.Util {
         ProjectileTriggerEnter,
         PlayerManagerPreLevelComplete,
         PlayerStateStorageSave,
-        HUDScoreConstruct
+        HUDScoreConstruct,
+        HUDNotificationsConstruct
     }
 }

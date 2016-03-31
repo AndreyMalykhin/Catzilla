@@ -17,7 +17,7 @@ GameObject:
   - 114: {fileID: 11446678}
   - 114: {fileID: 11444414}
   m_Layer: 5
-  m_Name: ErrorScreenSpacePopup
+  m_Name: ErrorPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,11 +116,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f494f5c66184f8d97344cf9c511a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoHideDelay: 4
   animator: {fileID: 0}
-  canvas: {fileID: 22389692}
   isShowAnimated: 0
   isHideAnimated: 0
+  showSound: {fileID: 0}
+  preShowSound: {fileID: 0}
+  audioSource: {fileID: 0}
+  autoHideDelay: 4
 --- !u!114 &11446678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,6 +206,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

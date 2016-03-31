@@ -150,11 +150,13 @@
 		<value>Уровень пройден!</value>
 	</data>
 	<data name="LevelCompleteScreen.Score" xml:space="preserve">
-		<value>Очки
-{0}</value>
+		<value>Очки: {0}</value>
 	</data>
 	<data name="LevelCompleteScreen.Share" xml:space="preserve">
 		<value>Поделиться повтором</value>
+	</data>
+	<data name="LevelCompleteScreen.Time" xml:space="preserve">
+		<value>Время: {0}</value>
 	</data>
 	<data name="LevelStartScreen.Level" xml:space="preserve">
 		<value>Уровень {0}</value>
@@ -201,6 +203,10 @@
 	<data name="Player.Score" xml:space="preserve">
 		<value>{0} / {1}</value>
 	</data>
+	<data name="Player.SmashStreak" xml:space="preserve">
+		<value>x{0} СЕРИЯ РАЗРУШЕНИЙ!
++{1}</value>
+	</data>
 	<data name="ResurrectionBonus.Take" xml:space="preserve">
 		<value>+{0} воскрешение</value>
 	</data>
@@ -223,7 +229,7 @@
 		<value>Это твое здоровье, не позволяй копам отнимать его</value>
 	</data>
 	<data name="TutorialScreen.Step4" xml:space="preserve">
-		<value>Это твои очки и макс. очки для уровня, разрушь что-то, чтобы заработать немного</value>
+		<value>Это твои текущие очки и необходимые для нового уровня, разрушь что-нибудь, чтобы заработать немного</value>
 	</data>
 	<data name="TutorialScreen.Step5" xml:space="preserve">
 		<value>Иногда персонаж не будет тебя слушать... да, он упрям... просто будь настойчивее</value>

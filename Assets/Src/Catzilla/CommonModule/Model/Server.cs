@@ -16,9 +16,6 @@ namespace Catzilla.CommonModule.Model {
     [CreateAssetMenuAttribute]
     public class Server: ScriptableObject, IDisposable {
         [Inject]
-        public CoroutineManagerView CoroutineManager {get; set;}
-
-        [Inject]
         public EventBus EventBus {get; set;}
 
         public int PendingRequestsCount {get {return pendingRequestsCount;}}

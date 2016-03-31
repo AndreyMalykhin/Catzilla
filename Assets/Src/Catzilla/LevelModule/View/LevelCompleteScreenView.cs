@@ -11,6 +11,7 @@ namespace Catzilla.LevelModule.View {
         public Button ShareBtn {get {return shareBtn;}}
         public Button WatchReplayBtn {get {return watchReplayBtn;}}
         public Text Score {get {return score;}}
+        public Text Time {get {return time;}}
         public RawImage ReplayImg {get {return replayImg;}}
         public GameObject Replay {get {return replay;}}
 
@@ -22,6 +23,9 @@ namespace Catzilla.LevelModule.View {
 
         [SerializeField]
         private Text score;
+
+        [SerializeField]
+        private Text time;
 
         [SerializeField]
         private RawImage replayImg;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
+using System;
 using System.Collections;
 using SmartLocalization;
 using Zenject;
@@ -8,6 +9,16 @@ using Catzilla.PlayerModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class PlayerView: LevelObjectView {
+        public struct SmashStreak {
+            public readonly int Length;
+            public readonly int ExtraScore;
+
+            public SmashStreak(int length, int extraScore) {
+                Length = length;
+                ExtraScore = extraScore;
+            }
+        }
+
         public int ScoreBonusesTaken {get; set;}
         public int ResurrectionBonusesTaken {get; set;}
         public int SmashedCops {get; set;}
@@ -71,6 +82,8 @@ namespace Catzilla.LevelObjectModule.View {
         public AudioClip HurtSound;
         public AudioClip TreatSound;
         public AudioClip FootstepSound;
+        public AudioClip SmashStreakSound;
+        public AudioClip RefuseSound;
         public AudioSource LowPrioAudioSource;
         public AudioSource HighPrioAudioSource;
         public bool IsHealthFreezed;
@@ -135,6 +148,16 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private float speedChangeAmount;
 
+        [SerializeField]
+        [Tooltip("In seconds")]
+        private float smashStreakDelay;
+
+        [SerializeField]
+        private int smashStreakMinLength;
+
+        [SerializeField]
+        private float smashStreakScoreLengthFactor;
+
         private readonly Vector3[] cameraShakeAmounts = new Vector3[4];
         private Vector3 cameraStartPosition;
         private int score;
@@ -148,6 +171,8 @@ namespace Catzilla.LevelObjectModule.View {
         private float creationTime;
         private bool isRefusing;
         private int deathsCount;
+        private int smashStreakLength;
+        private int smashStreakScore;
         private WaitForSeconds refuseCheckRateWaiter;
         private WaitForSeconds refuseDurationWaiter;
         private WaitForSeconds speedChangeDelayWaiter;
@@ -173,6 +198,13 @@ namespace Catzilla.LevelObjectModule.View {
             StartCoroutine(Refuser());
             StartCoroutine(SpeedChanger());
             eventBus.Fire((int) Events.PlayerConstruct, new Evt(this));
+        }
+
+        public void AddSmash(int score) {
+            ++smashStreakLength;
+            smashStreakScore += score;
+            CancelInvoke("EnsureSmashStreak");
+            Invoke("EnsureSmashStreak", smashStreakDelay);
         }
 
         public void Resurrect() {
@@ -204,6 +236,28 @@ namespace Catzilla.LevelObjectModule.View {
                     amount, duration, inOneDirection, shakerIndex));
                 break;
             }
+        }
+
+        private void EnsureSmashStreak() {
+            if (isDead
+                || smashStreakLength < smashStreakMinLength
+                || smashStreakScore <= 0) {
+                ResetSmashStreak();
+                return;
+            }
+
+            int extraScore = (int) (smashStreakScore *
+                smashStreakLength * smashStreakScoreLengthFactor);
+            var streak = new SmashStreak(smashStreakLength, extraScore);
+            ResetSmashStreak();
+            eventBus.Fire((int) Events.PlayerSmashStreak,
+                new Evt(this, streak));
+            Score += extraScore;
+        }
+
+        private void ResetSmashStreak() {
+            smashStreakLength = 0;
+            smashStreakScore = 0;
         }
 
         private void OnDestroy() {

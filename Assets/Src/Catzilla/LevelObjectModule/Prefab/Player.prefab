@@ -729,6 +729,8 @@ MonoBehaviour:
   HurtSound: {fileID: 8300000, guid: 087a55cb8829649678dba67b55c4b303, type: 3}
   TreatSound: {fileID: 0}
   FootstepSound: {fileID: 8300000, guid: 8d85354b4a2ce4b1f9ec0ebd20bdaee1, type: 3}
+  SmashStreakSound: {fileID: 8300000, guid: 37fd64ba9cb214bd0ad069c3211ba347, type: 3}
+  RefuseSound: {fileID: 8300000, guid: d49bedc40f59d45589bd86ea73b1ceb1, type: 3}
   LowPrioAudioSource: {fileID: 8291638}
   HighPrioAudioSource: {fileID: 8275416}
   IsHealthFreezed: 0
@@ -750,6 +752,9 @@ MonoBehaviour:
   speedChangeChance: 0.25
   speedRestoreChance: 0.25
   speedChangeAmount: 2
+  smashStreakDelay: 1
+  smashStreakMinLength: 4
+  smashStreakScoreLengthFactor: 0.1
 --- !u!114 &11477530
 MonoBehaviour:
   m_ObjectHideFlags: 1

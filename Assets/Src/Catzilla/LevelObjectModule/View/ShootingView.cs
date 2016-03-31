@@ -135,6 +135,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void Aim() {
+            // DebugUtils.Log("ShootingView.Aim()");
             Quaternion rotationToTarget =
                 Quaternion.LookRotation(GetAimPoint() - aimee.position);
             aimee.rotation = Quaternion.RotateTowards(
@@ -147,23 +148,9 @@ namespace Catzilla.LevelObjectModule.View {
             Vector3 targetPosition = target.transform.position;
             Vector3 targetSpeed =
                 (targetPosition - targetOldPosition) / aimPeriod;
-            float distanceToTarget =
-                (aimee.position - targetPosition).magnitude;
-            float projectileHitTime = distanceToTarget / projectileSpeed;
-            Vector3 predictedOffset = targetSpeed * projectileHitTime;
-            return new Vector3(
-                Mathf.Clamp(
-                    targetPosition.x + predictedOffset.x, levelMinX, levelMaxX),
-                aimee.position.y,
+            Vector3 predictedOffset = targetSpeed * 1.5f;
+            return new Vector3(targetPosition.x, aimee.position.y,
                 targetPosition.z + predictedOffset.z);
-        }
-
-        private void OnDrawGizmos() {
-            if (target == null) {
-                return;
-            }
-
-            Gizmos.DrawLine(aimee.position, GetAimPoint());
         }
 
         private IEnumerator Shooter() {
