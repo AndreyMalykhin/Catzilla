@@ -55,8 +55,96 @@ MonoBehaviour:
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
       spawnChance: 0.75
-  - ObjectSettings: []
-  - ObjectSettings: []
+  - ObjectSettings:
+    - objectType: 1
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+      spawnChance: 0.75
+    - objectType: 3
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+      spawnChance: 0.75
+    - objectType: 4
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+      spawnChance: 0.75
+    - objectType: 5
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+      spawnChance: 0.75
+    - objectType: 6
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+      spawnChance: 0.75
+    - objectType: 2
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 2
+      spawnChance: 0.75
+    - objectType: 8
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+      spawnChance: 0.75
+    - objectType: 14
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+      spawnChance: 0.75
+    - objectType: 9
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+      spawnChance: 0.75
+    - objectType: 7
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 2
+      spawnChance: 0.75
+  - ObjectSettings:
+    - objectType: 1
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+      spawnChance: 0.75
+    - objectType: 3
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+      spawnChance: 0.75
+    - objectType: 4
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+      spawnChance: 0.75
+    - objectType: 5
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+      spawnChance: 0.75
+    - objectType: 6
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 4
+      spawnChance: 0.75
+    - objectType: 2
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+      spawnChance: 0.75
+    - objectType: 8
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+      spawnChance: 0.75
+    - objectType: 14
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+      spawnChance: 0.75
+    - objectType: 9
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+      spawnChance: 0.75
+    - objectType: 7
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 2
+      spawnChance: 0.75
+    - objectType: 13
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+      spawnChance: 0.75
+    - objectType: 10
+      minSpawnsPerArea: 1
+      maxSpawnsPerArea: 1
+      spawnChance: 0.75
   - ObjectSettings: []
   - ObjectSettings: []
   - ObjectSettings: []

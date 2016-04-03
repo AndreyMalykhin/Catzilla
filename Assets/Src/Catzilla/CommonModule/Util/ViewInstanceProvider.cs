@@ -10,8 +10,8 @@ namespace Catzilla.CommonModule.Util {
         private readonly Transform parent;
         private readonly IInstantiator instantiator;
 
-        public ViewInstanceProvider(
-            PoolableView proto, Transform parent, IInstantiator instantiator) {
+        public ViewInstanceProvider(PoolableView proto,
+            IInstantiator instantiator, Transform parent = null) {
             this.proto = proto;
             this.parent = parent;
             this.instantiator = instantiator;
@@ -20,7 +20,17 @@ namespace Catzilla.CommonModule.Util {
         public PoolableView Get() {
             var instance = instantiator.InstantiatePrefab(proto.gameObject)
                 .GetComponent<PoolableView>();
-            instance.transform.SetParent(parent, !instance.IsUI);
+
+            if (instance.DeactivateOnReturn) {
+                GameObject instanceObject = instance.gameObject;
+                instance.ActivateOnTake = instanceObject.activeSelf;
+                instanceObject.SetActive(false);
+            }
+
+            if (parent != null) {
+                instance.transform.SetParent(parent, !instance.IsUI);
+            }
+
             return instance;
         }
     }

@@ -49,6 +49,32 @@ namespace Catzilla.LevelObjectModule.Controller {
                 colliderSmashing.transform.position);
         }
 
+        public void OnCollisionEnter(Evt evt) {
+            var smashable = (SmashableView) evt.Source;
+
+            if (smashable.IsSmashed) {
+                return;
+            }
+
+            var collision = (Collision) evt.Data;
+            Vector3 impulse = collision.impulse;
+
+            if (impulse == Vector3.zero) {
+                return;
+            }
+
+            float smashForce = impulse.magnitude / Time.fixedDeltaTime;
+
+            if (smashForce < 64f) {
+                return;
+            }
+
+            // DebugUtils.Log("SmashableContoller.OnCollisionEnter());
+            var smashUpwardsModifier = 0f;
+            smashable.Smash(smashForce, smashUpwardsModifier,
+                collision.contacts[0].point);
+        }
+
         public void OnExplosion(Evt evt) {
             var explosive = (ExplosiveView) evt.Source;
             var explosionInfo = (ExplosiveView.ExplosionInfo) evt.Data;

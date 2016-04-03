@@ -26,6 +26,9 @@ namespace Catzilla.CommonModule.View {
         private Animator animator;
 
         [SerializeField]
+        private DeactivatableView deactivatable;
+
+        [SerializeField]
         private bool isShowAnimated;
 
         [SerializeField]
@@ -41,18 +44,20 @@ namespace Catzilla.CommonModule.View {
         private AudioSource audioSource;
 
         [SerializeField]
-        [FormerlySerializedAs("AutoHideDelay")]
         [Tooltip("In seconds")]
         private float autoHideDelay;
 
+        [SerializeField]
+        private bool isAutoHideUnscaled;
+
         private bool isShown;
-        private IEnumerator autoHider;
+        private IEnumerator unscaledAutoHider;
         private WaitForSecondsRealtime autoHideDelayWaiter;
 
         [PostInject]
         public void OnConstruct() {
             autoHideDelayWaiter = new WaitForSecondsRealtime(autoHideDelay);
-            gameObject.SetActive(isShown);
+            GameObjectUtils.SetActive(gameObject, isShown, deactivatable);
         }
 
         public void Show() {
@@ -64,11 +69,15 @@ namespace Catzilla.CommonModule.View {
             if (OnPreShow != null) OnPreShow(this);
             eventBus.Fire((int) Events.ShowablePreShow, new Evt(this));
             isShown = true;
-            gameObject.SetActive(isShown);
+            GameObjectUtils.SetActive(gameObject, isShown, deactivatable);
 
             if (autoHideDelay > 0f) {
-                autoHider = AutoHider();
-                StartCoroutine(autoHider);
+                if (isAutoHideUnscaled) {
+                    unscaledAutoHider = UnscaledAutoHider();
+                    StartCoroutine(unscaledAutoHider);
+                } else {
+                    Invoke("Hide", autoHideDelay);
+                }
             }
 
             if (animator != null) {
@@ -86,9 +95,7 @@ namespace Catzilla.CommonModule.View {
                 return;
             }
 
-            if (autoHider != null) {
-                StopCoroutine(autoHider);
-            }
+            StopAutoHide();
 
             if (animator != null) {
                 animator.SetBool(isShownParam, false);
@@ -108,15 +115,22 @@ namespace Catzilla.CommonModule.View {
                 animator.SetBool(isShownParam, isShown);
             }
 
-            if (autoHider != null) {
-                StopCoroutine(autoHider);
-                autoHider = null;
-            }
-
-            gameObject.SetActive(isShown);
+            StopAutoHide();
+            unscaledAutoHider = null;
+            GameObjectUtils.SetActive(gameObject, isShown, deactivatable);
         }
 
 		void IPoolable.OnTake() {}
+
+        private void StopAutoHide() {
+            if (isAutoHideUnscaled) {
+                if (unscaledAutoHider != null) {
+                    StopCoroutine(unscaledAutoHider);
+                }
+            } else {
+                CancelInvoke("Hide");
+            }
+        }
 
         private void OnShowAnimationEnd() {
             if (!isShowAnimated) {
@@ -136,7 +150,7 @@ namespace Catzilla.CommonModule.View {
 
         private void DoHide() {
             isShown = false;
-            gameObject.SetActive(isShown);
+            GameObjectUtils.SetActive(gameObject, isShown, deactivatable);
             if (OnHide != null) OnHide(this);
         }
 
@@ -145,7 +159,7 @@ namespace Catzilla.CommonModule.View {
             eventBus.Fire((int) Events.ShowableShow, new Evt(this));
         }
 
-        private IEnumerator AutoHider() {
+        private IEnumerator UnscaledAutoHider() {
             autoHideDelayWaiter.Restart();
             yield return autoHideDelayWaiter;
             Hide();

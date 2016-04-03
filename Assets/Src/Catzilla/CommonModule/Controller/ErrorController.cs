@@ -23,7 +23,7 @@ namespace Catzilla.CommonModule.Controller {
                 return;
             }
 
-            ScreenSpacePopupView popup = popupManager.Get(errorPopupType);
+            var popup = (ScreenSpacePopupView) popupManager.Get(errorPopupType);
             popup.Msg.text = translator.Translate(errorMsg);
             popupManager.Show(popup);
         }

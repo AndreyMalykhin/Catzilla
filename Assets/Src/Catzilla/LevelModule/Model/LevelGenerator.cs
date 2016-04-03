@@ -151,6 +151,7 @@ namespace Catzilla.LevelModule.Model {
         public void NewArea(PlayerView player, LevelView outputLevel,
             Action<LevelAreaView> onDone = null) {
             // DebugUtils.Log("LevelGenerator.NewArea()");
+            Profiler.BeginSample("LevelGenerator.NewArea()");
             LevelSettings levelSettings =
                 levelSettingsStorage.Get(outputLevel.Index);
             bool spawnPlayer = false;
@@ -164,6 +165,7 @@ namespace Catzilla.LevelModule.Model {
                 levelSettings,
                 outputLevel,
                 onDone);
+            Profiler.EndSample();
         }
 
         private EnvType NextState(LevelSettings levelSettings) {
@@ -202,8 +204,9 @@ namespace Catzilla.LevelModule.Model {
             EnvTypeInfo envTypeInfo,
             bool spawnPlayer,
             PlayerView player = null) {
+            Profiler.BeginSample("LevelGenerator.GetSpawnsInfos()");
             LevelObjectType[] objectTypes =
-                envTypeInfo.SpawnMap.GetObjectTypes();
+                envTypeInfo.SpawnMap.ObjectTypes;
             Array.Sort(objectTypes, ObjectTypeComparator);
             spawnsInfosBuffer.Clear();
             int objectTypesCount = objectTypes.Length;
@@ -243,6 +246,7 @@ namespace Catzilla.LevelModule.Model {
                 spawnsInfosBuffer.Add(new SpawnsInfo(objectType, spawnsCount));
             }
 
+            Profiler.EndSample();
             return spawnsInfosBuffer;
         }
 

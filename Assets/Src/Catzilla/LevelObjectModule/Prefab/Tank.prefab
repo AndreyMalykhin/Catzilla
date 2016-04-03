@@ -18,7 +18,6 @@ GameObject:
   - 114: {fileID: 11495818}
   - 114: {fileID: 11401604}
   - 114: {fileID: 11444204}
-  - 114: {fileID: 11489962}
   m_Layer: 11
   m_Name: Tank
   m_TagString: Untagged
@@ -550,8 +549,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0819af9ceaaf4ba1ba69e555e92ccd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolId: 32
-  IsUI: 0
+  poolId: 31
+  isUI: 0
+  deactivateOnReturn: 1
 --- !u!114 &11429200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -591,14 +591,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d68737fed9ab4e9394e712c63ef1da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviours:
-  - {fileID: 11483028}
+  behaviours: []
   renderers:
   - {fileID: 2353050}
   - {fileID: 2302648}
   - {fileID: 2332120}
   - {fileID: 2326252}
   - {fileID: 2325838}
+  animators: []
+  bodies:
+  - {fileID: 5465430}
 --- !u!114 &11483028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -615,9 +617,9 @@ MonoBehaviour:
   projectileProto: {fileID: 11467526, guid: 7ace5b98a77fb42dc9f4cd450f354280, type: 2}
   projectileSource: {fileID: 450834}
   aimee: {fileID: 457654}
-  aimSpeed: 16
+  aimSpeed: 32
   aimPeriod: 0.125
-  shootingDelay: 1
+  shootingDelay: 0.5
   shotPeriod: 0
   burstPeriod: 16
   shotsInBurst: 1
@@ -637,22 +639,6 @@ MonoBehaviour:
   MinScore: 32
   MaxScore: 64
   Collider: {fileID: 6596006}
---- !u!114 &11489962
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1103fdfaeec5e48b8b54acd9916fa7d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShakeCameraInOneDirection: 1
-  CameraShakeMinAmount: 1
-  CameraShakeMaxAmount: 1
-  CameraShakeDirection: {x: 0, y: 1, z: 0}
-  CameraShakeDuration: 0.5
 --- !u!114 &11495818
 MonoBehaviour:
   m_ObjectHideFlags: 1

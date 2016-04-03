@@ -1,27 +1,20 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 using Zenject;
-using Catzilla.CommonModule.View;
+using Catzilla.CommonModule.Util;
 
-namespace Catzilla.CommonModule.Util {
-    [CreateAssetMenuAttribute]
-    public class WorldSpacePopupManager: ScriptableObject {
+namespace Catzilla.CommonModule.View {
+    abstract public class PopupManagerView: MonoBehaviour {
         [Serializable]
         private struct PopupType {
             public int Id;
-            public WorldSpacePopupView Proto;
+            public PopupView Proto;
         }
 
         [Inject]
-        [NonSerialized]
         private PoolStorageView poolStorage;
-
-        [NonSerialized]
-        private int nextPopupIndex;
-
-        [NonSerialized]
-        private WorldSpacePopupView[] recentPopups;
 
         [SerializeField]
         private int simultaneousPopupsCount = 4;
@@ -29,12 +22,18 @@ namespace Catzilla.CommonModule.Util {
         [SerializeField]
         private PopupType[] popupTypes;
 
-        private readonly IDictionary<int, WorldSpacePopupView> popupProtos =
-            new Dictionary<int, WorldSpacePopupView>(4);
+        [NonSerialized]
+        private int nextPopupIndex;
+
+        [NonSerialized]
+        private PopupView[] recentPopups;
+
+        private readonly IDictionary<int, PopupView> popupProtos =
+            new Dictionary<int, PopupView>(8);
 
         [PostInject]
         public void OnConstruct() {
-            recentPopups = new WorldSpacePopupView[simultaneousPopupsCount];
+            recentPopups = new PopupView[simultaneousPopupsCount];
 
             for (int i = 0; i < popupTypes.Length; ++i) {
                 PopupType popupType = popupTypes[i];
@@ -42,14 +41,17 @@ namespace Catzilla.CommonModule.Util {
             }
         }
 
-        public WorldSpacePopupView Get(int popupType) {
-            WorldSpacePopupView popupProto = popupProtos[popupType];
+        public PopupView Get(int popupType) {
+            PopupView popupProto = popupProtos[popupType];
             int poolId = popupProto.GetComponent<PoolableView>().PoolId;
-            return poolStorage.Take(poolId).GetComponent<WorldSpacePopupView>();
+            return poolStorage.Take(poolId)
+                .GetComponent<PopupView>();
         }
 
-        public void Show(WorldSpacePopupView popup) {
-            // DebugUtils.Log("WorldSpacePopupManager.Show()");
+        public void Show(PopupView popup) {
+            // DebugUtils.Log("PopupManagerView.Show()");
+            OnPreShow(popup);
+
             for (int i = 0; i < recentPopups.Length; ++i) {
                 if (recentPopups[i] == popup) {
                     recentPopups[i] = null;
@@ -57,7 +59,7 @@ namespace Catzilla.CommonModule.Util {
                 }
             }
 
-            WorldSpacePopupView recentPopup = recentPopups[nextPopupIndex];
+            PopupView recentPopup = recentPopups[nextPopupIndex];
 
             if (recentPopup != null) {
                 recentPopup.GetComponent<ShowableView>().Hide();
@@ -75,6 +77,8 @@ namespace Catzilla.CommonModule.Util {
             showable.OnHide += OnPopupHide;
             showable.Show();
         }
+
+        protected virtual void OnPreShow(PopupView popup) {}
 
         private void OnPopupHide(ShowableView showable) {
             poolStorage.Return(showable.GetComponent<PoolableView>());

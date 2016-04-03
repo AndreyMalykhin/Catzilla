@@ -8,16 +8,16 @@ namespace Catzilla.PlayerModule.View {
     public class HUDHealthView: MonoBehaviour {
         public int Value {
             set {
-                if (slider.value == value) {
+                if (this.value == value) {
                     return;
                 }
 
-                if (setValueCoroutine != null) {
-                    StopCoroutine(setValueCoroutine);
+                if (animator != null) {
+                    animator.SetTrigger(
+                        value > this.value ? increaseParam : decreaseParam);
                 }
 
-                setValueCoroutine = SetValue(value);
-                StartCoroutine(setValueCoroutine);
+                this.value = value;
             }
         }
 
@@ -35,31 +35,17 @@ namespace Catzilla.PlayerModule.View {
         private Animator animator;
 
         [SerializeField]
-        [Tooltip("In seconds")]
-        private float animationDuration = 2f;
+        private float changeSpeed;
 
-        private IEnumerator setValueCoroutine;
+        private float value;
 
-        private IEnumerator SetValue(int value) {
-            // DebugUtils.Log("HUDHealthView.SetValue()");
-            float startTime = Time.realtimeSinceStartup;
-            float elapsedTime = 0f;
-            float startValue = slider.value;
-
-            if (animator != null) {
-                animator.SetTrigger(
-                    value >= slider.value ? increaseParam : decreaseParam);
+        private void Update() {
+            if (value == slider.value) {
+                return;
             }
 
-            while (elapsedTime < animationDuration) {
-                float completionPercentage = elapsedTime / animationDuration;
-                slider.value = Mathf.Lerp(
-                    startValue, value, completionPercentage);
-                yield return null;
-                elapsedTime = Time.realtimeSinceStartup - startTime;
-            }
-
-            slider.value = value;
+            slider.value = Mathf.MoveTowards(
+                slider.value, value, changeSpeed * Time.deltaTime);
         }
 
         private void Awake() {

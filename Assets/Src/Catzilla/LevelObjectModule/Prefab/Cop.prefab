@@ -18,7 +18,6 @@ GameObject:
   - 114: {fileID: 11495818}
   - 114: {fileID: 11401604}
   - 114: {fileID: 11470220}
-  - 114: {fileID: 11468298}
   - 114: {fileID: 11457644}
   m_Layer: 11
   m_Name: Cop
@@ -621,8 +620,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0819af9ceaaf4ba1ba69e555e92ccd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolId: 3
-  IsUI: 0
+  poolId: 2
+  isUI: 0
+  deactivateOnReturn: 1
 --- !u!114 &11429200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -645,10 +645,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d68737fed9ab4e9394e712c63ef1da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviours:
-  - {fileID: 11483028}
+  behaviours: []
   renderers:
   - {fileID: 2341958}
+  animators: []
+  bodies:
+  - {fileID: 5465430}
 --- !u!114 &11457644
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -660,22 +662,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c1cc34e55eed41c6941fd64741530c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11468298
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1103fdfaeec5e48b8b54acd9916fa7d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShakeCameraInOneDirection: 1
-  CameraShakeMinAmount: 1
-  CameraShakeMaxAmount: 1
-  CameraShakeDirection: {x: 0, y: 1, z: 0}
-  CameraShakeDuration: 0.5
 --- !u!114 &11470220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -712,9 +698,9 @@ MonoBehaviour:
   projectileProto: {fileID: 11467526, guid: 362fec4312e394d09be04ce01ef081a4, type: 2}
   projectileSource: {fileID: 450834}
   aimee: {fileID: 424354}
-  aimSpeed: 45
+  aimSpeed: 64
   aimPeriod: 0.125
-  shootingDelay: 1
+  shootingDelay: 0.5
   shotPeriod: 0
   burstPeriod: 16
   shotsInBurst: 1

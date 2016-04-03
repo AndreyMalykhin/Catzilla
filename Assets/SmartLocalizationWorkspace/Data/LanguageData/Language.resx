@@ -155,6 +155,9 @@
 	<data name="LevelCompleteScreen.Share" xml:space="preserve">
 		<value>Share replay</value>
 	</data>
+	<data name="LevelCompleteScreen.Time" xml:space="preserve">
+		<value>Time: {0}</value>
+	</data>
 	<data name="LevelStartScreen.Level" xml:space="preserve">
 		<value>Level {0}</value>
 	</data>
@@ -205,10 +208,10 @@
 +{1}</value>
 	</data>
 	<data name="ResurrectionBonus.Take" xml:space="preserve">
-		<value>+{0} resurrection</value>
+		<value>resurrection</value>
 	</data>
 	<data name="RewardBonus.Take" xml:space="preserve">
-		<value>+{0} reward</value>
+		<value>reward</value>
 	</data>
 	<data name="TutorialScreen.End" xml:space="preserve">
 		<value>Got it!</value>
@@ -233,8 +236,5 @@
 	</data>
 	<data name="TutorialScreen.Step6" xml:space="preserve">
 		<value>That's it buddy, just don't use swipe and everything will be fine... probably</value>
-	</data>
-	<data name="LevelCompleteScreen.Time" xml:space="preserve">
-		<value>Time: {0}</value>
 	</data>
 </root>

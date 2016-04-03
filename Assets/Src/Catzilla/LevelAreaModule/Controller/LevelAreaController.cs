@@ -12,9 +12,6 @@ namespace Catzilla.LevelAreaModule.Controller {
         [Inject]
         private LevelGenerator levelGenerator;
 
-        [Inject("PlayerFieldOfViewTag")]
-        private string playerFieldOfViewTag;
-
         private LevelView level;
         private PlayerView player;
 
@@ -26,17 +23,8 @@ namespace Catzilla.LevelAreaModule.Controller {
             player = (PlayerView) evt.Source;
         }
 
-        public void OnTriggerEnter(Evt evt) {
-            var collider = (Collider) evt.Data;
-
-            if (collider == null
-                || !collider.CompareTag(playerFieldOfViewTag)) {
-                return;
-            }
-
-            var area = (LevelAreaView) evt.Source;
-
-            if (area.Index < levelGenerator.InitialAreasCount - 1) {
+        public void OnDestroy(Evt evt) {
+            if (level == null) {
                 return;
             }
 

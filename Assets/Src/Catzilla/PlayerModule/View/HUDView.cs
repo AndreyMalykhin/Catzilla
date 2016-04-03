@@ -5,11 +5,11 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.PlayerModule.View {
     public class HUDView: MonoBehaviour {
-        [Inject("HUDWrapper")]
-        private GameObject parent;
-
         public HUDHealthView Health;
         public HUDScoreView Score;
+
+        [Inject("HUDWrapper")]
+        private GameObject parent;
 
         [PostInject]
         public void OnConstruct() {

@@ -109,7 +109,8 @@ namespace Catzilla.GameOverMenuModule.Controller {
         private void RewardPlayer(PlayerState playerState) {
             int addResurrectionsCount = RewardManager.Give(playerState);
             PlayerStateStorage.Save(playerState);
-            ScreenSpacePopupView popup = PopupManager.Get(CommonPopupType);
+            var popup = (ScreenSpacePopupView) PopupManager.Get(
+                CommonPopupType);
             popup.Msg.text = Translator.Translate(
                 "Player.RewardEarn", addResurrectionsCount);
             PopupManager.Show(popup);

@@ -6,7 +6,7 @@ using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
-    public class ScreenSpacePopupView: MonoBehaviour {
+    public class ScreenSpacePopupView: PopupView {
         public Text Msg;
     }
 }

@@ -618,8 +618,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0819af9ceaaf4ba1ba69e555e92ccd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolId: 34
-  IsUI: 0
+  poolId: 33
+  isUI: 0
+  deactivateOnReturn: 1
 --- !u!114 &11422622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -663,10 +664,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behaviours:
-  - {fileID: 11483028}
   - {fileID: 11489738}
   renderers:
   - {fileID: 2362736}
+  animators: []
+  bodies:
+  - {fileID: 5465430}
 --- !u!114 &11483028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -683,9 +686,9 @@ MonoBehaviour:
   projectileProto: {fileID: 11467526, guid: 397a6c7cb4826479d8eb3c8932db7016, type: 2}
   projectileSource: {fileID: 496598}
   aimee: {fileID: 424354}
-  aimSpeed: 32
+  aimSpeed: 16
   aimPeriod: 0.125
-  shootingDelay: 1
+  shootingDelay: 0.75
   shotPeriod: 0
   burstPeriod: 8
   shotsInBurst: 1

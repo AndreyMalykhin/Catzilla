@@ -6,14 +6,14 @@ using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
-    public class WorldSpacePopupView: MonoBehaviour, IPoolable {
+    public class WorldSpacePopupView: PopupView, IPoolable {
         public Camera LookAtTarget {
             get {return lookAtTarget;}
             set {lookAtTarget = value;}
         }
 
-        public Text Msg;
         public Vector3 Offset;
+        public Text Msg;
 
         [SerializeField]
         private Vector3 offScreenPosition = new Vector3(Int16.MinValue, 0f, 0f);
@@ -29,18 +29,18 @@ namespace Catzilla.CommonModule.View {
         }
 
         void IPoolable.OnReturn() {
-            LookAtTarget = null;
+            lookAtTarget = null;
             countOfUpdatesTillPlacement = -1;
-            ResetPosition();
+            InitPosition();
         }
 
 		void IPoolable.OnTake() {}
 
         private void Awake() {
-            ResetPosition();
+            InitPosition();
         }
 
-        private void ResetPosition() {
+        private void InitPosition() {
             transform.position = offScreenPosition;
         }
 
@@ -53,7 +53,6 @@ namespace Catzilla.CommonModule.View {
             transform.GetWorldCorners(corners);
             Vector3 popupRight = corners[2];
             Vector3 popupLeft = corners[0];
-            Debug.DrawLine(popupLeft, popupRight);
             float distance =
                 lookAtTarget.transform.position.y - transform.position.y;
             Vector3 screenRight = lookAtTarget.ViewportToWorldPoint(
@@ -69,12 +68,12 @@ namespace Catzilla.CommonModule.View {
         }
 
         private void LateUpdate() {
-            if (LookAtTarget == null) {
+            if (lookAtTarget == null) {
                 return;
             }
 
             transform.rotation =
-                Quaternion.LookRotation(LookAtTarget.transform.forward);
+                Quaternion.LookRotation(lookAtTarget.transform.forward);
             Place();
         }
 

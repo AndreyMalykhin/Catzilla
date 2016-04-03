@@ -51,18 +51,12 @@ namespace Catzilla.LevelObjectModule.Controller {
         private PlayerManager playerManager;
 
         [Inject]
-        private WorldSpacePopupManager worldSpacePopupManager;
+        private WorldSpacePopupManagerView worldSpacePopupManager;
 
         [Inject("SpeechWorldPopupType")]
         private int speechWorldPopupType;
 
         private PlayerView player;
-        private string refuseMsg;
-
-        [PostInject]
-        public void OnConstruct() {
-            refuseMsg = translator.Translate("Player.Refuse");
-        }
 
         public void OnViewConstruct(Evt evt) {
             player = (PlayerView) evt.Source;
@@ -85,6 +79,7 @@ namespace Catzilla.LevelObjectModule.Controller {
                 return;
             }
 
+            Profiler.BeginSample("PlayerController.OnTriggerEnter()");
             var colliderDamaging = colliderBody.GetComponent<DamagingView>();
 
             if (colliderDamaging != null) {
@@ -145,6 +140,8 @@ namespace Catzilla.LevelObjectModule.Controller {
 
                 player.AddSmash(addedScore);
             }
+
+            Profiler.EndSample();
         }
 
         public void OnExplosion(Evt evt) {
@@ -234,9 +231,9 @@ namespace Catzilla.LevelObjectModule.Controller {
                     playerLowPrioAudioChannel);
             }
 
-            WorldSpacePopupView popup =
-                worldSpacePopupManager.Get(speechWorldPopupType);
-            popup.Msg.text = refuseMsg;
+            var popup = (WorldSpaceTextPopupView) worldSpacePopupManager.Get(
+                speechWorldPopupType);
+            popup.Msg.text = translator.Translate("Player.Refuse");
             popup.LookAtTarget = player.Camera;
             popup.PlaceAbove(player.Collider.bounds);
             worldSpacePopupManager.Show(popup);

@@ -15,22 +15,15 @@ namespace Catzilla.LevelObjectModule.View {
                 }
 
                 target = value;
-
-                if (shooter != null) {
-                    StopCoroutine(shooter);
-                }
-
-                if (aimer != null) {
-                    StopCoroutine(aimer);
-                }
+                CancelInvoke("Aim");
+                CancelInvoke("ShootBurst");
+                CancelInvoke("ShootSingle");
 
                 if (target != null) {
                     targetOldPosition = target.transform.position;
                     aimee.LookAt(GetAimPoint());
-                    shooter = Shooter();
-                    aimer = Aimer();
-                    StartCoroutine(shooter);
-                    StartCoroutine(aimer);
+                    InvokeRepeating("Aim", aimPeriod, aimPeriod);
+                    InvokeRepeating("ShootBurst", shootingDelay, burstPeriod);
                 }
              }
         }
@@ -91,22 +84,12 @@ namespace Catzilla.LevelObjectModule.View {
         private Collider target;
         private int projectilePoolId;
         private float projectileSpeed;
-        private WaitForSeconds shotPeriodWaiter;
-        private WaitForSeconds burstPeriodWaiter;
-        private WaitForSeconds shootingDelayWaiter;
-        private WaitForSeconds aimPeriodWaiter;
-        private IEnumerator shooter;
-        private IEnumerator aimer;
         private Vector3 targetOldPosition;
 
         [PostInject]
         public void OnConstruct() {
             projectilePoolId =
                 projectileProto.GetComponent<PoolableView>().PoolId;
-            shotPeriodWaiter = new WaitForSeconds(shotPeriod);
-            burstPeriodWaiter = new WaitForSeconds(burstPeriod);
-            shootingDelayWaiter = new WaitForSeconds(shootingDelay);
-            aimPeriodWaiter = new WaitForSeconds(aimPeriod);
             InitProjectileSpeed();
         }
 
@@ -127,15 +110,12 @@ namespace Catzilla.LevelObjectModule.View {
                 new Evt(this, collider));
         }
 
-        private IEnumerator Aimer() {
-            while (target != null) {
-                Aim();
-                yield return aimPeriodWaiter;
-            }
-        }
-
         private void Aim() {
             // DebugUtils.Log("ShootingView.Aim()");
+            if (target == null) {
+                return;
+            }
+
             Quaternion rotationToTarget =
                 Quaternion.LookRotation(GetAimPoint() - aimee.position);
             aimee.rotation = Quaternion.RotateTowards(
@@ -153,26 +133,22 @@ namespace Catzilla.LevelObjectModule.View {
                 targetPosition.z + predictedOffset.z);
         }
 
-        private IEnumerator Shooter() {
-            yield return shootingDelayWaiter;
+        private void ShootBurst() {
+            if (target == null) {
+                return;
+            }
 
-            while (target != null) {
-                for (int i = 0; i < shotsInBurst && target != null; ++i) {
-                    Shoot();
-
-                    if (shotPeriod != 0f) {
-                        yield return shotPeriodWaiter;
-                    }
-                }
-
-                if (burstPeriod != 0f) {
-                    yield return burstPeriodWaiter;
-                }
+            for (int i = 0; i < shotsInBurst; ++i) {
+                Invoke("ShootSingle", shotPeriod * i);
             }
         }
 
-        private void Shoot() {
+        private void ShootSingle() {
             // DebugUtils.Log("ShootingView.Shoot()");
+            if (target == null) {
+                return;
+            }
+
             var projectile = poolStorage.Take(projectilePoolId)
                 .GetComponent<ProjectileView>();
             projectile.transform.position = projectileSource.position;

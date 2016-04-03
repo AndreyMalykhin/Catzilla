@@ -417,8 +417,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0819af9ceaaf4ba1ba69e555e92ccd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolId: 35
-  IsUI: 0
+  poolId: 34
+  isUI: 0
+  deactivateOnReturn: 1
 --- !u!114 &11451822
 MonoBehaviour:
   m_ObjectHideFlags: 1

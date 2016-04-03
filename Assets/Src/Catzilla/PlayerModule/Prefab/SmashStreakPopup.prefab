@@ -9,11 +9,13 @@ GameObject:
   m_Component:
   - 224: {fileID: 22491134}
   - 222: {fileID: 22225872}
-  - 223: {fileID: 22355916}
+  - 223: {fileID: 22330110}
+  - 225: {fileID: 22584170}
   - 114: {fileID: 11499108}
   - 114: {fileID: 11428338}
   - 114: {fileID: 11428006}
   - 114: {fileID: 11460548}
+  - 114: {fileID: 11421998}
   m_Layer: 5
   m_Name: SmashStreakPopup
   m_TagString: Untagged
@@ -21,6 +23,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &11421998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98fee74dbc7ca4e6db98c2f64ca4db56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 22584170}
+  canvasScaler: {fileID: 0}
 --- !u!114 &11428006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -32,8 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0819af9ceaaf4ba1ba69e555e92ccd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolId: 43
-  IsUI: 1
+  poolId: 42
+  isUI: 1
+  deactivateOnReturn: 0
 --- !u!114 &11428338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -58,12 +74,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  deactivatable: {fileID: 11421998}
   isShowAnimated: 0
   isHideAnimated: 0
   showSound: {fileID: 0}
   preShowSound: {fileID: 0}
   audioSource: {fileID: 0}
   autoHideDelay: 2
+  isAutoHideUnscaled: 0
 --- !u!114 &11499108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -96,15 +114,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 2
-  m_Text: "x16 SMASH STREAK!\n+1024\nx16 \u0421\u0415\u0420\u0418\u042F \u0420\u0410\u0417\u0420\u0423\u0428\u0415\u041D\u0418\u0419!
-    +1024"
+  m_Text: "x16 SMASH STREAK!\n+1024\nx16 \u0421\u0415\u0420\u0418\u042F \u0420\u0410\u0417\u0420\u0423\u0428\u0415\u041D\u0418\u0419!\n+1024"
 --- !u!222 &22225872
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142020}
---- !u!223 &22355916
+--- !u!223 &22330110
 Canvas:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -140,6 +157,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &22584170
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142020}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -208,10 +208,10 @@
 +{1}</value>
 	</data>
 	<data name="ResurrectionBonus.Take" xml:space="preserve">
-		<value>+{0} воскрешение</value>
+		<value>воскрешение</value>
 	</data>
 	<data name="RewardBonus.Take" xml:space="preserve">
-		<value>+{0} приз</value>
+		<value>приз</value>
 	</data>
 	<data name="TutorialScreen.End" xml:space="preserve">
 		<value>Ясно!</value>

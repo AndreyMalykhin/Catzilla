@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,8 +8,20 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
     public class PoolableView: MonoBehaviour, IPoolable {
-        public int PoolId;
-        public bool IsUI;
+        public int PoolId {get {return poolId;}}
+        public bool IsUI {get {return isUI;}}
+        public bool DeactivateOnReturn {get {return deactivateOnReturn;}}
+        public bool ActivateOnTake {get; set;}
+        public bool IsInPool {get; set;}
+
+        [SerializeField]
+        private int poolId;
+
+        [SerializeField]
+        private bool isUI;
+
+        [SerializeField]
+        private bool deactivateOnReturn = true;
 
         private readonly List<IPoolable> poolables = new List<IPoolable>(8);
 

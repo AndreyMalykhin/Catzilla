@@ -7,9 +7,9 @@ using Catzilla.LevelAreaModule.Model;
 using Catzilla.LevelObjectModule.View;
 
 namespace Catzilla.LevelAreaModule.View {
-    public class LevelAreaView: MonoBehaviour {
+    public class LevelAreaView: MonoBehaviour, IPoolable {
         [Inject]
-        public EventBus EventBus {get; set;}
+        private EventBus eventBus;
 
         public int Index {get; private set;}
 
@@ -17,9 +17,10 @@ namespace Catzilla.LevelAreaModule.View {
             Index = index;
         }
 
-        private void OnTriggerEnter(Collider collider) {
-            EventBus.Fire((int) Events.LevelAreaTriggerEnter,
-                new Evt(this, collider));
+        void IPoolable.OnReturn() {
+            eventBus.Fire((int) Events.LevelAreaDestroy, new Evt(this));
         }
+
+        void IPoolable.OnTake() {}
     }
 }

@@ -11,6 +11,7 @@ namespace Catzilla.CommonModule.Controller {
         private PoolStorageView poolStorage;
 
         public void OnLevelLoad(Evt evt) {
+            poolStorage.Cleanup();
             poolStorage.Refill();
             GC.Collect();
         }

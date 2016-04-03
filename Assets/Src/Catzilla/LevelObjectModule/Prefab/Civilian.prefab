@@ -18,7 +18,6 @@ GameObject:
   - 114: {fileID: 11429288}
   - 114: {fileID: 11479234}
   - 114: {fileID: 11494524}
-  - 114: {fileID: 11406078}
   m_Layer: 11
   m_Name: Civilian
   m_TagString: Untagged
@@ -489,22 +488,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11406078
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1103fdfaeec5e48b8b54acd9916fa7d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShakeCameraInOneDirection: 1
-  CameraShakeMinAmount: 1
-  CameraShakeMaxAmount: 1
-  CameraShakeDirection: {x: 0, y: 1, z: 0}
-  CameraShakeDuration: 0.5
 --- !u!114 &11407112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -527,8 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d68737fed9ab4e9394e712c63ef1da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviours:
-  - {fileID: 11442074}
+  behaviours: []
   renderers:
   - {fileID: 2362690}
   - {fileID: 2333712}
@@ -536,6 +518,10 @@ MonoBehaviour:
   - {fileID: 2354108}
   - {fileID: 2325276}
   - {fileID: 2362410}
+  animators:
+  - {fileID: 9567050}
+  bodies:
+  - {fileID: 5427854}
 --- !u!114 &11429288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -573,8 +559,7 @@ MonoBehaviour:
     m_Bits: 2560
   minSpeed: 1
   maxSpeed: 2
-  speed: 0
-  desiredSpeed: 0
+  speedAdjustRate: 0.5
   stopDistance: 1
   collider: {fileID: 6584306}
   body: {fileID: 5427854}
@@ -590,8 +575,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0819af9ceaaf4ba1ba69e555e92ccd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolId: 1
-  IsUI: 0
+  poolId: 1
+  isUI: 0
+  deactivateOnReturn: 1
 --- !u!114 &11479234
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -5,18 +5,16 @@ using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelAreaModule.Model;
 
 namespace Catzilla.LevelAreaModule.View {
-    [ExecuteInEditMode]
-    public class SpawnView: MonoBehaviour {
+    public class SpawnView: MonoBehaviour, ISerializationCallbackReceiver {
         public SpawnLocation Location {
             get {
                 return new SpawnLocation(
-                    new Bounds(transform.position, GetSize()), isXFlipped);
+                    new Bounds(transform.position, size), isXFlipped);
             }
         }
 
         public List<LevelObjectType> ObjectTypes {
             get {
-                CheckExtraObjectTypes();
                 var result = new List<LevelObjectType>(extraObjectTypes);
                 result.Add(objectType);
                 return result;
@@ -33,16 +31,29 @@ namespace Catzilla.LevelAreaModule.View {
         private LevelObjectType[] extraObjectTypes;
 
         [SerializeField]
-        private int itemsAcrossX = 1;
+        private int itemsAcrossX;
 
         [SerializeField]
-        private int itemsAcrossZ = 1;
+        private int itemsAcrossZ;
 
         [SerializeField]
-        private Color color = Color.green;
+        private Color color;
 
         [SerializeField]
         private bool isXFlipped;
+
+        [SerializeField]
+        [HideInInspector]
+        private Vector3 size;
+
+        void ISerializationCallbackReceiver.OnAfterDeserialize() {
+            // DebugUtils.Log("SpawnView.OnAfterDeserialize()");
+        }
+
+        void ISerializationCallbackReceiver.OnBeforeSerialize() {
+            ValidateExtraObjectTypes();
+            size = GetSize();
+        }
 
         private void OnDrawGizmos() {
             Gizmos.color = color;
@@ -58,7 +69,7 @@ namespace Catzilla.LevelAreaModule.View {
                 itemsAcrossZ * objectTypeInfo.Depth);
         }
 
-        private void CheckExtraObjectTypes() {
+        private void ValidateExtraObjectTypes() {
             ObjectTypeInfo objectTypeInfo =
                 objectTypeInfoStorage.Get(objectType);
 

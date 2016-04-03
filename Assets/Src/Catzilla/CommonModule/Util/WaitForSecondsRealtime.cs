@@ -17,7 +17,7 @@ namespace Catzilla.CommonModule.Util {
         }
 
         public void Restart() {
-            stopWaitingTime = Time.realtimeSinceStartup + duration ;
+            stopWaitingTime = Time.realtimeSinceStartup + duration;
         }
     }
 }

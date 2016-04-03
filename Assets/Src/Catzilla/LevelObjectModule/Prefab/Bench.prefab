@@ -100,7 +100,6 @@ GameObject:
   - 114: {fileID: 11469876}
   - 114: {fileID: 11434098}
   - 114: {fileID: 11435932}
-  - 114: {fileID: 11487632}
   - 114: {fileID: 11422762}
   m_Layer: 11
   m_Name: Bench
@@ -656,6 +655,9 @@ MonoBehaviour:
   behaviours: []
   renderers:
   - {fileID: 2320950}
+  animators: []
+  bodies:
+  - {fileID: 5452302}
 --- !u!114 &11434098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -716,8 +718,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0819af9ceaaf4ba1ba69e555e92ccd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolId: 0
-  IsUI: 0
+  poolId: 0
+  isUI: 0
+  deactivateOnReturn: 1
 --- !u!114 &11472518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -732,22 +735,6 @@ MonoBehaviour:
   MinScore: 16
   MaxScore: 32
   Collider: {fileID: 6531034}
---- !u!114 &11487632
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 152140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1103fdfaeec5e48b8b54acd9916fa7d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShakeCameraInOneDirection: 1
-  CameraShakeMinAmount: 1
-  CameraShakeMaxAmount: 1
-  CameraShakeDirection: {x: 0, y: 1, z: 0}
-  CameraShakeDuration: 0.5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

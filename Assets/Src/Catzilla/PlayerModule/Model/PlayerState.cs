@@ -112,7 +112,7 @@ namespace Catzilla.PlayerModule.Model {
             return record;
         }
 
-        public void OnBeforeSerialize() {
+        void ISerializationCallbackReceiver.OnBeforeSerialize() {
             // DebugUtils.Log(
             //     "PlayerState.OnBeforeSerialize(); saveDate={0}", SaveDate);
             serializedSaveDate = saveDate.ToBinary();
@@ -121,7 +121,7 @@ namespace Catzilla.PlayerModule.Model {
             serializedPlayTime = playTime.Ticks;
         }
 
-        public void OnAfterDeserialize() {
+        void ISerializationCallbackReceiver.OnAfterDeserialize() {
             saveDate = DateTime.FromBinary(serializedSaveDate);
             lastSeenDate = DateTime.FromBinary(serializedLastSeenDate);
             rewardUnlockDate = DateTime.FromBinary(serializedRewardUnlockDate);

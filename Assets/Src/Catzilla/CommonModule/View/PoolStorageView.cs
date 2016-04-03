@@ -26,19 +26,43 @@ namespace Catzilla.CommonModule.View {
             new List<PoolableView>(32);
 
         public PoolableView Take(int poolId) {
-            PoolableView instance = poolsMap[poolId].Take();
+            Pool<PoolableView> pool = poolsMap[poolId];
 
-            if (instance.transform.parent == instanceContainer) {
+            if (pool.Size <= 0) {
+                DebugUtils.Log("PoolStorageView.Take(); poolId={0}", poolId);
+                DebugUtils.Assert(false);
+            }
+
+            PoolableView instance = pool.Take();
+
+            if (instance.DeactivateOnReturn) {
+                instance.gameObject.SetActive(instance.ActivateOnTake);
+            }
+
+            if (instanceContainer != null
+                && instance.transform.parent == instanceContainer) {
                 instance.transform.SetParent(null, !instance.IsUI);
             }
 
+            instance.IsInPool = false;
             return instance;
         }
 
         public void Return(PoolableView instance) {
             DebugUtils.Assert(!IsInPool(instance));
             poolsMap[instance.PoolId].Return(instance);
-            instance.transform.SetParent(instanceContainer, !instance.IsUI);
+            GameObject instanceObject = instance.gameObject;
+
+            if (instance.DeactivateOnReturn) {
+                instance.ActivateOnTake = instanceObject.activeSelf;
+                instanceObject.SetActive(false);
+            }
+
+            if (instanceContainer != null) {
+                instance.transform.SetParent(instanceContainer, !instance.IsUI);
+            }
+
+            instance.IsInPool = true;
             // DebugUtils.Log("PoolStorageView.Return(); left={0}; instance={1}",
             //     poolsMap[instance.PoolId].available, instance);
         }
@@ -54,24 +78,47 @@ namespace Catzilla.CommonModule.View {
 
         public void Refill() {
             // DebugUtils.Log("PoolStorageView.Refill()");
-            foreach (KeyValuePair<int, Pool<PoolableView>> item in poolsMap) {
-                var pool = item.Value;
+            foreach (Pool<PoolableView> pool in poolsMap.Values) {
                 pool.Add(pool.Capacity - pool.Size);
+            }
+        }
+
+        public void Cleanup() {
+            // DebugUtils.Log("PoolStorageView.Cleanup()");
+            var validInstances = new List<PoolableView>(64);
+
+            foreach (Pool<PoolableView> pool in poolsMap.Values) {
+                List<PoolableView> instances = pool.Instances;
+
+                for (int j = 0; j < instances.Count; ++j) {
+                    var instance = instances[j];
+
+                    if (instance == null) {
+                        continue;
+                    }
+
+                    validInstances.Add(instance);
+                }
+
+                pool.Clear();
+
+                for (int i = 0; i < validInstances.Count; ++i) {
+                    pool.Add(validInstances[i]);
+                }
+
+                validInstances.Clear();
             }
         }
 
         [PostInject]
         public void OnConstruct() {
             // DebugUtils.Log("PoolStorageView.OnConstruct()");
-            DebugUtils.Assert(instanceContainer.gameObject != gameObject);
-            instanceContainer.gameObject.SetActive(false);
-
             for (int i = 0; i < poolsParams.Length; ++i) {
                 PoolParams poolParams = poolsParams[i];
                 var instanceProvider = new ViewInstanceProvider(
-                    poolParams.ViewProto, instanceContainer, instantiator);
-                var pool = new Pool<PoolableView>(
-                    instanceProvider, poolParams.InitialSize);
+                    poolParams.ViewProto, instantiator, instanceContainer);
+                var pool = new Pool<PoolableView>(instanceProvider,
+                    poolParams.InitialSize);
                 poolsMap.Add(poolParams.ViewProto.PoolId, pool);
             }
         }
@@ -90,7 +137,7 @@ namespace Catzilla.CommonModule.View {
         }
 
         private bool IsInPool(PoolableView instance) {
-            return instance.transform.parent == instanceContainer;
+            return instance.IsInPool;
         }
     }
 }

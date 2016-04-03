@@ -32,6 +32,8 @@ GameObject:
   - 114: {fileID: 11467780}
   - 114: {fileID: 11477530}
   - 114: {fileID: 11495188}
+  - 114: {fileID: 11402604}
+  - 114: {fileID: 11467970}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -228,7 +230,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 190784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 16, z: 4}
+  m_LocalPosition: {x: 0, y: 16, z: 3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 406494}
@@ -298,7 +300,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294934527
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -513,7 +515,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 32, y: 32, z: 48}
+  m_Size: {x: 32, y: 32, z: 38}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6510856
 BoxCollider:
@@ -699,6 +701,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11402604
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80eef79bbed6449c9074c3fa0167f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseFactor: 0.25
 --- !u!114 &11416770
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -737,12 +751,14 @@ MonoBehaviour:
   IsScoreFreezed: 0
   SideSpeed: 4
   MaxHealth: 100
-  CameraShakeNoiseFactor: 0.25
   body: {fileID: 5462906}
   hudProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
   envLayer:
     serializedVersion: 2
     m_Bits: 1024
+  cameraShakers:
+  - {fileID: 11402604}
+  - {fileID: 11467970}
   refuseChance: 0.25
   refuseDelay: 32
   refuseCheckRate: 2
@@ -755,6 +771,18 @@ MonoBehaviour:
   smashStreakDelay: 1
   smashStreakMinLength: 4
   smashStreakScoreLengthFactor: 0.1
+--- !u!114 &11467970
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80eef79bbed6449c9074c3fa0167f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseFactor: 0.25
 --- !u!114 &11477530
 MonoBehaviour:
   m_ObjectHideFlags: 1

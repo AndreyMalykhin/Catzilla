@@ -37,7 +37,6 @@ namespace Catzilla.AppModule.Controller {
 
         public void OnStart(Evt evt) {
             // DebugUtils.Log("AppController.OnStart()");
-            Application.targetFrameRate = 30;
             PlayerState playerState = PlayerStateStorage.Get();
 
             if (playerState == null) {
@@ -71,7 +70,8 @@ namespace Catzilla.AppModule.Controller {
 
             if (GiftManager.IsDeserved(playerState)) {
                 int givenResurrectionsCount = GiftManager.Give(playerState);
-                ScreenSpacePopupView popup = PopupManager.Get(CommonPopupType);
+                var popup = (ScreenSpacePopupView) PopupManager.Get(
+                    CommonPopupType);
                 popup.Msg.text = Translator.Translate(
                     "Player.GiftEarn", givenResurrectionsCount);
                 PopupManager.Show(popup);
@@ -79,7 +79,8 @@ namespace Catzilla.AppModule.Controller {
 
             if (RewardManager.IsTimeToUnlock(playerState)) {
                 int unlockedRewardsCount = RewardManager.Unlock(playerState);
-                ScreenSpacePopupView popup = PopupManager.Get(CommonPopupType);
+                var popup = (ScreenSpacePopupView) PopupManager.Get(
+                    CommonPopupType);
                 popup.Msg.text = Translator.Translate(
                     "Player.RewardUnlock", unlockedRewardsCount);
                 PopupManager.Show(popup);

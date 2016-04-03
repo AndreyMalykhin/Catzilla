@@ -23,7 +23,6 @@ namespace Catzilla.PlayerModule.Controller {
 
         public void OnViewConstruct(Evt evt) {
             score = (HUDScoreView) evt.Source;
-            score.Text = Translator.Translate("Player.Score");
             int level = PlayerStateStorage.Get().Level;
             score.MaxValue =
                 LevelSettingsStorage.Get(level).CompletionScore;

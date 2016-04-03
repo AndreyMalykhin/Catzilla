@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c42a8a0a52464db089d40c487501cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: {fileID: 11454008}
 --- !u!114 &11452434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -252,6 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1718b09ccef14aa3a8246a8c9e0ddfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  simultaneousPopupsCount: 1
   popupTypes:
   - Id: 0
     Proto: {fileID: 11428338, guid: a41222e37796e4272a2ceed34b066e79, type: 2}
@@ -448,7 +450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 11462450}
   animator: {fileID: 9505764}
-  animationDuration: 0.5
+  changeSpeed: 200
 --- !u!222 &22264872
 CanvasRenderer:
   m_ObjectHideFlags: 1

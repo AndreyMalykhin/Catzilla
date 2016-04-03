@@ -26,7 +26,7 @@ namespace Catzilla.CommonModule.View {
         private AudioManager audioManager;
 
         [SerializeField]
-        private WorldSpacePopupManager worldSpacePopupManager;
+        private WorldSpacePopupManagerView worldSpacePopupManager;
 
         [SerializeField]
         private bool isServerStubbed = true;
@@ -118,7 +118,7 @@ namespace Catzilla.CommonModule.View {
             container.Bind<Camera>("MainCamera").ToInstance(mainCamera);
             container.Bind<AudioManager>().ToInstance(audioManager);
             container.Bind<UIBlockerView>().ToInstance(uiBlocker);
-            container.Bind<WorldSpacePopupManager>()
+            container.Bind<WorldSpacePopupManagerView>()
                 .ToInstance(worldSpacePopupManager);
             container.Bind<Stopwatch>("PlayStopwatch")
                 .ToInstance(new Stopwatch());
@@ -147,7 +147,6 @@ namespace Catzilla.CommonModule.View {
         public override void PostBindings(DiContainer container) {
             container.Inject(container.Resolve<Server>());
             container.Inject(container.Resolve<AudioManager>());
-            container.Inject(container.Resolve<WorldSpacePopupManager>());
             var eventBus = container.Resolve<EventBus>();
 
             var poolStorageController =

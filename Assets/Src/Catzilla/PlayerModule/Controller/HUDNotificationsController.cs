@@ -1,3 +1,4 @@
+using UnityEngine;
 using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
@@ -20,11 +21,14 @@ namespace Catzilla.PlayerModule.Controller {
 
         public void OnSmashStreak(Evt evt) {
             var popupManager = hudNotifications.PopupManager;
-            ScreenSpacePopupView popup = popupManager.Get(smashStreakPopupType);
+            var popup = (ScreenSpacePopupView) popupManager.Get(
+                smashStreakPopupType);
             var smashStreak = (PlayerView.SmashStreak) evt.Data;
+            Profiler.BeginSample("HUDNotificationsController.OnSmashStreak()");
             popup.Msg.text = translator.Translate("Player.SmashStreak",
                 smashStreak.Length, smashStreak.ExtraScore);
             popupManager.Show(popup);
+            Profiler.EndSample();
         }
     }
 }

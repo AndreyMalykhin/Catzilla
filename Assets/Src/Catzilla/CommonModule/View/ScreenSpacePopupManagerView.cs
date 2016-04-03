@@ -6,47 +6,12 @@ using Zenject;
 using Catzilla.CommonModule.Util;
 
 namespace Catzilla.CommonModule.View {
-    public class ScreenSpacePopupManagerView: MonoBehaviour {
-        [Serializable]
-        private struct PopupType {
-            public int Id;
-            public ScreenSpacePopupView Proto;
-        }
-
-        [Inject]
-        private PoolStorageView poolStorage;
-
-        [SerializeField]
-        private PopupType[] popupTypes;
-
-        private readonly IDictionary<int, ScreenSpacePopupView> popupProtos =
-            new Dictionary<int, ScreenSpacePopupView>(4);
-
-        [PostInject]
-        public void OnConstruct() {
-            for (int i = 0; i < popupTypes.Length; ++i) {
-                PopupType popupType = popupTypes[i];
-                popupProtos.Add(popupType.Id, popupType.Proto);
-            }
-        }
-
-        public ScreenSpacePopupView Get(int popupType) {
-            ScreenSpacePopupView popupProto = popupProtos[popupType];
-            int poolId = popupProto.GetComponent<PoolableView>().PoolId;
-            return poolStorage.Take(poolId)
-                .GetComponent<ScreenSpacePopupView>();
-        }
-
-        public void Show(ScreenSpacePopupView popup) {
+    public class ScreenSpacePopupManagerView: PopupManagerView {
+        protected override void OnPreShow(PopupView popup) {
             bool isWorldPositionStays = false;
-            popup.transform.SetParent(transform, isWorldPositionStays);
-            var showable = popup.GetComponent<ShowableView>();
-            showable.OnHide += OnPopupHide;
-            showable.Show();
-        }
-
-        private void OnPopupHide(ShowableView showable) {
-            poolStorage.Return(showable.GetComponent<PoolableView>());
+            Transform popupTransform = popup.transform;
+            popupTransform.SetParent(transform, isWorldPositionStays);
+            popupTransform.SetAsLastSibling();
         }
     }
 }

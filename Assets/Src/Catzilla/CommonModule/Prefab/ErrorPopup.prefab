@@ -117,12 +117,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  deactivatable: {fileID: 0}
   isShowAnimated: 0
   isHideAnimated: 0
   showSound: {fileID: 0}
   preShowSound: {fileID: 0}
   audioSource: {fileID: 0}
   autoHideDelay: 4
+  isAutoHideUnscaled: 1
 --- !u!114 &11446678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -134,8 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0819af9ceaaf4ba1ba69e555e92ccd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolId: 29
-  IsUI: 1
+  poolId: 28
+  isUI: 1
+  deactivateOnReturn: 1
 --- !u!114 &11463926
 MonoBehaviour:
   m_ObjectHideFlags: 1

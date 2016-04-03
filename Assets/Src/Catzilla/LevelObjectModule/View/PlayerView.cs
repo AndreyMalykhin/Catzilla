@@ -5,6 +5,7 @@ using System.Collections;
 using SmartLocalization;
 using Zenject;
 using Catzilla.CommonModule.Util;
+using Catzilla.CommonModule.View;
 using Catzilla.PlayerModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
@@ -40,7 +41,7 @@ namespace Catzilla.LevelObjectModule.View {
         public int Health {
             get {return health;}
             set {
-                if (IsHealthFreezed || health == value) {
+                if (isDead || IsHealthFreezed || health == value) {
                     return;
                 }
 
@@ -88,9 +89,8 @@ namespace Catzilla.LevelObjectModule.View {
         public AudioSource HighPrioAudioSource;
         public bool IsHealthFreezed;
         public bool IsScoreFreezed;
-        public float SideSpeed = 5f;
-        public int MaxHealth = 100;
-        public float CameraShakeNoiseFactor = 0.25f;
+        public float SideSpeed;
+        public int MaxHealth;
 
         private static readonly int frontSpeedParam =
             Animator.StringToHash("FrontSpeed");
@@ -115,6 +115,9 @@ namespace Catzilla.LevelObjectModule.View {
 
         [SerializeField]
         private LayerMask envLayer;
+
+        [SerializeField]
+        private ValueShakerView[] cameraShakers;
 
         [SerializeField]
         private float refuseChance;
@@ -158,7 +161,6 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         private float smashStreakScoreLengthFactor;
 
-        private readonly Vector3[] cameraShakeAmounts = new Vector3[4];
         private Vector3 cameraStartPosition;
         private int score;
         private int health;
@@ -187,8 +189,6 @@ namespace Catzilla.LevelObjectModule.View {
             maxX = levelMaxX - halfWidth;
             health = MaxHealth;
             cameraStartPosition = Camera.transform.localPosition;
-            HUD = instantiator.InstantiatePrefab(hudProto.gameObject)
-                .GetComponent<HUDView>();
             creationTime = Time.time;
             refuseCheckRateWaiter = new WaitForSeconds(refuseCheckRate);
             refuseDurationWaiter = new WaitForSeconds(refuseDuration);
@@ -197,6 +197,8 @@ namespace Catzilla.LevelObjectModule.View {
             refuseDelayWaiter = new WaitForSeconds(refuseDelay);
             StartCoroutine(Refuser());
             StartCoroutine(SpeedChanger());
+            HUD = instantiator.InstantiatePrefab(hudProto.gameObject)
+                .GetComponent<HUDView>();
             eventBus.Fire((int) Events.PlayerConstruct, new Evt(this));
         }
 
@@ -222,18 +224,18 @@ namespace Catzilla.LevelObjectModule.View {
         public void ShakeCamera(
             Vector3 amount, float duration, bool inOneDirection) {
             // DebugUtils.Log("PlayerView.ShakeCamera()");
-            if (duration == 0f) {
+            if (duration == 0f || amount == Vector3.zero) {
                 return;
             }
 
-            for (int i = 0; i < cameraShakeAmounts.Length; ++i) {
-                if (cameraShakeAmounts[i] != Vector3.zero) {
+            for (int i = 0; i < cameraShakers.Length; ++i) {
+                ValueShakerView shaker = cameraShakers[i];
+
+                if (shaker.IsShaking) {
                     continue;
                 }
 
-                var shakerIndex = i;
-                StartCoroutine(CameraShaker(
-                    amount, duration, inOneDirection, shakerIndex));
+                shaker.Shake(amount, duration, inOneDirection);
                 break;
             }
         }
@@ -293,32 +295,6 @@ namespace Catzilla.LevelObjectModule.View {
                     SetTargetX(Input.mousePosition);
                 }
             }
-        }
-
-        private IEnumerator CameraShaker(
-            Vector3 amount,
-            float duration,
-            bool inOneDirection,
-            int shakerIndex) {
-            float remainingTime = duration;
-            float amplitudeSign = 1f;
-            Vector3 maxNoise = amount * CameraShakeNoiseFactor;
-
-            while (remainingTime > 0f) {
-                Vector3 noise = maxNoise *
-                    (Mathf.PerlinNoise(Time.time, 0f) - 0.5f);
-                cameraShakeAmounts[shakerIndex] = (amount * (amplitudeSign *
-                    (remainingTime / duration))) + noise;
-                remainingTime -= Time.deltaTime;
-
-                if (!inOneDirection) {
-                    amplitudeSign *= -1f;
-                }
-
-                yield return null;
-            }
-
-            cameraShakeAmounts[shakerIndex] = Vector3.zero;
         }
 
         private IEnumerator Refuser() {
@@ -390,8 +366,8 @@ namespace Catzilla.LevelObjectModule.View {
                 cameraStartPosition.y,
                 cameraStartPosition.z);
 
-            for (int i = 0; i < cameraShakeAmounts.Length; ++i) {
-                newPosition += cameraShakeAmounts[i];
+            for (int i = 0; i < cameraShakers.Length; ++i) {
+                newPosition += cameraShakers[i].Amount;
             }
 
             Camera.transform.localPosition = newPosition;

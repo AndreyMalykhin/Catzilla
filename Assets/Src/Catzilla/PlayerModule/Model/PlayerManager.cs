@@ -13,7 +13,7 @@ using Catzilla.LevelModule.View;
 namespace Catzilla.PlayerModule.Model {
     public class PlayerManager {
         [Inject]
-        private WorldSpacePopupManager popupManager;
+        private WorldSpacePopupManagerView popupManager;
 
         [Inject]
         private EventBus eventBus;
@@ -54,7 +54,7 @@ namespace Catzilla.PlayerModule.Model {
         [Inject]
         private GameOverScreenView gameOverScreen;
 
-        private readonly StringBuilder strBuilder = new StringBuilder(8);
+        private readonly StringBuilder strBuilder = new StringBuilder(16);
 
         /**
          * @return Added score
@@ -64,16 +64,19 @@ namespace Catzilla.PlayerModule.Model {
                 return 0;
             }
 
+            Profiler.BeginSample("PlayerManager.AddScore()");
             int score = UnityEngine.Random.Range(
                 scoreable.MinScore, scoreable.MaxScore + 1);
             player.Score += score;
-            WorldSpacePopupView popup = popupManager.Get(scoreWorldPopupType);
+            var popup = (WorldSpaceTextPopupView) popupManager.Get(
+                scoreWorldPopupType);
             popup.Msg.text =
                 strBuilder.Append('+').Append(score).ToString();
             strBuilder.Length = 0;
             popup.LookAtTarget = player.Camera;
             popup.PlaceAbove(scoreable.Collider.bounds);
             popupManager.Show(popup);
+            Profiler.EndSample();
             return score;
         }
 
@@ -83,10 +86,14 @@ namespace Catzilla.PlayerModule.Model {
             int addResurrectionsCount = 1;
             playerStateStorage.Get().AvailableResurrectionsCount +=
                 addResurrectionsCount;
-            WorldSpacePopupView popup =
-                popupManager.Get(resurrectionWorldPopupType);
-            popup.Msg.text = translator.Translate(
-                "ResurrectionBonus.Take", addResurrectionsCount);
+            var popup = (WorldSpaceTextPopupView) popupManager.Get(
+                resurrectionWorldPopupType);
+            popup.Msg.text = strBuilder.Append('+')
+                .Append(addResurrectionsCount)
+                .Append(' ')
+                .Append(translator.Translate("ResurrectionBonus.Take"))
+                .ToString();
+            strBuilder.Length = 0;
             popup.LookAtTarget = player.Camera;
             popup.PlaceAbove(resurrectionBonus.Collider.bounds);
             popupManager.Show(popup);
@@ -96,9 +103,13 @@ namespace Catzilla.PlayerModule.Model {
             PlayerView player, RewardBonusView rewardBonus) {
             int addRewardsCount = 1;
             playerStateStorage.Get().AvailableRewardsCount += addRewardsCount;
-            WorldSpacePopupView popup = popupManager.Get(rewardWorldPopupType);
-            popup.Msg.text =
-                translator.Translate("RewardBonus.Take", addRewardsCount);
+            var popup = (WorldSpaceTextPopupView) popupManager.Get(
+                rewardWorldPopupType);
+            popup.Msg.text = strBuilder.Append('+')
+                .Append(addRewardsCount)
+                .Append(' ')
+                .Append(translator.Translate("RewardBonus.Take"))
+                .ToString();
             popup.LookAtTarget = player.Camera;
             popup.PlaceAbove(rewardBonus.Collider.bounds);
             popupManager.Show(popup);

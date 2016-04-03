@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.View;
 
 namespace Catzilla.LevelObjectModule.Model {
@@ -22,6 +23,7 @@ namespace Catzilla.LevelObjectModule.Model {
         }
 
         private void OnEnable() {
+            // DebugUtils.Log("ObjectTypeInfoStorage.OnEnable()");
             for (int i = 0; i < items.Length; ++i) {
                 itemsMap.Add((int) items[i].Type, items[i]);
             }

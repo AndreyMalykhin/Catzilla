@@ -29,8 +29,8 @@ namespace Catzilla.LevelAreaModule.View {
                 levelAreaController.OnLevelConstruct);
             eventBus.On((int) Events.PlayerConstruct,
                 levelAreaController.OnPlayerConstruct);
-            eventBus.On((int) Events.LevelAreaTriggerEnter,
-                levelAreaController.OnTriggerEnter);
+            eventBus.On((int) Events.LevelAreaDestroy,
+                levelAreaController.OnDestroy);
         }
     }
 }

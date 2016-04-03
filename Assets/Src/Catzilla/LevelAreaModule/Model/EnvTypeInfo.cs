@@ -9,7 +9,7 @@ namespace Catzilla.LevelAreaModule.Model {
     public class EnvTypeInfo {
         public EnvType Type {get {return type;}}
         public LevelAreaView ViewProto {get {return viewProto;}}
-        public SpawnMapView SpawnMap {get {return spawnMap;}}
+        public SpawnMap SpawnMap {get {return spawnMap;}}
 
         [SerializeField]
         private EnvType type;
@@ -18,7 +18,7 @@ namespace Catzilla.LevelAreaModule.Model {
         private LevelAreaView viewProto;
 
         [SerializeField]
-        private SpawnMapView spawnMap;
+        private SpawnMap spawnMap;
 
         [SerializeField]
         private int minSpawnWeight = 1;

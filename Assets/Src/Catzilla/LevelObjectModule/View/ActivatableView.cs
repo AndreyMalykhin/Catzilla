@@ -8,6 +8,7 @@ namespace Catzilla.LevelObjectModule.View {
         public bool IsActive {
             get {return isActive;}
             set {
+                Profiler.BeginSample("ActivatableView.IsActive()");
                 isActive = value;
 
                 for (int i = 0; i < behaviours.Length; ++i) {
@@ -17,6 +18,18 @@ namespace Catzilla.LevelObjectModule.View {
                 for (int i = 0; i < renderers.Length; ++i) {
                     renderers[i].enabled = value;
                 }
+
+                for (int i = 0; i < animators.Length; ++i) {
+                    animators[i].enabled = value;
+                }
+
+                for (int i = 0; i < bodies.Length; ++i) {
+                    if (!value) {
+                        bodies[i].Sleep();
+                    }
+                }
+
+                Profiler.EndSample();
             }
         }
 
@@ -28,6 +41,12 @@ namespace Catzilla.LevelObjectModule.View {
 
         [SerializeField]
         private Renderer[] renderers;
+
+        [SerializeField]
+        private Animator[] animators;
+
+        [SerializeField]
+        private Rigidbody[] bodies;
 
         private bool isActive;
 

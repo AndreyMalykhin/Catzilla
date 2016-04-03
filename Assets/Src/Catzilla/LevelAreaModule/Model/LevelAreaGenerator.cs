@@ -98,6 +98,7 @@ namespace Catzilla.LevelAreaModule.Model {
                     break;
                 }
 
+                Profiler.BeginSample("LevelAreaGenerator.NewObjects()");
                 int objectProtoIndex = UnityEngine.Random.Range(
                     0, objectTypeInfo.ProtoInfos.Length);
                 ObjectProtoInfo objectProtoInfo =
@@ -107,6 +108,7 @@ namespace Catzilla.LevelAreaModule.Model {
                 InitObject(obj, objectTypeInfo, objectProtoInfo, spawnLocation,
                     levelSettings);
                 ReserveSpawnPoint(spawnPoint);
+                Profiler.EndSample();
                 yield return null;
             }
         }

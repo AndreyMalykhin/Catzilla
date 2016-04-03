@@ -27,6 +27,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 482030}
+  - 54: {fileID: 5491566}
   - 65: {fileID: 6554552}
   - 114: {fileID: 11461362}
   - 114: {fileID: 11459958}
@@ -96,6 +97,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127356}
   m_Mesh: {fileID: 4300000, guid: 17424ed4a0a124b8e88a88469e6f09f4, type: 3}
+--- !u!54 &5491566
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178742}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!65 &6549862
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -106,8 +122,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 32, y: 24.000006, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 32, y: 24, z: 1}
+  m_Center: {x: 0, y: 0, z: -0.5}
 --- !u!65 &6554552
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -142,8 +158,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0819af9ceaaf4ba1ba69e555e92ccd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolId: 17
-  IsUI: 0
+  poolId: 17
+  isUI: 0
+  deactivateOnReturn: 1
 --- !u!114 &11459958
 MonoBehaviour:
   m_ObjectHideFlags: 1

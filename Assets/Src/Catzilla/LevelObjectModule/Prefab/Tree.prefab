@@ -320,6 +320,9 @@ MonoBehaviour:
   behaviours: []
   renderers:
   - {fileID: 2374372}
+  animators: []
+  bodies:
+  - {fileID: 5443342}
 --- !u!114 &11486824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -345,8 +348,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0819af9ceaaf4ba1ba69e555e92ccd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolId: 7
-  IsUI: 0
+  poolId: 5
+  isUI: 0
+  deactivateOnReturn: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

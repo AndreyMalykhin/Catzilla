@@ -18,7 +18,7 @@ namespace Catzilla.LevelObjectModule.View {
         private PoolStorageView poolStorage;
 
         [SerializeField]
-        private float lifetime = 2f;
+        private float lifetime;
 
         [SerializeField]
         private Transform[] parts;
@@ -33,10 +33,10 @@ namespace Catzilla.LevelObjectModule.View {
         private float smashForce;
         private float smashUpwardsModifier;
         private Vector3 smashSourcePosition;
-        private bool isSmashed;
 
         [PostInject]
         public void OnConstruct() {
+            // DebugUtils.Log("SmashedView.OnConstruct()");
             int partsCount = parts.Length;
             initialPartStates = new PartState[partsCount];
 
@@ -51,6 +51,7 @@ namespace Catzilla.LevelObjectModule.View {
 
         public void Init(SmashableView smashable, float smashForce,
             float smashUpwardsModifier, Vector3 smashSourcePosition) {
+            // DebugUtils.Log("SmashedView.Init()");
             this.smashForce = smashForce;
             this.smashUpwardsModifier = smashUpwardsModifier;
             this.smashSourcePosition = smashSourcePosition;
@@ -69,37 +70,23 @@ namespace Catzilla.LevelObjectModule.View {
                 alternating.Material =
                     smashable.GetComponent<AlternatingView>().Material;
             }
+
+            Smash();
         }
 
         void IPoolable.OnReturn() {
-            isSmashed = false;
-
             for (int i = 0; i < parts.Length; ++i) {
                 Transform part = parts[i];
                 PartState initialPartState = initialPartStates[i];
                 part.localPosition = initialPartState.LocalPosition;
                 part.localRotation = initialPartState.LocalRotation;
-                var partBody = part.GetComponent<Rigidbody>();
-
-                if (partBody == null) {
-                    continue;
-                }
-
-                partBody.Sleep();
             }
         }
 
 		void IPoolable.OnTake() {}
 
-        private void FixedUpdate() {
-            if (isSmashed) {
-                return;
-            }
-
-            Smash();
-        }
-
         private void Smash() {
+            // DebugUtils.Log("SmashedView.Smash()");
             float explosionRadius = 0f;
 
             for (int i = 0; i < parts.Length; ++i) {
@@ -114,7 +101,6 @@ namespace Catzilla.LevelObjectModule.View {
             }
 
             Invoke("Dispose", lifetime);
-            isSmashed = true;
         }
 
         private void Dispose() {
