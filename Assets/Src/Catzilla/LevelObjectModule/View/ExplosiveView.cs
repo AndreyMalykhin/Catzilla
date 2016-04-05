@@ -5,19 +5,11 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class ExplosiveView: MonoBehaviour, IPoolable {
-        public struct ExplosionInfo {
-            public readonly Vector3 Position;
-            public readonly float Force;
-            public readonly int HitObjectsCount;
-            public readonly Collider[] HitObjects;
-
-            public ExplosionInfo(Vector3 position, float force,
-                int hitObjectsCount, Collider[] hitObjects) {
-                Position = position;
-                Force = force;
-                HitObjectsCount = hitObjectsCount;
-                HitObjects = hitObjects;
-            }
+        public class ExplosionInfo {
+            public Vector3 Position;
+            public float Force;
+            public int HitObjectsCount;
+            public Collider[] HitObjects;
         }
 
         public float ExplosionUpwardsModifier {
@@ -53,6 +45,8 @@ namespace Catzilla.LevelObjectModule.View {
 
         private bool isExploded;
         private Collider[] hitObjects;
+        private readonly ExplosionInfo explosionInfoBuffer =
+            new ExplosionInfo();
 
         public void Explode() {
             // DebugUtils.Log("ExplosiveView.Explode()");
@@ -69,11 +63,13 @@ namespace Catzilla.LevelObjectModule.View {
                     hitObjects,
                     hitLayer.value),
                 maxHitObjects);
-            var explosionInfo = new ExplosionInfo(explosionSource,
-                explosionForce, hitObjectsCount, hitObjects);
+            explosionInfoBuffer.Position = explosionSource;
+            explosionInfoBuffer.Force = explosionForce;
+            explosionInfoBuffer.HitObjectsCount = hitObjectsCount;
+            explosionInfoBuffer.HitObjects = hitObjects;
             isExploded = true;
             eventBus.Fire((int) Events.ExplosiveExplode,
-                new Evt(this, explosionInfo));
+                new Evt(this, explosionInfoBuffer));
             poolStorage.ReturnLater(poolable);
         }
 

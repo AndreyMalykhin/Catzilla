@@ -68,7 +68,7 @@ TextMesh:
   m_GameObject: {fileID: 185012}
   m_Text: Meow!
   m_OffsetZ: 0
-  m_CharacterSize: 0.5
+  m_CharacterSize: 0.375
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 0

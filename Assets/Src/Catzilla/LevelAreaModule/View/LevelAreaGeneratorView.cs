@@ -8,18 +8,31 @@ using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.Model;
 using Catzilla.LevelModule.View;
-using Catzilla.LevelAreaModule.View;
+using Catzilla.LevelAreaModule.Model;
 
-namespace Catzilla.LevelAreaModule.Model {
-    public class LevelAreaGenerator {
+namespace Catzilla.LevelAreaModule.View {
+    public class LevelAreaGeneratorView: MonoBehaviour {
         [Inject]
-        public ObjectTypeInfoStorage ObjectTypeInfoStorage {get; set;}
+        private ObjectTypeInfoStorage objectTypeInfoStorage;
 
         [Inject("PlayerObjectType")]
-        public LevelObjectType PlayerObjectType {get; set;}
+        private LevelObjectType playerObjectType;
+
+        [SerializeField]
+        [Tooltip("In seconds")]
+        private float objectSpawnRate;
 
         private readonly IDictionary<Vector3, bool> reservedSpawnPoints =
             new Dictionary<Vector3, bool>(64, new Vector3Comparer());
+        private LevelAreaView area;
+        private EnvTypeInfo envTypeInfo;
+        private List<SpawnsInfo> spawnsInfos;
+        private LevelSettings levelSettings;
+        private LevelView level;
+        private int spawnsInfosIndex;
+        private int objectsCountToSpawn;
+        private int spawnTriesCount;
+        private Action<LevelAreaView> onDone;
 
         public void NewArea(
             EnvTypeInfo envTypeInfo,
@@ -28,89 +41,93 @@ namespace Catzilla.LevelAreaModule.Model {
             LevelView outputLevel,
             Action<LevelAreaView> onDone = null) {
             // DebugUtils.Log(
-            //     "LevelAreaGenerator.NewArea(); envType={0}", envType);
-            outputLevel.StartCoroutine(DoNewArea(
-                envTypeInfo, spawnsInfos, levelSettings, outputLevel, onDone));
-        }
+            //     "LevelAreaGeneratorView.NewArea(); envType={0}", envType);
+            area = outputLevel.NewArea(envTypeInfo);
 
-        private IEnumerator DoNewArea(
-            EnvTypeInfo envTypeInfo,
-            List<SpawnsInfo> spawnsInfos,
-            LevelSettings levelSettings,
-            LevelView outputLevel,
-            Action<LevelAreaView> onDone = null) {
+            if (spawnsInfos.Count == 0) {
+                if (onDone != null) onDone(area);
+                return;
+            }
+
+            Profiler.BeginSample("LevelAreaGeneratorView.NewArea()");
+            this.envTypeInfo = envTypeInfo;
+            this.spawnsInfos = spawnsInfos;
+            this.levelSettings = levelSettings;
+            this.onDone = onDone;
+            level = outputLevel;
+            spawnsInfosIndex = 0;
+            NextObjectType();
             reservedSpawnPoints.Clear();
-            LevelAreaView area = outputLevel.NewArea(envTypeInfo);
-
-            for (int i = 0; i < spawnsInfos.Count; ++i) {
-                SpawnsInfo spawnsInfo = spawnsInfos[i];
-                IEnumerator objects = NewObjects(
-                    spawnsInfo.ObjectType,
-                    spawnsInfo.Count,
-                    envTypeInfo,
-                    area.Index,
-                    levelSettings,
-                    outputLevel);
-
-                while (objects.MoveNext()) {
-                    yield return null;
-                }
-            }
-
-            if (onDone != null) {
-                onDone(area);
-            }
+            InvokeRepeating("NewObject", objectSpawnRate, objectSpawnRate);
+            Profiler.EndSample();
         }
 
-        private IEnumerator NewObjects(
-            LevelObjectType objectType,
-            int countToSpawn,
-            EnvTypeInfo envTypeInfo,
-            int areaIndex,
-            LevelSettings levelSettings,
-            LevelView outputLevel) {
-            // DebugUtils.Log("LevelAreaGenerator.NewObjects()");
+        public void Stop() {
+            if (!IsInvoking("NewObject")) {
+                return;
+            }
+
+            CancelInvoke("NewObject");
+        }
+
+        private void NewObject() {
+            // DebugUtils.Log("LevelAreaGeneratorView.NewObject()");
+            Profiler.BeginSample("LevelAreaGeneratorView.NewObject()");
+            LevelObjectType objectType =
+                spawnsInfos[spawnsInfosIndex].ObjectType;
             List<SpawnLocation> spawnLocations =
                 envTypeInfo.SpawnMap.GetLocations(objectType);
             ObjectTypeInfo objectTypeInfo =
-                ObjectTypeInfoStorage.Get(objectType);
+                objectTypeInfoStorage.Get(objectType);
             Vector3 spawnPoint;
             SpawnLocation spawnLocation;
-            int triesCount = countToSpawn * 2;
             bool isFreeSpaceExists = true;
 
-            for (int i = 0; i < countToSpawn; ++i) {
-                do {
-                    spawnLocation = spawnLocations[
-                        UnityEngine.Random.Range(0, spawnLocations.Count)];
-                    spawnPoint = GetRandomSpawnPoint(
-                        spawnLocation.Bounds, objectTypeInfo);
+            do {
+                spawnLocation = spawnLocations[
+                    UnityEngine.Random.Range(0, spawnLocations.Count)];
+                spawnPoint = GetRandomSpawnPoint(
+                    spawnLocation.Bounds, objectTypeInfo);
 
-                    if (triesCount == 0) {
-                        isFreeSpaceExists = false;
-                        break;
-                    }
-
-                    --triesCount;
-                } while (IsSpawnPointReserved(spawnPoint));
-
-                if (!isFreeSpaceExists) {
+                if (spawnTriesCount == 0) {
+                    isFreeSpaceExists = false;
                     break;
                 }
 
-                Profiler.BeginSample("LevelAreaGenerator.NewObjects()");
+                --spawnTriesCount;
+            } while (IsSpawnPointReserved(spawnPoint));
+
+            if (isFreeSpaceExists) {
                 int objectProtoIndex = UnityEngine.Random.Range(
                     0, objectTypeInfo.ProtoInfos.Length);
                 ObjectProtoInfo objectProtoInfo =
                     objectTypeInfo.ProtoInfos[objectProtoIndex];
-                LevelObjectView obj = outputLevel.NewObject(
-                    objectProtoInfo.View, spawnPoint, areaIndex);
+                LevelObjectView obj = level.NewObject(
+                    objectProtoInfo.View, spawnPoint, area.Index);
                 InitObject(obj, objectTypeInfo, objectProtoInfo, spawnLocation,
                     levelSettings);
                 ReserveSpawnPoint(spawnPoint);
-                Profiler.EndSample();
-                yield return null;
             }
+
+            --objectsCountToSpawn;
+            Profiler.EndSample();
+
+            if (objectsCountToSpawn <= 0 || spawnTriesCount <= 0) {
+                ++spawnsInfosIndex;
+
+                if (spawnsInfosIndex >= spawnsInfos.Count) {
+                    CancelInvoke("NewObject");
+                    if (onDone != null) onDone(area);
+                    return;
+                }
+
+                NextObjectType();
+            }
+        }
+
+        private void NextObjectType() {
+            objectsCountToSpawn = spawnsInfos[spawnsInfosIndex].Count;
+            spawnTriesCount = objectsCountToSpawn * 2;
         }
 
         private Vector3 GetRandomSpawnPoint(
@@ -158,7 +175,7 @@ namespace Catzilla.LevelAreaModule.Model {
                     objectProtoInfo.AvailableMaterials[materialIndex];
             }
 
-            if (objectTypeInfo.Type == PlayerObjectType) {
+            if (objectTypeInfo.Type == playerObjectType) {
                 var player = obj.GetComponent<PlayerView>();
                 player.FrontSpeed = levelSettings.PlayerFrontSpeed;
                 player.SideSpeed = levelSettings.PlayerSideSpeed;

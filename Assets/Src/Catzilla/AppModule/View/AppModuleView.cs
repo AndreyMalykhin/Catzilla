@@ -20,7 +20,7 @@ namespace Catzilla.AppModule.View {
             var eventBus = container.Resolve<EventBus>();
             var appController = container.Resolve<AppController>();
             eventBus.On((int) Events.AppStart, appController.OnStart);
-            Application.targetFrameRate = 60;
+            // Application.targetFrameRate = 60;
         }
     }
 }

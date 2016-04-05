@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 421208}
   - 33: {fileID: 3389754}
   - 23: {fileID: 2342436}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: BackRestRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 483526}
   - 33: {fileID: 3383784}
   - 23: {fileID: 2342726}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: SeatRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - 4: {fileID: 405036}
   - 33: {fileID: 3318134}
   - 23: {fileID: 2315900}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: LegFrontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - 4: {fileID: 480652}
   - 33: {fileID: 3351242}
   - 23: {fileID: 2324956}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: LegBackLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ GameObject:
   - 4: {fileID: 466360}
   - 33: {fileID: 3316610}
   - 23: {fileID: 2395186}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: BackRestLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - 114: {fileID: 11434098}
   - 114: {fileID: 11435932}
   - 114: {fileID: 11422762}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Bench
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   - 65: {fileID: 6531034}
   - 23: {fileID: 2320950}
   - 33: {fileID: 3345612}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   - 4: {fileID: 451654}
   - 33: {fileID: 3317870}
   - 23: {fileID: 2340788}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: SeatLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   - 4: {fileID: 490252}
   - 33: {fileID: 3354270}
   - 23: {fileID: 2312424}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: LegBackRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   - 4: {fileID: 438770}
   - 33: {fileID: 3348996}
   - 23: {fileID: 2381256}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: LegFrontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -732,8 +732,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinScore: 16
-  MaxScore: 32
+  MinScore: 32
+  MaxScore: 64
   Collider: {fileID: 6531034}
 --- !u!1001 &100100000
 Prefab:

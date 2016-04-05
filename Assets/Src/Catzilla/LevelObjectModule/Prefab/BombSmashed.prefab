@@ -12,7 +12,7 @@ GameObject:
   - 23: {fileID: 2309270}
   - 54: {fileID: 5423362}
   - 65: {fileID: 6510018}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: PieceBackBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ GameObject:
   - 23: {fileID: 2385050}
   - 54: {fileID: 5421398}
   - 65: {fileID: 6585572}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: PieceFrontBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ GameObject:
   - 23: {fileID: 2308310}
   - 54: {fileID: 5426534}
   - 65: {fileID: 6598226}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: PieceFrontTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - 82: {fileID: 8283878}
   - 114: {fileID: 11433468}
   - 114: {fileID: 11495810}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: BombSmashed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - 23: {fileID: 2337218}
   - 54: {fileID: 5459034}
   - 65: {fileID: 6506272}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: PieceBackTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 468862}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -68,15 +68,6 @@ namespace Catzilla.AppModule.Controller {
         private void ShowMainScreen() {
             PlayerState playerState = PlayerStateStorage.Get();
 
-            if (GiftManager.IsDeserved(playerState)) {
-                int givenResurrectionsCount = GiftManager.Give(playerState);
-                var popup = (ScreenSpacePopupView) PopupManager.Get(
-                    CommonPopupType);
-                popup.Msg.text = Translator.Translate(
-                    "Player.GiftEarn", givenResurrectionsCount);
-                PopupManager.Show(popup);
-            }
-
             if (RewardManager.IsTimeToUnlock(playerState)) {
                 int unlockedRewardsCount = RewardManager.Unlock(playerState);
                 var popup = (ScreenSpacePopupView) PopupManager.Get(

@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 458740}
   - 33: {fileID: 3364702}
   - 23: {fileID: 2387096}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: PieceFrontTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 413212}
   - 33: {fileID: 3368186}
   - 23: {fileID: 2380192}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: PieceFrontBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - 65: {fileID: 6512910}
   - 33: {fileID: 3333574}
   - 23: {fileID: 2372958}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   - 114: {fileID: 11461522}
   - 114: {fileID: 11457808}
   - 114: {fileID: 11468964}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - 4: {fileID: 451370}
   - 33: {fileID: 3383506}
   - 23: {fileID: 2328214}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: PieceBackBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - 4: {fileID: 436382}
   - 33: {fileID: 3380556}
   - 23: {fileID: 2321222}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: PieceBackTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +450,7 @@ MonoBehaviour:
   maxHitObjects: 4
   hitLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 67584
   poolable: {fileID: 11433468}
 --- !u!114 &11461522
 MonoBehaviour:

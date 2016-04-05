@@ -5,15 +5,13 @@ using Catzilla.CommonModule.Util;
 
 namespace Catzilla.PlayerModule.View {
     public class HUDNotificationsView: MonoBehaviour {
-        public ScreenSpacePopupManagerView PopupManager {
-            get {return popupManager;}
-        }
+        public TextMesh Msg {get {return msg;}}
 
         [Inject]
         private EventBus eventBus;
 
         [SerializeField]
-        private ScreenSpacePopupManagerView popupManager;
+        private TextMesh msg;
 
         [PostInject]
         public void OnConstruct() {

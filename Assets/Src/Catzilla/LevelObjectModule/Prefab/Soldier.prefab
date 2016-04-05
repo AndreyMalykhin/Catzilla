@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 479118}
   - 33: {fileID: 3370136}
   - 23: {fileID: 2385336}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   - 114: {fileID: 11495818}
   - 114: {fileID: 11401604}
   - 114: {fileID: 11485288}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Soldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   - 4: {fileID: 457198}
   - 33: {fileID: 3391394}
   - 23: {fileID: 2353698}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: LegRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 450834}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: ProjectileSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   - 4: {fileID: 466682}
   - 33: {fileID: 3303970}
   - 23: {fileID: 2341088}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - 4: {fileID: 485208}
   - 33: {fileID: 3322600}
   - 23: {fileID: 2373898}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: LegLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - 4: {fileID: 460606}
   - 33: {fileID: 3309050}
   - 23: {fileID: 2306386}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: ArmRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   - 65: {fileID: 6555376}
   - 33: {fileID: 3360562}
   - 23: {fileID: 2345278}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   - 4: {fileID: 488368}
   - 33: {fileID: 3356076}
   - 23: {fileID: 2387080}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: ArmLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -666,14 +666,16 @@ MonoBehaviour:
   projectileProto: {fileID: 11467526, guid: 362fec4312e394d09be04ce01ef081a4, type: 2}
   projectileSource: {fileID: 450834}
   aimee: {fileID: 424354}
-  aimSpeed: 64
+  aimSpeed: 128
   aimPeriod: 0.125
-  shootingDelay: 0.5
-  shotPeriod: 0.125
+  shootingDelay: 0.25
+  shotPeriod: 0.25
   burstPeriod: 16
   shotsInBurst: 2
-  projectileMinSpeed: 6
-  projectileMaxSpeed: 6
+  shotsCount: 2
+  projectileMinSpeed: 3
+  projectileMaxSpeed: 3
+  shootAheadTargetSpeedFactor: 2
 --- !u!114 &11485288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -705,8 +707,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinScore: 64
-  MaxScore: 128
+  MinScore: 32
+  MaxScore: 64
   Collider: {fileID: 6555376}
 --- !u!114 &11495818
 MonoBehaviour:

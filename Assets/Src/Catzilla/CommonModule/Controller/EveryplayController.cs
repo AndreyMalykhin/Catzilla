@@ -16,8 +16,8 @@ namespace Catzilla.CommonModule.Controller {
 
         private readonly Texture2D screenshot =
             new Texture2D(256, 128, TextureFormat.RGBA32, false);
-        private readonly WaitForSecondsRealtime screenshotDelayWaiter =
-            new WaitForSecondsRealtime(2f);
+        private readonly WaitForSeconds screenshotDelayWaiter =
+            new WaitForSeconds(16f);
 
         [PostInject]
         public void OnConstruct() {
@@ -71,7 +71,6 @@ namespace Catzilla.CommonModule.Controller {
         }
 
         private IEnumerator ScreenshotTaker() {
-            screenshotDelayWaiter.Restart();
             yield return screenshotDelayWaiter;
             Everyplay.TakeThumbnail();
         }

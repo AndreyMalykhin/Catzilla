@@ -24,9 +24,9 @@ TagManager:
   - LevelArea
   - LevelObject.Bonus
   - Void
-  - 
-  - 
-  - 
+  - LevelObject.Static
+  - LevelObject.ExplosiveProjectile
+  - LevelObject.SmashedSmall
   - 
   - 
   - 

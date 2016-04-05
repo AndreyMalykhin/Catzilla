@@ -17,7 +17,7 @@ GameObject:
   - 114: {fileID: 11446390}
   - 114: {fileID: 11486688}
   - 114: {fileID: 11425170}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: House
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +34,7 @@ GameObject:
   - 4: {fileID: 405202}
   - 33: {fileID: 3317238}
   - 23: {fileID: 2370942}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: WallLeftFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   - 4: {fileID: 496092}
   - 33: {fileID: 3334290}
   - 23: {fileID: 2309430}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: WallRightFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - 4: {fileID: 486900}
   - 33: {fileID: 3334394}
   - 23: {fileID: 2399250}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: RoofBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - 4: {fileID: 441678}
   - 33: {fileID: 3396194}
   - 23: {fileID: 2391896}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: WallFrontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - 65: {fileID: 6514876}
   - 33: {fileID: 3302116}
   - 23: {fileID: 2315858}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - 4: {fileID: 455732}
   - 33: {fileID: 3317098}
   - 23: {fileID: 2328134}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: RoofFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   - 4: {fileID: 495770}
   - 33: {fileID: 3318924}
   - 23: {fileID: 2371720}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: WallFrontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - 4: {fileID: 440618}
   - 33: {fileID: 3335294}
   - 23: {fileID: 2301322}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: WallRightBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - 4: {fileID: 405514}
   - 33: {fileID: 3359112}
   - 23: {fileID: 2397902}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: WallBackLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +188,7 @@ GameObject:
   - 4: {fileID: 476840}
   - 33: {fileID: 3349646}
   - 23: {fileID: 2303378}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: WallLeftBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   - 4: {fileID: 437968}
   - 33: {fileID: 3367402}
   - 23: {fileID: 2343700}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: WallBackRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,5 +1,7 @@
+using System.Collections;
 using Zenject;
 using Catzilla.CommonModule.View;
+using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
 
 namespace Catzilla.CommonModule.Controller {
@@ -10,7 +12,10 @@ namespace Catzilla.CommonModule.Controller {
         [Inject]
         private TutorialScreenView tutorialScreen;
 
-        public void OnLevelStartScreenShow(ShowableView showable) {
+        [Inject]
+        private CoroutineManagerView coroutineManager;
+
+        public void OnLevelGenerate(Evt evt) {
             game.Pause();
         }
 

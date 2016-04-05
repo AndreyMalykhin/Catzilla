@@ -204,8 +204,7 @@
 		<value>{0} / {1}</value>
 	</data>
 	<data name="Player.SmashStreak" xml:space="preserve">
-		<value>x{0} СЕРИЯ РАЗРУШЕНИЙ!
-+{1}</value>
+		<value>СЕРИЯ РАЗРУШЕНИЙ!</value>
 	</data>
 	<data name="ResurrectionBonus.Take" xml:space="preserve">
 		<value>воскрешение</value>

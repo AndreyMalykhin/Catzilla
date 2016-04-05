@@ -93,7 +93,7 @@ namespace Catzilla.LevelObjectModule.View {
         private void SetSpeed(float value) {
             speed = value;
 
-            if (animator != null) {
+            if (animator != null && animator.isInitialized) {
                 animator.SetFloat(speedParam, speed);
             }
         }

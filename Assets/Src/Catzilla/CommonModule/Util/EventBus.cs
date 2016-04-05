@@ -15,13 +15,9 @@ namespace Catzilla.CommonModule.Util {
                 return;
             }
 
-            Profiler.BeginSample("EventBus.Fire()");
-
             for (int i = 0; i < listeners.Count; ++i) {
                 listeners[i](evt);
             }
-
-            Profiler.EndSample();
         }
 
         public void On(int eventId, Listener listener) {

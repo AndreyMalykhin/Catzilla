@@ -12,25 +12,26 @@ using Catzilla.LevelModule.Model;
 namespace Catzilla.LevelModule.View {
     public class LevelView: MonoBehaviour {
         [Inject]
-        public EventBus EventBus {get; set;}
+        private EventBus eventBus;
 
         [Inject("LevelAreaDepth")]
-        public float AreaDepth {get; set;}
+        private float areaDepth;
 
         [Inject]
-        public PoolStorageView PoolStorage {get; set;}
+        private PoolStorageView poolStorage;
 
         [Inject]
-        public IInstantiator Instantiator {get; set;}
+        private IInstantiator instantiator;
 
         public int Index {get; private set;}
+        public int NextAreaIndex {get {return nextAreaIndex;}}
 
         private int nextAreaIndex = 0;
 
         [PostInject]
         public void OnConstruct() {
             // DebugUtils.Log("LevelView.OnConstruct()");
-            EventBus.Fire((int) Events.LevelConstruct, new Evt(this));
+            eventBus.Fire((int) Events.LevelConstruct, new Evt(this));
         }
 
         public void Init(int index) {
@@ -38,15 +39,17 @@ namespace Catzilla.LevelModule.View {
         }
 
         public LevelAreaView NewArea(EnvTypeInfo envTypeInfo) {
+            Profiler.BeginSample("LevelView.NewArea()");
             var poolId =
                 envTypeInfo.ViewProto.GetComponent<PoolableView>().PoolId;
-            var area = PoolStorage.Take(poolId).GetComponent<LevelAreaView>();
+            var area = poolStorage.Take(poolId).GetComponent<LevelAreaView>();
             area.Init(nextAreaIndex);
             area.transform.position =
-                new Vector3(0f, 0f, nextAreaIndex * AreaDepth);
+                new Vector3(0f, 0f, nextAreaIndex * areaDepth);
             area.transform.rotation = Quaternion.identity;
             area.transform.parent = transform;
             ++nextAreaIndex;
+            Profiler.EndSample();
             return area;
         }
 
@@ -57,17 +60,17 @@ namespace Catzilla.LevelModule.View {
             LevelObjectView obj = null;
 
             if (poolable == null) {
-                obj = Instantiator.InstantiatePrefab(objectProto.gameObject)
+                obj = instantiator.InstantiatePrefab(objectProto.gameObject)
                     .GetComponent<LevelObjectView>();
             } else {
-                obj = PoolStorage.Take(poolable.PoolId)
+                obj = poolStorage.Take(poolable.PoolId)
                     .GetComponent<LevelObjectView>();
             }
 
             var position = new Vector3(
                 spawnPoint.x,
                 spawnPoint.y,
-                spawnPoint.z + areaIndex * AreaDepth);
+                spawnPoint.z + areaIndex * areaDepth);
             obj.transform.position = position;
             obj.transform.parent = transform;
             return obj;

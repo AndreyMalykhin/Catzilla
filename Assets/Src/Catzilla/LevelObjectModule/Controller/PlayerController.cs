@@ -224,6 +224,7 @@ namespace Catzilla.LevelObjectModule.Controller {
         }
 
         public void OnRefuse(Evt evt) {
+            // DebugUtils.Log("PlayerController.OnRefuse()");
             if (player.RefuseSound != null) {
                 audioManager.Play(
                     player.RefuseSound,

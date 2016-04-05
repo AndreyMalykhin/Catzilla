@@ -7,57 +7,58 @@ using Catzilla.CommonModule.View;
 
 namespace Catzilla.CommonModule.Model {
     public class Game {
-        public bool IsPaused {get {return AudioManager.IsPaused;}}
+        public bool IsPaused {get {return audioManager.IsPaused;}}
 
         [Inject("LevelScene")]
-        public string LevelScene {get; set;}
+        private string levelScene;
 
         [Inject("EmptyScene")]
-        public string EmptyScene {get; set;}
+        private string emptyScene;
 
         [Inject("LevelTag")]
-        public string LevelTag {get; set;}
+        private string levelTag;
 
         [Inject]
-        public EventBus EventBus {get; set;}
+        private EventBus eventBus;
 
         [Inject]
-        public AudioManager AudioManager {get; set;}
+        private AudioManager audioManager;
 
         [Inject]
-        public DiContainer Container {get; set;}
+        private DiContainer diContainer;
 
         [Inject]
-        public CoroutineManagerView CoroutineManager {get; set;}
+        private CoroutineManagerView coroutineManager;
 
         public void Pause() {
             // DebugUtils.Log("Game.Pause()");
             Time.timeScale = 0f;
-            AudioManager.IsPaused = true;
+            audioManager.IsPaused = true;
         }
 
         public void Resume() {
             // DebugUtils.Log("Game.Resume()");
             Time.timeScale = 1f;
-            AudioManager.IsPaused = false;
+            audioManager.IsPaused = false;
         }
 
         public void LoadLevel() {
             // DebugUtils.Log("Game.LoadLevel()");
-            EventBus.Fire((int) Events.GamePreLevelLoad, new Evt(this));
-            CoroutineManager.Run(DoLoadLevel());
+            eventBus.Fire((int) Events.GamePreLevelLoad, new Evt(this));
+            coroutineManager.Run(DoLoadLevel());
         }
 
         public void UnloadLevel() {
-            SceneManager.LoadScene(EmptyScene);
-            EventBus.Fire((int) Events.GameLevelUnload, new Evt(this));
+            eventBus.Fire((int) Events.GamePreLevelUnload, new Evt(this));
+            SceneManager.LoadScene(emptyScene);
+            eventBus.Fire((int) Events.GameLevelUnload, new Evt(this));
         }
 
         private IEnumerator DoLoadLevel() {
-            SceneManager.LoadScene(LevelScene);
+            SceneManager.LoadScene(levelScene);
             yield return null;
-            Container.InjectGameObject(GameObject.FindWithTag(LevelTag));
-            EventBus.Fire((int) Events.GameLevelLoad, new Evt(this));
+            diContainer.InjectGameObject(GameObject.FindWithTag(levelTag));
+            eventBus.Fire((int) Events.GameLevelLoad, new Evt(this));
         }
     }
 }

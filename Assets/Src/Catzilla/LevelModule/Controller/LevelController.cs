@@ -44,7 +44,8 @@ namespace Catzilla.LevelModule.Controller {
         private void OnStartScreenShow(ShowableView showable) {
             showable.OnShow -= OnStartScreenShow;
             PlayerState playerState = playerStateStorage.Get();
-            levelGenerator.NewLevel(playerState.Level, level, OnLevelGenerate);
+            level.Init(playerState.Level);
+            levelGenerator.NewLevel(level, OnLevelGenerate);
         }
 
         private void OnLevelGenerate() {
@@ -58,7 +59,8 @@ namespace Catzilla.LevelModule.Controller {
             PlayerState playerState = playerStateStorage.Get();
 
             if (playerState.Level == 0 && !playerState.WasTutorialShown) {
-                var tutorialShowable = tutorialScreen.GetComponent<ShowableView>();
+                var tutorialShowable =
+                    tutorialScreen.GetComponent<ShowableView>();
                 tutorialShowable.OnShow += OnTutorialShow;
                 tutorialShowable.Show();
                 playerState.WasTutorialShown = true;

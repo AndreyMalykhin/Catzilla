@@ -19,10 +19,18 @@ namespace Catzilla.LevelObjectModule.View {
                 CancelInvoke("ShootBurst");
                 CancelInvoke("ShootSingle");
 
-                if (target != null) {
-                    targetOldPosition = target.transform.position;
-                    aimee.LookAt(GetAimPoint());
-                    InvokeRepeating("Aim", aimPeriod, aimPeriod);
+                if (target == null) {
+                    return;
+                }
+
+                targetPrevPosition = target.transform.position;
+                prevAimTime = Time.time;
+                targetPrevSpeed = Vector3.zero;
+                aimee.LookAt(new Vector3(targetPrevPosition.x,
+                    aimee.position.y, targetPrevPosition.z));
+                InvokeRepeating("Aim", aimPeriod, aimPeriod);
+
+                if (shotsLeft > 0) {
                     InvokeRepeating("ShootBurst", shootingDelay, burstPeriod);
                 }
              }
@@ -76,25 +84,41 @@ namespace Catzilla.LevelObjectModule.View {
         private int shotsInBurst;
 
         [SerializeField]
+        private int shotsCount;
+
+        [SerializeField]
         private float projectileMinSpeed;
 
         [SerializeField]
         private float projectileMaxSpeed;
 
+        [SerializeField]
+        private float shootAheadTargetSpeedFactor;
+
         private Collider target;
         private int projectilePoolId;
         private float projectileSpeed;
-        private Vector3 targetOldPosition;
+        private Vector3 targetPrevPosition;
+        private Vector3 targetPrevSpeed;
+        private float prevAimTime;
+        private int shotsLeft;
 
         [PostInject]
         public void OnConstruct() {
+            DebugUtils.Assert(aimPeriod > 0f);
+            DebugUtils.Assert(shootingDelay > aimPeriod);
             projectilePoolId =
                 projectileProto.GetComponent<PoolableView>().PoolId;
+            shotsLeft = shotsCount;
             InitProjectileSpeed();
         }
 
         void IPoolable.OnReturn() {
             Target = null;
+            prevAimTime = 0f;
+            shotsLeft = shotsCount;
+            targetPrevPosition = Vector3.zero;
+            targetPrevSpeed = Vector3.zero;
             InitProjectileSpeed();
         }
 
@@ -116,21 +140,25 @@ namespace Catzilla.LevelObjectModule.View {
                 return;
             }
 
+            Vector3 targetPosition = target.transform.position;
+            Vector3 targetSpeed = (targetPosition - targetPrevPosition) /
+                (Time.time - prevAimTime);
+            Vector3 predictedOffset = new Vector3();
+
+            if (shotsLeft > 0) {
+                predictedOffset = Vector3.Max(targetSpeed, targetPrevSpeed)
+                    * shootAheadTargetSpeedFactor;
+            }
+
+            Vector3 aimPoint = new Vector3(targetPosition.x, aimee.position.y,
+                targetPosition.z + predictedOffset.z);
             Quaternion rotationToTarget =
-                Quaternion.LookRotation(GetAimPoint() - aimee.position);
+                Quaternion.LookRotation(aimPoint - aimee.position);
             aimee.rotation = Quaternion.RotateTowards(
                 aimee.rotation, rotationToTarget, aimSpeed * aimPeriod);
-            targetOldPosition = target.transform.position;
-        }
-
-        private Vector3 GetAimPoint() {
-            // DebugUtils.Log("ShootingView.GetAimPoint()");
-            Vector3 targetPosition = target.transform.position;
-            Vector3 targetSpeed =
-                (targetPosition - targetOldPosition) / aimPeriod;
-            Vector3 predictedOffset = targetSpeed * 1.5f;
-            return new Vector3(targetPosition.x, aimee.position.y,
-                targetPosition.z + predictedOffset.z);
+            targetPrevPosition = target.transform.position;
+            targetPrevSpeed = targetSpeed;
+            prevAimTime = Time.time;
         }
 
         private void ShootBurst() {
@@ -154,6 +182,12 @@ namespace Catzilla.LevelObjectModule.View {
             projectile.transform.position = projectileSource.position;
             projectile.transform.rotation = projectileSource.rotation;
             projectile.Speed = projectileSpeed;
+
+            if (--shotsLeft <= 0) {
+                CancelInvoke("ShootBurst");
+                CancelInvoke("ShootSingle");
+            }
+
             eventBus.Fire((int) Events.ShootingShot, new Evt(this));
         }
     }

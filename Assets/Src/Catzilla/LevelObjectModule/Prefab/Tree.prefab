@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 480842}
   - 33: {fileID: 3380442}
   - 23: {fileID: 2303646}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,7 +33,7 @@ GameObject:
   - 114: {fileID: 11412472}
   - 114: {fileID: 11420818}
   - 114: {fileID: 11486500}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ GameObject:
   - 4: {fileID: 410002}
   - 33: {fileID: 3397348}
   - 23: {fileID: 2314098}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - 65: {fileID: 6506634}
   - 23: {fileID: 2374372}
   - 33: {fileID: 3307822}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,8 +334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinScore: 16
-  MaxScore: 32
+  MinScore: 32
+  MaxScore: 64
   Collider: {fileID: 6506634}
 --- !u!114 &11497770
 MonoBehaviour:

@@ -12,7 +12,7 @@ GameObject:
   - 23: {fileID: 2387914}
   - 54: {fileID: 5432734}
   - 65: {fileID: 6589946}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: SeatRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 409186}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - 23: {fileID: 2318240}
   - 54: {fileID: 5437242}
   - 65: {fileID: 6536402}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: LegFrontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   - 23: {fileID: 2342260}
   - 54: {fileID: 5496770}
   - 65: {fileID: 6537786}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: LegFrontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   - 23: {fileID: 2396826}
   - 54: {fileID: 5451708}
   - 65: {fileID: 6523512}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: LegBackRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - 23: {fileID: 2360952}
   - 54: {fileID: 5426162}
   - 65: {fileID: 6594612}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: BackRestRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - 23: {fileID: 2306044}
   - 54: {fileID: 5450832}
   - 65: {fileID: 6528124}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: LegBackLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - 23: {fileID: 2398900}
   - 54: {fileID: 5440106}
   - 65: {fileID: 6596840}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: BackRestLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - 82: {fileID: 8254268}
   - 114: {fileID: 11442300}
   - 114: {fileID: 11417676}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: BenchSmashed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - 23: {fileID: 2389060}
   - 54: {fileID: 5438038}
   - 65: {fileID: 6580134}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: SeatLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -585,7 +585,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142126}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -600,7 +600,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102436}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -615,7 +615,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119096}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -630,7 +630,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173712}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -645,7 +645,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150298}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -660,7 +660,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147322}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -675,7 +675,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131456}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -690,7 +690,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127866}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -704,7 +704,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131456}
-  m_Material: {fileID: 13400000, guid: 36184602dc55c45fdb41a3ae2e6f4518, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -716,7 +716,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147322}
-  m_Material: {fileID: 13400000, guid: 36184602dc55c45fdb41a3ae2e6f4518, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -728,7 +728,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119096}
-  m_Material: {fileID: 13400000, guid: 36184602dc55c45fdb41a3ae2e6f4518, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -740,7 +740,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127866}
-  m_Material: {fileID: 13400000, guid: 36184602dc55c45fdb41a3ae2e6f4518, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -752,7 +752,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173712}
-  m_Material: {fileID: 13400000, guid: 36184602dc55c45fdb41a3ae2e6f4518, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -764,7 +764,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102436}
-  m_Material: {fileID: 13400000, guid: 36184602dc55c45fdb41a3ae2e6f4518, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -776,7 +776,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142126}
-  m_Material: {fileID: 13400000, guid: 36184602dc55c45fdb41a3ae2e6f4518, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -788,7 +788,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150298}
-  m_Material: {fileID: 13400000, guid: 36184602dc55c45fdb41a3ae2e6f4518, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

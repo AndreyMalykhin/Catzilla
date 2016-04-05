@@ -3,12 +3,12 @@ using System.Collections;
 using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.LevelObjectModule.View;
+using Catzilla.LevelAreaModule.View;
 using Catzilla.LevelModule.Model;
 using Catzilla.LevelModule.View;
-using Catzilla.LevelAreaModule.View;
 
-namespace Catzilla.LevelAreaModule.Controller {
-    public class LevelAreaController {
+namespace Catzilla.LevelModule.Controller {
+    public class LevelGeneratorController {
         [Inject]
         private LevelGenerator levelGenerator;
 
@@ -23,12 +23,20 @@ namespace Catzilla.LevelAreaModule.Controller {
             player = (PlayerView) evt.Source;
         }
 
-        public void OnDestroy(Evt evt) {
+        public void OnLevelAreaDestroy(Evt evt) {
             if (level == null) {
                 return;
             }
 
             levelGenerator.NewArea(player, level);
+        }
+
+        public void OnPreLevelLoad(Evt evt) {
+            levelGenerator.Stop();
+        }
+
+        public void OnPreLevelUnload(Evt evt) {
+            levelGenerator.Stop();
         }
     }
 }

@@ -42,9 +42,6 @@ namespace Catzilla.PlayerModule.View {
         [SerializeField]
         private int speechWorldPopupType;
 
-        [SerializeField]
-        private int smashStreakPopupType;
-
         public override void InitBindings(DiContainer container) {
             PlayerStateStorage finalPlayerStateStorage = playerStateStorage;
 
@@ -65,8 +62,6 @@ namespace Catzilla.PlayerModule.View {
                 .ToInstance(rewardWorldPopupType);
             container.Bind<int>("SpeechWorldPopupType")
                 .ToInstance(speechWorldPopupType);
-            container.Bind<int>("SmashStreakPopupType")
-                .ToInstance(smashStreakPopupType);
             container.Bind<HUDScoreController>().ToSingle();
             container.Bind<HUDHealthController>().ToSingle();
             container.Bind<HUDNotificationsController>().ToSingle();

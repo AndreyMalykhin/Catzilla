@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Zenject;
 using Catzilla.CommonModule.Util;
@@ -23,6 +24,26 @@ namespace Catzilla.LevelModule.Model {
             ParkEnd
         }
 
+        private class ObjectTypeComparer: IComparer<LevelObjectType> {
+            private readonly ObjectTypeInfoStorage objectTypeInfoStorage;
+
+            public ObjectTypeComparer(
+                ObjectTypeInfoStorage objectTypeInfoStorage) {
+                this.objectTypeInfoStorage = objectTypeInfoStorage;
+            }
+
+            public int Compare(LevelObjectType lhs, LevelObjectType rhs) {
+                int result = objectTypeInfoStorage.Get(lhs).SpawnPriority
+                    - objectTypeInfoStorage.Get(rhs).SpawnPriority;
+
+                if (result == 0) {
+                    return UnityEngine.Random.Range(0, 2) == 0 ? 1 : -1;
+                }
+
+                return result;
+            }
+        }
+
         private struct StateTransition {
             public readonly EnvType EnvType;
             public readonly State NextState;
@@ -33,10 +54,10 @@ namespace Catzilla.LevelModule.Model {
             }
         }
 
-        public int InitialAreasCount {get {return 3;}}
+        public readonly int InitialAreasCount = 3;
 
         [Inject]
-        private LevelAreaGenerator areaGenerator;
+        private LevelAreaGeneratorView areaGenerator;
 
         [Inject]
         private EnvTypeInfoStorage envTypeInfoStorage;
@@ -53,14 +74,20 @@ namespace Catzilla.LevelModule.Model {
         [Inject]
         private BonusSpawnResolver bonusSpawnResolver;
 
+        [Inject]
+        private EventBus eventBus;
+
+        private bool isStopped;
         private State nextState;
         private readonly IDictionary<int, StateTransition[]> states =
             new Dictionary<int, StateTransition[]>(16);
         private readonly List<SpawnsInfo> spawnsInfosBuffer =
-            new List<SpawnsInfo>(16);
+            new List<SpawnsInfo>(32);
+        private ObjectTypeComparer objectTypeComparer;
 
         [PostInject]
         public void OnConstruct() {
+            objectTypeComparer = new ObjectTypeComparer(objectTypeInfoStorage);
             states[(int) State.First] = new StateTransition[] {
                 new StateTransition(EnvType.HoodEnd, State.Second)
             };
@@ -96,10 +123,10 @@ namespace Catzilla.LevelModule.Model {
             };
         }
 
-        public void NewLevel(
-            int levelIndex, LevelView outputLevel, Action onDone = null) {
+        public void NewLevel(LevelView outputLevel, Action onDone = null) {
             // DebugUtils.Log("LevelGenerator.NewLevel()");
-            outputLevel.Init(levelIndex);
+            outputLevel.gameObject.SetActive(false);
+            isStopped = false;
             nextState = State.First;
             bonusSpawnResolver.ActiveBonusObjects = 0;
             spawnsInfosBuffer.Clear();
@@ -113,6 +140,10 @@ namespace Catzilla.LevelModule.Model {
                 levelSettings,
                 outputLevel,
                 (LevelAreaView area1) => {
+                    if (isStopped) {
+                        return;
+                    }
+
                     envType = NextState(levelSettings);
                     envTypeInfo = envTypeInfoStorage.Get(envType);
                     PlayerView player = null;
@@ -128,6 +159,10 @@ namespace Catzilla.LevelModule.Model {
                         levelSettings,
                         outputLevel,
                         (LevelAreaView area2) => {
+                            if (isStopped) {
+                                return;
+                            }
+
                             envType = NextState(levelSettings);
                             envTypeInfo = envTypeInfoStorage.Get(envType);
                             spawnPlayer = false;
@@ -142,7 +177,15 @@ namespace Catzilla.LevelModule.Model {
                                 levelSettings,
                                 outputLevel,
                                 (LevelAreaView area3) => {
+                                    if (isStopped) {
+                                        return;
+                                    }
+
+                                    outputLevel.gameObject.SetActive(true);
                                     if (onDone != null) onDone();
+                                    eventBus.Fire(
+                                        (int) Events.LevelGeneratorLevelGenerate,
+                                        new Evt(this, outputLevel));
                                 });
                         });
                 });
@@ -166,6 +209,15 @@ namespace Catzilla.LevelModule.Model {
                 outputLevel,
                 onDone);
             Profiler.EndSample();
+        }
+
+        public void Stop() {
+            if (isStopped) {
+                return;
+            }
+
+            isStopped = true;
+            areaGenerator.Stop();
         }
 
         private EnvType NextState(LevelSettings levelSettings) {
@@ -207,7 +259,7 @@ namespace Catzilla.LevelModule.Model {
             Profiler.BeginSample("LevelGenerator.GetSpawnsInfos()");
             LevelObjectType[] objectTypes =
                 envTypeInfo.SpawnMap.ObjectTypes;
-            Array.Sort(objectTypes, ObjectTypeComparator);
+            Array.Sort(objectTypes, objectTypeComparer);
             spawnsInfosBuffer.Clear();
             int objectTypesCount = objectTypes.Length;
 
@@ -246,20 +298,7 @@ namespace Catzilla.LevelModule.Model {
                 spawnsInfosBuffer.Add(new SpawnsInfo(objectType, spawnsCount));
             }
 
-            Profiler.EndSample();
             return spawnsInfosBuffer;
-        }
-
-        private int ObjectTypeComparator(
-            LevelObjectType lhs, LevelObjectType rhs) {
-            int result = objectTypeInfoStorage.Get(lhs).SpawnPriority
-                - objectTypeInfoStorage.Get(rhs).SpawnPriority;
-
-            if (result == 0) {
-                return UnityEngine.Random.Range(0, 2) == 0 ? 1 : -1;
-            }
-
-            return result;
         }
     }
 }

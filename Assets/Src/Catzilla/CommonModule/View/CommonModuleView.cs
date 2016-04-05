@@ -179,9 +179,10 @@ namespace Catzilla.CommonModule.View {
                 Events.ServerResponse, errorController.OnServerResponse);
 
             var gameController = container.Resolve<GameController>();
+            eventBus.On((int) Events.LevelGeneratorLevelGenerate,
+                gameController.OnLevelGenerate);
             var levelStartScreen = container.Resolve<LevelStartScreenView>()
                 .GetComponent<ShowableView>();
-            levelStartScreen.OnShow += gameController.OnLevelStartScreenShow;
             levelStartScreen.OnHide += gameController.OnLevelStartScreenHide;
             var gameOverScreen = container.Resolve<GameOverScreenView>();
             var gameOverScreenShowable =

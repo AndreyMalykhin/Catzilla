@@ -8,7 +8,7 @@ namespace Catzilla.LevelObjectModule.View {
         private Rigidbody body;
 
         [SerializeField]
-        private float speed = 4f;
+        private float speed;
 
         private void FixedUpdate() {
             Fly();

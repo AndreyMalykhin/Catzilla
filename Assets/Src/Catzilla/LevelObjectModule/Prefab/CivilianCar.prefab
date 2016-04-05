@@ -490,7 +490,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 118
   m_CollisionDetection: 0
@@ -635,9 +635,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 2560
-  minSpeed: 2
-  maxSpeed: 4
+    m_Bits: 330240
+  minSpeed: 1.5
+  maxSpeed: 3
   speedAdjustRate: 0.5
   stopDistance: 1
   collider: {fileID: 6578506}

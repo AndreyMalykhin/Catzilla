@@ -42,6 +42,7 @@ namespace Catzilla.LevelModule.View {
             container.Bind<LevelCompleteScreenController>().ToSingle();
             container.Bind<LevelGenerator>().ToSingle();
             container.Bind<BonusSpawnResolver>().ToSingle();
+            container.Bind<LevelGeneratorController>().ToSingle();
             container.Bind<float>("LevelAreaWidth").ToInstance(areaWidth);
             container.Bind<float>("LevelAreaDepth").ToInstance(areaDepth);
             container.Bind<float>("LevelMinX").ToInstance(-areaWidth / 2f);
@@ -58,6 +59,19 @@ namespace Catzilla.LevelModule.View {
                 container.Resolve<LevelController>();
             eventBus.On((int)
                 Events.LevelConstruct, levelController.OnViewConstruct);
+
+            var levelGeneratorController =
+                container.Resolve<LevelGeneratorController>();
+            eventBus.On((int) Events.LevelConstruct,
+                levelGeneratorController.OnLevelConstruct);
+            eventBus.On((int) Events.PlayerConstruct,
+                levelGeneratorController.OnPlayerConstruct);
+            eventBus.On((int) Events.LevelAreaDestroy,
+                levelGeneratorController.OnLevelAreaDestroy);
+            eventBus.On((int) Events.GamePreLevelUnload,
+                levelGeneratorController.OnPreLevelUnload);
+            eventBus.On((int) Events.GamePreLevelLoad,
+                levelGeneratorController.OnPreLevelLoad);
 
             var levelCompleteScreen =
                 container.Resolve<LevelCompleteScreenView>();

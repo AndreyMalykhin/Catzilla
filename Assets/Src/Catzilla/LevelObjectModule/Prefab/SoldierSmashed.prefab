@@ -11,7 +11,7 @@ GameObject:
   - 82: {fileID: 8235824}
   - 114: {fileID: 11474964}
   - 114: {fileID: 11419130}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: SoldierSmashed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ GameObject:
   - 23: {fileID: 2306942}
   - 54: {fileID: 5408238}
   - 65: {fileID: 6506514}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ GameObject:
   - 23: {fileID: 2363022}
   - 54: {fileID: 5419946}
   - 65: {fileID: 6515260}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: ArmRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 446156}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   - 23: {fileID: 2360208}
   - 54: {fileID: 5464796}
   - 65: {fileID: 6511102}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: LegLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - 23: {fileID: 2306882}
   - 54: {fileID: 5436504}
   - 65: {fileID: 6552728}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: LegRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - 23: {fileID: 2334012}
   - 54: {fileID: 5411008}
   - 65: {fileID: 6553592}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - 23: {fileID: 2307706}
   - 54: {fileID: 5465352}
   - 65: {fileID: 6571094}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: ArmLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}

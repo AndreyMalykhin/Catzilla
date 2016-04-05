@@ -10,14 +10,9 @@ using Catzilla.PlayerModule.View;
 
 namespace Catzilla.LevelObjectModule.View {
     public class PlayerView: LevelObjectView {
-        public struct SmashStreak {
-            public readonly int Length;
-            public readonly int ExtraScore;
-
-            public SmashStreak(int length, int extraScore) {
-                Length = length;
-                ExtraScore = extraScore;
-            }
+        public class SmashStreak {
+            public int Length;
+            public int ExtraScore;
         }
 
         public int ScoreBonusesTaken {get; set;}
@@ -61,7 +56,10 @@ namespace Catzilla.LevelObjectModule.View {
             get {return frontSpeed;}
             set {
                 frontSpeed = value;
-                Animator.SetFloat(frontSpeedParam, frontSpeed);
+
+                if (Animator.isInitialized) {
+                    Animator.SetFloat(frontSpeedParam, frontSpeed);
+                }
             }
         }
 
@@ -180,6 +178,7 @@ namespace Catzilla.LevelObjectModule.View {
         private WaitForSeconds speedChangeDelayWaiter;
         private WaitForSeconds speedCheckRateWaiter;
         private WaitForSeconds refuseDelayWaiter;
+        private readonly SmashStreak smashStreakBuffer = new SmashStreak();
 
         [PostInject]
         public void OnConstruct() {
@@ -195,8 +194,6 @@ namespace Catzilla.LevelObjectModule.View {
             speedChangeDelayWaiter = new WaitForSeconds(speedChangeDelay);
             speedCheckRateWaiter = new WaitForSeconds(speedCheckRate);
             refuseDelayWaiter = new WaitForSeconds(refuseDelay);
-            StartCoroutine(Refuser());
-            StartCoroutine(SpeedChanger());
             HUD = instantiator.InstantiatePrefab(hudProto.gameObject)
                 .GetComponent<HUDView>();
             eventBus.Fire((int) Events.PlayerConstruct, new Evt(this));
@@ -240,6 +237,12 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
+        private void OnEnable() {
+            StartCoroutine(Refuser());
+            StartCoroutine(SpeedChanger());
+            Animator.SetFloat(frontSpeedParam, frontSpeed);
+        }
+
         private void EnsureSmashStreak() {
             if (isDead
                 || smashStreakLength < smashStreakMinLength
@@ -250,10 +253,11 @@ namespace Catzilla.LevelObjectModule.View {
 
             int extraScore = (int) (smashStreakScore *
                 smashStreakLength * smashStreakScoreLengthFactor);
-            var streak = new SmashStreak(smashStreakLength, extraScore);
+            smashStreakBuffer.Length = smashStreakLength;
+            smashStreakBuffer.ExtraScore = extraScore;
             ResetSmashStreak();
             eventBus.Fire((int) Events.PlayerSmashStreak,
-                new Evt(this, streak));
+                new Evt(this, smashStreakBuffer));
             Score += extraScore;
         }
 
@@ -298,6 +302,7 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private IEnumerator Refuser() {
+            // DebugUtils.Log("PlayerView.Refuser()");
             if (refuseChance == 0f || refuseDuration == 0f) {
                 yield break;
             }

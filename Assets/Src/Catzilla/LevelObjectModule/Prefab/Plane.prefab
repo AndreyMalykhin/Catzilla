@@ -665,6 +665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   behaviours:
   - {fileID: 11489738}
+  - {fileID: 11483028}
   renderers:
   - {fileID: 2362736}
   animators: []
@@ -692,8 +693,10 @@ MonoBehaviour:
   shotPeriod: 0
   burstPeriod: 8
   shotsInBurst: 1
+  shotsCount: 1
   projectileMinSpeed: 8
   projectileMaxSpeed: 8
+  shootAheadTargetSpeedFactor: 1
 --- !u!114 &11489738
 MonoBehaviour:
   m_ObjectHideFlags: 1

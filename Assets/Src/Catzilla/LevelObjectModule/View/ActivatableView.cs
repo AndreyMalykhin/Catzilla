@@ -53,16 +53,13 @@ namespace Catzilla.LevelObjectModule.View {
         [PostInject]
         public void OnConstruct() {
             IsActive = false;
-            eventBus.Fire((int) Events.ActivatableConstruct, new Evt(this));
         }
 
         void IPoolable.OnReturn() {
             IsActive = false;
         }
 
-        void IPoolable.OnTake() {
-            eventBus.Fire((int) Events.ActivatableConstruct, new Evt(this));
-        }
+        void IPoolable.OnTake() {}
 
         private void OnTriggerEnter(Collider collider) {
             eventBus.Fire((int) Events.ActivatableTriggerEnter,

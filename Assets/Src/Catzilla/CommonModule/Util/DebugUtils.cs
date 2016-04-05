@@ -6,7 +6,7 @@ namespace Catzilla.CommonModule.Util {
             UnityEngine.Assertions.Assert.raiseExceptions = true;
         }
 
-        [Conditional("DEVELOPMENT_BUILD")]
+        // [Conditional("DEVELOPMENT_BUILD")]
         public static void Log(string msg, params object[] args) {
             if (!UnityEngine.Debug.isDebugBuild) {
                 return;
@@ -15,7 +15,7 @@ namespace Catzilla.CommonModule.Util {
             UnityEngine.Debug.LogFormat(msg, args);
         }
 
-        [Conditional("DEVELOPMENT_BUILD")]
+        // [Conditional("DEVELOPMENT_BUILD")]
         public static void Assert(bool condition) {
             UnityEngine.Assertions.Assert.IsTrue(condition);
         }

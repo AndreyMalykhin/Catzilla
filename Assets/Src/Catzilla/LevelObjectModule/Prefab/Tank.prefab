@@ -18,7 +18,7 @@ GameObject:
   - 114: {fileID: 11495818}
   - 114: {fileID: 11401604}
   - 114: {fileID: 11444204}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   - 4: {fileID: 471694}
   - 33: {fileID: 3334036}
   - 23: {fileID: 2326252}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   - 4: {fileID: 403324}
   - 33: {fileID: 3378772}
   - 23: {fileID: 2332120}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: TrackRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 450834}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: ProjectileSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   - 4: {fileID: 444338}
   - 33: {fileID: 3383516}
   - 23: {fileID: 2302648}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: TrackLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - 4: {fileID: 427658}
   - 33: {fileID: 3316996}
   - 23: {fileID: 2353050}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - 4: {fileID: 491690}
   - 33: {fileID: 3380240}
   - 23: {fileID: 2325838}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 417100}
   - 65: {fileID: 6596006}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 457654}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: TurretWrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -617,14 +617,16 @@ MonoBehaviour:
   projectileProto: {fileID: 11467526, guid: 7ace5b98a77fb42dc9f4cd450f354280, type: 2}
   projectileSource: {fileID: 450834}
   aimee: {fileID: 457654}
-  aimSpeed: 32
+  aimSpeed: 64
   aimPeriod: 0.125
-  shootingDelay: 0.5
+  shootingDelay: 0.25
   shotPeriod: 0
   burstPeriod: 16
   shotsInBurst: 1
-  projectileMinSpeed: 8
-  projectileMaxSpeed: 8
+  shotsCount: 1
+  projectileMinSpeed: 4
+  projectileMaxSpeed: 4
+  shootAheadTargetSpeedFactor: 2
 --- !u!114 &11487140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -636,8 +638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6de41007c37540f5bdf225bc9c11f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinScore: 32
-  MaxScore: 64
+  MinScore: 16
+  MaxScore: 32
   Collider: {fileID: 6596006}
 --- !u!114 &11495818
 MonoBehaviour:

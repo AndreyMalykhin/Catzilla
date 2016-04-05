@@ -93,8 +93,8 @@ namespace Catzilla.LevelObjectModule.View {
                 container.Resolve<ActivatableController>();
             eventBus.On((int) Events.ActivatableTriggerEnter,
                 activatableContoller.OnTriggerEnter);
-            eventBus.On((int) Events.ActivatableConstruct,
-                activatableContoller.OnConstruct);
+            eventBus.On((int) Events.LevelGeneratorLevelGenerate,
+                activatableContoller.OnLevelGenerate);
 
             var fleeingController = container.Resolve<FleeingController>();
             eventBus.On((int) Events.FleeingTriggerEnter,
