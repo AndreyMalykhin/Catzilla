@@ -497,9 +497,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShakeCameraInOneDirection: 0
   CameraShakeMinAmount: 1
-  CameraShakeMaxAmount: 2
+  CameraShakeMaxAmount: 1
   CameraShakeDirection: {x: 0, y: 1, z: 0}
   CameraShakeDuration: 0.5
+  isTrigger: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -27,7 +27,7 @@ TagManager:
   - LevelObject.Static
   - LevelObject.ExplosiveProjectile
   - LevelObject.SmashedSmall
-  - 
+  - LevelObject.Aircraft
   - 
   - 
   - 

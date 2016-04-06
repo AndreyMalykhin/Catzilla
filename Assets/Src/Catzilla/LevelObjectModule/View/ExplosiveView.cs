@@ -56,13 +56,18 @@ namespace Catzilla.LevelObjectModule.View {
 
             Vector3 explosionSource = transform.position;
             float explosionForce = UnityEngine.Random.Range(minForce, maxForce);
-            int hitObjectsCount = Mathf.Min(
-                Physics.OverlapSphereNonAlloc(
-                    explosionSource,
-                    explosionRadius,
-                    hitObjects,
-                    hitLayer.value),
-                maxHitObjects);
+            int hitObjectsCount = 0;
+
+            if (explosionRadius > 0f) {
+                hitObjectsCount = Mathf.Min(
+                    Physics.OverlapSphereNonAlloc(
+                        explosionSource,
+                        explosionRadius,
+                        hitObjects,
+                        hitLayer.value),
+                    maxHitObjects);
+            }
+
             explosionInfoBuffer.Position = explosionSource;
             explosionInfoBuffer.Force = explosionForce;
             explosionInfoBuffer.HitObjectsCount = hitObjectsCount;

@@ -30,3 +30,4 @@ MonoBehaviour:
   - Name: PlayerLowPrio
     Id: 5
     SimultaneousSoundsCount: 1
+  soundMergePeriod: 0.032

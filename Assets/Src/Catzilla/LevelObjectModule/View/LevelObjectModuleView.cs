@@ -35,6 +35,7 @@ namespace Catzilla.LevelObjectModule.View {
             container.Bind<ExplosiveController>().ToSingle();
             container.Bind<DisposableController>().ToSingle();
             container.Bind<FleeingController>().ToSingle();
+            container.Bind<ShockwavableController>().ToSingle();
             container.Bind<LevelObjectType>("PlayerObjectType")
                 .ToInstance(LevelObjectType.Player);
             container.Bind<string>("PlayerTag").ToInstance(playerTag);
@@ -100,6 +101,15 @@ namespace Catzilla.LevelObjectModule.View {
             eventBus.On((int) Events.FleeingTriggerEnter,
                 fleeingController.OnTriggerEnter);
 
+            var shockwavableController =
+                container.Resolve<ShockwavableController>();
+            eventBus.On((int) Events.ExplosiveExplode,
+                shockwavableController.OnExplosion);
+            eventBus.On((int) Events.ShockwavableTriggerEnter,
+                shockwavableController.OnTriggerEnter);
+            eventBus.On((int) Events.ShootingShot,
+                shockwavableController.OnShot);
+
             var playerController =
                 container.Resolve<PlayerController>();
             eventBus.On((int) Events.PlayerConstruct,
@@ -122,8 +132,8 @@ namespace Catzilla.LevelObjectModule.View {
                 playerController.OnRefuse);
             eventBus.On((int) Events.PlayerSmashStreak,
                 playerController.OnSmashStreak);
-            eventBus.On((int) Events.ExplosiveExplode,
-                playerController.OnExplosion);
+            eventBus.On((int) Events.ShockwavablePropagate,
+                playerController.OnShockwave);
         }
     }
 }

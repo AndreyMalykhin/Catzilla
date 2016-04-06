@@ -13,6 +13,11 @@ namespace Catzilla.CommonModule.Util {
             public int SimultaneousSoundsCount;
         }
 
+        private struct RecentPlay {
+            public AudioSource Source;
+            public float Time;
+        }
+
         public bool IsPaused {
             get {return AudioListener.pause;}
             set {AudioListener.pause = value;}
@@ -21,39 +26,53 @@ namespace Catzilla.CommonModule.Util {
         [SerializeField]
         private Channel[] channels;
 
+        [SerializeField]
+        [Tooltip("In seconds")]
+        private float soundMergePeriod;
+
         [NonSerialized]
-        private IDictionary<int, AudioSource[]> recentlyPlayedSources =
-            new Dictionary<int, AudioSource[]>(8);
+        private IDictionary<int, RecentPlay[]> recentPlays =
+            new Dictionary<int, RecentPlay[]>(8);
 
         public void Play(AudioClip sound, AudioSource audioSource,
             int channelId, float pitch = 1f) {
             // DebugUtils.Log("AudioManager.Play(); sound={0};", sound);
-            int freeSlot = GetFreeChannelSlot(channelId);
+            int freeSlot = GetSuitableChannelSlot(channelId, sound);
 
             if (freeSlot == -1) {
                 return;
             }
 
-            recentlyPlayedSources[channelId][freeSlot] = audioSource;
             audioSource.clip = sound;
             audioSource.pitch = pitch;
             audioSource.Play();
+            recentPlays[channelId][freeSlot] =
+                new RecentPlay{Source = audioSource, Time = Time.time};
         }
 
-        private int GetFreeChannelSlot(int channelId) {
-            AudioSource[] channelRecentlyPlayedSources =
-                recentlyPlayedSources[channelId];
+        /**
+         * @return -1 if no suitable slot
+         */
+        private int GetSuitableChannelSlot(int channelId, AudioClip sound) {
+            // DebugUtils.Log("AudioManager.GetSuitableChannelSlot()");
+            RecentPlay[] channelRecentPlays = recentPlays[channelId];
+            int suitableSlot = -1;
 
-            for (int i = 0; i < channelRecentlyPlayedSources.Length; ++i) {
-                if (channelRecentlyPlayedSources[i] != null
-                    && channelRecentlyPlayedSources[i].isPlaying) {
-                    continue;
+            for (int i = 0; i < channelRecentPlays.Length; ++i) {
+                var recentPlay = channelRecentPlays[i];
+                AudioSource recentSource = recentPlay.Source;
+
+                if (recentSource == null) {
+                    suitableSlot = i;
+                } else if (recentSource.clip == sound
+                           && recentPlay.Time + soundMergePeriod >= Time.time) {
+                    return -1;
+                } else if (!recentSource.isPlaying) {
+                    suitableSlot = i;
                 }
-
-                return i;
             }
 
-            return -1;
+            return suitableSlot;
         }
 
         private void OnEnable() {
@@ -62,8 +81,8 @@ namespace Catzilla.CommonModule.Util {
 
             for (int i = 0; i < channels.Length; ++i) {
                 Channel channel = channels[i];
-                recentlyPlayedSources.Add(channel.Id,
-                    new AudioSource[channel.SimultaneousSoundsCount]);
+                recentPlays.Add(channel.Id,
+                    new RecentPlay[channel.SimultaneousSoundsCount]);
             }
         }
     }

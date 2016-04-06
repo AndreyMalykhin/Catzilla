@@ -29,7 +29,7 @@ namespace Catzilla.LevelModule.Controller {
 
             isVideoRecordingInited = true;
 
-            if (isReady) {
+            if (isReady && Everyplay.IsRecordingSupported()) {
                 return;
             }
 

@@ -80,6 +80,13 @@ namespace Catzilla.LevelObjectModule.View {
                 PartState initialPartState = initialPartStates[i];
                 part.localPosition = initialPartState.LocalPosition;
                 part.localRotation = initialPartState.LocalRotation;
+                var partBody = part.GetComponent<Rigidbody>();
+
+                if (partBody == null) {
+                    continue;
+                }
+
+                partBody.Sleep();
             }
         }
 

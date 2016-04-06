@@ -92,17 +92,6 @@ namespace Catzilla.LevelObjectModule.Controller {
                 player.Health += colliderTreating.AddHealth;
             }
 
-            var colliderShockwavable =
-                colliderBody.GetComponent<ShockwavableView>();
-
-            if (colliderShockwavable != null
-                && colliderShockwavable.GetComponent<ExplosiveView>() == null) {
-                player.ShakeCamera(
-                    colliderShockwavable.CameraShakeAmount,
-                    colliderShockwavable.CameraShakeDuration,
-                    colliderShockwavable.ShakeCameraInOneDirection);
-            }
-
             var colliderReward = colliderBody.GetComponent<RewardBonusView>();
 
             if (colliderReward != null) {
@@ -142,18 +131,6 @@ namespace Catzilla.LevelObjectModule.Controller {
             }
 
             Profiler.EndSample();
-        }
-
-        public void OnExplosion(Evt evt) {
-            var explosive = (ExplosiveView) evt.Source;
-            var shockwavable = explosive.GetComponent<ShockwavableView>();
-
-            if (shockwavable != null) {
-                player.ShakeCamera(
-                    shockwavable.CameraShakeAmount,
-                    shockwavable.CameraShakeDuration,
-                    shockwavable.ShakeCameraInOneDirection);
-            }
         }
 
         public void OnDeath(Evt evt) {
@@ -207,6 +184,17 @@ namespace Catzilla.LevelObjectModule.Controller {
                 audioManager.Play(player.TreatSound, player.HighPrioAudioSource,
                     playerHighPrioAudioChannel, pitch);
             }
+        }
+
+        public void OnShockwave(Evt evt) {
+            var shockwavable = (ShockwavableView) evt.Source;
+            Vector3 cameraShakeAmount = shockwavable.CameraShakeDirection *
+                UnityEngine.Random.Range(shockwavable.CameraShakeMinAmount,
+                    shockwavable.CameraShakeMaxAmount);
+            player.ShakeCamera(
+                cameraShakeAmount,
+                shockwavable.CameraShakeDuration,
+                shockwavable.ShakeCameraInOneDirection);
         }
 
         public void OnSmashStreak(Evt evt) {

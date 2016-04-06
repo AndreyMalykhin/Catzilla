@@ -166,6 +166,7 @@ MonoBehaviour:
   CameraShakeMaxAmount: 1
   CameraShakeDirection: {x: 1, y: 0, z: 1}
   CameraShakeDuration: 0.5
+  isTrigger: 1
 --- !u!114 &11451822
 MonoBehaviour:
   m_ObjectHideFlags: 1

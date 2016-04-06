@@ -36,6 +36,7 @@ namespace Catzilla.CommonModule.Util {
         ShootingTriggerEnter,
         ShootingShot,
         ShockwavableTriggerEnter,
+        ShockwavablePropagate,
         TakeableTriggerEnter,
         ProjectileTriggerEnter,
         PlayerManagerPreLevelComplete,

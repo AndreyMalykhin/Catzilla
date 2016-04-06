@@ -17,7 +17,7 @@ GameObject:
   - 114: {fileID: 11401604}
   - 114: {fileID: 11489738}
   - 114: {fileID: 11422622}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +34,7 @@ GameObject:
   - 4: {fileID: 435226}
   - 33: {fileID: 3311526}
   - 23: {fileID: 2367218}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: HorizontalStabilizerLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   - 4: {fileID: 438254}
   - 33: {fileID: 3315762}
   - 23: {fileID: 2392158}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: WingRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - 4: {fileID: 428540}
   - 33: {fileID: 3395604}
   - 23: {fileID: 2300166}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: WingLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 496598}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: BombSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - 4: {fileID: 430886}
   - 33: {fileID: 3389724}
   - 23: {fileID: 2315790}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - 4: {fileID: 420556}
   - 33: {fileID: 3331584}
   - 23: {fileID: 2373380}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: VerticalStabilizer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - 4: {fileID: 419004}
   - 33: {fileID: 3346886}
   - 23: {fileID: 2318770}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: HorizontalStabilizerRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - 65: {fileID: 6517196}
   - 33: {fileID: 3363226}
   - 23: {fileID: 2362736}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
