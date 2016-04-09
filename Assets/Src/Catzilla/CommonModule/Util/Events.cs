@@ -42,6 +42,8 @@ namespace Catzilla.CommonModule.Util {
         PlayerManagerPreLevelComplete,
         PlayerStateStorageSave,
         HUDScoreConstruct,
-        HUDNotificationsConstruct
+        HUDNotificationsConstruct,
+        CriticalScoreSkillConstruct,
+        SkillListItemLearnBtnClick
     }
 }

@@ -4,10 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Zenject;
 using Catzilla.CommonModule.Util;
+using Catzilla.PlayerModule.Model;
 using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.Model;
 using Catzilla.LevelModule.View;
+using Catzilla.SkillModule.Model;
+using Catzilla.SkillModule.View;
 using Catzilla.LevelAreaModule.Model;
 
 namespace Catzilla.LevelAreaModule.View {
@@ -21,6 +24,15 @@ namespace Catzilla.LevelAreaModule.View {
         [SerializeField]
         [Tooltip("In seconds")]
         private float objectSpawnRate;
+
+        [Inject]
+        private SkillStorage skillStorage;
+
+        [Inject]
+        private SkillHelperStorage skillHelperStorage;
+
+        [Inject]
+        private PlayerStateStorage playerStateStorage;
 
         private readonly IDictionary<Vector3, bool> reservedSpawnPoints =
             new Dictionary<Vector3, bool>(64, new Vector3Comparer());
@@ -179,6 +191,15 @@ namespace Catzilla.LevelAreaModule.View {
                 var player = obj.GetComponent<PlayerView>();
                 player.FrontSpeed = levelSettings.PlayerFrontSpeed;
                 player.SideSpeed = levelSettings.PlayerSideSpeed;
+                List<int> skillIds = playerStateStorage.Get().SkillIds;
+
+                for (int i = 0; i < skillIds.Count; ++i) {
+                    Skill skill = skillStorage.Get(skillIds[i]);
+                    BaseSkill baseSkill = skillStorage.GetBase(skill.BaseId);
+                    ISkillHelper skillHelper =
+                        skillHelperStorage.Get(baseSkill.Type);
+                    skillHelper.AddSkill(skill, obj.gameObject);
+                }
             }
         }
     }

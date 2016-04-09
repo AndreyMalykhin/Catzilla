@@ -38,6 +38,8 @@ namespace Catzilla.MainMenuModule.View {
                 mainScreenController.OnReplaysBtnClick);
             mainScreen.LoginBtn.onClick.AddListener(
                 mainScreenController.OnLoginBtnClick);
+            mainScreen.SkillsBtn.onClick.AddListener(
+                mainScreenController.OnSkillsBtnClick);
         }
     }
 }

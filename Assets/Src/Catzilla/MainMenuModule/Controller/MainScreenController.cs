@@ -4,49 +4,55 @@ using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.PlayerModule.Model;
+using Catzilla.SkillModule.View;
+using Catzilla.SkillModule.Model;
 using Catzilla.MainMenuModule.View;
 
 namespace Catzilla.MainMenuModule.Controller {
     public class MainScreenController {
         [Inject]
-        public MainScreenView MainScreen {get; set;}
+        private MainScreenView mainScreen;
 
         [Inject]
-        public Game Game {get; set;}
+        private Game game;
 
         [Inject]
-        public PlayerStateStorage PlayerStateStorage {get; set;}
+        private AuthManager authManager;
 
         [Inject]
-        public AuthManager AuthManager {get; set;}
-
-        [Inject]
-        public Server Server {get; set;}
+        private Server server;
 
         [Inject("FeedbackEmail")]
-        public string FeedbackEmail {get; set;}
+        private string feedbackEmail;
+
+        [Inject]
+        private SkillManager skillManager;
 
         [PostInject]
         public void OnConstruct() {
-            MainScreen.LoginBtn.gameObject.SetActive(!Server.IsLoggedIn);
+            mainScreen.LoginBtn.gameObject.SetActive(!server.IsLoggedIn);
+        }
+
+        public void OnSkillsBtnClick() {
+            skillManager.ShowScreen();
         }
 
         public void OnFeedbackBtnClick() {
             string subject = WWW.EscapeURL("Feedback");
             string url =
-                string.Format("mailto:{0}?subject={1}", FeedbackEmail, subject);
+                string.Format("mailto:{0}?subject={1}", feedbackEmail, subject);
             Application.OpenURL(url);
         }
 
         public void OnLoginBtnClick() {
-            AuthManager.OnLoginSuccess += OnLogin;
-            AuthManager.Login();
+            authManager.OnLoginSuccess += OnLogin;
+            authManager.Login();
         }
 
         public void OnServerDispose(Evt evt) {
-            MainScreen.LeaderboardBtn.interactable = false;
-            MainScreen.AchievementsBtn.interactable = false;
-            MainScreen.LoginBtn.interactable = false;
+            mainScreen.LeaderboardBtn.interactable = false;
+            mainScreen.AchievementsBtn.interactable = false;
+            mainScreen.LoginBtn.interactable = false;
         }
 
         public void OnExitBtnClick() {
@@ -54,18 +60,18 @@ namespace Catzilla.MainMenuModule.Controller {
         }
 
         public void OnStartBtnClick() {
-            MainScreen.GetComponent<ShowableView>().Hide();
-            Game.LoadLevel();
+            mainScreen.GetComponent<ShowableView>().Hide();
+            game.LoadLevel();
         }
 
         public void OnLeaderboardBtnClick() {
-            AuthManager.OnLoginSuccess += OnLoginForLeaderboard;
-            AuthManager.Login();
+            authManager.OnLoginSuccess += OnLoginForLeaderboard;
+            authManager.Login();
         }
 
         public void OnAchievementsBtnClick() {
-            AuthManager.OnLoginSuccess += OnLoginForAchievements;
-            AuthManager.Login();
+            authManager.OnLoginSuccess += OnLoginForAchievements;
+            authManager.Login();
         }
 
         public void OnReplaysBtnClick() {
@@ -86,7 +92,7 @@ namespace Catzilla.MainMenuModule.Controller {
 
         private void OnLogin(AuthManager authManager) {
             authManager.OnLoginSuccess -= OnLogin;
-            MainScreen.LoginBtn.gameObject.SetActive(false);
+            mainScreen.LoginBtn.gameObject.SetActive(false);
         }
     }
 }

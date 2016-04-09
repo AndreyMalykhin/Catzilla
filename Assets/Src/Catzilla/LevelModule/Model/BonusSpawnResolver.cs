@@ -43,7 +43,7 @@ namespace Catzilla.LevelModule.Model {
             LevelSettings levelSettings = GetLevelSettings();
             result = player.ResurrectionBonusesTaken == 0
                 && player.Score >= 0.25f * levelSettings.CompletionScore
-                && player.Score <= 0.75f * levelSettings.CompletionScore
+                && player.Score <= 0.5f * levelSettings.CompletionScore
                 && playerStateStorage.Get().AvailableResurrectionsCount == 0;
         }
 

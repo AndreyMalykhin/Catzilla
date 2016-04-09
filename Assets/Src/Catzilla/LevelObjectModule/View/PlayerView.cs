@@ -2,17 +2,27 @@
 using UnityEngine.Serialization;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using SmartLocalization;
 using Zenject;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
 using Catzilla.PlayerModule.View;
+using Catzilla.LevelObjectModule.Model;
 
 namespace Catzilla.LevelObjectModule.View {
     public class PlayerView: LevelObjectView {
         public class SmashStreak {
             public int Length;
             public int ExtraScore;
+        }
+
+        public delegate CriticalValue ScoreFilter(
+            CriticalValue score, ScoreableView source = null);
+
+        public event ScoreFilter OnScoreFilter {
+            add {scoreFilters.Add(value);}
+            remove {scoreFilters.Remove(value);}
         }
 
         public int ScoreBonusesTaken {get; set;}
@@ -22,9 +32,8 @@ namespace Catzilla.LevelObjectModule.View {
         public int Score {
             get {return score;}
             set {
-                // DebugUtils.Log("PlayerView.Score set");
-
-                if (IsScoreFreezed || score == value) {
+                // DebugUtils.Log("PlayerView.Score()");
+                if (score == value) {
                     return;
                 }
 
@@ -179,6 +188,8 @@ namespace Catzilla.LevelObjectModule.View {
         private WaitForSeconds speedCheckRateWaiter;
         private WaitForSeconds refuseDelayWaiter;
         private readonly SmashStreak smashStreakBuffer = new SmashStreak();
+        private readonly List<ScoreFilter> scoreFilters =
+            new List<ScoreFilter>(4);
 
         [PostInject]
         public void OnConstruct() {
@@ -216,6 +227,19 @@ namespace Catzilla.LevelObjectModule.View {
             Animator.enabled = true;
             Health = MaxHealth;
             eventBus.Fire((int) Events.PlayerResurrect, new Evt(this));
+        }
+
+        public CriticalValue FilterScore(
+            CriticalValue score, ScoreableView source) {
+            if (IsScoreFreezed) {
+                return 0;
+            }
+
+            for (int i = 0; i < scoreFilters.Count; ++i) {
+                score = scoreFilters[i](score, source);
+            }
+
+            return score;
         }
 
         public void ShakeCamera(
@@ -258,7 +282,8 @@ namespace Catzilla.LevelObjectModule.View {
             ResetSmashStreak();
             eventBus.Fire((int) Events.PlayerSmashStreak,
                 new Evt(this, smashStreakBuffer));
-            Score += extraScore;
+            ScoreableView scoreSource = null;
+            Score += FilterScore(extraScore, scoreSource);
         }
 
         private void ResetSmashStreak() {

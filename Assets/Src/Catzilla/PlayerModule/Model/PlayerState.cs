@@ -9,6 +9,7 @@ namespace Catzilla.PlayerModule.Model {
     public class PlayerState: ISerializationCallbackReceiver {
         public List<Achievement> Achievements {get {return achievements;}}
         public List<Record> Records {get {return records;}}
+        public List<int> SkillIds {get {return skillIds;}}
 
         public bool WasTutorialShown {
             get {return wasTutorialShown;}
@@ -18,6 +19,11 @@ namespace Catzilla.PlayerModule.Model {
         public int Level {
             get {return level;}
             set {level = value;}
+        }
+
+        public int AvailableSkillPointsCount {
+            get {return availableSkillPointsCount;}
+            set {availableSkillPointsCount = value;}
         }
 
         public int AvailableResurrectionsCount {
@@ -51,6 +57,9 @@ namespace Catzilla.PlayerModule.Model {
         }
 
         [SerializeField]
+        private List<int> skillIds = new List<int>(8);
+
+        [SerializeField]
         private List<Achievement> achievements = new List<Achievement>(8);
 
         [SerializeField]
@@ -64,6 +73,9 @@ namespace Catzilla.PlayerModule.Model {
 
         [SerializeField]
         private int availableRewardsCount = 1;
+
+        [SerializeField]
+        private int availableSkillPointsCount;
 
         [SerializeField]
         private int level;
@@ -91,6 +103,14 @@ namespace Catzilla.PlayerModule.Model {
 
         [NonSerialized]
         private DateTime rewardUnlockDate;
+
+        public void AddSkill(int id) {
+            skillIds.Add(id);
+        }
+
+        public void RemoveSkill(int id) {
+            skillIds.Remove(id);
+        }
 
         public void AddAchievement(Achievement achievement) {
             achievements.Add(achievement);
@@ -143,9 +163,15 @@ namespace Catzilla.PlayerModule.Model {
                 recordsStr.Append(records[i]).Append(", ");
             }
 
+            StringBuilder skillsStr = new StringBuilder(64);
+
+            for (int i = 0; i < skillIds.Count; ++i) {
+                skillsStr.Append(skillIds[i]).Append(", ");
+            }
+
             return string.Format(
-                "level={0}; availableResurrectionsCount={1}; saveDate={2}; lastSeenDate={3}; playTime={4}; achievements={5}; rewardUnlockDate={6}; availableRewardsCount={7}; wasTutorialShown={8}; records={9}",
-                level, availableResurrectionsCount, saveDate, lastSeenDate, playTime, achievementsStr.ToString(), rewardUnlockDate, availableRewardsCount, wasTutorialShown, recordsStr.ToString());
+                "level={0}; availableResurrectionsCount={1}; saveDate={2}; lastSeenDate={3}; playTime={4}; achievements={5}; rewardUnlockDate={6}; availableRewardsCount={7}; wasTutorialShown={8}; records={9}; skills={10}; availableSkillPointsCount={11}",
+                level, availableResurrectionsCount, saveDate, lastSeenDate, playTime, achievementsStr.ToString(), rewardUnlockDate, availableRewardsCount, wasTutorialShown, recordsStr.ToString(), skillsStr.ToString(), availableSkillPointsCount);
         }
     }
 }

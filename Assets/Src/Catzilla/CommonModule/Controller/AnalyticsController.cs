@@ -63,6 +63,11 @@ namespace Catzilla.CommonModule.Controller {
             LogEvent("Replays.View");
         }
 
+
+        public void OnMainScreenSkillsBtnClick() {
+            LogEvent("Skills.View");
+        }
+
         public void OnGameOverScreenExitBtnClick() {
             LogEvent("Game.Exit");
         }

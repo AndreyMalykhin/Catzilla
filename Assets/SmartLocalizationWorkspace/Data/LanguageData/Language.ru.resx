@@ -183,7 +183,7 @@
 		<value>Войти</value>
 	</data>
 	<data name="MainMenu.Replays" xml:space="preserve">
-		<value>Смотреть повторы</value>
+		<value>Видео</value>
 	</data>
 	<data name="MainMenu.Start" xml:space="preserve">
 		<value>Играть</value>

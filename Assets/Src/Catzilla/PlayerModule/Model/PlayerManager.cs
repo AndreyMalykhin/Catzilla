@@ -8,6 +8,7 @@ using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.Model;
 using Catzilla.GameOverMenuModule.View;
 using Catzilla.LevelObjectModule.View;
+using Catzilla.LevelObjectModule.Model;
 using Catzilla.LevelModule.View;
 
 namespace Catzilla.PlayerModule.Model {
@@ -60,24 +61,29 @@ namespace Catzilla.PlayerModule.Model {
          * @return Added score
          */
         public int AddScore(PlayerView player, ScoreableView scoreable) {
-            if (player.IsScoreFreezed) {
+            CriticalValue initialScore = UnityEngine.Random.Range(
+                scoreable.MinScore, scoreable.MaxScore + 1);
+            CriticalValue finalScore =
+                player.FilterScore(initialScore, scoreable);
+
+            if (finalScore <= 0) {
                 return 0;
             }
 
             Profiler.BeginSample("PlayerManager.AddScore()");
-            int score = UnityEngine.Random.Range(
-                scoreable.MinScore, scoreable.MaxScore + 1);
-            player.Score += score;
+            player.Score += finalScore;
             var popup = (WorldSpaceTextPopupView) popupManager.Get(
                 scoreWorldPopupType);
+            popup.transform.localScale =
+                finalScore.IsCritical ? new Vector3(2f, 2f, 2f) : Vector3.zero;
             popup.Msg.text =
-                strBuilder.Append('+').Append(score).ToString();
+                strBuilder.Append('+').Append(finalScore).ToString();
             strBuilder.Length = 0;
             popup.LookAtTarget = player.Camera;
             popup.PlaceAbove(scoreable.Collider.bounds);
             popupManager.Show(popup);
             Profiler.EndSample();
-            return score;
+            return finalScore;
         }
 
         public void ApplyResurrectionBonus(

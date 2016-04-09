@@ -238,6 +238,8 @@ namespace Catzilla.CommonModule.View {
                 analyticsController.OnMainScreenReplaysBtnClick);
             mainScreen.ExitBtn.onClick.AddListener(
                 analyticsController.OnMainScreenExitBtnClick);
+            mainScreen.SkillsBtn.onClick.AddListener(
+                analyticsController.OnMainScreenSkillsBtnClick);
             gameOverScreen.ExitBtn.onClick.AddListener(
                 analyticsController.OnGameOverScreenExitBtnClick);
             gameOverScreen.RestartBtn.onClick.AddListener(

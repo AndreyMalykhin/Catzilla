@@ -23,8 +23,6 @@ namespace Catzilla.LevelObjectModule.View {
         private string playerFieldOfViewTag;
 
         public override void InitBindings(DiContainer container) {
-            container.Bind<ObjectTypeInfoStorage>()
-                .ToInstance(objectTypeInfoStorage);
             container.Bind<PlayerController>().ToSingle();
             container.Bind<SmashableController>().ToSingle();
             container.Bind<ShootingController>().ToSingle();
@@ -36,6 +34,8 @@ namespace Catzilla.LevelObjectModule.View {
             container.Bind<DisposableController>().ToSingle();
             container.Bind<FleeingController>().ToSingle();
             container.Bind<ShockwavableController>().ToSingle();
+            container.Bind<ObjectTypeInfoStorage>()
+                .ToInstance(objectTypeInfoStorage);
             container.Bind<LevelObjectType>("PlayerObjectType")
                 .ToInstance(LevelObjectType.Player);
             container.Bind<string>("PlayerTag").ToInstance(playerTag);
