@@ -3,6 +3,7 @@ using Zenject;
 using Catzilla.CommonModule.Model;
 using Catzilla.CommonModule.Util;
 using Catzilla.CommonModule.View;
+using Catzilla.SkillModule.View;
 using Catzilla.LevelObjectModule.View;
 using Catzilla.LevelModule.View;
 
@@ -13,6 +14,9 @@ namespace Catzilla.LevelModule.Controller {
 
         [Inject]
         private LevelCompleteScreenView screen;
+
+        [Inject]
+        private SkillsScreenView skillsScreen;
 
         private bool isVideoRecordingInited;
 
@@ -55,8 +59,16 @@ namespace Catzilla.LevelModule.Controller {
             Everyplay.PlayLastRecording();
         }
 
-        private void OnHide(ShowableView showable) {
-            showable.OnHide -= OnHide;
+        private void OnHide(ShowableView levelCompleteScreenShowable) {
+            levelCompleteScreenShowable.OnHide -= OnHide;
+            var skillsScreenShowable =
+                skillsScreen.GetComponent<ShowableView>();
+            skillsScreenShowable.OnHide += OnSkillsScreenHide;
+            skillsScreenShowable.Show();
+        }
+
+        private void OnSkillsScreenHide(ShowableView showable) {
+            showable.OnHide -= OnSkillsScreenHide;
             game.LoadLevel();
         }
 

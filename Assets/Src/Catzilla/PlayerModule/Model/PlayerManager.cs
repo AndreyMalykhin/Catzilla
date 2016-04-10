@@ -46,6 +46,9 @@ namespace Catzilla.PlayerModule.Model {
         [Inject("RewardWorldPopupType")]
         private int rewardWorldPopupType;
 
+        [Inject("DamageWorldPopupType")]
+        private int damageWorldPopupType;
+
         [Inject("PlayerHighPrioAudioChannel")]
         private int playerHighPrioAudioChannel;
 
@@ -74,8 +77,8 @@ namespace Catzilla.PlayerModule.Model {
             player.Score += finalScore;
             var popup = (WorldSpaceTextPopupView) popupManager.Get(
                 scoreWorldPopupType);
-            popup.transform.localScale =
-                finalScore.IsCritical ? new Vector3(2f, 2f, 2f) : Vector3.zero;
+            popup.transform.localScale = finalScore.IsCritical ?
+                new Vector3(1.5f, 1.5f, 1.5f) : Vector3.one;
             popup.Msg.text =
                 strBuilder.Append('+').Append(finalScore).ToString();
             strBuilder.Length = 0;
@@ -121,40 +124,37 @@ namespace Catzilla.PlayerModule.Model {
             popupManager.Show(popup);
         }
 
+        public void Attack(PlayerView player, DamagingView damaging) {
+            Attack attack = player.FilterAttack(
+                new Attack{Damage = damaging.Damage}, damaging);
+            int damage = attack.Damage;
+
+            if (damage <= 0 && attack.Status == AttackStatus.Absorb) {
+                var popup = (WorldSpaceTextPopupView) popupManager.Get(
+                    damageWorldPopupType);
+                popup.Msg.text = translator.Translate("Player.Absorb");
+                popup.LookAtTarget = player.Camera;
+                popup.PlaceAbove(player.Collider.bounds);
+                popupManager.Show(popup);
+                return;
+            }
+
+            player.Health -= damage;
+        }
+
         public void CompleteLevel(PlayerView player) {
             // DebugUtils.Log("PlayerManager.CompleteLevel()");
             eventBus.Fire((int) Events.PlayerManagerPreLevelComplete,
                 new Evt(this, player));
-            PlayerState playerState = playerStateStorage.Get();
-            GiveAchievementIfNeeded(playerState);
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;
+            PlayerState playerState = playerStateStorage.Get();
+            EnsureAchievement(playerState);
             ++playerState.Level;
+            ++playerState.AvailableSkillPointsCount;
             playerState.PlayTime += playStopwatch.Elapsed;
             SaveRecords(player, playerState);
-
-            levelCompleteScreen.Score.text =
-                translator.Translate("LevelCompleteScreen.Score", player.Score);
-            var levelDuration = new TimeSpan(0, 0, (int) player.TotalLifetime);
-            var formattedLevelDuration = string.Format(
-                "{0:00}:{1:00}", levelDuration.Minutes, levelDuration.Seconds);
-            levelCompleteScreen.Time.text = translator.Translate(
-                "LevelCompleteScreen.Time", formattedLevelDuration);
-            var levelCompleteScreenShowable =
-                levelCompleteScreen.GetComponent<ShowableView>();
-            Action<ShowableView> levelCompleteScreenShowHandler;
-            levelCompleteScreenShowHandler = delegate (ShowableView showable) {
-                showable.OnShow -= levelCompleteScreenShowHandler;
-                game.UnloadLevel();
-                playerStateStorage.Save(playerState);
-
-                if (server.IsLoggedIn) {
-                    playerStateStorage.Sync(server);
-                }
-            };
-            levelCompleteScreenShowable.OnShow +=
-                levelCompleteScreenShowHandler;
-            levelCompleteScreenShowable.Show();
+            ShowLevelCompleteScreen(player, playerState);
         }
 
         public void Loose(PlayerView player) {
@@ -182,6 +182,32 @@ namespace Catzilla.PlayerModule.Model {
             gameOverScreenShowable.Show();
         }
 
+        private void ShowLevelCompleteScreen(
+            PlayerView player, PlayerState playerState) {
+            levelCompleteScreen.Score.text =
+                translator.Translate("LevelCompleteScreen.Score", player.Score);
+            var levelDuration = new TimeSpan(0, 0, (int) player.TotalLifetime);
+            var formattedLevelDuration = string.Format(
+                "{0:00}:{1:00}", levelDuration.Minutes, levelDuration.Seconds);
+            levelCompleteScreen.Time.text = translator.Translate(
+                "LevelCompleteScreen.Time", formattedLevelDuration);
+            var levelCompleteScreenShowable =
+                levelCompleteScreen.GetComponent<ShowableView>();
+            Action<ShowableView> levelCompleteScreenShowHandler;
+            levelCompleteScreenShowHandler = delegate (ShowableView showable) {
+                showable.OnShow -= levelCompleteScreenShowHandler;
+                game.UnloadLevel();
+                playerStateStorage.Save(playerState);
+
+                if (server.IsLoggedIn) {
+                    playerStateStorage.Sync(server);
+                }
+            };
+            levelCompleteScreenShowable.OnShow +=
+                levelCompleteScreenShowHandler;
+            levelCompleteScreenShowable.Show();
+        }
+
         private void SaveRecords(PlayerView player, PlayerState playerState) {
             playerState.GetRecord(GooglePlayIds.leaderboard_scores).Value =
                 player.Score;
@@ -189,7 +215,7 @@ namespace Catzilla.PlayerModule.Model {
                 .Value += player.SmashedCops;
         }
 
-        private void GiveAchievementIfNeeded(PlayerState playerState) {
+        private void EnsureAchievement(PlayerState playerState) {
             string achievementId;
 
             switch (playerState.Level + 1) {

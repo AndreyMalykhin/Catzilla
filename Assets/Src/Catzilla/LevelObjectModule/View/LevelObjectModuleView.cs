@@ -35,7 +35,10 @@ namespace Catzilla.LevelObjectModule.View {
             container.Bind<FleeingController>().ToSingle();
             container.Bind<ShockwavableController>().ToSingle();
             container.Bind<ObjectTypeInfoStorage>()
-                .ToInstance(objectTypeInfoStorage);
+                .ToSingleMethod((InjectContext context) => {
+                    context.Container.Inject(objectTypeInfoStorage);
+                    return objectTypeInfoStorage;
+                });
             container.Bind<LevelObjectType>("PlayerObjectType")
                 .ToInstance(LevelObjectType.Player);
             container.Bind<string>("PlayerTag").ToInstance(playerTag);
@@ -45,7 +48,6 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         public override void PostBindings(DiContainer container) {
-            container.Inject(container.Resolve<ObjectTypeInfoStorage>());
             var eventBus = container.Resolve<EventBus>();
 
             var disposableController =

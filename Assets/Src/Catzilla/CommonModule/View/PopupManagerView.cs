@@ -17,7 +17,7 @@ namespace Catzilla.CommonModule.View {
         private PoolStorageView poolStorage;
 
         [SerializeField]
-        private int simultaneousPopupsCount = 4;
+        private int simultaneousPopupsCount;
 
         [SerializeField]
         private PopupType[] popupTypes;

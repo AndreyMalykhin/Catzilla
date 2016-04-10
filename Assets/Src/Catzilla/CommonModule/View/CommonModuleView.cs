@@ -47,6 +47,9 @@ namespace Catzilla.CommonModule.View {
         private ScreenSpacePopupManagerView screenSpacePopupManager;
 
         [SerializeField]
+        private UIView ui;
+
+        [SerializeField]
         private UIBlockerView uiBlocker;
 
         [SerializeField]
@@ -95,7 +98,10 @@ namespace Catzilla.CommonModule.View {
                 finalServer = serverStub;
             }
 
-            container.Bind<Server>().ToInstance(finalServer);
+            container.Bind<Server>().ToSingleMethod((InjectContext context) => {
+                context.Container.Inject(finalServer);
+                return finalServer;
+            });
             container.Bind<AuthManager>().ToSingle();
             container.Bind<EventBus>().ToSingle();
             container.Bind<Translator>().ToSingle();
@@ -110,13 +116,18 @@ namespace Catzilla.CommonModule.View {
             container.Bind<EveryplayController>().ToSingle();
             container.Bind<AnalyticsController>().ToSingle();
             container.Bind<PoolStorageView>().ToInstance(poolStorage);
+            container.Bind<UIView>().ToInstance(ui);
             container.Bind<CoroutineManagerView>().ToInstance(coroutineManager);
             container.Bind<ScreenSpacePopupManagerView>()
                 .ToInstance(screenSpacePopupManager);
             container.Bind<ActivityIndicatorView>()
                 .ToInstance(activityIndicator);
             container.Bind<Camera>("MainCamera").ToInstance(mainCamera);
-            container.Bind<AudioManager>().ToInstance(audioManager);
+            container.Bind<AudioManager>()
+                .ToSingleMethod((InjectContext context) => {
+                    context.Container.Inject(audioManager);
+                    return audioManager;
+                });
             container.Bind<UIBlockerView>().ToInstance(uiBlocker);
             container.Bind<WorldSpacePopupManagerView>()
                 .ToInstance(worldSpacePopupManager);
@@ -145,8 +156,6 @@ namespace Catzilla.CommonModule.View {
         }
 
         public override void PostBindings(DiContainer container) {
-            container.Inject(container.Resolve<Server>());
-            container.Inject(container.Resolve<AudioManager>());
             var eventBus = container.Resolve<EventBus>();
 
             var poolStorageController =

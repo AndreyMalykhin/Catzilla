@@ -12,10 +12,13 @@ namespace Catzilla.PlayerModule.Model {
         private int level;
 
         [SerializeField]
-        private int availableResurrectionsCount = 1;
+        private int availableResurrectionsCount;
 
         [SerializeField]
-        private int availableRewardsCount = 1;
+        private int availableRewardsCount;
+
+        [SerializeField]
+        private int availableSkillPointsCount;
 
         [SerializeField]
         private bool wasTutorialShown;
@@ -32,6 +35,7 @@ namespace Catzilla.PlayerModule.Model {
                     AvailableResurrectionsCount =
                         availableResurrectionsCount,
                     AvailableRewardsCount = availableRewardsCount,
+                    AvailableSkillPointsCount = availableSkillPointsCount,
                     WasTutorialShown = wasTutorialShown
                 };
             }

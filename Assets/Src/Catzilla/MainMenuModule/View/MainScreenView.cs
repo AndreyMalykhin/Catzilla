@@ -23,27 +23,21 @@ namespace Catzilla.MainMenuModule.View {
         private Button skillsBtn;
 
         [SerializeField]
-        [FormerlySerializedAs("StartBtn")]
         private Button startBtn;
 
         [SerializeField]
-        [FormerlySerializedAs("ExitBtn")]
         private Button exitBtn;
 
         [SerializeField]
-        [FormerlySerializedAs("LeaderboardBtn")]
         private Button leaderboardBtn;
 
         [SerializeField]
-        [FormerlySerializedAs("AchievementsBtn")]
         private Button achievementsBtn;
 
         [SerializeField]
-        [FormerlySerializedAs("FeedbackBtn")]
         private Button feedbackBtn;
 
         [SerializeField]
-        [FormerlySerializedAs("ReplaysBtn")]
         private Button replaysBtn;
     }
 }

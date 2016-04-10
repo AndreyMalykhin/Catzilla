@@ -18,8 +18,9 @@ namespace Catzilla.CommonModule.Util {
         }
 
         public PoolableView Get() {
-            var instance = instantiator.InstantiatePrefab(proto.gameObject)
-                .GetComponent<PoolableView>();
+            var instance =
+                instantiator.InstantiatePrefabForComponent<PoolableView>(
+                    proto.gameObject);
 
             if (instance.DeactivateOnReturn) {
                 GameObject instanceObject = instance.gameObject;

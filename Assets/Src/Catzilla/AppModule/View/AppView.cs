@@ -13,13 +13,13 @@ namespace Catzilla.AppModule.View {
             for (int i = 0; i < modules.Length; ++i) {
                 modules[i].InitBindings(Container);
             }
-
-            for (int i = 0; i < modules.Length; ++i) {
-                modules[i].PostBindings(Container);
-            }
         }
 
         public override void Start() {
+            for (int i = 0; i < modules.Length; ++i) {
+                modules[i].PostBindings(Container);
+            }
+
             var eventBus = Container.Resolve<EventBus>();
             eventBus.Fire((int) Events.AppStart, new Evt(this));
         }

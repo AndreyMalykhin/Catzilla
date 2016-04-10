@@ -26,7 +26,7 @@ namespace Catzilla.MainMenuModule.Controller {
         private string feedbackEmail;
 
         [Inject]
-        private SkillManager skillManager;
+        private SkillsScreenView skillsScreen;
 
         [PostInject]
         public void OnConstruct() {
@@ -34,7 +34,7 @@ namespace Catzilla.MainMenuModule.Controller {
         }
 
         public void OnSkillsBtnClick() {
-            skillManager.ShowScreen();
+            skillsScreen.GetComponent<ShowableView>().Show();
         }
 
         public void OnFeedbackBtnClick() {

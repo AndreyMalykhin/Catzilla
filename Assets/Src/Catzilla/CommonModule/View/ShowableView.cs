@@ -111,7 +111,7 @@ namespace Catzilla.CommonModule.View {
             OnHide = null;
             OnShow = null;
 
-            if (animator != null && isShown) {
+            if (animator != null) {
                 animator.SetBool(isShownParam, isShown);
             }
 

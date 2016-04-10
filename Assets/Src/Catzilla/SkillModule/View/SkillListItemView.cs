@@ -7,43 +7,21 @@ using Catzilla.CommonModule.Util;
 namespace Catzilla.SkillModule.View {
     public class SkillListItemView: MonoBehaviour {
         public struct Item {
-            public readonly int BaseId;
-            public readonly Texture2D Img;
-            public readonly string Name;
-            public readonly int CurrentLevel;
-            public readonly string CurrentLevelDescription;
-            public readonly int MaxLevel;
-            public readonly int NextLevelId;
-            public readonly string NextLevelDescription;
-            public readonly bool IsAvailable;
-
-            public Item(
-                int baseId,
-                Texture2D img,
-                string name,
-                int currentLevel,
-                string currentLevelDescription,
-                int maxLevel,
-                int nextLevelId,
-                string nextLevelDescription,
-                bool isAvailable) {
-                BaseId = baseId;
-                Img = img;
-                Name = name;
-                CurrentLevel = currentLevel;
-                CurrentLevelDescription = currentLevelDescription;
-                MaxLevel = maxLevel;
-                NextLevelId = nextLevelId;
-                NextLevelDescription = nextLevelDescription;
-                IsAvailable = isAvailable;
-            }
+            public Sprite Img;
+            public string Name;
+            public string CurrentLevel;
+            public string CurrentLevelDescription;
+            public int NextLevelId;
+            public string NextLevelDescription;
+            public bool IsDisabled;
+            public string Learn;
         }
 
         [Inject]
         private EventBus eventBus;
 
         [SerializeField]
-        private RawImage img;
+        private Image img;
 
         [SerializeField]
         new private Text name;
@@ -55,10 +33,13 @@ namespace Catzilla.SkillModule.View {
         private Text nextLevelDescription;
 
         [SerializeField]
-        private Text level;
+        private Text currentLevel;
 
         [SerializeField]
         private Button learnBtn;
+
+        [SerializeField]
+        private Text learnBtnText;
 
         private Item item;
 
@@ -73,16 +54,18 @@ namespace Catzilla.SkillModule.View {
         }
 
         private void Render() {
-            img.texture = item.Img;
-            name.text = item.Name;
-            currentLevelDescription.text = item.CurrentLevelDescription;
-            nextLevelDescription.text = item.NextLevelDescription;
-            level.text = string.Format("{0} / {1}",
-                Mathf.Max(item.CurrentLevel, 0), item.MaxLevel);
             currentLevelDescription.gameObject.SetActive(
-                item.CurrentLevel != -1);
-            learnBtn.gameObject.SetActive(item.CurrentLevel != item.MaxLevel);
-            learnBtn.interactable = item.IsAvailable;
+                item.CurrentLevelDescription != "");
+            currentLevelDescription.text = item.CurrentLevelDescription;
+            nextLevelDescription.gameObject.SetActive(
+                item.NextLevelDescription != "");
+            nextLevelDescription.text = item.NextLevelDescription;
+            learnBtn.gameObject.SetActive(item.NextLevelDescription != "");
+            learnBtn.interactable = !item.IsDisabled;
+            learnBtnText.text = item.Learn;
+            currentLevel.text = item.CurrentLevel;
+            img.sprite = item.Img;
+            name.text = item.Name;
         }
 
         private void OnLearnBtnClick() {

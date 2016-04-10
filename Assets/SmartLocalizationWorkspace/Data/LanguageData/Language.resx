@@ -185,20 +185,23 @@
 	<data name="MainMenu.Replays" xml:space="preserve">
 		<value>Video</value>
 	</data>
+	<data name="MainMenu.Skills" xml:space="preserve">
+		<value>Skills</value>
+	</data>
 	<data name="MainMenu.Start" xml:space="preserve">
 		<value>Play</value>
 	</data>
-	<data name="Player.GiftEarn" xml:space="preserve">
+	<data name="Notification.RewardEarn" xml:space="preserve">
 		<value>+{0} resurrection</value>
+	</data>
+	<data name="Notification.RewardUnlock" xml:space="preserve">
+		<value>+{0} reward</value>
+	</data>
+	<data name="Player.Absorb" xml:space="preserve">
+		<value>Absorb</value>
 	</data>
 	<data name="Player.Refuse" xml:space="preserve">
 		<value>Meow!</value>
-	</data>
-	<data name="Player.RewardEarn" xml:space="preserve">
-		<value>+{0} resurrection</value>
-	</data>
-	<data name="Player.RewardUnlock" xml:space="preserve">
-		<value>+{0} reward</value>
 	</data>
 	<data name="Player.Score" xml:space="preserve">
 		<value>{0} / {1}</value>
@@ -211,6 +214,30 @@
 	</data>
 	<data name="RewardBonus.Take" xml:space="preserve">
 		<value>reward</value>
+	</data>
+	<data name="Skill.CriticalSmashDescription" xml:space="preserve">
+		<value>{0}% chance to get {1}% score on smash</value>
+	</data>
+	<data name="Skill.CriticalSmashName" xml:space="preserve">
+		<value>Critical smash</value>
+	</data>
+	<data name="Skill.CurrentLevel" xml:space="preserve">
+		<value>{0} / {1}</value>
+	</data>
+	<data name="Skill.CurrentLevelDescription" xml:space="preserve">
+		<value>Current: {0}</value>
+	</data>
+	<data name="Skill.Learn" xml:space="preserve">
+		<value>Learn</value>
+	</data>
+	<data name="Skill.NextLevelDescription" xml:space="preserve">
+		<value>Next: {0}</value>
+	</data>
+	<data name="SkillsScreen.AvailableSkillPoints" xml:space="preserve">
+		<value>Available points: {0}</value>
+	</data>
+	<data name="SkillsScreen.Close" xml:space="preserve">
+		<value>Close</value>
 	</data>
 	<data name="TutorialScreen.End" xml:space="preserve">
 		<value>Got it!</value>
@@ -235,5 +262,11 @@
 	</data>
 	<data name="TutorialScreen.Step6" xml:space="preserve">
 		<value>That's it buddy, just don't use swipe and everything will be fine... probably</value>
+	</data>
+	<data name="Skill.DamageAbsorptionName" xml:space="preserve">
+		<value>Damage absorption</value>
+	</data>
+	<data name="Skill.DamageAbsorptionDescription" xml:space="preserve">
+		<value>{0}% change to absorb {1}% of incoming damage</value>
 	</data>
 </root>

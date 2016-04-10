@@ -55,19 +55,13 @@ namespace Catzilla.GameOverMenuModule.Controller {
             PlayerState playerState = PlayerStateStorage.Get();
 
             if (playerState != null) {
-                GameOverScreen.AvailableResurrectionsCount =
-                    playerState.AvailableResurrectionsCount;
-                GameOverScreen.AvailableRewardsCount =
-                    playerState.AvailableRewardsCount;
+                UpdateScreen(playerState);
             }
         }
 
         public void OnPlayerStateStorageSave(Evt evt) {
-            PlayerState playerState = PlayerStateStorage.Get();
-            GameOverScreen.AvailableResurrectionsCount =
-                playerState.AvailableResurrectionsCount;
-            GameOverScreen.AvailableRewardsCount =
-                playerState.AvailableRewardsCount;
+            var playerStateStorage = (PlayerStateStorage) evt.Source;
+            UpdateScreen(playerStateStorage.Get());
         }
 
         public void OnExitBtnClick() {
@@ -112,13 +106,20 @@ namespace Catzilla.GameOverMenuModule.Controller {
             var popup = (ScreenSpacePopupView) PopupManager.Get(
                 CommonPopupType);
             popup.Msg.text = Translator.Translate(
-                "Player.RewardEarn", addResurrectionsCount);
+                "Notification.RewardEarn", addResurrectionsCount);
             PopupManager.Show(popup);
         }
 
         private void OnHideForRestart(ShowableView showable) {
             showable.OnHide -= OnHideForRestart;
             Game.LoadLevel();
+        }
+
+        private void UpdateScreen(PlayerState playerState) {
+            GameOverScreen.AvailableResurrectionsCount =
+                playerState.AvailableResurrectionsCount;
+            GameOverScreen.AvailableRewardsCount =
+                playerState.AvailableRewardsCount;
         }
     }
 }

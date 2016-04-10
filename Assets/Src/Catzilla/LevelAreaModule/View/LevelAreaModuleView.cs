@@ -16,12 +16,14 @@ namespace Catzilla.LevelAreaModule.View {
         private LevelAreaGeneratorView areaGenerator;
 
         public override void InitBindings(DiContainer container) {
-            container.Bind<EnvTypeInfoStorage>().ToInstance(envTypeInfoStorage);
+            container.Bind<EnvTypeInfoStorage>()
+                .ToSingleMethod((InjectContext context) => {
+                    context.Container.Inject(envTypeInfoStorage);
+                    return envTypeInfoStorage;
+                });
             container.Bind<LevelAreaGeneratorView>().ToInstance(areaGenerator);
         }
 
-        public override void PostBindings(DiContainer container) {
-            container.Inject(container.Resolve<EnvTypeInfoStorage>());
-        }
+        public override void PostBindings(DiContainer container) {}
     }
 }

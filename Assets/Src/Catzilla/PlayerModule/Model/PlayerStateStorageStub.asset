@@ -13,5 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 0
   availableResurrectionsCount: 0
-  availableRewardsCount: 1
+  availableRewardsCount: 0
+  availableSkillPointsCount: 2
   wasTutorialShown: 1

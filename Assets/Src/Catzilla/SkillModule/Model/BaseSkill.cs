@@ -8,7 +8,7 @@ namespace Catzilla.SkillModule.Model {
         public SkillType Type {get {return type;}}
         public string Name {get {return name;}}
         public string Description {get {return description;}}
-        public Texture2D Img {get {return img;}}
+        public Sprite Img {get {return img;}}
 
         [SerializeField]
         private int id;
@@ -17,7 +17,7 @@ namespace Catzilla.SkillModule.Model {
         private SkillType type;
 
         [SerializeField]
-        private Texture2D img;
+        private Sprite img;
 
         [SerializeField]
         private string name;

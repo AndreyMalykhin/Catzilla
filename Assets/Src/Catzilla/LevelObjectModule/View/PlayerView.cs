@@ -19,10 +19,17 @@ namespace Catzilla.LevelObjectModule.View {
 
         public delegate CriticalValue ScoreFilter(
             CriticalValue score, ScoreableView source = null);
+        public delegate Attack AttackFilter(
+            Attack attack, DamagingView source = null);
 
         public event ScoreFilter OnScoreFilter {
             add {scoreFilters.Add(value);}
             remove {scoreFilters.Remove(value);}
+        }
+
+        public event AttackFilter OnAttackFilter {
+            add {attackFilters.Add(value);}
+            remove {attackFilters.Remove(value);}
         }
 
         public int ScoreBonusesTaken {get; set;}
@@ -45,7 +52,7 @@ namespace Catzilla.LevelObjectModule.View {
         public int Health {
             get {return health;}
             set {
-                if (isDead || IsHealthFreezed || health == value) {
+                if (health == value) {
                     return;
                 }
 
@@ -190,6 +197,8 @@ namespace Catzilla.LevelObjectModule.View {
         private readonly SmashStreak smashStreakBuffer = new SmashStreak();
         private readonly List<ScoreFilter> scoreFilters =
             new List<ScoreFilter>(4);
+        private readonly List<AttackFilter> attackFilters =
+            new List<AttackFilter>(4);
 
         [PostInject]
         public void OnConstruct() {
@@ -205,8 +214,8 @@ namespace Catzilla.LevelObjectModule.View {
             speedChangeDelayWaiter = new WaitForSeconds(speedChangeDelay);
             speedCheckRateWaiter = new WaitForSeconds(speedCheckRate);
             refuseDelayWaiter = new WaitForSeconds(refuseDelay);
-            HUD = instantiator.InstantiatePrefab(hudProto.gameObject)
-                .GetComponent<HUDView>();
+            HUD = instantiator.InstantiatePrefabForComponent<HUDView>(
+                hudProto.gameObject);
             eventBus.Fire((int) Events.PlayerConstruct, new Evt(this));
         }
 
@@ -229,9 +238,21 @@ namespace Catzilla.LevelObjectModule.View {
             eventBus.Fire((int) Events.PlayerResurrect, new Evt(this));
         }
 
+        public Attack FilterAttack(Attack attack, DamagingView source = null) {
+            if (IsHealthFreezed || isDead) {
+                return new Attack{Damage = 0, Status = AttackStatus.Fail};
+            }
+
+            for (int i = 0; i < attackFilters.Count; ++i) {
+                attack = attackFilters[i](attack, source);
+            }
+
+            return attack;
+        }
+
         public CriticalValue FilterScore(
-            CriticalValue score, ScoreableView source) {
-            if (IsScoreFreezed) {
+            CriticalValue score, ScoreableView source = null) {
+            if (IsScoreFreezed || isDead) {
                 return 0;
             }
 
@@ -338,6 +359,7 @@ namespace Catzilla.LevelObjectModule.View {
                 isRefusing = UnityEngine.Random.value <= refuseChance;
 
                 if (isRefusing) {
+                    targetX = -targetX;
                     yield return refuseDurationWaiter;
                     isRefusing = false;
                 }

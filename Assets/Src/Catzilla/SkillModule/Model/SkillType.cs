@@ -1,5 +1,6 @@
 namespace Catzilla.SkillModule.Model {
     public enum SkillType {
-        CriticalScore = 0
+        CriticalSmash = 0,
+        DamageAbsorption = 1
     }
 }

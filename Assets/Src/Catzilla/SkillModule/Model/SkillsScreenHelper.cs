@@ -1,3 +1,4 @@
+using UnityEngine;
 using System.Collections.Generic;
 using Catzilla.CommonModule.View;
 using Catzilla.CommonModule.Util;
@@ -16,6 +17,8 @@ namespace Catzilla.SkillModule.Model {
             PlayerStateStorage playerStateStorage,
             SkillHelperStorage skillHelperStorage,
             Translator translator) {
+            itemsBuffer.Clear();
+            currentSkillsBuffer.Clear();
             BaseSkill[] baseSkills = skillStorage.GetAllBase();
             PlayerState playerState = playerStateStorage.Get();
             List<int> currentSkillIds = playerState.SkillIds;
@@ -26,47 +29,81 @@ namespace Catzilla.SkillModule.Model {
             }
 
             for (int i = 0; i < baseSkills.Length; ++i) {
-                BaseSkill baseSkill = baseSkills[i];
-                ISkillHelper skillHelper =
-                    skillHelperStorage.Get(baseSkill.Type);
-                Skill currentSkill = null;
-                var currentSkillLevel = -1;
-                var currentSkillDescription = "";
-                Skill nextSkill = null;
-
-                if (currentSkillsBuffer.TryGetValue(
-                        baseSkill.Id, out currentSkill)) {
-                    currentSkillLevel = currentSkill.Level;
-                    currentSkillDescription = skillHelper.GetSkillDescription(
-                        currentSkill, baseSkill.Description);
-                    nextSkill =
-                        skillStorage.GetNextLevel(currentSkill.Id);
-                } else {
-                    nextSkill = skillStorage.GetFirstLevel(baseSkill.Id);
-                }
-
-                string nextSkillDescription = skillHelper.GetSkillDescription(
-                    nextSkill, baseSkill.Description);
-                int maxSkillLevel =
-                    skillStorage.GetMaxLevel(baseSkill.Id).Level;
-                bool isSkillAvailable =
-                    playerState.AvailableSkillPointsCount > 0;
-                itemsBuffer.Add(new SkillListItemView.Item(
-                    baseSkill.Id,
-                    baseSkill.Img,
-                    translator.Translate(baseSkill.Name),
-                    currentSkillLevel,
-                    currentSkillDescription,
-                    maxSkillLevel,
-                    nextSkill.Id,
-                    nextSkillDescription,
-                    isSkillAvailable
+                itemsBuffer.Add(GetItem(
+                    baseSkills[i],
+                    currentSkillsBuffer,
+                    playerState,
+                    skillStorage,
+                    skillHelperStorage,
+                    translator
                 ));
             }
 
-            itemsBuffer.Clear();
-            currentSkillsBuffer.Clear();
             return itemsBuffer;
+        }
+
+        private static SkillListItemView.Item GetItem(
+            BaseSkill baseSkill,
+            IDictionary<int, Skill> currentSkills,
+            PlayerState playerState,
+            SkillStorage skillStorage,
+            SkillHelperStorage skillHelperStorage,
+            Translator translator) {
+            ISkillHelper skillHelper =
+                skillHelperStorage.Get(baseSkill.Type);
+            Skill currentSkill = null;
+            var currentSkillLevel = -1;
+            var currentSkillDescription = "";
+            Skill nextSkill = null;
+
+            if (currentSkillsBuffer.TryGetValue(
+                    baseSkill.Id, out currentSkill)) {
+                currentSkillLevel = currentSkill.Level;
+                currentSkillDescription = translator.Translate(
+                    "Skill.CurrentLevelDescription",
+                    skillHelper.GetSkillDescription(
+                        currentSkill,
+                        translator.Translate(baseSkill.Description)
+                    )
+                );
+                nextSkill =
+                    skillStorage.GetNextLevel(currentSkill.Id);
+            } else {
+                nextSkill = skillStorage.GetFirstLevel(baseSkill.Id);
+            }
+
+            int nextSkillId = -1;
+            string nextSkillDescription = "";
+
+            if (nextSkill != null) {
+                nextSkillId = nextSkill.Id;
+                nextSkillDescription = translator.Translate(
+                    "Skill.NextLevelDescription",
+                    skillHelper.GetSkillDescription(
+                        nextSkill,
+                        translator.Translate(baseSkill.Description)
+                    )
+                );
+            }
+
+            int maxSkillLevel =
+                skillStorage.GetMaxLevel(baseSkill.Id).Level + 1;
+            string currentSkillLevelText = translator.Translate(
+                "Skill.CurrentLevel",
+                currentSkillLevel + 1,
+                maxSkillLevel);
+            bool isSkillDisabled =
+                playerState.AvailableSkillPointsCount <= 0;
+            return new SkillListItemView.Item{
+                Img = baseSkill.Img,
+                Name = translator.Translate(baseSkill.Name),
+                CurrentLevel = currentSkillLevelText,
+                CurrentLevelDescription = currentSkillDescription,
+                NextLevelId = nextSkillId,
+                NextLevelDescription = nextSkillDescription,
+                IsDisabled = isSkillDisabled,
+                Learn = translator.Translate("Skill.Learn")
+            };
         }
     }
 }

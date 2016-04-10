@@ -19,16 +19,25 @@ namespace Catzilla.SkillModule.Model {
         [Inject]
         private Translator translator;
 
-        [Inject]
-        private SkillsScreenView skillsScreen;
+        public void Learn(int skillId) {
+            PlayerState playerState = playerStateStorage.Get();
+            List<int> currentSkillIds = playerState.SkillIds;
 
-        public void ShowScreen() {
-            skillsScreen.Items = SkillsScreenHelper.GetItems(
-                skillStorage,
-                playerStateStorage,
-                skillHelperStorage,
-                translator);
-            skillsScreen.GetComponent<ShowableView>().Show();
+            for (int i = 0; i < currentSkillIds.Count; ++i) {
+                var currentSkillId = currentSkillIds[i];
+
+                if (skillStorage.Get(skillId).BaseId !=
+                        skillStorage.Get(currentSkillId).BaseId) {
+                    continue;
+                }
+
+                playerState.RemoveSkill(currentSkillId);
+                break;
+            }
+
+            playerState.AddSkill(skillId);
+            --playerState.AvailableSkillPointsCount;
+            playerStateStorage.Save(playerState);
         }
     }
 }

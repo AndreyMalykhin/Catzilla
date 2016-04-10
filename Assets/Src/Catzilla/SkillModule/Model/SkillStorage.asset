@@ -14,16 +14,35 @@ MonoBehaviour:
   items:
   - BaseSkill:
       id: 0
-      type: 1
-      name: Skill.CriticalScore
+      type: 0
+      img: {fileID: 21300000, guid: eca746d95b8a149f49336e328a13674c, type: 3}
+      name: Skill.CriticalSmashName
+      description: Skill.CriticalSmashDescription
     Skills:
     - id: 0
       baseId: 0
       level: 0
-      chance: 2
+      chance: 0.32
       factor: 2
     - id: 1
       baseId: 0
       level: 1
-      chance: 4
+      chance: 0.64
       factor: 2
+  - BaseSkill:
+      id: 1
+      type: 1
+      img: {fileID: 21300000, guid: 9f0325c10fbdc4b15b042ce7bd13c129, type: 3}
+      name: Skill.DamageAbsorptionName
+      description: Skill.DamageAbsorptionDescription
+    Skills:
+    - id: 2
+      baseId: 1
+      level: 0
+      chance: 0.32
+      factor: 1
+    - id: 3
+      baseId: 1
+      level: 1
+      chance: 0.64
+      factor: 1

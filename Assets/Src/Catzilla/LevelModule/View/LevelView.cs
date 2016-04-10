@@ -60,8 +60,9 @@ namespace Catzilla.LevelModule.View {
             LevelObjectView obj = null;
 
             if (poolable == null) {
-                obj = instantiator.InstantiatePrefab(objectProto.gameObject)
-                    .GetComponent<LevelObjectView>();
+                obj =
+                    instantiator.InstantiatePrefabForComponent<LevelObjectView>(
+                        objectProto.gameObject);
             } else {
                 obj = poolStorage.Take(poolable.PoolId)
                     .GetComponent<LevelObjectView>();

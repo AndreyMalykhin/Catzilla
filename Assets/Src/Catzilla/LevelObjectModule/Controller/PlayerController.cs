@@ -83,7 +83,7 @@ namespace Catzilla.LevelObjectModule.Controller {
             var colliderDamaging = colliderBody.GetComponent<DamagingView>();
 
             if (colliderDamaging != null) {
-                player.Health -= colliderDamaging.Damage;
+                playerManager.Attack(player, colliderDamaging);
             }
 
             var colliderTreating = colliderBody.GetComponent<TreatingView>();

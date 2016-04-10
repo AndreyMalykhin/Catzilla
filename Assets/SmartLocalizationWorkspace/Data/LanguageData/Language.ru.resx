@@ -185,20 +185,23 @@
 	<data name="MainMenu.Replays" xml:space="preserve">
 		<value>Видео</value>
 	</data>
+	<data name="MainMenu.Skills" xml:space="preserve">
+		<value>Умения</value>
+	</data>
 	<data name="MainMenu.Start" xml:space="preserve">
 		<value>Играть</value>
 	</data>
-	<data name="Player.GiftEarn" xml:space="preserve">
+	<data name="Notification.RewardEarn" xml:space="preserve">
 		<value>+{0} воскрешение</value>
+	</data>
+	<data name="Notification.RewardUnlock" xml:space="preserve">
+		<value>+{0} приз</value>
+	</data>
+	<data name="Player.Absorb" xml:space="preserve">
+		<value>Поглощение</value>
 	</data>
 	<data name="Player.Refuse" xml:space="preserve">
 		<value>Мяу!</value>
-	</data>
-	<data name="Player.RewardEarn" xml:space="preserve">
-		<value>+{0} воскрешение</value>
-	</data>
-	<data name="Player.RewardUnlock" xml:space="preserve">
-		<value>+{0} приз</value>
 	</data>
 	<data name="Player.Score" xml:space="preserve">
 		<value>{0} / {1}</value>
@@ -211,6 +214,36 @@
 	</data>
 	<data name="RewardBonus.Take" xml:space="preserve">
 		<value>приз</value>
+	</data>
+	<data name="Skill.CriticalSmashDescription" xml:space="preserve">
+		<value>{0}% шанс получить {1}% очков при разрушении</value>
+	</data>
+	<data name="Skill.CriticalSmashName" xml:space="preserve">
+		<value>Критическое разрушение</value>
+	</data>
+	<data name="Skill.CurrentLevel" xml:space="preserve">
+		<value>{0} / {1}</value>
+	</data>
+	<data name="Skill.CurrentLevelDescription" xml:space="preserve">
+		<value>Текущий: {0}</value>
+	</data>
+	<data name="Skill.DamageAbsorptionDescription" xml:space="preserve">
+		<value>{0}% шанс поглотить {1}% входящего урона</value>
+	</data>
+	<data name="Skill.DamageAbsorptionName" xml:space="preserve">
+		<value>Поглощение урона</value>
+	</data>
+	<data name="Skill.Learn" xml:space="preserve">
+		<value>Изучить</value>
+	</data>
+	<data name="Skill.NextLevelDescription" xml:space="preserve">
+		<value>Следующий: {0}</value>
+	</data>
+	<data name="SkillsScreen.AvailableSkillPoints" xml:space="preserve">
+		<value>Доступные очки: {0}</value>
+	</data>
+	<data name="SkillsScreen.Close" xml:space="preserve">
+		<value>Закрыть</value>
 	</data>
 	<data name="TutorialScreen.End" xml:space="preserve">
 		<value>Ясно!</value>

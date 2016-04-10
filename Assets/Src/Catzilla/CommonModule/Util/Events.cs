@@ -43,7 +43,8 @@ namespace Catzilla.CommonModule.Util {
         PlayerStateStorageSave,
         HUDScoreConstruct,
         HUDNotificationsConstruct,
-        CriticalScoreSkillConstruct,
-        SkillListItemLearnBtnClick
+        CriticalSmashSkillConstruct,
+        SkillListItemLearnBtnClick,
+        DamageAbsorptionSkillConstruct
     }
 }

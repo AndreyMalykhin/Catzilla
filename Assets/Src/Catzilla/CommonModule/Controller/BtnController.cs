@@ -7,17 +7,22 @@ using Catzilla.CommonModule.Util;
 namespace Catzilla.CommonModule.Controller {
     public class BtnController {
         [Inject]
-        public AudioManager AudioManager {get; set;}
+        private AudioManager audioManager;
 
         [Inject("UIHighPrioAudioChannel")]
-        public int UIHighPrioAudioChannel {get; set;}
+        private int uiHighPrioAudioChannel;
+
+        [Inject]
+        private UIView ui;
 
         public void OnClick(Evt evt) {
             var btn = (BtnView) evt.Source;
 
             if (btn.ClickSound != null) {
-                AudioManager.Play(
-                    btn.ClickSound, btn.AudioSource, UIHighPrioAudioChannel);
+                AudioSource audioSource = btn.AudioSource == null ?
+                    ui.AudioSource : btn.AudioSource;
+                audioManager.Play(
+                    btn.ClickSound, audioSource, uiHighPrioAudioChannel);
             }
         }
     }

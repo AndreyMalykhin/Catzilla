@@ -77,7 +77,7 @@ namespace Catzilla.SkillModule.Model {
 
                 for (int j = 0; j < derivedSkills.Length; ++j) {
                     Skill skill = derivedSkills[j];
-                    this.skillsMap.Add(skill.Id, skill);
+                    skillsMap.Add(skill.Id, skill);
                 }
             }
         }

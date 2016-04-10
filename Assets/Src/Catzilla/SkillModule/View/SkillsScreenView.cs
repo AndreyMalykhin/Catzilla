@@ -1,25 +1,34 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 using System.Collections.Generic;
+using Catzilla.CommonModule.View;
+using Catzilla.CommonModule.Util;
 
 namespace Catzilla.SkillModule.View {
     public class SkillsScreenView: MonoBehaviour {
         public List<SkillListItemView.Item> Items {
             set {
-                for (int i = 0; i < items.Count; ++i) {
-                    Destroy(items[i].gameObject);
+                for (int i = items.Count; i < value.Count; ++i) {
+                    items.Add(CreateItem());
                 }
 
-                items.Clear();
+                for (int i = items.Count - 1; i >= value.Count; --i) {
+                    DestroyItem(items[i]);
+                    items.RemoveAt(i);
+                }
 
                 for (int i = 0; i < value.Count; ++i) {
-                    items.Add(CreateItem(value[i]));
+                    items[i].SetItem(value[i]);
                 }
             }
         }
 
+        public Text AvailableSkillPoints {get {return availableSkillPoints;}}
+        public Button CloseBtn {get {return closeBtn;}}
+
         [Inject]
-        private IInstantiator instantiator;
+        private PoolStorageView poolStorage;
 
         [SerializeField]
         private Transform itemList;
@@ -27,15 +36,28 @@ namespace Catzilla.SkillModule.View {
         [SerializeField]
         private SkillListItemView itemProto;
 
-        private List<SkillListItemView> items = new List<SkillListItemView>(8);
+        [SerializeField]
+        private Text availableSkillPoints;
 
-        private SkillListItemView CreateItem(SkillListItemView.Item itemState) {
-            var itemView = instantiator.InstantiatePrefab(itemProto.gameObject)
-                .GetComponent<SkillListItemView>();
+        [SerializeField]
+        private Button closeBtn;
+
+        private readonly List<SkillListItemView> items =
+            new List<SkillListItemView>(8);
+
+        private SkillListItemView CreateItem() {
+            // DebugUtils.Log("SkillsScreenView.CreateItem()");
+            int poolId = itemProto.GetComponent<PoolableView>().PoolId;
+            var itemView =
+                poolStorage.Take(poolId).GetComponent<SkillListItemView>();
             bool isWorldPositionStays = false;
             itemView.transform.SetParent(itemList, isWorldPositionStays);
-            itemView.SetItem(itemState);
+            itemView.transform.SetAsLastSibling();
             return itemView;
+        }
+
+        private void DestroyItem(SkillListItemView item) {
+            poolStorage.Return(item.GetComponent<PoolableView>());
         }
     }
 }

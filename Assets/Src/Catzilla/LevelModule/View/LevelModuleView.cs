@@ -37,7 +37,10 @@ namespace Catzilla.LevelModule.View {
             container.Bind<LevelCompleteScreenView>()
                 .ToInstance(completeScreen);
             container.Bind<LevelSettingsStorage>()
-                .ToInstance(levelSettingsStorage);
+                .ToSingleMethod((InjectContext context) => {
+                    context.Container.Inject(levelSettingsStorage);
+                    return levelSettingsStorage;
+                });
             container.Bind<LevelController>().ToSingle();
             container.Bind<LevelCompleteScreenController>().ToSingle();
             container.Bind<LevelGenerator>().ToSingle();
@@ -52,7 +55,6 @@ namespace Catzilla.LevelModule.View {
         }
 
         public override void PostBindings(DiContainer container) {
-            container.Inject(container.Resolve<LevelSettingsStorage>());
             var eventBus = container.Resolve<EventBus>();
 
             var levelController =

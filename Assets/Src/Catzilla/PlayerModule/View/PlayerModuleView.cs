@@ -42,6 +42,9 @@ namespace Catzilla.PlayerModule.View {
         [SerializeField]
         private int speechWorldPopupType;
 
+        [SerializeField]
+        private int damageWorldPopupType;
+
         public override void InitBindings(DiContainer container) {
             PlayerStateStorage finalPlayerStateStorage = playerStateStorage;
 
@@ -50,9 +53,20 @@ namespace Catzilla.PlayerModule.View {
             }
 
             container.Bind<PlayerStateStorage>()
-                .ToInstance(finalPlayerStateStorage);
-            container.Bind<GiftManager>().ToInstance(giftManager);
-            container.Bind<RewardManager>().ToInstance(rewardManager);
+                .ToSingleMethod((InjectContext context) => {
+                    context.Container.Inject(finalPlayerStateStorage);
+                    return finalPlayerStateStorage;
+                });
+            container.Bind<GiftManager>()
+                .ToSingleMethod((InjectContext context) => {
+                    context.Container.Inject(giftManager);
+                    return giftManager;
+                });
+            container.Bind<RewardManager>()
+                .ToSingleMethod((InjectContext context) => {
+                    context.Container.Inject(rewardManager);
+                    return rewardManager;
+                });
             container.Bind<GameObject>("HUDWrapper").ToInstance(hudWrapper);
             container.Bind<int>("ScoreWorldPopupType")
                 .ToInstance(scoreWorldPopupType);
@@ -62,6 +76,8 @@ namespace Catzilla.PlayerModule.View {
                 .ToInstance(rewardWorldPopupType);
             container.Bind<int>("SpeechWorldPopupType")
                 .ToInstance(speechWorldPopupType);
+            container.Bind<int>("DamageWorldPopupType")
+                .ToInstance(damageWorldPopupType);
             container.Bind<HUDScoreController>().ToSingle();
             container.Bind<HUDHealthController>().ToSingle();
             container.Bind<HUDNotificationsController>().ToSingle();
@@ -69,9 +85,6 @@ namespace Catzilla.PlayerModule.View {
         }
 
         public override void PostBindings(DiContainer container) {
-            container.Inject(container.Resolve<PlayerStateStorage>());
-            container.Inject(container.Resolve<GiftManager>());
-            container.Inject(container.Resolve<RewardManager>());
             var eventBus = container.Resolve<EventBus>();
 
             var hudScoreController =

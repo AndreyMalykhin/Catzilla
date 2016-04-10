@@ -73,7 +73,7 @@ namespace Catzilla.AppModule.Controller {
                 var popup = (ScreenSpacePopupView) PopupManager.Get(
                     CommonPopupType);
                 popup.Msg.text = Translator.Translate(
-                    "Player.RewardUnlock", unlockedRewardsCount);
+                    "Notification.RewardUnlock", unlockedRewardsCount);
                 PopupManager.Show(popup);
             }
 
