@@ -15,7 +15,7 @@ MonoBehaviour:
   - BaseSkill:
       id: 0
       type: 0
-      img: {fileID: 21300000, guid: eca746d95b8a149f49336e328a13674c, type: 3}
+      img: {fileID: 21300000, guid: 63e698edeb0df76448f068cb0a8f0090, type: 3}
       name: Skill.CriticalSmashName
       description: Skill.CriticalSmashDescription
     Skills:
@@ -24,15 +24,17 @@ MonoBehaviour:
       level: 0
       chance: 0.32
       factor: 2
+      duration: 4
     - id: 1
       baseId: 0
       level: 1
       chance: 0.64
       factor: 2
+      duration: 8
   - BaseSkill:
       id: 1
       type: 1
-      img: {fileID: 21300000, guid: 9f0325c10fbdc4b15b042ce7bd13c129, type: 3}
+      img: {fileID: 21300000, guid: 2fcbd988521dd4dfdbc4cc5ce3b968a6, type: 3}
       name: Skill.DamageAbsorptionName
       description: Skill.DamageAbsorptionDescription
     Skills:
@@ -41,8 +43,48 @@ MonoBehaviour:
       level: 0
       chance: 0.32
       factor: 1
+      duration: 4
     - id: 3
       baseId: 1
       level: 1
       chance: 0.64
       factor: 1
+      duration: 8
+  - BaseSkill:
+      id: 2
+      type: 2
+      img: {fileID: 21300000, guid: 12ed2af878e954299b5620b999910c94, type: 3}
+      name: Skill.SideSpeedBoostName
+      description: Skill.SideSpeedBoostDescription
+    Skills:
+    - id: 4
+      baseId: 2
+      level: 0
+      chance: 0.32
+      factor: 0.16
+      duration: 4
+    - id: 5
+      baseId: 2
+      level: 1
+      chance: 0.64
+      factor: 0.32
+      duration: 8
+  - BaseSkill:
+      id: 3
+      type: 3
+      img: {fileID: 21300000, guid: 486226bfe09434d79a7d355f87503660, type: 3}
+      name: Skill.RefuseRateDecreaseName
+      description: Skill.RefuseRateDecreaseDescription
+    Skills:
+    - id: 6
+      baseId: 3
+      level: 0
+      chance: 1
+      factor: 0.32
+      duration: 4
+    - id: 7
+      baseId: 3
+      level: 1
+      chance: 1
+      factor: 0.64
+      duration: 8

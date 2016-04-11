@@ -5,7 +5,7 @@ using Catzilla.LevelObjectModule.View;
 using Catzilla.SkillModule.View;
 
 namespace Catzilla.SkillModule.Model {
-    public class CriticalSmashSkillHelper: ISkillHelper {
+    public class SideSpeedBoostSkillHelper: ISkillHelper {
         [Inject]
         private IInstantiator instantiator;
 
@@ -19,9 +19,9 @@ namespace Catzilla.SkillModule.Model {
         }
 
         void ISkillHelper.AddSkill(Skill skill, GameObject obj) {
-            // DebugUtils.Log("CriticalSmashSkillHelper.AddSkill()");
-            var skillView =
-                instantiator.InstantiateComponent<CriticalSmashSkillView>(obj);
+            // DebugUtils.Log("SideSpeedBoostSkillHelper.AddSkill()");
+            var skillView = instantiator
+                .InstantiateComponent<SideSpeedBoostSkillView>(obj);
             skillView.Init(obj.GetComponent<PlayerView>());
             skillView.Chance = skill.Chance;
             skillView.Factor = skill.Factor;

@@ -8,8 +8,6 @@ namespace Catzilla.LevelModule.Model {
         public readonly int Index;
         public readonly int CompletionScore;
         public readonly int ExtraScore;
-        public readonly float PlayerFrontSpeed;
-        public readonly float PlayerSideSpeed;
         public readonly int ResurrectionReward;
 
         private readonly IDictionary<int, ObjectLevelSettings> objectSettings;
@@ -18,15 +16,11 @@ namespace Catzilla.LevelModule.Model {
             int index,
             int completionScore,
             int extraScore,
-            float playerFrontSpeed,
-            float playerSideSpeed,
             int resurrectionReward,
             IDictionary<int, ObjectLevelSettings> objectSettings) {
             Index = index;
             CompletionScore = completionScore;
             ExtraScore = extraScore;
-            PlayerFrontSpeed = playerFrontSpeed;
-            PlayerSideSpeed = playerSideSpeed;
             ResurrectionReward = resurrectionReward;
             this.objectSettings = objectSettings;
         }

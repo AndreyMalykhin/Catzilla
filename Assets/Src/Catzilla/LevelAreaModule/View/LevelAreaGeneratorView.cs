@@ -188,9 +188,6 @@ namespace Catzilla.LevelAreaModule.View {
             }
 
             if (objectTypeInfo.Type == playerObjectType) {
-                var player = obj.GetComponent<PlayerView>();
-                player.FrontSpeed = levelSettings.PlayerFrontSpeed;
-                player.SideSpeed = levelSettings.PlayerSideSpeed;
                 List<int> skillIds = playerStateStorage.Get().SkillIds;
 
                 for (int i = 0; i < skillIds.Count; ++i) {

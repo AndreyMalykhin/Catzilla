@@ -5,7 +5,7 @@ using Catzilla.LevelObjectModule.View;
 using Catzilla.SkillModule.View;
 
 namespace Catzilla.SkillModule.Model {
-    public class CriticalSmashSkillHelper: ISkillHelper {
+    public class RefuseRateDecreaseSkillHelper: ISkillHelper {
         [Inject]
         private IInstantiator instantiator;
 
@@ -19,9 +19,9 @@ namespace Catzilla.SkillModule.Model {
         }
 
         void ISkillHelper.AddSkill(Skill skill, GameObject obj) {
-            // DebugUtils.Log("CriticalSmashSkillHelper.AddSkill()");
-            var skillView =
-                instantiator.InstantiateComponent<CriticalSmashSkillView>(obj);
+            // DebugUtils.Log("RefuseRateDecreaseSkillHelper.AddSkill()");
+            var skillView = instantiator
+                .InstantiateComponent<RefuseRateDecreaseSkillView>(obj);
             skillView.Init(obj.GetComponent<PlayerView>());
             skillView.Chance = skill.Chance;
             skillView.Factor = skill.Factor;

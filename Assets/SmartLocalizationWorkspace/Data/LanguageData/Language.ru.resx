@@ -216,10 +216,10 @@
 		<value>приз</value>
 	</data>
 	<data name="Skill.CriticalSmashDescription" xml:space="preserve">
-		<value>{0}% шанс получить {1}% очков при разрушении</value>
+		<value>После серии разрушений, на {2} сек. появляется {0}% шанс получить {1}% очков при каждом разрушении</value>
 	</data>
 	<data name="Skill.CriticalSmashName" xml:space="preserve">
-		<value>Критическое разрушение</value>
+		<value>Где мои деньги?!</value>
 	</data>
 	<data name="Skill.CurrentLevel" xml:space="preserve">
 		<value>{0} / {1}</value>
@@ -228,16 +228,28 @@
 		<value>Текущий: {0}</value>
 	</data>
 	<data name="Skill.DamageAbsorptionDescription" xml:space="preserve">
-		<value>{0}% шанс поглотить {1}% входящего урона</value>
+		<value>После серии разрушений, на {2} сек. появляется {0}% шанс поглотить {1}% входящего урона</value>
 	</data>
 	<data name="Skill.DamageAbsorptionName" xml:space="preserve">
-		<value>Поглощение урона</value>
+		<value>Неприкасаемый</value>
 	</data>
 	<data name="Skill.Learn" xml:space="preserve">
 		<value>Изучить</value>
 	</data>
 	<data name="Skill.NextLevelDescription" xml:space="preserve">
 		<value>Следующий: {0}</value>
+	</data>
+	<data name="Skill.RefuseRateDecreaseDescription" xml:space="preserve">
+		<value>После серии разрушений есть {0}% шанс уменьшить вероятность отказа на {1}% на {2} сек.</value>
+	</data>
+	<data name="Skill.RefuseRateDecreaseName" xml:space="preserve">
+		<value>Братан</value>
+	</data>
+	<data name="Skill.SideSpeedBoostDescription" xml:space="preserve">
+		<value>После серии разрушений есть {0}% шанс получить +{1}% боковой скорости на {2} сек.</value>
+	</data>
+	<data name="Skill.SideSpeedBoostName" xml:space="preserve">
+		<value>В ударе</value>
 	</data>
 	<data name="SkillsScreen.AvailableSkillPoints" xml:space="preserve">
 		<value>Доступные очки: {0}</value>

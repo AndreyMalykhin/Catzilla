@@ -8,6 +8,7 @@ namespace Catzilla.SkillModule.Model {
         public int BaseId {get {return baseId;}}
         public float Chance {get {return chance;}}
         public float Factor {get {return factor;}}
+        public float Duration {get {return duration;}}
         public int Level {get {return level;}}
 
         [SerializeField]
@@ -24,5 +25,8 @@ namespace Catzilla.SkillModule.Model {
 
         [SerializeField]
         private float factor;
+
+        [SerializeField]
+        private float duration;
     }
 }

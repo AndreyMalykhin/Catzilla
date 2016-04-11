@@ -24,6 +24,8 @@ namespace Catzilla.SkillModule.View {
             container.Bind<SkillManager>().ToSingle();
             container.Bind<CriticalSmashSkillController>().ToSingle();
             container.Bind<DamageAbsorptionSkillController>().ToSingle();
+            container.Bind<SideSpeedBoostSkillController>().ToSingle();
+            container.Bind<RefuseRateDecreaseSkillController>().ToSingle();
             container.Bind<SkillsScreenView>().ToInstance(skillsScreen);
             container.Bind<SkillStorage>()
                 .ToSingleMethod((InjectContext context) => {
@@ -40,6 +42,12 @@ namespace Catzilla.SkillModule.View {
                     storage.Add(
                         SkillType.DamageAbsorption,
                         context.Container.Instantiate<DamageAbsorptionSkillHelper>());
+                    storage.Add(
+                        SkillType.SideSpeedBoost,
+                        context.Container.Instantiate<SideSpeedBoostSkillHelper>());
+                    storage.Add(
+                        SkillType.RefuseRateDecrease,
+                        context.Container.Instantiate<RefuseRateDecreaseSkillHelper>());
                     return storage;
                 });
         }
@@ -52,11 +60,29 @@ namespace Catzilla.SkillModule.View {
                 container.Resolve<CriticalSmashSkillController>();
             eventBus.On((int) Events.CriticalSmashSkillConstruct,
                 criticalSmashSkillController.OnConstruct);
+            eventBus.On((int) Events.PlayerSmashStreak,
+                criticalSmashSkillController.OnSmashStreak);
 
             var damageAbsorptionSkillController =
                 container.Resolve<DamageAbsorptionSkillController>();
             eventBus.On((int) Events.DamageAbsorptionSkillConstruct,
                 damageAbsorptionSkillController.OnConstruct);
+            eventBus.On((int) Events.PlayerSmashStreak,
+                damageAbsorptionSkillController.OnSmashStreak);
+
+            var sideSpeedBoostSkillController =
+                container.Resolve<SideSpeedBoostSkillController>();
+            eventBus.On((int) Events.SideSpeedBoostSkillConstruct,
+                sideSpeedBoostSkillController.OnConstruct);
+            eventBus.On((int) Events.PlayerSmashStreak,
+                sideSpeedBoostSkillController.OnSmashStreak);
+
+            var refuseRateDecreaseSkillController =
+                container.Resolve<RefuseRateDecreaseSkillController>();
+            eventBus.On((int) Events.RefuseRateDecreaseSkillConstruct,
+                refuseRateDecreaseSkillController.OnConstruct);
+            eventBus.On((int) Events.PlayerSmashStreak,
+                refuseRateDecreaseSkillController.OnSmashStreak);
 
             var skillsScreenController =
                 container.Resolve<SkillsScreenController>();

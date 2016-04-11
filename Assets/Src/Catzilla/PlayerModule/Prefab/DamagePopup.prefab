@@ -138,7 +138,7 @@ MonoBehaviour:
   showSound: {fileID: 0}
   preShowSound: {fileID: 0}
   audioSource: {fileID: 0}
-  autoHideDelay: 1
+  autoHideDelay: 2
   isAutoHideUnscaled: 0
 --- !u!1001 &100100000
 Prefab:

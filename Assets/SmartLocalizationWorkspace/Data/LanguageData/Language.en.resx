@@ -216,10 +216,10 @@
 		<value>reward</value>
 	</data>
 	<data name="Skill.CriticalSmashDescription" xml:space="preserve">
-		<value>{0}% chance to get {1}% score on smash</value>
+		<value>After smash streak, for {2} sec. there is a {0}% chance to get {1}% score on every smash</value>
 	</data>
 	<data name="Skill.CriticalSmashName" xml:space="preserve">
-		<value>Critical smash</value>
+		<value>Where ma money?!</value>
 	</data>
 	<data name="Skill.CurrentLevel" xml:space="preserve">
 		<value>{0} / {1}</value>
@@ -228,16 +228,28 @@
 		<value>Current: {0}</value>
 	</data>
 	<data name="Skill.DamageAbsorptionDescription" xml:space="preserve">
-		<value>{0}% change to absorb {1}% of incoming damage</value>
+		<value>After smash streak, for {2} sec. there is a {0}% chance to absorb {1}% of incoming damage</value>
 	</data>
 	<data name="Skill.DamageAbsorptionName" xml:space="preserve">
-		<value>Damage absorption</value>
+		<value>Can't touch this!</value>
 	</data>
 	<data name="Skill.Learn" xml:space="preserve">
 		<value>Learn</value>
 	</data>
 	<data name="Skill.NextLevelDescription" xml:space="preserve">
 		<value>Next: {0}</value>
+	</data>
+	<data name="Skill.RefuseRateDecreaseDescription" xml:space="preserve">
+		<value>After smash streak, there is a {0}% chance to decrease probability of refuse by {1}% for {2} sec.</value>
+	</data>
+	<data name="Skill.RefuseRateDecreaseName" xml:space="preserve">
+		<value>Homie</value>
+	</data>
+	<data name="Skill.SideSpeedBoostDescription" xml:space="preserve">
+		<value>After smash streak, there is a {0}% chance to gain +{1}% side speed for {2} sec.</value>
+	</data>
+	<data name="Skill.SideSpeedBoostName" xml:space="preserve">
+		<value>On a roll</value>
 	</data>
 	<data name="SkillsScreen.AvailableSkillPoints" xml:space="preserve">
 		<value>Available points: {0}</value>

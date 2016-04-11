@@ -119,6 +119,7 @@ namespace Catzilla.PlayerModule.Model {
                 .Append(' ')
                 .Append(translator.Translate("RewardBonus.Take"))
                 .ToString();
+            strBuilder.Length = 0;
             popup.LookAtTarget = player.Camera;
             popup.PlaceAbove(rewardBonus.Collider.bounds);
             popupManager.Show(popup);

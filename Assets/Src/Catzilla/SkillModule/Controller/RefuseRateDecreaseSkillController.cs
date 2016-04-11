@@ -5,12 +5,12 @@ using Catzilla.LevelObjectModule.View;
 using Catzilla.SkillModule.View;
 
 namespace Catzilla.SkillModule.Controller {
-    public class DamageAbsorptionSkillController {
-        private DamageAbsorptionSkillView skill;
+    public class RefuseRateDecreaseSkillController {
+        private RefuseRateDecreaseSkillView skill;
 
         public void OnConstruct(Evt evt) {
-            // DebugUtils.Log("DamageAbsorptionSkillController.OnConstruct()");
-            skill = (DamageAbsorptionSkillView) evt.Source;
+            // DebugUtils.Log("RefuseRateDecreaseSkillController.OnConstruct()");
+            skill = (RefuseRateDecreaseSkillView) evt.Source;
         }
 
         public void OnSmashStreak(Evt evt) {

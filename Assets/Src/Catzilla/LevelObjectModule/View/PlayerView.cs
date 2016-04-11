@@ -22,12 +22,12 @@ namespace Catzilla.LevelObjectModule.View {
         public delegate Attack AttackFilter(
             Attack attack, DamagingView source = null);
 
-        public event ScoreFilter OnScoreFilter {
+        public event ScoreFilter ScoreFilters {
             add {scoreFilters.Add(value);}
             remove {scoreFilters.Remove(value);}
         }
 
-        public event AttackFilter OnAttackFilter {
+        public event AttackFilter AttackFilters {
             add {attackFilters.Add(value);}
             remove {attackFilters.Remove(value);}
         }
@@ -71,12 +71,17 @@ namespace Catzilla.LevelObjectModule.View {
         public float FrontSpeed {
             get {return frontSpeed;}
             set {
-                frontSpeed = value;
+                frontSpeed = Mathf.Max(value, 0f);
 
                 if (Animator.isInitialized) {
                     Animator.SetFloat(frontSpeedParam, frontSpeed);
                 }
             }
+        }
+
+        public float SideSpeed {
+            get {return sideSpeed;}
+            set {sideSpeed = Mathf.Max(value, 0f);}
         }
 
         public int ActionsPerMinuteRank {
@@ -88,6 +93,11 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         public int DeathsCount {get {return deathsCount;}}
+
+        public float RefuseChance {
+            get {return refuseChance;}
+            set {refuseChance = Mathf.Max(value, 0);}
+        }
 
         public Collider Collider;
         public Camera Camera;
@@ -103,8 +113,10 @@ namespace Catzilla.LevelObjectModule.View {
         public AudioSource HighPrioAudioSource;
         public bool IsHealthFreezed;
         public bool IsScoreFreezed;
-        public float SideSpeed;
         public int MaxHealth;
+        public float BaseFrontSpeed;
+        public float BaseSideSpeed;
+        public float BaseRefuseChance;
 
         private static readonly int frontSpeedParam =
             Animator.StringToHash("FrontSpeed");
@@ -132,9 +144,6 @@ namespace Catzilla.LevelObjectModule.View {
 
         [SerializeField]
         private ValueShakerView[] cameraShakers;
-
-        [SerializeField]
-        private float refuseChance;
 
         [SerializeField]
         [Tooltip("In seconds")]
@@ -183,9 +192,11 @@ namespace Catzilla.LevelObjectModule.View {
         private float maxX;
         private float targetX;
         private float frontSpeed;
+        private float sideSpeed;
         private int actionsCount;
         private float creationTime;
         private bool isRefusing;
+        private float refuseChance;
         private int deathsCount;
         private int smashStreakLength;
         private int smashStreakScore;
@@ -214,6 +225,9 @@ namespace Catzilla.LevelObjectModule.View {
             speedChangeDelayWaiter = new WaitForSeconds(speedChangeDelay);
             speedCheckRateWaiter = new WaitForSeconds(speedCheckRate);
             refuseDelayWaiter = new WaitForSeconds(refuseDelay);
+            FrontSpeed = BaseFrontSpeed;
+            SideSpeed = BaseSideSpeed;
+            RefuseChance = BaseRefuseChance;
             HUD = instantiator.InstantiatePrefabForComponent<HUDView>(
                 hudProto.gameObject);
             eventBus.Fire((int) Events.PlayerConstruct, new Evt(this));
@@ -349,7 +363,7 @@ namespace Catzilla.LevelObjectModule.View {
 
         private IEnumerator Refuser() {
             // DebugUtils.Log("PlayerView.Refuser()");
-            if (refuseChance == 0f || refuseDuration == 0f) {
+            if (BaseRefuseChance == 0f || refuseDuration == 0f) {
                 yield break;
             }
 
@@ -436,7 +450,7 @@ namespace Catzilla.LevelObjectModule.View {
         private void Move() {
             Vector3 currentPosition = body.position;
             float newX = Mathf.MoveTowards(
-                currentPosition.x, targetX, SideSpeed * Time.deltaTime);
+                currentPosition.x, targetX, sideSpeed * Time.deltaTime);
             float newZ = currentPosition.z + frontSpeed * Time.deltaTime;
             body.MovePosition(new Vector3(newX, currentPosition.y, newZ));
         }

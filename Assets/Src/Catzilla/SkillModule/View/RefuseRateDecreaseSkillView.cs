@@ -6,13 +6,17 @@ using Catzilla.LevelObjectModule.View;
 using Catzilla.SkillModule.Model;
 
 namespace Catzilla.SkillModule.View {
-    public class DamageAbsorptionSkillView: MonoBehaviour {
+    public class RefuseRateDecreaseSkillView: MonoBehaviour {
+        public float Chance {
+            get {return temporary.Chance;}
+            set {temporary.Chance = value;}
+        }
+
         public float Duration {
             get {return temporary.Duration;}
             set {temporary.Duration = value;}
         }
 
-        public float Chance;
         public float Factor;
 
         [Inject]
@@ -24,9 +28,8 @@ namespace Catzilla.SkillModule.View {
         [PostInject]
         public void OnConstruct() {
             temporary = new TemporarySkill(this, Activate, "Deactivate");
-            temporary.Chance = 1f;
             eventBus.Fire(
-                (int) Events.DamageAbsorptionSkillConstruct, new Evt(this));
+                (int) Events.RefuseRateDecreaseSkillConstruct, new Evt(this));
         }
 
         public void Init(PlayerView player) {
@@ -38,26 +41,17 @@ namespace Catzilla.SkillModule.View {
         }
 
         private void Activate() {
-            // DebugUtils.Log("DamageAbsorptionSkillView.Activate()");
-            player.AttackFilters += FilterAttack;
+            // DebugUtils.Log("RefuseRateDecreaseSkillView.Activate()");
+            player.RefuseChance -= GetRefuseChanceDelta();
         }
 
         private void Deactivate() {
-            // DebugUtils.Log("DamageAbsorptionSkillView.Deactivate()");
-            player.AttackFilters -= FilterAttack;
+            // DebugUtils.Log("RefuseRateDecreaseSkillView.Deactivate()");
+            player.RefuseChance += GetRefuseChanceDelta();
         }
 
-        private Attack FilterAttack(
-            Attack attack, DamagingView source = null) {
-            // DebugUtils.Log("DamageAbsorptionSkillView.FilterAttack()");
-            if (source != null && UnityEngine.Random.value <= Chance) {
-                int damage = attack.Damage;
-                attack.Damage = damage - Mathf.RoundToInt(damage * Factor);
-                attack.Status = AttackStatus.Absorb;
-                return attack;
-            }
-
-            return attack;
+        private float GetRefuseChanceDelta() {
+            return player.BaseRefuseChance * Factor;
         }
     }
 }

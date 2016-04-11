@@ -45,6 +45,8 @@ namespace Catzilla.CommonModule.Util {
         HUDNotificationsConstruct,
         CriticalSmashSkillConstruct,
         SkillListItemLearnBtnClick,
-        DamageAbsorptionSkillConstruct
+        DamageAbsorptionSkillConstruct,
+        SideSpeedBoostSkillConstruct,
+        RefuseRateDecreaseSkillConstruct
     }
 }

@@ -13,12 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   completionScoreLevelFactor: 1024
   minCompletionScore: 6144
-  playerMinFrontSpeed: 8
-  playerMaxFrontSpeed: 8
-  playerFrontSpeedLevelFactor: 0
-  playerMinSideSpeed: 4
-  playerMaxSideSpeed: 4
-  playerSideSpeedLevelFactor: 0
   resurrectionMinReward: 1
   resurrectionRewardLevelFactor: 0
   itemsParams:
@@ -78,7 +72,7 @@ MonoBehaviour:
       spawnChance: 0.75
     - objectType: 2
       minSpawnsPerArea: 1
-      maxSpawnsPerArea: 3
+      maxSpawnsPerArea: 2
       spawnChance: 0.75
     - objectType: 8
       minSpawnsPerArea: 1
@@ -130,7 +124,7 @@ MonoBehaviour:
       maxSpawnsPerArea: 1
       spawnChance: 0.75
     - objectType: 7
-      minSpawnsPerArea: 2
+      minSpawnsPerArea: 1
       maxSpawnsPerArea: 2
       spawnChance: 0.75
     - objectType: 13
@@ -179,8 +173,8 @@ MonoBehaviour:
       maxSpawnsPerArea: 1
       spawnChance: 0.75
     - objectType: 7
-      minSpawnsPerArea: 5
-      maxSpawnsPerArea: 5
+      minSpawnsPerArea: 3
+      maxSpawnsPerArea: 4
       spawnChance: 0.75
     - objectType: 13
       minSpawnsPerArea: 1

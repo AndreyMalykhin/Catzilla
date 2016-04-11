@@ -21,24 +21,6 @@ namespace Catzilla.LevelModule.Model {
         private int minCompletionScore = 2048;
 
         [SerializeField]
-        private float playerMinFrontSpeed = 4f;
-
-        [SerializeField]
-        private float playerMaxFrontSpeed = 8f;
-
-        [SerializeField]
-        private float playerFrontSpeedLevelFactor = 0.1f;
-
-        [SerializeField]
-        private float playerMinSideSpeed = 4f;
-
-        [SerializeField]
-        private float playerMaxSideSpeed = 8f;
-
-        [SerializeField]
-        private float playerSideSpeedLevelFactor = 0.1f;
-
-        [SerializeField]
         private int resurrectionMinReward = 1;
 
         [SerializeField]
@@ -67,10 +49,6 @@ namespace Catzilla.LevelModule.Model {
             float completionScore = minCompletionScore + extraScore;
             float resurrectionReward = resurrectionMinReward + levelIndex *
                 resurrectionRewardLevelFactor;
-            float playerFrontSpeed = Mathf.Min(playerMinFrontSpeed +
-                levelIndex * playerFrontSpeedLevelFactor, playerMaxFrontSpeed);
-            float playerSideSpeed = Mathf.Min(playerMinSideSpeed +
-                levelIndex * playerSideSpeedLevelFactor, playerMaxSideSpeed);
 
             if (levelIndex >= itemsParams.Length) {
                 levelIndex = itemsParams.Length - 1;
@@ -90,8 +68,6 @@ namespace Catzilla.LevelModule.Model {
                 levelIndex,
                 (int) completionScore,
                 (int) extraScore,
-                playerFrontSpeed,
-                playerSideSpeed,
                 (int) resurrectionReward,
                 objectSettingsMap);
         }

@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048449710b6e843bbaa59a4284f433be, type: 3}
   m_Name: PlayerStateStorageStub
   m_EditorClassIdentifier: 
-  level: 0
+  level: 6
   availableResurrectionsCount: 0
   availableRewardsCount: 0
-  availableSkillPointsCount: 2
+  availableSkillPointsCount: 8
   wasTutorialShown: 1
