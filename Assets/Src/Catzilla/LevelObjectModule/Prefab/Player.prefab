@@ -877,6 +877,10 @@ MonoBehaviour:
   BaseFrontSpeed: 8
   BaseSideSpeed: 4
   BaseRefuseChance: 0.25
+  BaseCriticalScoreChance: 0
+  BaseCriticalScoreFactor: 0
+  BaseDamageAbsorbChance: 0
+  BaseDamageAbsorbFactor: 0
   body: {fileID: 5462906}
   hudProto: {fileID: 11463448, guid: 9ed9749da291d414e9f1dc4f398ece7f, type: 2}
   envLayer:

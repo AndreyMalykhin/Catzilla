@@ -216,7 +216,7 @@
 		<value>приз</value>
 	</data>
 	<data name="Skill.CriticalSmashDescription" xml:space="preserve">
-		<value>После серии разрушений, на {2} сек. появляется {0}% шанс получить {1}% очков при каждом разрушении</value>
+		<value>После серии разрушений, на {2} сек. появляется {0}% шанс получить +{1}% очков при каждом разрушении</value>
 	</data>
 	<data name="Skill.CriticalSmashName" xml:space="preserve">
 		<value>Где мои деньги?!</value>
@@ -239,11 +239,35 @@
 	<data name="Skill.NextLevelDescription" xml:space="preserve">
 		<value>Следующий: {0}</value>
 	</data>
+	<data name="Skill.PermanentCriticalSmashDescription" xml:space="preserve">
+		<value>{0}% шанс получить +{1}% очков при разрушении</value>
+	</data>
+	<data name="Skill.PermanentCriticalSmashName" xml:space="preserve">
+		<value>Прибыльное дело</value>
+	</data>
+	<data name="Skill.PermanentDamageAbsorptionDescription" xml:space="preserve">
+		<value>{0}% шанс поглотить {1}% входящего урона</value>
+	</data>
+	<data name="Skill.PermanentDamageAbsorptionName" xml:space="preserve">
+		<value>Руки прочь!</value>
+	</data>
+	<data name="Skill.PermanentRefuseRateDecreaseDescription" xml:space="preserve">
+		<value>Шанс отказа уменьшается на {0}%</value>
+	</data>
+	<data name="Skill.PermanentRefuseRateDecreaseName" xml:space="preserve">
+		<value>Сытый и довольный</value>
+	</data>
+	<data name="Skill.PermanentSideSpeedBoostDescription" xml:space="preserve">
+		<value>+{0}% боковой скорости</value>
+	</data>
+	<data name="Skill.PermanentSideSpeedBoostName" xml:space="preserve">
+		<value>Новенькие ботинки</value>
+	</data>
 	<data name="Skill.RefuseRateDecreaseDescription" xml:space="preserve">
 		<value>После серии разрушений есть {0}% шанс уменьшить вероятность отказа на {1}% на {2} сек.</value>
 	</data>
 	<data name="Skill.RefuseRateDecreaseName" xml:space="preserve">
-		<value>Братан</value>
+		<value>Все для победы</value>
 	</data>
 	<data name="Skill.SideSpeedBoostDescription" xml:space="preserve">
 		<value>После серии разрушений есть {0}% шанс получить +{1}% боковой скорости на {2} сек.</value>

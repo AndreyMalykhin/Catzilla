@@ -77,17 +77,20 @@ namespace Catzilla.SkillModule.Model {
 
                 for (int j = 0; j < derivedSkills.Length; ++j) {
                     Skill skill = derivedSkills[j];
+                    DebugUtils.Assert(skill.BaseId == baseSkill.Id);
                     skillsMap.Add(skill.Id, skill);
                 }
             }
+
+            Array.Sort(baseSkillsList, BaseSkillComparer);
         }
 
         private int SkillComparer(Skill lhs, Skill rhs) {
-            if (lhs.Level == rhs.Level) {
-                return 0;
-            }
+            return lhs.Level.CompareTo(rhs.Level);
+        }
 
-            return lhs.Level < rhs.Level ? -1 : 1;
+        private int BaseSkillComparer(BaseSkill lhs, BaseSkill rhs) {
+            return lhs.Order.CompareTo(rhs.Order);
         }
     }
 }

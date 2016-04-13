@@ -38,25 +38,13 @@ namespace Catzilla.SkillModule.View {
         }
 
         private void Activate() {
-            player.ScoreFilters += FilterScore;
+            player.CriticalScoreChance += Chance;
+            player.CriticalScoreFactor += Factor;
         }
 
         private void Deactivate() {
-            player.ScoreFilters -= FilterScore;
-        }
-
-        private CriticalValue FilterScore(
-            CriticalValue score, ScoreableView source = null) {
-            // DebugUtils.Log("CriticalSmashSkillView.FilterScore()");
-            if (source != null
-                && UnityEngine.Random.value <= Chance
-                && source.GetComponent<SmashableView>() != null) {
-                bool isCritical = true;
-                return new CriticalValue(
-                    Mathf.RoundToInt(score * Factor), isCritical);
-            }
-
-            return score;
+            player.CriticalScoreChance -= Chance;
+            player.CriticalScoreFactor -= Factor;
         }
     }
 }

@@ -234,6 +234,8 @@ namespace Catzilla.CommonModule.View {
                 analyticsController.OnPlayerConstruct);
             eventBus.On((int) Events.AppStart,
                 analyticsController.OnAppStart);
+            eventBus.On((int) Events.SkillListItemLearnBtnClick,
+                analyticsController.OnSkillListItemLearnBtnClick);
             var mainScreen = container.Resolve<MainScreenView>();
             mainScreen.FeedbackBtn.onClick.AddListener(
                 analyticsController.OnMainScreenFeedbackBtnClick);

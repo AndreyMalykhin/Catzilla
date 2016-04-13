@@ -39,25 +39,14 @@ namespace Catzilla.SkillModule.View {
 
         private void Activate() {
             // DebugUtils.Log("DamageAbsorptionSkillView.Activate()");
-            player.AttackFilters += FilterAttack;
+            player.DamageAbsorbChance += Chance;
+            player.DamageAbsorbFactor += Factor;
         }
 
         private void Deactivate() {
             // DebugUtils.Log("DamageAbsorptionSkillView.Deactivate()");
-            player.AttackFilters -= FilterAttack;
-        }
-
-        private Attack FilterAttack(
-            Attack attack, DamagingView source = null) {
-            // DebugUtils.Log("DamageAbsorptionSkillView.FilterAttack()");
-            if (source != null && UnityEngine.Random.value <= Chance) {
-                int damage = attack.Damage;
-                attack.Damage = damage - Mathf.RoundToInt(damage * Factor);
-                attack.Status = AttackStatus.Absorb;
-                return attack;
-            }
-
-            return attack;
+            player.DamageAbsorbChance -= Chance;
+            player.DamageAbsorbFactor -= Factor;
         }
     }
 }

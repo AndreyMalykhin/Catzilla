@@ -93,10 +93,18 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         public int DeathsCount {get {return deathsCount;}}
+        public float RefuseChance {get; set;}
+        public float CriticalScoreChance {get; set;}
+        public float DamageAbsorbChance {get; set;}
 
-        public float RefuseChance {
-            get {return refuseChance;}
-            set {refuseChance = Mathf.Max(value, 0);}
+        public float DamageAbsorbFactor {
+            get {return damageAbsorbFactor;}
+            set {damageAbsorbFactor = Mathf.Clamp(value, 0f, 1f);}
+        }
+
+        public float CriticalScoreFactor {
+            get {return criticalScoreFactor;}
+            set {criticalScoreFactor = Mathf.Max(value, 0f);}
         }
 
         public Collider Collider;
@@ -117,6 +125,10 @@ namespace Catzilla.LevelObjectModule.View {
         public float BaseFrontSpeed;
         public float BaseSideSpeed;
         public float BaseRefuseChance;
+        public float BaseCriticalScoreChance;
+        public float BaseCriticalScoreFactor;
+        public float BaseDamageAbsorbChance;
+        public float BaseDamageAbsorbFactor;
 
         private static readonly int frontSpeedParam =
             Animator.StringToHash("FrontSpeed");
@@ -196,10 +208,11 @@ namespace Catzilla.LevelObjectModule.View {
         private int actionsCount;
         private float creationTime;
         private bool isRefusing;
-        private float refuseChance;
         private int deathsCount;
         private int smashStreakLength;
         private int smashStreakScore;
+        private float damageAbsorbFactor;
+        private float criticalScoreFactor;
         private WaitForSeconds refuseCheckRateWaiter;
         private WaitForSeconds refuseDurationWaiter;
         private WaitForSeconds speedChangeDelayWaiter;
@@ -228,6 +241,10 @@ namespace Catzilla.LevelObjectModule.View {
             FrontSpeed = BaseFrontSpeed;
             SideSpeed = BaseSideSpeed;
             RefuseChance = BaseRefuseChance;
+            CriticalScoreChance = BaseCriticalScoreChance;
+            CriticalScoreFactor = BaseCriticalScoreFactor;
+            DamageAbsorbChance = BaseDamageAbsorbChance;
+            DamageAbsorbFactor = BaseDamageAbsorbFactor;
             HUD = instantiator.InstantiatePrefabForComponent<HUDView>(
                 hudProto.gameObject);
             eventBus.Fire((int) Events.PlayerConstruct, new Evt(this));
@@ -254,7 +271,15 @@ namespace Catzilla.LevelObjectModule.View {
 
         public Attack FilterAttack(Attack attack, DamagingView source = null) {
             if (IsHealthFreezed || isDead) {
-                return new Attack{Damage = 0, Status = AttackStatus.Fail};
+                return new Attack{Status = AttackStatus.Fail};
+            }
+
+            if (attack.Status != AttackStatus.Absorb
+                && UnityEngine.Random.value <= DamageAbsorbChance
+                && source != null) {
+                attack.Damage -=
+                    Mathf.RoundToInt(attack.Damage * damageAbsorbFactor);
+                attack.Status = AttackStatus.Absorb;
             }
 
             for (int i = 0; i < attackFilters.Count; ++i) {
@@ -267,7 +292,16 @@ namespace Catzilla.LevelObjectModule.View {
         public CriticalValue FilterScore(
             CriticalValue score, ScoreableView source = null) {
             if (IsScoreFreezed || isDead) {
-                return 0;
+                return new CriticalValue();
+            }
+
+            if (!score.IsCritical
+                && UnityEngine.Random.value <= CriticalScoreChance
+                && source != null
+                && source.GetComponent<SmashableView>() != null) {
+                score.IsCritical = true;
+                score.Value =
+                    Mathf.RoundToInt(score.Value * (1f + criticalScoreFactor));
             }
 
             for (int i = 0; i < scoreFilters.Count; ++i) {
@@ -312,13 +346,18 @@ namespace Catzilla.LevelObjectModule.View {
 
             int extraScore = (int) (smashStreakScore *
                 smashStreakLength * smashStreakScoreLengthFactor);
-            smashStreakBuffer.Length = smashStreakLength;
-            smashStreakBuffer.ExtraScore = extraScore;
-            ResetSmashStreak();
-            eventBus.Fire((int) Events.PlayerSmashStreak,
-                new Evt(this, smashStreakBuffer));
             ScoreableView scoreSource = null;
-            Score += FilterScore(extraScore, scoreSource);
+            extraScore = FilterScore(extraScore, scoreSource);
+
+            if (extraScore > 0) {
+                smashStreakBuffer.Length = smashStreakLength;
+                smashStreakBuffer.ExtraScore = extraScore;
+                eventBus.Fire((int) Events.PlayerSmashStreak,
+                    new Evt(this, smashStreakBuffer));
+                Score += extraScore;
+            }
+
+            ResetSmashStreak();
         }
 
         private void ResetSmashStreak() {
@@ -370,7 +409,7 @@ namespace Catzilla.LevelObjectModule.View {
             yield return refuseDelayWaiter;
 
             while (true) {
-                isRefusing = UnityEngine.Random.value <= refuseChance;
+                isRefusing = UnityEngine.Random.value <= RefuseChance;
 
                 if (isRefusing) {
                     targetX = -targetX;

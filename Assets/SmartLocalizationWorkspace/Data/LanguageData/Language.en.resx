@@ -216,7 +216,7 @@
 		<value>reward</value>
 	</data>
 	<data name="Skill.CriticalSmashDescription" xml:space="preserve">
-		<value>After smash streak, for {2} sec. there is a {0}% chance to get {1}% score on every smash</value>
+		<value>After smash streak, for {2} sec. there is a {0}% chance to get +{1}% score on every smash</value>
 	</data>
 	<data name="Skill.CriticalSmashName" xml:space="preserve">
 		<value>Where ma money?!</value>
@@ -239,14 +239,38 @@
 	<data name="Skill.NextLevelDescription" xml:space="preserve">
 		<value>Next: {0}</value>
 	</data>
+	<data name="Skill.PermanentCriticalSmashDescription" xml:space="preserve">
+		<value>{0}% chance to get +{1}% score on smash</value>
+	</data>
+	<data name="Skill.PermanentCriticalSmashName" xml:space="preserve">
+		<value>Moneymaker</value>
+	</data>
+	<data name="Skill.PermanentDamageAbsorptionDescription" xml:space="preserve">
+		<value>{0}% chance to absorb {1}% of incoming damage</value>
+	</data>
+	<data name="Skill.PermanentDamageAbsorptionName" xml:space="preserve">
+		<value>Get your hands off!</value>
+	</data>
+	<data name="Skill.PermanentRefuseRateDecreaseDescription" xml:space="preserve">
+		<value>Chance of refuse decreases by {0}%</value>
+	</data>
+	<data name="Skill.PermanentRefuseRateDecreaseName" xml:space="preserve">
+		<value>Well-fed and contended</value>
+	</data>
+	<data name="Skill.PermanentSideSpeedBoostDescription" xml:space="preserve">
+		<value>+{0}% side speed</value>
+	</data>
+	<data name="Skill.PermanentSideSpeedBoostName" xml:space="preserve">
+		<value>Brand-new boots</value>
+	</data>
 	<data name="Skill.RefuseRateDecreaseDescription" xml:space="preserve">
 		<value>After smash streak, there is a {0}% chance to decrease probability of refuse by {1}% for {2} sec.</value>
 	</data>
 	<data name="Skill.RefuseRateDecreaseName" xml:space="preserve">
-		<value>Homie</value>
+		<value>Anything to win</value>
 	</data>
 	<data name="Skill.SideSpeedBoostDescription" xml:space="preserve">
-		<value>After smash streak, there is a {0}% chance to gain +{1}% side speed for {2} sec.</value>
+		<value>After smash streak, there is a {0}% chance to get +{1}% side speed for {2} sec.</value>
 	</data>
 	<data name="Skill.SideSpeedBoostName" xml:space="preserve">
 		<value>On a roll</value>

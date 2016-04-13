@@ -9,6 +9,7 @@ namespace Catzilla.SkillModule.Model {
         public string Name {get {return name;}}
         public string Description {get {return description;}}
         public Sprite Img {get {return img;}}
+        public int Order {get {return order;}}
 
         [SerializeField]
         private int id;
@@ -24,5 +25,8 @@ namespace Catzilla.SkillModule.Model {
 
         [SerializeField]
         private string description;
+
+        [SerializeField]
+        private int order;
     }
 }

@@ -149,6 +149,8 @@ namespace Catzilla.PlayerModule.Model {
                 new Evt(this, player));
             player.IsHealthFreezed = true;
             player.IsScoreFreezed = true;
+            player.FrontSpeed = 0f;
+            player.SideSpeed = 0f;
             PlayerState playerState = playerStateStorage.Get();
             EnsureAchievement(playerState);
             ++playerState.Level;

@@ -63,7 +63,6 @@ namespace Catzilla.CommonModule.Controller {
             LogEvent("Replays.View");
         }
 
-
         public void OnMainScreenSkillsBtnClick() {
             LogEvent("Skills.View");
         }
@@ -78,6 +77,12 @@ namespace Catzilla.CommonModule.Controller {
 
         public void OnLevelCompleteScreenShareBtnClick() {
             LogEvent("Replay.Share");
+        }
+
+        public void OnSkillListItemLearnBtnClick(Evt evt) {
+            var skillId = (int) evt.Data;
+            AnalyticsUtils.AddCategorizedEventParam("Id", skillId);
+            LogEvent("Skill.Learn");
         }
 
         public void OnAppStart(Evt evt) {

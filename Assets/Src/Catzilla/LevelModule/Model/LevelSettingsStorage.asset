@@ -38,7 +38,7 @@ MonoBehaviour:
       maxSpawnsPerArea: 4
       spawnChance: 0.75
     - objectType: 2
-      minSpawnsPerArea: 3
+      minSpawnsPerArea: 2
       maxSpawnsPerArea: 4
       spawnChance: 0.75
     - objectType: 8
@@ -259,7 +259,7 @@ MonoBehaviour:
       maxSpawnsPerArea: 1
       spawnChance: 0.25
     - objectType: 10
-      minSpawnsPerArea: 3
+      minSpawnsPerArea: 2
       maxSpawnsPerArea: 3
       spawnChance: 0.75
   - ObjectSettings:
@@ -294,11 +294,11 @@ MonoBehaviour:
     - objectType: 2
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
-      spawnChance: 0.5
+      spawnChance: 0.25
     - objectType: 10
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
-      spawnChance: 0.5
+      spawnChance: 0.25
     - objectType: 7
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1

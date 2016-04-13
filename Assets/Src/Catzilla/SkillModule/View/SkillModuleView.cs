@@ -40,14 +40,26 @@ namespace Catzilla.SkillModule.View {
                         SkillType.CriticalSmash,
                         context.Container.Instantiate<CriticalSmashSkillHelper>());
                     storage.Add(
+                        SkillType.PermanentCriticalSmash,
+                        context.Container.Instantiate<PermanentCriticalSmashSkillHelper>());
+                    storage.Add(
                         SkillType.DamageAbsorption,
                         context.Container.Instantiate<DamageAbsorptionSkillHelper>());
+                    storage.Add(
+                        SkillType.PermanentDamageAbsorption,
+                        context.Container.Instantiate<PermanentDamageAbsorptionSkillHelper>());
                     storage.Add(
                         SkillType.SideSpeedBoost,
                         context.Container.Instantiate<SideSpeedBoostSkillHelper>());
                     storage.Add(
+                        SkillType.PermanentSideSpeedBoost,
+                        context.Container.Instantiate<PermanentSideSpeedBoostSkillHelper>());
+                    storage.Add(
                         SkillType.RefuseRateDecrease,
                         context.Container.Instantiate<RefuseRateDecreaseSkillHelper>());
+                    storage.Add(
+                        SkillType.PermanentRefuseRateDecrease,
+                        context.Container.Instantiate<PermanentRefuseRateDecreaseSkillHelper>());
                     return storage;
                 });
         }
