@@ -115,6 +115,7 @@ namespace Catzilla.CommonModule.View {
             container.Bind<GameController>().ToSingle();
             container.Bind<EveryplayController>().ToSingle();
             container.Bind<AnalyticsController>().ToSingle();
+            container.Bind<UIBlockerController>().ToSingle();
             container.Bind<PoolStorageView>().ToInstance(poolStorage);
             container.Bind<UIView>().ToInstance(ui);
             container.Bind<CoroutineManagerView>().ToInstance(coroutineManager);
@@ -261,6 +262,12 @@ namespace Catzilla.CommonModule.View {
             ad.OnView += analyticsController.OnAdView;
             var authManager = container.Resolve<AuthManager>();
             authManager.OnLoginSuccess += analyticsController.OnLogin;
+
+            var uiBlockerController = container.Resolve<UIBlockerController>();
+            eventBus.On((int) Events.ServerRequest,
+                uiBlockerController.OnServerRequest);
+            eventBus.On((int) Events.ServerResponse,
+                uiBlockerController.OnServerResponse);
         }
     }
 }

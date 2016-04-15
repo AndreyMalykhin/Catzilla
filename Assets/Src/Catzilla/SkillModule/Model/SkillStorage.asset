@@ -31,19 +31,19 @@ MonoBehaviour:
       level: 1
       chance: 0.08
       factor: 0.5
-      duration: 8
+      duration: 9
     - id: 2
       baseId: 0
       level: 2
       chance: 0.12
       factor: 0.5
-      duration: 8
+      duration: 10
     - id: 3
       baseId: 0
       level: 3
       chance: 0.16
       factor: 0.5
-      duration: 8
+      duration: 12
   - BaseSkill:
       id: 1
       type: 1
@@ -55,27 +55,27 @@ MonoBehaviour:
     - id: 4
       baseId: 1
       level: 0
-      chance: 0.04
+      chance: 0.05
       factor: 1
       duration: 8
     - id: 5
       baseId: 1
       level: 1
-      chance: 0.08
+      chance: 0.1
       factor: 1
-      duration: 8
+      duration: 9
     - id: 6
       baseId: 1
       level: 2
-      chance: 0.12
+      chance: 0.15
       factor: 1
-      duration: 8
+      duration: 10
     - id: 7
       baseId: 1
       level: 3
-      chance: 0.16
+      chance: 0.22
       factor: 1
-      duration: 8
+      duration: 12
   - BaseSkill:
       id: 2
       type: 2
@@ -95,19 +95,19 @@ MonoBehaviour:
       level: 1
       chance: 1
       factor: 0.08
-      duration: 8
+      duration: 9
     - id: 10
       baseId: 2
       level: 2
       chance: 1
       factor: 0.12
-      duration: 8
+      duration: 10
     - id: 11
       baseId: 2
       level: 3
       chance: 1
       factor: 0.16
-      duration: 8
+      duration: 12
   - BaseSkill:
       id: 3
       type: 3
@@ -127,19 +127,19 @@ MonoBehaviour:
       level: 1
       chance: 1
       factor: 0.16
-      duration: 8
+      duration: 9
     - id: 14
       baseId: 3
       level: 2
       chance: 1
       factor: 0.24
-      duration: 8
+      duration: 10
     - id: 15
       baseId: 3
       level: 3
       chance: 1
       factor: 0.32
-      duration: 8
+      duration: 12
   - BaseSkill:
       id: 4
       type: 4
@@ -201,7 +201,7 @@ MonoBehaviour:
     - id: 23
       baseId: 5
       level: 3
-      chance: 0.08
+      chance: 0.1
       factor: 1
       duration: 0
   - BaseSkill:

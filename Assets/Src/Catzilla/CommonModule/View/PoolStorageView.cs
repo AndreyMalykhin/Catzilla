@@ -93,7 +93,7 @@ namespace Catzilla.CommonModule.View {
                 for (int j = 0; j < instances.Count; ++j) {
                     var instance = instances[j];
 
-                    if (instance == null) {
+                    if (instance == null || instance.gameObject == null) {
                         continue;
                     }
 

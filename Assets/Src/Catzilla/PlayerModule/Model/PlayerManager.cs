@@ -170,6 +170,10 @@ namespace Catzilla.PlayerModule.Model {
                     playerHighPrioAudioChannel);
             }
 
+            ShowGameOverScreen(playerState);
+        }
+
+        private void ShowGameOverScreen(PlayerState playerState) {
             var gameOverScreenShowable =
                 gameOverScreen.GetComponent<ShowableView>();
             Action<ShowableView> gameOverScreenShowHandler;

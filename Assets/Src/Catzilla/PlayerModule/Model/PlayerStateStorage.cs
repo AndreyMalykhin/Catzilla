@@ -75,7 +75,7 @@ namespace Catzilla.PlayerModule.Model {
 
                     if (remotePlayer != null
                         && remotePlayer.PlayTime > localPlayer.PlayTime) {
-                        Player = remotePlayer;
+                        Save(remotePlayer);
                         if (onSuccess != null) onSuccess();
                         return;
                     }

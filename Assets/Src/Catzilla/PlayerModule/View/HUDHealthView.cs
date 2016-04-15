@@ -49,7 +49,7 @@ namespace Catzilla.PlayerModule.View {
         }
 
         private void Awake() {
-            slider.value = 0f;
+            slider.value = slider.maxValue;
         }
     }
 }

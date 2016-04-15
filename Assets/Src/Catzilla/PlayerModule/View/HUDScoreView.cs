@@ -42,7 +42,9 @@ namespace Catzilla.PlayerModule.View {
         private void Render() {
             Profiler.BeginSample("HUDScoreView.Render()");
             text.text = strBuilder.Append(value)
-                .Append(" / ").Append(maxValue).ToString();
+                .Append("/")
+                .Append(maxValue)
+                .ToString();
             strBuilder.Length = 0;
             Profiler.EndSample();
         }

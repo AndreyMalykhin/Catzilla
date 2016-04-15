@@ -135,7 +135,7 @@
 		<value>Лидеры</value>
 	</data>
 	<data name="GameOverMenu.Restart" xml:space="preserve">
-		<value>Играть снова</value>
+		<value>Играть заново</value>
 	</data>
 	<data name="GameOverMenu.Resurrect" xml:space="preserve">
 		<value>Воскресить ({0})</value>
@@ -165,7 +165,7 @@
 		<value>Достижения</value>
 	</data>
 	<data name="MainMenu.Company" xml:space="preserve">
-		<value>от Mr. M</value>
+		<value>от Mr.M</value>
 	</data>
 	<data name="MainMenu.Exit" xml:space="preserve">
 		<value>Выйти</value>
@@ -202,9 +202,6 @@
 	</data>
 	<data name="Player.Refuse" xml:space="preserve">
 		<value>Мяу!</value>
-	</data>
-	<data name="Player.Score" xml:space="preserve">
-		<value>{0} / {1}</value>
 	</data>
 	<data name="Player.SmashStreak" xml:space="preserve">
 		<value>СЕРИЯ РАЗРУШЕНИЙ!</value>
@@ -300,7 +297,7 @@
 		<value>Это твои текущие очки и необходимые для нового уровня, разрушь что-нибудь, чтобы заработать немного</value>
 	</data>
 	<data name="TutorialScreen.Step5" xml:space="preserve">
-		<value>Иногда персонаж не будет тебя слушать... да, он упрям... просто будь настойчивее</value>
+		<value>Иногда персонаж будет отказываться слушать тебя... да, он упрям... просто будь настойчивее</value>
 	</data>
 	<data name="TutorialScreen.Step6" xml:space="preserve">
 		<value>Вот и все, приятель, главное не используй жесты и все будет хорошо... наверное</value>

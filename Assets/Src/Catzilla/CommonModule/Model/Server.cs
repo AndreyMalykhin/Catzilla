@@ -85,7 +85,7 @@ namespace Catzilla.CommonModule.Model {
                 }
 
                 string jsonPlayer = JsonUtility.ToJson(player);
-                DebugUtils.Log("Server.SavePlayer(); player={0}", jsonPlayer);
+                // DebugUtils.Log("Server.SavePlayer(); player={0}", jsonPlayer);
                 byte[] binaryPlayer = Encoding.UTF8.GetBytes(jsonPlayer);
                 SavedGameMetadataUpdate metadataUpdate =
                     new SavedGameMetadataUpdate.Builder()

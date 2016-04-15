@@ -13,33 +13,23 @@ namespace Catzilla.CommonModule.Model {
         [Inject]
         private PlayerStateStorage playerStateStorage;
 
-        [Inject]
-        private UIBlockerView uiBlocker;
-
         public void Login() {
             if (server.IsLoggedIn) {
                 FireLoginSuccessEvent();
                 return;
             }
 
-            var showable = uiBlocker.GetComponent<ShowableView>();
-            showable.Show();
             server.Login(
                 () => {
                     playerStateStorage.Sync(
                         server,
                         () => {
-                            showable.Hide();
                             FireLoginSuccessEvent();
                         },
                         () => {
-                            showable.Hide();
                             FireLoginSuccessEvent();
                         }
                     );
-                },
-                () => {
-                    showable.Hide();
                 }
             );
         }

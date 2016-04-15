@@ -211,13 +211,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f494f5c66184f8d97344cf9c511a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoHideDelay: 0
   animator: {fileID: 9558956}
+  deactivatable: {fileID: 0}
   isShowAnimated: 1
   isHideAnimated: 1
   showSound: {fileID: 0}
   preShowSound: {fileID: 0}
   audioSource: {fileID: 0}
+  autoHideDelay: 0
+  isAutoHideUnscaled: 0
 --- !u!114 &11441638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -497,7 +499,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -64, y: -64}
+  m_SizeDelta: {x: -32, y: -32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22429622
 RectTransform:

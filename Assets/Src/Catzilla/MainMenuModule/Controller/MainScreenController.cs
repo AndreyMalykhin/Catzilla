@@ -79,13 +79,13 @@ namespace Catzilla.MainMenuModule.Controller {
         }
 
         private void OnLoginForLeaderboard(AuthManager authManager) {
-            authManager.OnLoginSuccess += OnLoginForLeaderboard;
+            authManager.OnLoginSuccess -= OnLoginForLeaderboard;
             OnLogin(authManager);
             Social.ShowLeaderboardUI();
         }
 
         private void OnLoginForAchievements(AuthManager authManager) {
-            authManager.OnLoginSuccess += OnLoginForAchievements;
+            authManager.OnLoginSuccess -= OnLoginForAchievements;
             OnLogin(authManager);
             Social.ShowAchievementsUI();
         }

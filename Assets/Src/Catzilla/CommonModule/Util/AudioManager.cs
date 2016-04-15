@@ -46,8 +46,8 @@ namespace Catzilla.CommonModule.Util {
             audioSource.clip = sound;
             audioSource.pitch = pitch;
             audioSource.Play();
-            recentPlays[channelId][freeSlot] =
-                new RecentPlay{Source = audioSource, Time = Time.time};
+            recentPlays[channelId][freeSlot] = new RecentPlay{
+                Source = audioSource, Time = Time.realtimeSinceStartup};
         }
 
         /**
@@ -65,7 +65,8 @@ namespace Catzilla.CommonModule.Util {
                 if (recentSource == null) {
                     suitableSlot = i;
                 } else if (recentSource.clip == sound
-                           && recentPlay.Time + soundMergePeriod >= Time.time) {
+                           && recentPlay.Time + soundMergePeriod >=
+                               Time.realtimeSinceStartup) {
                     return -1;
                 } else if (!recentSource.isPlaying) {
                     suitableSlot = i;

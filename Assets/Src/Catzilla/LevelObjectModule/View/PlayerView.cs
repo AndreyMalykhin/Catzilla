@@ -94,6 +94,7 @@ namespace Catzilla.LevelObjectModule.View {
 
         public int DeathsCount {get {return deathsCount;}}
         public float RefuseChance {get; set;}
+        public float RefuseDuration {get; set;}
         public float CriticalScoreChance {get; set;}
         public float DamageAbsorbChance {get; set;}
 
@@ -125,6 +126,10 @@ namespace Catzilla.LevelObjectModule.View {
         public float BaseFrontSpeed;
         public float BaseSideSpeed;
         public float BaseRefuseChance;
+
+        [Tooltip("In seconds")]
+        public float BaseRefuseDuration;
+
         public float BaseCriticalScoreChance;
         public float BaseCriticalScoreFactor;
         public float BaseDamageAbsorbChance;
@@ -164,10 +169,6 @@ namespace Catzilla.LevelObjectModule.View {
         [SerializeField]
         [Tooltip("In seconds")]
         private float refuseCheckRate;
-
-        [SerializeField]
-        [Tooltip("In seconds")]
-        private float refuseDuration;
 
         [SerializeField]
         [Tooltip("In seconds")]
@@ -213,11 +214,8 @@ namespace Catzilla.LevelObjectModule.View {
         private int smashStreakScore;
         private float damageAbsorbFactor;
         private float criticalScoreFactor;
-        private WaitForSeconds refuseCheckRateWaiter;
-        private WaitForSeconds refuseDurationWaiter;
         private WaitForSeconds speedChangeDelayWaiter;
         private WaitForSeconds speedCheckRateWaiter;
-        private WaitForSeconds refuseDelayWaiter;
         private readonly SmashStreak smashStreakBuffer = new SmashStreak();
         private readonly List<ScoreFilter> scoreFilters =
             new List<ScoreFilter>(4);
@@ -233,14 +231,12 @@ namespace Catzilla.LevelObjectModule.View {
             health = MaxHealth;
             cameraStartPosition = Camera.transform.localPosition;
             creationTime = Time.time;
-            refuseCheckRateWaiter = new WaitForSeconds(refuseCheckRate);
-            refuseDurationWaiter = new WaitForSeconds(refuseDuration);
             speedChangeDelayWaiter = new WaitForSeconds(speedChangeDelay);
             speedCheckRateWaiter = new WaitForSeconds(speedCheckRate);
-            refuseDelayWaiter = new WaitForSeconds(refuseDelay);
             FrontSpeed = BaseFrontSpeed;
             SideSpeed = BaseSideSpeed;
             RefuseChance = BaseRefuseChance;
+            RefuseDuration = BaseRefuseDuration;
             CriticalScoreChance = BaseCriticalScoreChance;
             CriticalScoreFactor = BaseCriticalScoreFactor;
             DamageAbsorbChance = BaseDamageAbsorbChance;
@@ -331,9 +327,16 @@ namespace Catzilla.LevelObjectModule.View {
         }
 
         private void OnEnable() {
-            StartCoroutine(Refuser());
+            if (BaseRefuseChance != 0f && BaseRefuseDuration != 0f) {
+                Invoke("EnsureRefuse", refuseDelay);
+            }
+
             StartCoroutine(SpeedChanger());
             Animator.SetFloat(frontSpeedParam, frontSpeed);
+        }
+
+        private void OnDisable() {
+            CancelInvoke("EnsureRefuse");
         }
 
         private void EnsureSmashStreak() {
@@ -400,25 +403,21 @@ namespace Catzilla.LevelObjectModule.View {
             }
         }
 
-        private IEnumerator Refuser() {
-            // DebugUtils.Log("PlayerView.Refuser()");
-            if (BaseRefuseChance == 0f || refuseDuration == 0f) {
-                yield break;
-            }
-
-            yield return refuseDelayWaiter;
-
-            while (true) {
+        private void EnsureRefuse() {
+            // DebugUtils.Log("PlayerView.EnsureRefuse()");
+            if (isRefusing) {
+                isRefusing = false;
+            } else {
                 isRefusing = UnityEngine.Random.value <= RefuseChance;
 
                 if (isRefusing) {
                     targetX = -targetX;
-                    yield return refuseDurationWaiter;
-                    isRefusing = false;
+                    Invoke("EnsureRefuse", RefuseDuration);
+                    return;
                 }
-
-                yield return refuseCheckRateWaiter;
             }
+
+            Invoke("EnsureRefuse", refuseCheckRate);
         }
 
         private IEnumerator SpeedChanger() {
@@ -488,8 +487,10 @@ namespace Catzilla.LevelObjectModule.View {
 
         private void Move() {
             Vector3 currentPosition = body.position;
-            float newX = Mathf.MoveTowards(
-                currentPosition.x, targetX, sideSpeed * Time.deltaTime);
+            float sideSpeed = isRefusing ?
+                Mathf.Min(this.sideSpeed, BaseSideSpeed) : this.sideSpeed;
+            float newX = Mathf.MoveTowards(currentPosition.x, targetX,
+                sideSpeed * Time.deltaTime);
             float newZ = currentPosition.z + frontSpeed * Time.deltaTime;
             body.MovePosition(new Vector3(newX, currentPosition.y, newZ));
         }

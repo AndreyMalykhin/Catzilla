@@ -203,7 +203,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 10000 / 20000
+  m_Text: 10000/20000
 --- !u!114 &11462450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -304,8 +304,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 32
-    m_Right: 32
+    m_Left: 16
+    m_Right: 16
     m_Top: 16
     m_Bottom: 16
   m_ChildAlignment: 0
