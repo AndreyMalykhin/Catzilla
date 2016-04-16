@@ -500,8 +500,8 @@ MonoBehaviour:
   showSound: {fileID: 0}
   preShowSound: {fileID: 0}
   audioSource: {fileID: 0}
-  autoHideDelay: 0
-  isAutoHideUnscaled: 0
+  autoHideDelay: 16
+  isAutoHideUnscaled: 1
 --- !u!1 &185038201
 GameObject:
   m_ObjectHideFlags: 0
@@ -4519,7 +4519,7 @@ MonoBehaviour:
   playerStateStorage: {fileID: 11400000, guid: 7065479a8a75c45e8a2d6d98e0b3356c, type: 2}
   playerStateStorageStub: {fileID: 11400000, guid: fc662c19ecfaf40d5ad81507efc9ed48,
     type: 2}
-  isPlayerStateStorageStubbed: 1
+  isPlayerStateStorageStubbed: 0
   giftManager: {fileID: 11400000, guid: e335f292789ad42a186cb7d88992e8c0, type: 2}
   rewardManager: {fileID: 11400000, guid: f378e1248516441ddb8f9ef20381dad8, type: 2}
   hudWrapper: {fileID: 204182809}
@@ -5294,7 +5294,7 @@ MonoBehaviour:
   serverStub: {fileID: 11400000, guid: 52bf607ec63b0410b83d26fa21067d8e, type: 2}
   audioManager: {fileID: 11400000, guid: 3aed1a037599c4aef91b4831c64cc3cb, type: 2}
   worldSpacePopupManager: {fileID: 1058131398}
-  isServerStubbed: 1
+  isServerStubbed: 0
   poolStorage: {fileID: 1572147013}
   coroutineManager: {fileID: 200715833}
   activityIndicator: {fileID: 1454291257}

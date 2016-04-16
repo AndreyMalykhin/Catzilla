@@ -14,5 +14,5 @@ MonoBehaviour:
   level: 6
   availableResurrectionsCount: 0
   availableRewardsCount: 1
-  availableSkillPointsCount: 0
-  wasTutorialShown: 0
+  availableSkillPointsCount: 32
+  wasTutorialShown: 1
