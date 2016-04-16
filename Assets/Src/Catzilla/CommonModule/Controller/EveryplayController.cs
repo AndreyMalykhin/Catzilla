@@ -54,7 +54,7 @@ namespace Catzilla.CommonModule.Controller {
             var player = (PlayerView) evt.Data;
             Everyplay.SetMetadata("Score", player.Score);
             Everyplay.SetMetadata("Time", player.TotalLifetime);
-            Everyplay.SetMetadata("Level", playerStateStorage.Get().Level);
+            Everyplay.SetMetadata("Level", playerStateStorage.Get().Level + 1);
         }
 
         private void OnReadyForRecording(bool isReady) {
