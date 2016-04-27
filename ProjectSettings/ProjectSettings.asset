@@ -97,7 +97,7 @@ PlayerSettings:
   xboxOneDisableKinectGpuReservation: 0
   virtualRealitySupported: 0
   productGUID: ac526be6b35dc4ef38c10169f16a7474
-  AndroidBundleVersionCode: 6
+  AndroidBundleVersionCode: 7
   AndroidMinSdkVersion: 16
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -158,7 +158,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: /Users/test/Documents/android_prod.keystore
+  AndroidKeystoreName: /Users/test/Google Drive/dev/doc/android_prod.keystore
   AndroidKeyaliasName: prod
   AndroidTVCompatibility: 0
   AndroidIsGame: 1

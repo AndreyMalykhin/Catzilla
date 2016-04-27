@@ -890,13 +890,14 @@ MonoBehaviour:
   cameraShakers:
   - {fileID: 11402604}
   - {fileID: 11467970}
-  refuseDelay: 32
+  refuseDelay: 4
   refuseCheckRate: 2
-  speedChangeDelay: 32
+  speedChangeDelay: 4
   speedCheckRate: 2
   speedChangeChance: 0.25
   speedRestoreChance: 0.25
-  speedChangeAmount: 2
+  speedChangeMinAmount: 2
+  speedChangeMaxAmount: 2
   smashStreakDelay: 1
   smashStreakMinLength: 4
   smashStreakScoreLengthFactor: 0.08

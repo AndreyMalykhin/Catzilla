@@ -185,7 +185,10 @@ namespace Catzilla.LevelObjectModule.View {
         private float speedRestoreChance;
 
         [SerializeField]
-        private float speedChangeAmount;
+        private float speedChangeMinAmount;
+
+        [SerializeField]
+        private float speedChangeMaxAmount;
 
         [SerializeField]
         [Tooltip("In seconds")]
@@ -429,13 +432,13 @@ namespace Catzilla.LevelObjectModule.View {
 
             while (true) {
                 if (UnityEngine.Random.value <= speedChangeChance) {
-                    float normalSpeed = frontSpeed;
-                    FrontSpeed += UnityEngine.Random.Range(0, 2) == 0 ?
-                        speedChangeAmount : -speedChangeAmount;
+                    float speedDelta = UnityEngine.Random.Range(0, 2) == 0 ?
+                        speedChangeMinAmount : speedChangeMaxAmount;
+                    FrontSpeed += speedDelta;
 
                     while (true) {
                         if (UnityEngine.Random.value <= speedRestoreChance) {
-                            FrontSpeed = normalSpeed;
+                            FrontSpeed -= speedDelta;
                             break;
                         }
 
