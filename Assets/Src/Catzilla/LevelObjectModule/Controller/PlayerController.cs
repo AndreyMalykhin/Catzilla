@@ -29,8 +29,14 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject]
         private Server server;
 
+        [Inject]
+        private UIView ui;
+
         [Inject("EffectsHighPrioAudioChannel")]
         private int effectsHighPrioAudioChannel;
+
+        [Inject("PlayerHighPrioAudioChannel")]
+        private int uiHighPrioAudioChannel;
 
         [Inject("PlayerHighPrioAudioChannel")]
         private int playerHighPrioAudioChannel;
@@ -206,8 +212,8 @@ namespace Catzilla.LevelObjectModule.Controller {
             if (player.SmashStreakSound != null) {
                 audioManager.Play(
                     player.SmashStreakSound,
-                    player.HighPrioAudioSource,
-                    playerHighPrioAudioChannel);
+                    ui.AudioSource,
+                    uiHighPrioAudioChannel);
             }
         }
 
@@ -216,8 +222,8 @@ namespace Catzilla.LevelObjectModule.Controller {
             if (player.RefuseSound != null) {
                 audioManager.Play(
                     player.RefuseSound,
-                    player.LowPrioAudioSource,
-                    playerLowPrioAudioChannel);
+                    player.HighPrioAudioSource,
+                    playerHighPrioAudioChannel);
             }
 
             var popup = (WorldSpaceTextPopupView) worldSpacePopupManager.Get(

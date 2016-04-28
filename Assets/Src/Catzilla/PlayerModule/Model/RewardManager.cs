@@ -12,11 +12,11 @@ namespace Catzilla.PlayerModule.Model {
         private LevelSettingsStorage levelSettingsStorage;
 
         [SerializeField]
-        private int unlockRewardsCount = 1;
+        private int unlockRewardsCount;
 
         [Tooltip("In hours")]
         [SerializeField]
-        private int lockDuration = 1;
+        private int lockDuration;
 
         /**
          * @return Given resurrections count

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   completionScoreLevelFactor: 1024
   minCompletionScore: 6144
-  resurrectionMinReward: 1
+  resurrectionMinReward: 2
   resurrectionRewardLevelFactor: 0
   itemsParams:
   - ObjectSettings:

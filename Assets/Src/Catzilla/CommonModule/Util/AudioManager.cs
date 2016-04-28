@@ -31,7 +31,7 @@ namespace Catzilla.CommonModule.Util {
         private float soundMergePeriod;
 
         [NonSerialized]
-        private IDictionary<int, RecentPlay[]> recentPlays =
+        private readonly IDictionary<int, RecentPlay[]> recentPlays =
             new Dictionary<int, RecentPlay[]>(8);
 
         public void Play(AudioClip sound, AudioSource audioSource,
@@ -63,12 +63,14 @@ namespace Catzilla.CommonModule.Util {
                 AudioSource recentSource = recentPlay.Source;
 
                 if (recentSource == null) {
-                    suitableSlot = i;
+                    if (suitableSlot == -1) {
+                        suitableSlot = i;
+                    }
                 } else if (recentSource.clip == sound
                            && recentPlay.Time + soundMergePeriod >=
                                Time.realtimeSinceStartup) {
                     return -1;
-                } else if (!recentSource.isPlaying) {
+                } else if (!recentSource.isPlaying && suitableSlot == -1) {
                     suitableSlot = i;
                 }
             }

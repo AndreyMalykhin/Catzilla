@@ -158,8 +158,8 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: /Users/test/Google Drive/dev/doc/android_prod.keystore
-  AndroidKeyaliasName: prod
+  AndroidKeystoreName: /Users/test/Google Drive/dev/doc/android_debug.keystore
+  AndroidKeyaliasName: androiddebugkey
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
   androidEnableBanner: 0
@@ -490,7 +490,7 @@ PlayerSettings:
   WebGL::emscriptenArgs: 
   WebGL::template: APPLICATION:Default
   additionalIl2CppArgs::additionalIl2CppArgs: 
-  cloudProjectId: bbe3a0a3-c161-4daa-b06c-4bd7dba9b3e0
-  projectName: catzilla
+  cloudProjectId: e1ab7454-922b-44ba-b6d5-e8d02ce87d69
+  projectName: catzilla (dev)
   organizationId: andrii-malykhin
   cloudEnabled: 0

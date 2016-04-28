@@ -15,16 +15,16 @@ namespace Catzilla.LevelModule.Model {
         }
 
         [SerializeField]
-        private int completionScoreLevelFactor = 512;
+        private int completionScoreLevelFactor;
 
         [SerializeField]
-        private int minCompletionScore = 2048;
+        private int minCompletionScore;
 
         [SerializeField]
-        private int resurrectionMinReward = 1;
+        private int resurrectionMinReward;
 
         [SerializeField]
-        private float resurrectionRewardLevelFactor = 0.2f;
+        private float resurrectionRewardLevelFactor;
 
         [SerializeField]
         private LevelSettingsParams[] itemsParams;

@@ -20,7 +20,7 @@ MonoBehaviour:
     SimultaneousSoundsCount: 1
   - Name: UIHighPrio
     Id: 2
-    SimultaneousSoundsCount: 1
+    SimultaneousSoundsCount: 4
   - Name: UILowPrio
     Id: 3
     SimultaneousSoundsCount: 1
