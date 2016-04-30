@@ -214,7 +214,7 @@ Gone Bad</value>
 		<value>reward</value>
 	</data>
 	<data name="Skill.CriticalSmashDescription" xml:space="preserve">
-		<value>After smash streak, for {2} sec. there is a {0}% chance to get +{1}% score on every smash</value>
+		<value>After a smash streak, for {2} sec. there is a {0}% chance to get +{1}% score on every smash</value>
 	</data>
 	<data name="Skill.CriticalSmashName" xml:space="preserve">
 		<value>Where ma money?!</value>
@@ -226,7 +226,7 @@ Gone Bad</value>
 		<value>Current: {0}</value>
 	</data>
 	<data name="Skill.DamageAbsorptionDescription" xml:space="preserve">
-		<value>After smash streak, for {2} sec. there is a {0}% chance to absorb {1}% of incoming damage</value>
+		<value>After a smash streak, for {2} sec. there is a {0}% chance to absorb {1}% of incoming damage</value>
 	</data>
 	<data name="Skill.DamageAbsorptionName" xml:space="preserve">
 		<value>Can't touch this!</value>
@@ -262,13 +262,13 @@ Gone Bad</value>
 		<value>Brand-new boots</value>
 	</data>
 	<data name="Skill.RefuseRateDecreaseDescription" xml:space="preserve">
-		<value>After smash streak, there is a {0}% chance to decrease probability of refuse by {1}% for {2} sec.</value>
+		<value>After a smash streak, there is a {0}% chance to decrease probability of refuse by {1}% for {2} sec.</value>
 	</data>
 	<data name="Skill.RefuseRateDecreaseName" xml:space="preserve">
 		<value>Anything to win</value>
 	</data>
 	<data name="Skill.SideSpeedBoostDescription" xml:space="preserve">
-		<value>After smash streak, there is a {0}% chance to get +{1}% side speed for {2} sec.</value>
+		<value>After a smash streak, there is a {0}% chance to get +{1}% side speed for {2} sec.</value>
 	</data>
 	<data name="Skill.SideSpeedBoostName" xml:space="preserve">
 		<value>On a roll</value>
@@ -295,7 +295,7 @@ Gone Bad</value>
 		<value>This is your health, don't let them cops bring it down</value>
 	</data>
 	<data name="TutorialScreen.Step4" xml:space="preserve">
-		<value>This is your current score and score, required for new level, smash some to get some</value>
+		<value>This is your current score and score required for new level, smash some to get some</value>
 	</data>
 	<data name="TutorialScreen.Step5" xml:space="preserve">
 		<value>Sometimes character will refuse to listen you... yep, he is stubborn... just be more insistent</value>

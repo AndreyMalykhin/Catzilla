@@ -16,7 +16,8 @@ MonoBehaviour:
   resurrectionMinReward: 2
   resurrectionRewardLevelFactor: 0
   itemsParams:
-  - ObjectSettings:
+  - BaseLevel: -1
+    ObjectSettings:
     - objectType: 1
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
@@ -49,7 +50,8 @@ MonoBehaviour:
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
       spawnChance: 0.75
-  - ObjectSettings:
+  - BaseLevel: -1
+    ObjectSettings:
     - objectType: 1
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
@@ -90,7 +92,8 @@ MonoBehaviour:
       minSpawnsPerArea: 2
       maxSpawnsPerArea: 2
       spawnChance: 0.75
-  - ObjectSettings:
+  - BaseLevel: -1
+    ObjectSettings:
     - objectType: 1
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
@@ -139,7 +142,8 @@ MonoBehaviour:
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
       spawnChance: 0.75
-  - ObjectSettings:
+  - BaseLevel: -1
+    ObjectSettings:
     - objectType: 1
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
@@ -180,7 +184,8 @@ MonoBehaviour:
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
       spawnChance: 0.25
-  - ObjectSettings:
+  - BaseLevel: -1
+    ObjectSettings:
     - objectType: 1
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
@@ -221,7 +226,8 @@ MonoBehaviour:
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 3
       spawnChance: 0.75
-  - ObjectSettings:
+  - BaseLevel: -1
+    ObjectSettings:
     - objectType: 1
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
@@ -259,10 +265,11 @@ MonoBehaviour:
       maxSpawnsPerArea: 1
       spawnChance: 0.25
     - objectType: 10
-      minSpawnsPerArea: 2
+      minSpawnsPerArea: 1
       maxSpawnsPerArea: 3
       spawnChance: 0.75
-  - ObjectSettings:
+  - BaseLevel: -1
+    ObjectSettings:
     - objectType: 1
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 4
@@ -319,3 +326,51 @@ MonoBehaviour:
       minSpawnsPerArea: 1
       maxSpawnsPerArea: 1
       spawnChance: 0.75
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 0
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 3
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 4
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 5
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 0
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []
+  - BaseLevel: 3
+    ObjectSettings: []
+  - BaseLevel: 6
+    ObjectSettings: []

@@ -11,6 +11,7 @@ namespace Catzilla.LevelModule.Model {
     public class LevelSettingsStorage: ScriptableObject {
         [Serializable]
         private struct LevelSettingsParams {
+            public int BaseLevel;
             public ObjectLevelSettings[] ObjectSettings;
         }
 
@@ -31,7 +32,7 @@ namespace Catzilla.LevelModule.Model {
 
         [NonSerialized]
         private readonly IDictionary<int, LevelSettings> items =
-            new Dictionary<int, LevelSettings>(16);
+            new Dictionary<int, LevelSettings>(32);
 
         public LevelSettings Get(int levelIndex) {
             LevelSettings levelSettings = null;
@@ -54,14 +55,28 @@ namespace Catzilla.LevelModule.Model {
                 levelIndex = itemsParams.Length - 1;
             }
 
-            ObjectLevelSettings[] objectSettings =
-                itemsParams[levelIndex].ObjectSettings;
+            LevelSettingsParams levelSettingsParams = itemsParams[levelIndex];
             var objectSettingsMap =
                 new Dictionary<int, ObjectLevelSettings>(16);
 
+            if (levelSettingsParams.BaseLevel > -1) {
+                LevelSettingsParams baseLevelSettingsParams =
+                    itemsParams[levelSettingsParams.BaseLevel];
+                ObjectLevelSettings[] baseLevelObjectSettings =
+                    baseLevelSettingsParams.ObjectSettings;
+
+                for (int i = 0; i < baseLevelObjectSettings.Length; ++i) {
+                    objectSettingsMap[(int) baseLevelObjectSettings[i].ObjectType] =
+                        baseLevelObjectSettings[i];
+                }
+            }
+
+            ObjectLevelSettings[] objectSettings =
+                levelSettingsParams.ObjectSettings;
+
             for (int i = 0; i < objectSettings.Length; ++i) {
-                objectSettingsMap.Add(
-                    (int) objectSettings[i].ObjectType, objectSettings[i]);
+                objectSettingsMap[(int) objectSettings[i].ObjectType] =
+                    objectSettings[i];
             }
 
             return new LevelSettings(
