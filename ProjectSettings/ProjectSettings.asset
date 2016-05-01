@@ -97,7 +97,7 @@ PlayerSettings:
   xboxOneDisableKinectGpuReservation: 0
   virtualRealitySupported: 0
   productGUID: ac526be6b35dc4ef38c10169f16a7474
-  AndroidBundleVersionCode: 8
+  AndroidBundleVersionCode: 10
   AndroidMinSdkVersion: 16
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -490,7 +490,7 @@ PlayerSettings:
   WebGL::emscriptenArgs: 
   WebGL::template: APPLICATION:Default
   additionalIl2CppArgs::additionalIl2CppArgs: 
-  cloudProjectId: e1ab7454-922b-44ba-b6d5-e8d02ce87d69
-  projectName: catzilla (dev)
+  cloudProjectId: bbe3a0a3-c161-4daa-b06c-4bd7dba9b3e0
+  projectName: catzilla
   organizationId: andrii-malykhin
   cloudEnabled: 0

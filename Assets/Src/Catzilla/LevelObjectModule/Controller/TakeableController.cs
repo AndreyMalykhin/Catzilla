@@ -13,8 +13,8 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject]
         private AudioManager audioManager;
 
-        [Inject("PlayerHighPrioAudioChannel")]
-        private int playerHighPrioAudioChannel;
+        [Inject("PlayerMidPrioAudioChannel")]
+        private int playerMidPrioAudioChannel;
 
         public void OnTriggerEnter(Evt evt) {
             var collider = (Collider) evt.Data;
@@ -31,8 +31,8 @@ namespace Catzilla.LevelObjectModule.Controller {
                 var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
                 audioManager.Play(
                     takeable.TakeSound,
-                    player.HighPrioAudioSource,
-                    playerHighPrioAudioChannel,
+                    player.MidPrioAudioSource,
+                    playerMidPrioAudioChannel,
                     pitch);
             }
 

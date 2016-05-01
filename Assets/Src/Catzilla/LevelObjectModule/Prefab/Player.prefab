@@ -28,6 +28,7 @@ GameObject:
   - 54: {fileID: 5462906}
   - 82: {fileID: 8291638}
   - 82: {fileID: 8275416}
+  - 82: {fileID: 8213240}
   - 95: {fileID: 9551204}
   - 114: {fileID: 11467780}
   - 114: {fileID: 11477530}
@@ -588,6 +589,80 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.25, y: 4.5, z: 4.5}
   m_Center: {x: 0, y: -0.575, z: 2.25}
+--- !u!82 &8213240
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103594}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!82 &8275416
 AudioSource:
   m_ObjectHideFlags: 1
@@ -870,7 +945,8 @@ MonoBehaviour:
   SmashStreakSound: {fileID: 8300000, guid: 37fd64ba9cb214bd0ad069c3211ba347, type: 3}
   RefuseSound: {fileID: 8300000, guid: d49bedc40f59d45589bd86ea73b1ceb1, type: 3}
   LowPrioAudioSource: {fileID: 8291638}
-  HighPrioAudioSource: {fileID: 8275416}
+  MidPrioAudioSource: {fileID: 8275416}
+  HighPrioAudioSource: {fileID: 8213240}
   IsHealthFreezed: 0
   IsScoreFreezed: 0
   MaxHealth: 100

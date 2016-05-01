@@ -35,11 +35,14 @@ namespace Catzilla.LevelObjectModule.Controller {
         [Inject("EffectsHighPrioAudioChannel")]
         private int effectsHighPrioAudioChannel;
 
-        [Inject("PlayerHighPrioAudioChannel")]
+        [Inject("UIHighPrioAudioChannel")]
         private int uiHighPrioAudioChannel;
 
         [Inject("PlayerHighPrioAudioChannel")]
         private int playerHighPrioAudioChannel;
+
+        [Inject("PlayerMidPrioAudioChannel")]
+        private int playerMidPrioAudioChannel;
 
         [Inject("PlayerLowPrioAudioChannel")]
         private int playerLowPrioAudioChannel;
@@ -187,8 +190,8 @@ namespace Catzilla.LevelObjectModule.Controller {
                 }
 
                 var pitch = UnityEngine.Random.Range(0.95f, 1.05f);
-                audioManager.Play(player.TreatSound, player.HighPrioAudioSource,
-                    playerHighPrioAudioChannel, pitch);
+                audioManager.Play(player.TreatSound, player.MidPrioAudioSource,
+                    playerMidPrioAudioChannel, pitch);
             }
         }
 
@@ -222,8 +225,8 @@ namespace Catzilla.LevelObjectModule.Controller {
             if (player.RefuseSound != null) {
                 audioManager.Play(
                     player.RefuseSound,
-                    player.HighPrioAudioSource,
-                    playerHighPrioAudioChannel);
+                    player.LowPrioAudioSource,
+                    playerLowPrioAudioChannel);
             }
 
             var popup = (WorldSpaceTextPopupView) worldSpacePopupManager.Get(

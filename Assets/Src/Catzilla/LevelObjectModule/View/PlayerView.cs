@@ -119,6 +119,7 @@ namespace Catzilla.LevelObjectModule.View {
         public AudioClip SmashStreakSound;
         public AudioClip RefuseSound;
         public AudioSource LowPrioAudioSource;
+        public AudioSource MidPrioAudioSource;
         public AudioSource HighPrioAudioSource;
         public bool IsHealthFreezed;
         public bool IsScoreFreezed;

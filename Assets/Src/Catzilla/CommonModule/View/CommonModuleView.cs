@@ -89,6 +89,9 @@ namespace Catzilla.CommonModule.View {
         private int playerHighPrioAudioChannel;
 
         [SerializeField]
+        private int playerMidPrioAudioChannel;
+
+        [SerializeField]
         private int playerLowPrioAudioChannel;
 
         public override void InitBindings(DiContainer container) {
@@ -152,6 +155,8 @@ namespace Catzilla.CommonModule.View {
                 .ToInstance(uiLowPrioAudioChannel);
             container.Bind<int>("PlayerHighPrioAudioChannel")
                 .ToInstance(playerHighPrioAudioChannel);
+            container.Bind<int>("PlayerMidPrioAudioChannel")
+                .ToInstance(playerMidPrioAudioChannel);
             container.Bind<int>("PlayerLowPrioAudioChannel")
                 .ToInstance(playerLowPrioAudioChannel);
         }
